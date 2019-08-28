@@ -25,6 +25,9 @@ namespace DEEP.Entities
         [Tooltip("Player acceleration on air.")]
         [SerializeField] private float airAcceleration = 5f;
 
+        [Tooltip("If the Player is allowed jumping.")]
+        [SerializeField] private bool canJump = false;
+
         [Tooltip("Player acceleration when jumping.")]
         [SerializeField] private float jumpAcceleration = 5f;
 
@@ -128,7 +131,6 @@ namespace DEEP.Entities
 
             // Gets the local velocity of the Rigidbody.
             Vector3 localVel = transform.InverseTransformDirection(_rigidbody.velocity);
-            Vector3 planeVel = localVel; planeVel.y = 0; // Gets the local velocity on the x-z plane.
 
             // Verifies if the Player can move.
             if(canMove)
@@ -143,13 +145,12 @@ namespace DEEP.Entities
 
                 // Applies drag to the Rigidbody if the Player is on the ground (this is done via script in order to not apply 
                 // drag on the y-axis).
-                if(onGround) 
-                {
-                    localVel.x *= (1 - groundDrag);
-                    localVel.z *= (1 - groundDrag);
-                }
+                localVel.x *= (1 - groundDrag);
+                localVel.z *= (1 - groundDrag);
 
                 // Velocity clamp ==============================================================================
+
+                Vector3 planeVel = localVel; planeVel.y = 0; // Gets the local velocity on the x-z plane.
 
                 // Guarantees the Player velocity on the x-z plane never goes above maximum.
                 if(planeVel.magnitude > maxVelocity)
