@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 784329730603635299}
   - component: {fileID: 784329730603635296}
   - component: {fileID: 784329730603635297}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 784329730705011281}
   - component: {fileID: 784329730705011286}
   - component: {fileID: 784329730705011287}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -188,7 +188,7 @@ GameObject:
   - component: {fileID: 784329731532924585}
   - component: {fileID: 784329731532924590}
   - component: {fileID: 784329731532924591}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Aim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,9 +280,9 @@ GameObject:
   - component: {fileID: 784329731769305212}
   - component: {fileID: 784329731769305213}
   - component: {fileID: 784329731769305154}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -348,8 +348,14 @@ MonoBehaviour:
   health: 0
   maxHealth: 100
   maxVelocity: 8
-  acceleration: 5
+  groundAcceleration: 5
+  airAcceleration: 5
+  jumpAcceleration: 5
   groundDrag: 0.25
+  onGround: 0
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 3
   mouseSensitivity: {x: 2, y: 2}
   ammoTypes: []
 --- !u!1 &784329732216941986
@@ -364,7 +370,7 @@ GameObject:
   - component: {fileID: 784329732216942046}
   - component: {fileID: 784329732216942047}
   - component: {fileID: 784329732216942044}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -457,7 +463,7 @@ GameObject:
   - component: {fileID: 784329732505918581}
   - component: {fileID: 784329732505918583}
   - component: {fileID: 784329732505918580}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
