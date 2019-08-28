@@ -50,6 +50,9 @@ namespace DEEP.Entities
 
         [Header("Weapons")] // ==============================================================================
 
+        [Tooltip("Weapons carried by the player.")]
+        public List<PlayerWeapon> weapons;
+
         [Tooltip("Ammo sources carried by the player.")]
         public List<AmmoSource> ammoTypes;
 
@@ -142,10 +145,8 @@ namespace DEEP.Entities
                 // drag on the y-axis).
                 if(onGround) 
                 {
-                    if(movInput.x == 0)
-                        localVel.x *= (1 - groundDrag);
-                    if(movInput.z == 0)
-                        localVel.z *= (1 - groundDrag);
+                    localVel.x *= (1 - groundDrag);
+                    localVel.z *= (1 - groundDrag);
                 }
 
                 // Velocity clamp ==============================================================================

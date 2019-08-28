@@ -353,11 +353,14 @@ MonoBehaviour:
   jumpAcceleration: 5
   groundDrag: 0.25
   onGround: 0
+  heigthTolerance: 1.1
   raycastMask:
     serializedVersion: 2
     m_Bits: 3
   mouseSensitivity: {x: 2, y: 2}
+  weapons: []
   ammoTypes: []
+  canMove: 1
 --- !u!1 &784329732216941986
 GameObject:
   m_ObjectHideFlags: 0

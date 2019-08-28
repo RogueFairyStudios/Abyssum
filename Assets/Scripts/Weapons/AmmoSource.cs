@@ -4,8 +4,8 @@ namespace DEEP.Weapons
 {
 
     // Acts as a source of ammo for one or more weapons.
-    [System.Serializable]
-    public class AmmoSource
+    [CreateAssetMenu(fileName = "newAmmoSource", menuName = "ScriptableObjects/Ammo Source", order = 1)]
+    public class AmmoSource : ScriptableObject
     {
 
         [Tooltip("The id used to refer to this type of ammo.")]        
