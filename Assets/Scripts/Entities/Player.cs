@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
@@ -17,19 +18,19 @@ namespace DEEP.Entities
         [Header("Movimentation")] // =======================================================================
 
         [Tooltip("Max velocity the Player can reach when walking.")]
-        [SerializeField] private float maxVelocity = 8f;
+        [SerializeField] private float maxVelocity = 6f;
 
         [Tooltip("Player acceleration on ground.")]
-        [SerializeField] private float groundAcceleration = 5f;
+        [SerializeField] private float groundAcceleration = 3f;
 
         [Tooltip("Player acceleration on air.")]
-        [SerializeField] private float airAcceleration = 5f;
+        [SerializeField] private float airAcceleration = 3f;
 
         [Tooltip("If the Player is allowed jumping.")]
-        [SerializeField] private bool canJump = false;
+        [SerializeField] private bool canJump = true;
 
         [Tooltip("Player acceleration when jumping.")]
-        [SerializeField] private float jumpAcceleration = 5f;
+        [SerializeField] private float jumpAcceleration = 4f;
 
         [Range(0,1)]
         [Tooltip("Drag used to slow down the Player when no walking.")]
@@ -56,8 +57,19 @@ namespace DEEP.Entities
         [Tooltip("Weapons carried by the player.")]
         public List<PlayerWeapon> weapons;
 
+        // Stores the weapons instances with their info.
+        List<Tuple<bool, GameObject>> weaponInstances;
+
+        [Tooltip("Where Player weapons should be.")]
+        public Transform weaponPosition;
+
+        // Stores the current weapon.
+        [SerializeField] private WeaponBase currentWeapon;
+
         [Tooltip("Ammo sources carried by the player.")]
         public List<AmmoSource> ammoTypes;
+        // Stores a dictionary with the AmmoSource instances.
+        private Dictionary<string, AmmoSource> ammoDict;
 
         [Header("Control")] // ==============================================================================
 
@@ -74,6 +86,8 @@ namespace DEEP.Entities
 
             base.Start();
 
+            // Get components ===========================================================================================
+
             // Gets the Player's Rigidbody.
             _rigidbody = GetComponent<Rigidbody>();
 
@@ -83,6 +97,43 @@ namespace DEEP.Entities
             // Gets the Player's Camera.
             _camera = GetComponentInChildren<Camera>();
             if(_camera == null) Debug.LogError("DEEP.Entities.Player.Start: Camera not found!");
+
+            // Creates a dictionary with the ammo sources.
+            ammoDict = new Dictionary<string, AmmoSource>();
+            foreach(AmmoSource source in ammoTypes)
+                ammoDict.Add(source.id, Instantiate(source));
+
+            // Weapon setup =============================================================================================
+
+            // Instantiates the weapons.
+            weaponInstances = new List<Tuple<bool, GameObject>>();
+            foreach (PlayerWeapon weapon in weapons)
+            {
+
+                // Creates the weapons inside the weapon position.
+                GameObject weaponObj = Instantiate(weapon.prefab, weaponPosition.position, weaponPosition.rotation);
+                weaponObj.transform.SetParent(weaponPosition);
+                // Disables the weapon at start.
+                weaponObj.SetActive(false);
+
+                // Gets the weapon script.
+                WeaponBase weaponScript = weaponObj.GetComponent<WeaponBase>();
+                if(weaponScript == null) Debug.LogError("DEEP.Entities.Player.Start: Weapon has no weapon script!");
+
+                // Sets the ammo source of the weapon.
+                if(weapon.ammoId != null && weapon.ammoId != "")
+                    if(ammoDict.ContainsKey(weapon.ammoId))
+                        weaponScript.ammoSource = ammoDict[weapon.ammoId];
+                    else
+                        Debug.LogError("DEEP.Entities.Player.Start: Ammo type not found!");
+
+                // Adds the weapon to the list
+                weaponInstances.Add(new Tuple<bool, GameObject>(weapon.enabled, weaponObj));
+
+            }
+
+            // If there are weapons, equips the first one by default.
+            if(weaponInstances.Count > 0) SwitchWeapons(0);
 
         }
 
@@ -117,8 +168,23 @@ namespace DEEP.Entities
                 // Jumping =======================================================================================
 
                 // Makes the Player jump if touching the gorund.
-                if(onGround && Input.GetButtonDown("Jump"))
+                if(canJump && onGround && Input.GetButtonDown("Jump"))
                     _rigidbody.AddForce(Vector3.up * jumpAcceleration * _rigidbody.mass, ForceMode.Impulse);
+
+                //Equiping weapons ===============================================================================
+
+                // Verifies the number keys.
+                for(int i = 0; i < 10; i++)
+                    if(Input.GetKeyDown(i.ToString()))
+                    {
+                        if(i != 0) SwitchWeapons(i - 1);  // Converts the key into an order
+                        else if(i == 0) SwitchWeapons(9); // on a list.
+                        break;
+                    }
+
+                // Firing weapons ==================================================================================
+                if(Input.GetButton("Fire1") && currentWeapon != null)
+                    currentWeapon.Shot();
 
             }
 
@@ -180,6 +246,25 @@ namespace DEEP.Entities
                 }
 
             }
+
+        }
+
+        // Switches between the Player weapons.
+        private void SwitchWeapons(int weaponNum)
+        {
+
+            // Verifies if it's a valid weapon, if it's not doesn't switch.
+            if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
+                return;
+
+            // Disables the current weapon object.
+            if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
+
+            // Assigns the new weapon as current weapon.
+            currentWeapon = weaponInstances[weaponNum].Item2.GetComponent<WeaponBase>();
+
+            // Enables the current weapon.
+            currentWeapon.gameObject.SetActive(true);
 
         }
 

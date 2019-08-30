@@ -21,7 +21,7 @@ namespace DEEP.Weapons
         public bool HasAmmo(int amount)
         {
 
-            if(ammo > amount) return true;
+            if(ammo >= amount) return true;
             else return false;
 
         }

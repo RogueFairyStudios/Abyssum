@@ -4,8 +4,13 @@
 public class PlayerWeapon : ScriptableObject
 {
 
+    [Tooltip("If the Player can use the weapon.")]
     public bool enabled = false;
 
+    [Tooltip("The id of the ammo source to be used.")]
     public string ammoId = "Bullet";
+
+    [Tooltip("Prefab to be used as the GameObject of the weapon.")]
+    public GameObject prefab;
 
 }
