@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4da757c219cc149a8f553a77346fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 25
+  velocity: 50
 --- !u!1 &6237404013383432572
 GameObject:
   m_ObjectHideFlags: 0
@@ -115,11 +115,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4041188500202421656}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
-        type: 3}
-      propertyPath: m_Name
-      value: mesh
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7460bfee70e57d645846d3b7fd3b4500,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -189,6 +184,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
+        type: 3}
+      propertyPath: m_Name
+      value: mesh
       objectReference: {fileID: 0}
     - target: {fileID: -1504981713932161579, guid: 7460bfee70e57d645846d3b7fd3b4500,
         type: 3}

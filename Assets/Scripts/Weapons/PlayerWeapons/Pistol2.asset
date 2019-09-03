@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   ammoId: Bullet
-  prefab: {fileID: 9168991451539551708, guid: 459c91d6199b78444b33dddb457dfdcd, type: 3}
+  prefab: {fileID: 9168991451539551708, guid: 3a5f3f247c84c0569ac1dbe088541f47, type: 3}
