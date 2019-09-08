@@ -5,6 +5,7 @@ Deep is a game developed by Fellowship of the Game.
 ## Credits
 
 * Abner Santos
+* Daniel Sá
 * Eleazar Fernando
 * Luís Eduardo Rozante
 * Óliver Becker
