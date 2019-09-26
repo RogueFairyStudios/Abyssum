@@ -32,7 +32,7 @@ namespace DEEP.StateMachine
 
     }
 
-    public class State <T>{
+    public abstract class State <T>{
 
         public abstract void EnterState(T owner);
 
