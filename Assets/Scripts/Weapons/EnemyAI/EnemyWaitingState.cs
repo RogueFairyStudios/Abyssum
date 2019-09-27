@@ -28,18 +28,20 @@ public class EnemyWaitingState : State <EnemyAISystem>
     }
     public override void EnterState(EnemyAISystem owner){
         owner.waiting();
+        Debug.Log("entering waiting state");
     }
 
-    public override void ExitState(EnemyAISystem owner){}
+    public override void ExitState(EnemyAISystem owner){
+        Debug.Log("exiting wating state");
+    }
 
     public override void UpdateState(EnemyAISystem owner){
         
-        if (owner.search.get())
+        if (owner.search)
         {
-            owner.enemySM.ChangeState(EnemyShootingState.Instance);
+            owner.ChangeState(EnemyShootingState.Instance);
         }
         owner.waiting();
-        
     }
 
 }

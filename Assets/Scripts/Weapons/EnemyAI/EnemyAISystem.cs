@@ -9,7 +9,7 @@ public class EnemyAISystem : MonoBehaviour
 {
     [SerializeField]protected float radius; //search radius
     [SerializeField]private WeaponBase weapon;
-    [SerializeField]private bool search{get;set;}
+    [SeriaalizeField]public bool search{get;set;}
     protected GameObject target;
     protected Vector3 LastTagetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
@@ -34,7 +34,7 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     public void waiting(){
-        if ((Vector3.Distance(transform.position, target.transform.position) <= radius) && RayCastHitTarget())
+        if (inRange())
         {
             search = true;
             enemySM.ChangeState(EnemyShootingState.Instance);//target finded, stating gun fight
@@ -46,8 +46,10 @@ public class EnemyAISystem : MonoBehaviour
 
     public void getAim(){
         LastTagetLocation = target.transform.position;//update the target location
-        var pos = target.transform.position -transform.position;
-        pos.y = 0;// prevents the y axis rotation
+        var pos = (LastTagetLocation -transform.position).normalized;
+        /*if(pos.y != 0){
+            //arms movimentation
+        }*/
         var rotate = Quaternion.LookRotation(pos);
         transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * 10.0f);
     }
@@ -66,5 +68,18 @@ public class EnemyAISystem : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public bool inRange(){
+        if ((Vector3.Distance(transform.position, target.transform.position) <= radius) && RayCastHitTarget())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    public void ChangeState(State<EnemyAISystem> newState){
+        enemySM.ChangeState(newState);
     }
 }
