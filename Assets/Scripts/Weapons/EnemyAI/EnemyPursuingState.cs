@@ -14,7 +14,7 @@ public class EnemyPursuingState : State<EnemyAISystem>
         instance = this;
     }
 
-    public static EnemyPursuingState instance{
+    public static EnemyPursuingState Instance{
 
         get{
 
@@ -30,5 +30,12 @@ public class EnemyPursuingState : State<EnemyAISystem>
 
     public override void ExitState(EnemyAISystem owner){}
 
-    public override void UpdateState(EnemyAISystem owner){}
+    public override void UpdateState(EnemyAISystem owner){
+        if (owner.inRange())
+            owner.ChangeState(EnemyShootingState.Instance);
+        else{
+            owner.Pursuing();
+            owner.Shooting();
+        }
+    }
 }

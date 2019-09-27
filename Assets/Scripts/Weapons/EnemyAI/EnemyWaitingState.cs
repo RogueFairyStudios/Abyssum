@@ -37,11 +37,15 @@ public class EnemyWaitingState : State <EnemyAISystem>
 
     public override void UpdateState(EnemyAISystem owner){
         
-        if (owner.search)
+        if (owner.search)//verify if the enemy know where the target is
         {
-            owner.ChangeState(EnemyShootingState.Instance);
+            if(owner.inRange())
+                owner.ChangeState(EnemyShootingState.Instance);
+            else
+                owner.ChangeState(EnemyPursuingState.Instance);
         }
-        owner.waiting();
+        else
+            owner.waiting();
     }
 
 }

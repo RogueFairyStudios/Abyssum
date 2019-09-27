@@ -38,6 +38,6 @@ public class EnemyShootingState: State<EnemyAISystem>{
         if (owner.inRange())
             owner.Shooting();
         else//the enemy is trying to flee
-            owner.ChangeState();
+            owner.ChangeState(EnemyPursuingState.Instance);
     }
 }

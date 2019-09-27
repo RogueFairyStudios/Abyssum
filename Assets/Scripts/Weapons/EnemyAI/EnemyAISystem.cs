@@ -9,8 +9,9 @@ public class EnemyAISystem : MonoBehaviour
 {
     [SerializeField]protected float radius; //search radius
     [SerializeField]private WeaponBase weapon;
-    [SeriaalizeField]public bool search{get;set;}
+    [SerializeField]public bool search{get;set;}
     protected GameObject target;
+    protected  NavMeshAgent agent;
     protected Vector3 LastTagetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
     void Start()
@@ -20,6 +21,7 @@ public class EnemyAISystem : MonoBehaviour
         search = false;
         enemySM = new StateMachine<EnemyAISystem>(this);
         enemySM.ChangeState(EnemyWaitingState.Instance);//first state
+        agent = GetComponent<NavMeshAgent>();
     }
 
     void Update()
@@ -45,8 +47,7 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     public void getAim(){
-        LastTagetLocation = target.transform.position;//update the target location
-        var pos = (LastTagetLocation -transform.position).normalized;
+        var pos = (target.transform.position -transform.position).normalized;
         /*if(pos.y != 0){
             //arms movimentation
         }*/
@@ -61,7 +62,7 @@ public class EnemyAISystem : MonoBehaviour
         Debug.DrawLine(transform.position, radius * targetDirection);
 
         if(Physics.Raycast(searchRay, out hit, radius)){
-            if (hit.transform.gameObject == target)
+            if (hit.transform.gameObject == target)//verify if is something between the target and the enemy
             {
                 LastTagetLocation = target.transform.position;
                 return true;
@@ -71,12 +72,15 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     public bool inRange(){
-        if ((Vector3.Distance(transform.position, target.transform.position) <= radius) && RayCastHitTarget())
+        if (RayCastHitTarget() && (Vector3.Distance(transform.position, target.transform.position) <= radius))
         {
             return true;
         }
-
         return false;
+    }
+
+    public void Pursuing(){
+        agent.SetDestination(LastTagetLocation);
     }
 
     public void ChangeState(State<EnemyAISystem> newState){
