@@ -34,7 +34,7 @@ public class EnemyPursuingState : State<EnemyAISystem>
         if (owner.inRange())
             owner.ChangeState(EnemyShootingState.Instance);
         else{
-            owner.Pursuing();
+            owner.Pursuing();//go to last know enemy position
             owner.Shooting();
         }
     }

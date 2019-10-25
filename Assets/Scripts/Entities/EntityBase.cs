@@ -45,12 +45,10 @@ namespace DEEP.Entities
         // Deals a certain amount of damage to an entity and verifies if it's "dead", allows the specification of a damage type.
         public virtual void Damage (int amount, DamageType type) 
         { 
-
             // Decreases health and verifies if the entity has "died".
             health -= amount;
             if(health <= 0)
-                Die();
-            
+                Die();  
         }
 
         // "Kills" an entity.

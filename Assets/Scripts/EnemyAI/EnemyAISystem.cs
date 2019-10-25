@@ -1,13 +1,16 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 using UnityEngine.AI;
 using DEEP.Weapons;
 using DEEP.StateMachine;
+using DEEP.Entities;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Enemy))]
 public class EnemyAISystem : MonoBehaviour
 {
-    [SerializeField]protected float radius; //search radius
+    [SerializeField]private float radius; //search radius
     [SerializeField]private WeaponBase weapon;
     [SerializeField]public bool search{get;set;}
     protected GameObject target;
