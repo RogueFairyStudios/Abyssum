@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DEEP.Weapons;
 
 namespace DEEP.Entities{
@@ -29,6 +26,7 @@ namespace DEEP.Entities{
 
             if(!this.AI.search){
                 AI.search = true;
+                AI.hitted();
             }
 
             base.Damage(amount,type);

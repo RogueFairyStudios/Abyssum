@@ -15,7 +15,7 @@ public class EnemyAISystem : MonoBehaviour
     [SerializeField]public bool search{get;set;}
     protected GameObject target;
     protected  NavMeshAgent agent;
-    protected Vector3 LastTagetLocation; //location to search if the target has been missed
+    protected Vector3 LastTargetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
     void Start()
     {
@@ -67,7 +67,6 @@ public class EnemyAISystem : MonoBehaviour
         if(Physics.Raycast(searchRay, out hit, radius)){
             if (hit.transform.gameObject == target)//verify if is something between the target and the enemy
             {
-                LastTagetLocation = target.transform.position;
                 return true;
             }
         }
@@ -77,16 +76,29 @@ public class EnemyAISystem : MonoBehaviour
     public bool inRange(){
         if (RayCastHitTarget() && (Vector3.Distance(transform.position, target.transform.position) <= radius))
         {
+            LastTargetLocation = target.transform.position;
+            return true;
+        }
+        return false;
+    }
+
+    public bool outRange(){
+        if (RayCastHitTarget() && (Vector3.Distance(transform.position, target.transform.position) >= radius * 2))
+        {
+            LastTargetLocation = target.transform.position;
             return true;
         }
         return false;
     }
 
     public void Pursuing(){
-        agent.SetDestination(LastTagetLocation);
+        agent.SetDestination(LastTargetLocation);
     }
 
     public void ChangeState(State<EnemyAISystem> newState){
         enemySM.ChangeState(newState);
     }
+
+    //
+    public void hitted(){LastTargetLocation = target.transform.position;}
 }
