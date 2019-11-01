@@ -268,6 +268,7 @@ namespace DEEP.Entities
         }
 
         protected override void Die() {
+            Debug.Log("you died");
             SceneManager.LoadScene(0);
         }
 
