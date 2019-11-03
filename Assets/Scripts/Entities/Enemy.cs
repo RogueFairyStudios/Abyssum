@@ -9,7 +9,7 @@ namespace DEEP.Entities{
         
         private EnemyAISystem AI;
 
-        void Start()
+        protected override void Start()
         {
             base.Start();
             AI = GetComponent<EnemyAISystem>();
