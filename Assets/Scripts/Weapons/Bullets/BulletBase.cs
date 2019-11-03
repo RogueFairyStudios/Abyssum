@@ -1,6 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Net;
+using System.Collections.ObjectModel;
 using UnityEngine;
+using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets
 {
@@ -27,6 +28,14 @@ namespace DEEP.Weapons.Bullets
 
         protected virtual void OnCollisionEnter(Collision col)
         {
+            GameObject hitted = col.gameObject;
+            if (hitted.GetComponent(typeof(EntityBase)) != null)
+            {
+                EntityBase entity = hitted.GetComponent<EntityBase>();
+               // Debug.Log("hit an entity");
+                
+               entity.Damage(15,0);
+            }
 
             //Destroys the object on collision.
             Destroy(gameObject);

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using DEEP.StateMachine;
 
 public class EnemyPursuingState : State<EnemyAISystem>
@@ -34,7 +31,11 @@ public class EnemyPursuingState : State<EnemyAISystem>
         if (owner.inRange())
             owner.ChangeState(EnemyShootingState.Instance);
         else{
-            owner.Pursuing();
+            owner.Pursuing();//go to last know enemy position
+            if (owner.outRange())
+            {
+                owner.ChangeState(EnemyWaitingState.Instance);
+            }
             owner.Shooting();
         }
     }
