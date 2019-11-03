@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-
 using UnityEngine;
-
+using UnityEngine.SceneManagement;
 using DEEP.Weapons;
 
 namespace DEEP.Entities
@@ -268,7 +267,10 @@ namespace DEEP.Entities
 
         }
 
-        protected override void Die() {}
+        protected override void Die() {
+            Debug.Log("you died");
+            SceneManager.LoadScene(0);
+        }
 
     }
 
