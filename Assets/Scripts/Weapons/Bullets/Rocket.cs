@@ -12,9 +12,12 @@ namespace DEEP.Weapons.Bullets {
         [SerializeField] protected float explosionRadius = 3.0f;
         [Tooltip("Force applied to the objects in the radius of the explosion.")]
         [SerializeField] protected float explosionForce = 5.0f;
+
+        [SerializeField] protected GameObject explosionPrefab;
 		protected override void OnCollisionEnter(Collision col) {
 			print("Rocket collided. Now its time to explode!!");
 			Explosion();
+			SpawnExplosionPrefab();
 			//Destroys the object on collision.
 			Destroy(gameObject);
 
@@ -36,6 +39,19 @@ namespace DEEP.Weapons.Bullets {
 					}
 				}
 			}
+		}
+
+		private void SpawnExplosionPrefab() {
+			if (explosionPrefab == null) {
+				Debug.LogWarning("Missing explosionPrefab attribute!");
+				return;
+			}
+			Instantiate(explosionPrefab, transform.position, Quaternion.identity);
+		}
+
+		private void OnDrawGizmos() {
+			Gizmos.color = Color.yellow;
+			Gizmos.DrawSphere(transform.position, explosionRadius);
 		}
 	}
 }
