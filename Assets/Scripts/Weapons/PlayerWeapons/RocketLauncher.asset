@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enabled: 1
   ammoId: Rocket
-  prefab: {fileID: 9168991451539551708, guid: b93830ea583c3a942a3c6a8923325f90, type: 3}
+  prefab: {fileID: 2543737463301390606, guid: 09403150c9b565a48904b0b015700782, type: 3}

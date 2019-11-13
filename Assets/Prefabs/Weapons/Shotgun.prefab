@@ -538,7 +538,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoSource: {fileID: 0}
+  ammoSource: {fileID: 11400000, guid: 032c43652db8dea4ebb2ca508471f132, type: 2}
   ammoUsage: 0
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 4041188500202421656, guid: de612770af38ea04fa05d7402850544e,
