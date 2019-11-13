@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Magazine
   m_EditorClassIdentifier: 
   id: Magazine
-  ammo: 50
-  maxAmmo: 200
+  ammo: 40
+  maxAmmo: 400

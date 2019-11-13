@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
   enabled: 1
-  ammoId: none
-  prefab: {fileID: 9168991451539551708, guid: 0a5487c79271e7346a79dae8a67b9000, type: 3}
+  ammoId: Rocket
+  prefab: {fileID: 9168991451539551708, guid: b93830ea583c3a942a3c6a8923325f90, type: 3}

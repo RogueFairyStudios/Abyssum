@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7b7a8bd1ab5105a4daa06a0535eccc5a, type: 3}
-  m_Name: Rockets
+  m_Name: Shell
   m_EditorClassIdentifier: 
-  id: Magazine
-  ammo: 50
-  maxAmmo: 200
+  id: Shell
+  ammo: 12
+  maxAmmo: 120

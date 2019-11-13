@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: acc075e2e25e9f54a94bffba4b09325c, type: 3}
-  m_Name: Pistol2
+  m_Script: {fileID: 11500000, guid: 7b7a8bd1ab5105a4daa06a0535eccc5a, type: 3}
+  m_Name: Rocket
   m_EditorClassIdentifier: 
-  enabled: 1
-  ammoId: none
-  prefab: {fileID: 9168991451539551708, guid: 3a5f3f247c84c0569ac1dbe088541f47, type: 3}
+  id: Rocket
+  ammo: 5
+  maxAmmo: 50
