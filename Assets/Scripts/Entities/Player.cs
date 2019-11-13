@@ -100,7 +100,8 @@ namespace DEEP.Entities
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
             foreach(AmmoSource source in ammoTypes)
-                ammoDict.Add(source.id, Instantiate(source));
+                if(!ammoDict.ContainsKey(source.id))
+                    ammoDict.Add(source.id, Instantiate(source));
 
             // Weapon setup =============================================================================================
 

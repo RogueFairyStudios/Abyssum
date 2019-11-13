@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Pistol2
   m_EditorClassIdentifier: 
   enabled: 1
-  ammoId: Bullet
+  ammoId: none
   prefab: {fileID: 9168991451539551708, guid: 3a5f3f247c84c0569ac1dbe088541f47, type: 3}

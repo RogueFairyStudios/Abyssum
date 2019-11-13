@@ -8,12 +8,12 @@ namespace DEEP.Collectibles
         [SerializeField]private HealType hType;
         [SerializeField]private int heal;
 
-        protected virtual void OnCollisionEnter(Collision col)
+        protected virtual void OnTriggerEnter(Collider col)
         {
-            GameObject hitted = col.gameObject;
-            if (hitted.GetComponent(typeof(Player)) != null)
+
+            if (col.GetComponent(typeof(Player)) != null)
             {
-                Player entity = hitted.GetComponent<Player>();
+                Player entity = col.GetComponent<Player>();
                 
                entity.Heal(heal, hType);
             }

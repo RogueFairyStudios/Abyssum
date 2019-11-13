@@ -16,6 +16,9 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Velocity of the projectile.")]
         [SerializeField] protected float velocity = 10f;
 
+        [Tooltip("Damage inflicted by the projectile.")]
+        [SerializeField] protected int damage = 15;
+
         protected virtual void Start()
         {
 
@@ -34,7 +37,7 @@ namespace DEEP.Weapons.Bullets
                 EntityBase entity = hitted.GetComponent<EntityBase>();
                // Debug.Log("hit an entity");
                 
-               entity.Damage(15,0);
+               entity.Damage(damage, 0);
             }
 
             //Destroys the object on collision.

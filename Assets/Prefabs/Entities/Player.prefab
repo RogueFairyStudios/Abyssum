@@ -94,7 +94,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 823
+    m_Bits: 4294967295
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -126,6 +126,7 @@ GameObject:
   - component: {fileID: 784329731769305212}
   - component: {fileID: 784329731769305213}
   - component: {fileID: 784329731769305154}
+  - component: {fileID: 8220724060453802220}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -191,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963033749c8c919479f1b50d3346de90, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 100
   maxHealth: 100
   maxVelocity: 6
   groundAcceleration: 3
@@ -204,15 +205,30 @@ MonoBehaviour:
   raycastMask:
     serializedVersion: 2
     m_Bits: 3
-  mouseSensitivity: {x: 2, y: 2}
+  mouseSensitivity: {x: 1, y: 1}
   weapons:
   - {fileID: 11400000, guid: 1d5f8048e6790ad4980a52968afa8afd, type: 2}
-  - {fileID: 11400000, guid: 325b4bf087ffd374a9674ded22fbca69, type: 2}
+  - {fileID: 11400000, guid: 3393625288611ba4a80d31ed6f8d823b, type: 2}
+  - {fileID: 11400000, guid: 4adb0beef579ebb4b816afc494a6c2e3, type: 2}
   weaponPosition: {fileID: 3964534801763573718}
   currentWeapon: {fileID: 0}
   ammoTypes:
   - {fileID: 11400000, guid: a76853f6669a5e249a7f3583c955e465, type: 2}
+  - {fileID: 11400000, guid: 4a7f11402b1b4504e9fa55577d4ead43, type: 2}
+  - {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   canMove: 1
+--- !u!114 &8220724060453802220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784329731769305155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3b92c104d713fc4988bcb056a5a18fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &784329732505918586
 GameObject:
   m_ObjectHideFlags: 0
