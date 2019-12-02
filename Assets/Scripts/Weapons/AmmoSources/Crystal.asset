@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Crystal
   m_EditorClassIdentifier: 
   id: Crystal
-  ammo: 1
+  ammo: 5
   maxAmmo: 10
