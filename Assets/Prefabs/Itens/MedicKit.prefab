@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 36297765117952109}
-  - component: {fileID: 6273808658189852795}
+  - component: {fileID: 573399606290086692}
+  - component: {fileID: 5045862249035050676}
   m_Layer: 0
   m_Name: MedicKit
   m_TagString: Untagged
@@ -29,66 +30,32 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5042413577059683323}
-  - {fileID: 36297766817127100}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &6273808658189852795
-Rigidbody:
+--- !u!114 &573399606290086692
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 36297765117952114}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
---- !u!1 &36297766817127101
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 36297766817127100}
-  - component: {fileID: 36297766817127103}
-  m_Layer: 0
-  m_Name: collider
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &36297766817127100
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36297766817127101}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 36297765117952109}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &36297766817127103
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e11cda4b0c6d942a4d1e9b1e1fbbab, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hType: 0
+  heal: 50
+--- !u!65 &5045862249035050676
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 36297766817127101}
+  m_GameObject: {fileID: 36297765117952114}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.6, y: 0.2, z: 0.7}
@@ -100,11 +67,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 36297765117952109}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: b8f526861f86f6443a64b3119bf14757,
-        type: 3}
-      propertyPath: m_Name
-      value: mesh
-      objectReference: {fileID: 0}
     - target: {fileID: -5178661895559278292, guid: b8f526861f86f6443a64b3119bf14757,
         type: 3}
       propertyPath: m_Mesh
@@ -186,6 +148,11 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: cb7aa126b46a21243a4ce27b0b6f4c71, type: 2}
+    - target: {fileID: -927199367670048503, guid: b8f526861f86f6443a64b3119bf14757,
+        type: 3}
+      propertyPath: m_Name
+      value: mesh
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8f526861f86f6443a64b3119bf14757, type: 3}
 --- !u!4 &5042413577059683323 stripped

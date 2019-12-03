@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3504636131235218432}
   - component: {fileID: 6749213338669423701}
   m_Layer: 0
-  m_Name: Crystal
+  m_Name: CrystalAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -103,7 +103,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c51c9a784bdee5f62b173f2546d9b4fe, type: 2}
+  - {fileID: 2100000, guid: cd7d025cdf5d2a037806590c180a22be, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

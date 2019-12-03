@@ -7,11 +7,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 36297765117952114, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
-        type: 3}
-      propertyPath: m_Name
-      value: MedicKit_Super
-      objectReference: {fileID: 0}
     - target: {fileID: 36297765117952109, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -66,6 +61,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 36297765117952114, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: m_Name
+      value: MedicKit_Super
+      objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: heal
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7754582535152799028, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
