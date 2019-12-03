@@ -2,7 +2,10 @@ fileFormatVersion: 2
 guid: 0e1981434a9299a8abcdbe52108e4eb0
 ModelImporter:
   serializedVersion: 26
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      74: 2515818476863114300
+    second: Armature|PointAction
   externalObjects: {}
   materials:
     importMaterials: 0
