@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DEEP.Utilty
+namespace DEEP.Utility
 {
 
     // Picks a random skin from an array for an object.

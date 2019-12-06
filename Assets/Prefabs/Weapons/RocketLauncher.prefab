@@ -82,8 +82,8 @@ MonoBehaviour:
   bulletPrefab: {fileID: 783353297757611019, guid: 512e10dec6a33d345aaf923e45c0cb53,
     type: 3}
   delayBetweenShots: 1.5
-  shotClip: {fileID: 8300000, guid: 7171fe885cd8aca95b0beab7e30c4434, type: 3}
-  noAmmoCLip: {fileID: 8300000, guid: ed8756c2018d65b239dce15b83b827c0, type: 3}
+  shotClip: {fileID: 8300000, guid: 55475a585b5e129cd87bb20df0f1314e, type: 3}
+  noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
 --- !u!1 &3353184937841985651
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +204,8 @@ AudioSource:
   m_GameObject: {fileID: 3908921870063053298}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7632088498357130972, guid: c193f48fb764b9beca687f5467467b60,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
