@@ -25,6 +25,10 @@ namespace DEEP.Utility {
 
                 transform.localPosition = originalLocalPosition - transform.InverseTransformDirection(transform.forward * (safeDistance - Mathf.Clamp(hit.distance, 0, safeDistance)));
 
+            } else {
+
+                transform.localPosition = originalLocalPosition;
+            
             }
 
         }
