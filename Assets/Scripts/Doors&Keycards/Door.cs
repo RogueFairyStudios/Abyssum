@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace DEEP.DoorsAndKeycards {
 	public class Door : MonoBehaviour {
@@ -11,11 +12,13 @@ namespace DEEP.DoorsAndKeycards {
 
 		private Animator _animator;
 		private AudioSource _source;
+		private NavMeshObstacle _aiObstacle;
 
 		private void Start() {
 
 			_animator = GetComponentInChildren<Animator>();
 			_source = GetComponentInChildren<AudioSource>();
+			_aiObstacle = GetComponentInChildren<NavMeshObstacle>();
 
 		}
 
@@ -48,6 +51,9 @@ namespace DEEP.DoorsAndKeycards {
 				_source.clip = openClip;
 				_source.Play();
 			}
+
+			if(_aiObstacle != null)
+				_aiObstacle.enabled = false;
 
 			Destroy(this);
 
