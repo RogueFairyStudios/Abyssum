@@ -15,4 +15,13 @@ public class HideCursor : MonoBehaviour
         else Cursor.visible = true;
 
     }
+
+    /// <summary>
+    ///  If on windows player, lock cursor (It bugs out on linux players)
+    /// </summary>
+    private void Update()
+    {
+        if(Input.GetMouseButtonDown(0) && Application.platform == RuntimePlatform.WindowsEditor)
+            Cursor.lockState = CursorLockMode.Locked;
+    }
 }
