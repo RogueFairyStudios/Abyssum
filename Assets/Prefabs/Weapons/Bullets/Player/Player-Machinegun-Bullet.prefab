@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4041188500202421652}
   - component: {fileID: 2481365638519454730}
   m_Layer: 12
-  m_Name: Machinegun-Bullet
+  m_Name: Player-Machinegun-Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -191,7 +191,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 35
-  damage: 7
+  damage: 15
 --- !u!1 &6237404013383432572
 GameObject:
   m_ObjectHideFlags: 0

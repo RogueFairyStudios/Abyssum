@@ -211,6 +211,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 0590d7ba1cd542444b3e07d7f776b365, type: 2}
   - {fileID: 11400000, guid: 3393625288611ba4a80d31ed6f8d823b, type: 2}
   - {fileID: 11400000, guid: 4adb0beef579ebb4b816afc494a6c2e3, type: 2}
+  - {fileID: 11400000, guid: c9ee0f01377be8ecc808224d84af5dc6, type: 2}
   weaponPosition: {fileID: 3964534801763573718}
   currentWeapon: {fileID: 0}
   ammoTypes:
@@ -218,6 +219,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 032c43652db8dea4ebb2ca508471f132, type: 2}
   - {fileID: 11400000, guid: 4a7f11402b1b4504e9fa55577d4ead43, type: 2}
   - {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
+  - {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
   canMove: 1
 --- !u!114 &8220724060453802220
 MonoBehaviour:

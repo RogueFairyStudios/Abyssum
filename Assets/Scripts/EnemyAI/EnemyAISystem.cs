@@ -7,7 +7,6 @@ using DEEP.Entities;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Enemy))]
 public class EnemyAISystem : MonoBehaviour
 {
     [SerializeField]private float radius; //search radius
