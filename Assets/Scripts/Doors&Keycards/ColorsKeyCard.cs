@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DEEP.KeyCard {
+namespace DEEP.DoorsAndKeycards {
 	public class ColorsKeyCard : MonoBehaviour {
 		public KeysColors keyColor = 0;
 

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DEEP.KeyCard {
+namespace DEEP.DoorsAndKeycards {
 	public class InventoryKey : MonoBehaviour {
 		public static HashSet<KeysColors> inventory;
 		// Start is called before the first frame update
@@ -23,7 +23,7 @@ namespace DEEP.KeyCard {
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, layerMask)) {
 				try{
-					hit.collider.GetComponent<ColorsDoor>().TryOpenDoor();
+					hit.collider.GetComponent<Door>().TryOpenDoor();
 				} catch {
 					Debug.LogWarning("Couldn't access the ColorsDoor script from the object " + hit.collider.name);
 				}
