@@ -49,7 +49,7 @@ namespace DEEP.DoorsAndKeycards {
 				_source.Play();
 			}
 
-			this.enabled = false;
+			Destroy(this);
 
 		}
 	}
