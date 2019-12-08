@@ -4,23 +4,17 @@ using UnityEngine.AI;
 namespace DEEP.DoorsAndKeycards {
 	public class Door : MonoBehaviour {
 
-		public bool needKey = false;
-		public KeysColors doorColor = 0;
+		[SerializeField] private bool needKey = false;
+		[SerializeField] private KeysColors doorColor = 0;
 
-		public AudioClip openClip;
-		public AudioClip lockedClip;
+		[SerializeField] private AudioClip openClip = null;
+		[SerializeField] private AudioClip lockedClip = null;
 
-		private Animator _animator;
-		private AudioSource _source;
-		private NavMeshObstacle _aiObstacle;
-
-		private void Start() {
-
-			_animator = GetComponentInChildren<Animator>();
-			_source = GetComponentInChildren<AudioSource>();
-			_aiObstacle = GetComponentInChildren<NavMeshObstacle>();
-
-		}
+		[Header("Component References")]
+		[SerializeField] private Animator _animator = null;
+		[SerializeField] private AudioSource _source = null;
+		[SerializeField] private NavMeshObstacle _aiObstacle = null;
+		[SerializeField] private OcclusionPortal _occlusion = null;
 
 		public void TryOpenDoor() {
 
@@ -54,6 +48,9 @@ namespace DEEP.DoorsAndKeycards {
 
 			if(_aiObstacle != null)
 				_aiObstacle.enabled = false;
+
+			if(_occlusion != null)
+				_occlusion.open = true;
 
 			Destroy(this);
 

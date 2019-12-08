@@ -17,3 +17,4 @@ Deep is a game developed by Fellowship of the Game.
 * The following sounds were used in the game:
     - https://freesound.org/people/LeMudCrab/sounds/163456/
     - https://freesound.org/people/michorvath/sounds/427603/
+    - https://freesound.org/people/tommccann/sounds/235968/
