@@ -47,8 +47,8 @@ namespace DEEP.Utility {
                             cameraTransform.position + transform.TransformDirection(originalLocalPosition) + transform.forward * safeDistance);
 
         }
-    }
 
 # endif
 
+    }
 }
