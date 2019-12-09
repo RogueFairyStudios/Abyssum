@@ -1,6 +1,12 @@
+![DEEP Logo](https://github.com/FellowshipOfTheGame/DEEP/blob/master/Assets/Textures/UI/DEEP-logo.png)
+
+---
+
 # DEEP
 
 Deep is a game developed by Fellowship of the Game.
+
+---
 
 ## Credits
 
@@ -10,6 +16,8 @@ Deep is a game developed by Fellowship of the Game.
 * Luís Eduardo Rozante
 * Óliver Becker
 * Vinicíus Carvalho
+
+---
 
 ## Disclaimer
 
