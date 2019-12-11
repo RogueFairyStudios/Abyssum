@@ -247,7 +247,7 @@ GameObject:
   - component: {fileID: 8945414236787351243}
   - component: {fileID: 1673445427783202117}
   m_Layer: 0
-  m_Name: LockerGroup Alt
+  m_Name: LockerGroup (Alt)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -328,4 +328,4 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 0.63, y: 2.16, z: 1.8000004}
-  m_Center: {x: 0, y: 0.72, z: 0.9000002}
+  m_Center: {x: 0, y: 0, z: 0.9000002}

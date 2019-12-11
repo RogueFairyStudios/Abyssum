@@ -11,10 +11,9 @@ GameObject:
   - component: {fileID: 1284446275383845923}
   - component: {fileID: 115854524893862370}
   - component: {fileID: 6821992369238293582}
-  - component: {fileID: 2750953342664089647}
-  - component: {fileID: 3090953328609700155}
+  - component: {fileID: 6308611695404114488}
   m_Layer: 0
-  m_Name: Pipe-curve
+  m_Name: Pipe-curve-1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -80,8 +79,8 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &2750953342664089647
-BoxCollider:
+--- !u!64 &6308611695404114488
+MeshCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -90,19 +89,7 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.020000005, z: 0.010153088}
-  m_Center: {x: 0, y: -0.00072414515, z: 0.0041993223}
---- !u!65 &3090953328609700155
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 568893293186813574}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.01, y: 0.0101530915, z: 0.020000005}
-  m_Center: {x: 0, y: 0.004199317, z: -0.00072413805}
+  serializedVersion: 3
+  m_Convex: 0
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 912536769208657758, guid: 0b3978eb0ba9c3182aef4d3faf06d64f, type: 3}
