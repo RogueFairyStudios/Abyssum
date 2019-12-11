@@ -13,6 +13,12 @@ public class MenuButtons : MonoBehaviour
 
     public void StartGame(){
         Debug.Log("starting game");
+        SceneManager.LoadScene(2);
+    }
+
+    public void Showcase()
+    {
+        Debug.Log("showcase");
         SceneManager.LoadScene(1);
     }
 }
