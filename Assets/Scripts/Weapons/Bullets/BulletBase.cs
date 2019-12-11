@@ -19,6 +19,9 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Damage inflicted by the projectile.")]
         [SerializeField] protected int damage = 15;
 
+        [Tooltip("Bllod effect to be spawned when hitting an entity.")]
+        [SerializeField] protected GameObject bloodEffect = null;
+
         protected virtual void Start()
         {
 
@@ -32,12 +35,18 @@ namespace DEEP.Weapons.Bullets
         protected virtual void OnCollisionEnter(Collision col)
         {
             GameObject hitted = col.gameObject;
-            if (hitted.GetComponent(typeof(EntityBase)) != null)
+            EntityBase entity = hitted.GetComponent<EntityBase>();
+            if (entity != null)
             {
-                EntityBase entity = hitted.GetComponent<EntityBase>();
-               // Debug.Log("hit an entity");
                 
-               entity.Damage(damage, 0);
+                if(bloodEffect != null) {
+
+                    GameObject blood = Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+
+                }
+                
+                entity.Damage(damage, 0);
+
             }
 
             //Destroys the object on collision.

@@ -466,7 +466,8 @@ namespace DEEP.Entities
             ammoDict[type].GainAmmo(amount);
 
             // Updates the ammo counter on the HUD.
-            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+            if(currentWeapon != null)
+                _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
