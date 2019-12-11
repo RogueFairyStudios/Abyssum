@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc075e2e25e9f54a94bffba4b09325c, type: 3}
   m_Name: RocketLauncher
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   ammoId: Rocket
   prefab: {fileID: 2543737463301390606, guid: 09403150c9b565a48904b0b015700782, type: 3}

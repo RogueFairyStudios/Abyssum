@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2577152845516406388}
   - component: {fileID: 5500785977991240697}
   - component: {fileID: 4445097969312612389}
+  - component: {fileID: -5555126990137162140}
   m_Layer: 0
   m_Name: Shells
   m_TagString: Untagged
@@ -92,3 +93,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.10877891, y: 0.25885653, z: 0.17294134}
   m_Center: {x: -0.0007092543, y: -0.0026440404, z: 0.0000017993157}
+--- !u!114 &-5555126990137162140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6484274692873169475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac106f4cf4afbdcfc954917d821b20bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
+  type: Shell
+  amount: 10

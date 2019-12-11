@@ -1,17 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using DEEP.Entities;
+using DEEP.Collectibles;
 
 namespace DEEP.DoorsAndKeycards {
-	public class ColorsKeyCard : MonoBehaviour {
-		public KeysColors keyColor = 0;
 
-		void OnTriggerEnter(Collider collider) {
-			if (collider.tag == "Player") {
-				print("Adding the " + keyColor.ToString() + " key to the inventory");
-				InventoryKey.inventory.Add(keyColor);
-				Destroy(gameObject);
-			}
+	public class ColorsKeyCard : CollectibleBase {
+
+		public KeysColors keyColor = KeysColors.Blue;
+
+		protected override void Collect(Player player) {
+
+			player.GiveKeyCard(keyColor, collectionSound);
+
+			Destroy(gameObject);
+
 		}
 	}
+
 }

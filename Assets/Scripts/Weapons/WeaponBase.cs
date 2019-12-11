@@ -7,18 +7,17 @@ namespace DEEP.Weapons
     public abstract class WeaponBase : MonoBehaviour
     {
 
-        [Header("Ammo")]
-        [Tooltip("Ammo source for this weapon.")]
-        public AmmoSource ammoSource;
-
         [Tooltip("How much ammo is used for each shot.")]
         [SerializeField] private int ammoUsage = 1;
+
+        // Reference to the ammo source to use.
+        [HideInInspector] public AmmoSource ammoSource;
 
         // Attempts to fire the weapon.
         public virtual void Shot()
         {
 
-            if(ammoSource != null) // Verifies if an ammoSource is assigned.
+            if(ammoSource != null && ammoUsage > 0) // Verifies if an ammoSource is assigned and the weapons needs ammo.
             {
                 if(ammoSource.HasAmmo(ammoUsage)) // If the weapon has an ammoSource, checks for enough ammo.
                 {
@@ -30,7 +29,7 @@ namespace DEEP.Weapons
                 }
                 else NoAmmo(); // Do something when not enough ammo is avaliable.
             }
-            else Fire(); // If no ammoSource is assigned simple fire.
+            else Fire(); // If no ammoSource is assigned or the weapon doesn't use ammo simply fire.
 
         }
 

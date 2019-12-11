@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Bullet
   m_EditorClassIdentifier: 
   id: Bullet
-  ammo: 20
-  maxAmmo: 200
+  ammo: -1
+  maxAmmo: -1

@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+using DEEP.UI;
 using DEEP.Weapons;
+using DEEP.DoorsAndKeycards;
 
 namespace DEEP.Entities
 {
@@ -75,10 +80,31 @@ namespace DEEP.Entities
         [Tooltip("If the Player should be allowed to move.")]
         public bool canMove = true;
 
+        [Header("Feedback")] // =======================================================================
+
+        [Tooltip("Audio source used to play clips related to feedback to the player.")]
+        [SerializeField] private AudioSource feedbackAudioSource = null;
+        [Tooltip("Animator used to play screen effects giving feedback to the player.")]
+        [SerializeField] private Image screenFeedback = null;
+        private Coroutine screenFeedbackAnim = null; // Stores the current screen feedback coroutine.
+        [Tooltip("Duration of the screen feedback.")]
+        [SerializeField] private float screenFeedbackDuration = 0.1f;
+        [Tooltip("Color for the damage feedback.")]
+        [SerializeField] private Color damageFeedbackColor = Color.red;
+        [Tooltip("Color for the healing feedback.")]
+        [SerializeField] private Color healingFeedbackColor = Color.green;
+        [Tooltip("Color for the armor feedback.")]
+        [SerializeField] private Color armorFeedbackColor = Color.blue;
+        [Tooltip("Color for the weapon/ammo feedback.")]
+        [SerializeField] private Color weaponAmmoFeedbackColor = Color.yellow;
+        [Tooltip("Color for the keycard feedback.")]
+        [SerializeField] private Color keycardFeedbackColor = Color.magenta;
+
         // Player components ================================================================================
         private Rigidbody _rigidbody = null; // Player's Rigidbody.
         private CapsuleCollider _collider = null; // Player's CapsuleCollider.
         private Camera _camera = null; // Player's Camera.
+        private HUDController _hud = null; // Player's HUD controller.
 
         protected override void Start()
         {
@@ -95,7 +121,10 @@ namespace DEEP.Entities
 
             // Gets the Player's Camera.
             _camera = GetComponentInChildren<Camera>();
-            if(_camera == null) Debug.LogError("DEEP.Entities.Player.Start: Camera not found!");
+
+            // Gets the Player's HUD Controller and initializes the UI.
+            _hud = GetComponentInChildren<HUDController>();
+            _hud.SetHealthCounter(health);
 
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
@@ -183,8 +212,15 @@ namespace DEEP.Entities
                     }
 
                 // Firing weapons ==================================================================================
-                if(Input.GetButton("Fire1") && currentWeapon != null)
+                if(Input.GetButton("Fire1") && currentWeapon != null) {
+
+                    // Tries firing the weapon.
                     currentWeapon.Shot();
+
+                    // After that, updates the ammo counter on the HUD.
+                    _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+                }
 
             }
 
@@ -266,11 +302,163 @@ namespace DEEP.Entities
             // Enables the current weapon.
             currentWeapon.gameObject.SetActive(true);
 
+            // Updates the ammo counter on the HUD.
+            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+        }
+
+        public override void Damage(int amount, DamageType type) {
+
+            // Decreases health and verifies if the entity has "died".
+            health -= amount;
+            if(health <= 0)
+                Die();
+            else {
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(damageFeedbackColor, screenFeedbackDuration);
+            }
+
+            OnChangeHealth();
+
         }
 
         protected override void Die() {
             Debug.Log("you died");
             SceneManager.LoadScene(0);
+        }
+
+        public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
+        {
+
+            // Tries to heal the entity.
+            bool healed = base.Heal(amount, type);
+
+            // If the entity was healed plays the player feedback sound.
+            if(healed && feedbackAudio != null) {
+
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(healingFeedbackColor, screenFeedbackDuration);
+
+            }
+
+            return healed;
+
+        }
+
+        // Pick's up a weapon and enables it's use.
+        public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
+
+            // If the weapon was collected.
+            bool collected = false;
+
+            if(!weaponInstances[slot].Item1) {
+
+                // Gets the old instance from the list.
+                Tuple<bool, GameObject> weaponInstance;
+                weaponInstance = weaponInstances[slot];
+                weaponInstances.RemoveAt(slot);
+                
+                // Creates a new instance that is enabled and re-adds it to the list.
+                Tuple<bool, GameObject> enabledInstance = new Tuple<bool, GameObject>(true, weaponInstance.Item2);
+                weaponInstances.Insert(slot, enabledInstance);
+
+                Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.transform.name + " has been collected!");
+
+                collected = true;
+
+            }
+
+            // Gives ammo to the player.
+            bool givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
+
+            // If collected, plays the player feedback sound.
+            if((collected || givenAmmo) && feedbackAudio != null) {
+
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
+
+            }
+
+            // Returns if the player has collected the weapon or it's ammo.
+            return collected || givenAmmo;
+
+        }
+
+        // Gives a certain type of ammo to the player.
+        public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
+
+            // Checks if the ammo type is valid.
+            if(!ammoDict.ContainsKey(type)) return false;
+            
+            // Checks if ammo is not maxed out.
+            if(ammoDict[type].ammo >= ammoDict[type].maxAmmo) return false;
+
+            // Adds ammo to the source.
+            ammoDict[type].GainAmmo(amount);
+
+            // Updates the ammo counter on the HUD.
+            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
+
+            return true;
+
+        }
+
+        // Gives a keycard to the player.
+        public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
+
+            print("Adding the " + color.ToString() + " key to the inventory");
+			InventoryKey.inventory.Add(color);
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(keycardFeedbackColor, screenFeedbackDuration);
+
+        }
+
+        protected override void OnChangeHealth() {
+
+            _hud.SetHealthCounter(health);
+
+        }
+
+        // Starts a screen feedback effect.
+        private void StartScreenFeedback(Color color, float duration) {
+
+            // If a feedback effect is already happening stop it and start a new one.
+            if(screenFeedbackAnim != null)
+                StopCoroutine(screenFeedbackAnim);
+
+            screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(color, duration));
+
+        }
+
+        private IEnumerator ScreenFeedbackAnim(Color color, float duration) {
+
+            // Sets the feedback color and show it.
+            screenFeedback.color = color;
+            screenFeedback.enabled = true;
+
+            // Waits for the duration.
+            yield return new WaitForSeconds(duration);
+
+            // Ends the feedback.
+            screenFeedback.enabled = false;
+            screenFeedbackAnim = null;
+
         }
 
     }

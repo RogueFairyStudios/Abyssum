@@ -16,10 +16,13 @@ namespace DEEP.Entities
 
         // Entity's current health;
         [Header("Health")]
-        [SerializeField] private int health;
+        [SerializeField] protected int health;
 
-        [Tooltip("Entity's max life.")]
-        [SerializeField] private int maxHealth = 100;
+        [Tooltip("Entity's max health.")]
+        [SerializeField] protected int maxHealth = 100;
+
+        [Tooltip("Entity's max overloaded health.")]
+        [SerializeField] protected int maxOverloadedHealth = 200;
 
         protected virtual void Start()
         {
@@ -31,14 +34,24 @@ namespace DEEP.Entities
         // =================================================================================================
 
         // Heals the entity by a certain amount, allows the specification of a heal type.
-        public virtual void Heal (int amount, HealType type) 
+        public virtual bool Heal (int amount, HealType type) 
         {
             
+            // Doesn't heal because health is above max or overloaded max.
+            if(type == HealType.Regular && health >= maxHealth) return false;
+            if(type == HealType.Overload && health >= maxOverloadedHealth) return false;
+
             health += amount; // Adds the health.
 
-            // Allows going over max health based on the damage type.
-            if(type != HealType.Overload && health > maxHealth)
+            // Ensures not going above max health.
+            if(type == HealType.Regular && health > maxHealth)
                 health = maxHealth;
+            else if(type == HealType.Overload && health > maxOverloadedHealth)
+                health = maxOverloadedHealth;
+
+            OnChangeHealth();
+
+            return true;
 
         }
 
@@ -49,10 +62,16 @@ namespace DEEP.Entities
             health -= amount;
             if(health <= 0)
                 Die();  
+
+            OnChangeHealth();
+
         }
 
         // "Kills" an entity.
         protected abstract void Die();
+
+        // Called when health changes.
+        protected virtual void OnChangeHealth() { return; }
 
     }
 }
