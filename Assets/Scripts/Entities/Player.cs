@@ -19,6 +19,15 @@ namespace DEEP.Entities
     public class Player : EntityBase
     {
 
+        // ARMOR ==========================================================================================
+
+        // Entity's current armor;
+        [Header("Armor")]
+        [SerializeField] protected int armor = 0;
+
+        [Tooltip("Players's max armor.")]
+        [SerializeField] protected int maxArmor = 100;
+
         [Header("Movimentation")] // =======================================================================
 
         [Tooltip("Max velocity the Player can reach when walking.")]
@@ -100,7 +109,11 @@ namespace DEEP.Entities
         [Tooltip("Color for the keycard feedback.")]
         [SerializeField] private Color keycardFeedbackColor = Color.magenta;
 
+        [Header("Death")] // =======================================================================
+        [SerializeField] private GameObject deathMenu = null;
+
         // Player components ================================================================================
+
         private Rigidbody _rigidbody = null; // Player's Rigidbody.
         private CapsuleCollider _collider = null; // Player's CapsuleCollider.
         private Camera _camera = null; // Player's Camera.
@@ -125,6 +138,7 @@ namespace DEEP.Entities
             // Gets the Player's HUD Controller and initializes the UI.
             _hud = GetComponentInChildren<HUDController>();
             _hud.SetHealthCounter(health);
+            _hud.SetArmorCounter(armor);
 
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
@@ -309,22 +323,42 @@ namespace DEEP.Entities
 
         public override void Damage(int amount, DamageType type) {
 
-            // Decreases health and verifies if the entity has "died".
-            health -= amount;
-            if(health <= 0)
-                Die();
-            else {
+            // Calculates the percent of damage that should be absorbed by armor.
+            float armorAbsorption = Mathf.Clamp(armor / 100f, 0.3f, 1f);
+
+            // Calculates the amount of damage to armor and health.
+            int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
+            int healthDamage = amount - armorDamage;
+
+            // Decreases armor.
+            armor -= armorDamage;
+
+            // Decreases health.
+            health -= healthDamage;
+
+            if(health > 0) {
                 // Flicks the screen to give feedback.
                 StartScreenFeedback(damageFeedbackColor, screenFeedbackDuration);
             }
 
+            OnChangeArmor();
             OnChangeHealth();
 
         }
 
         protected override void Die() {
-            Debug.Log("you died");
-            SceneManager.LoadScene(0);
+            
+            Debug.Log("You died!");
+
+            _rigidbody.velocity = Vector3.zero;
+
+            canMove = false;
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            deathMenu.SetActive(true);
+            
         }
 
         public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
@@ -344,6 +378,32 @@ namespace DEEP.Entities
             }
 
             return healed;
+
+        }
+
+        // Give armor to the player.
+        public virtual bool GiveArmor(int amount, AudioClip feedbackAudio) 
+        {
+
+            // Checks if armor is not maxed out.
+            if(armor >= maxArmor) return false;
+
+            armor += amount; // Adds the armor.
+
+            // Ensures not going above max armor.
+            if(armor > maxArmor) armor = maxArmor;
+
+            // Updates the armor counter on the HUD.
+            OnChangeArmor();
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(armorFeedbackColor, screenFeedbackDuration);
+
+            return true;
 
         }
 
@@ -368,10 +428,15 @@ namespace DEEP.Entities
 
                 collected = true;
 
+                if(currentWeapon == null) // If no weapon is equiped equips the weapon.
+                    SwitchWeapons(slot);
+
             }
 
             // Gives ammo to the player.
-            bool givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
+            bool givenAmmo = false;
+            if(ammo > 0)
+                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
 
             // If collected, plays the player feedback sound.
             if((collected || givenAmmo) && feedbackAudio != null) {
@@ -429,12 +494,6 @@ namespace DEEP.Entities
 
         }
 
-        protected override void OnChangeHealth() {
-
-            _hud.SetHealthCounter(health);
-
-        }
-
         // Starts a screen feedback effect.
         private void StartScreenFeedback(Color color, float duration) {
 
@@ -459,6 +518,32 @@ namespace DEEP.Entities
             screenFeedback.enabled = false;
             screenFeedbackAnim = null;
 
+        }
+
+        private void OnChangeArmor() {
+
+            _hud.SetArmorCounter(armor);
+
+        }
+
+        protected override void OnChangeHealth() {
+
+            _hud.SetHealthCounter(health);
+
+            base.OnChangeHealth();
+
+        }
+
+        public void RestartGame() {
+
+            SceneManager.LoadScene(0);
+        
+        }
+
+        public void RestartLevel() {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
         }
 
     }

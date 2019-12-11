@@ -60,8 +60,6 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
-            if(health <= 0)
-                Die();  
 
             OnChangeHealth();
 
@@ -71,7 +69,13 @@ namespace DEEP.Entities
         protected abstract void Die();
 
         // Called when health changes.
-        protected virtual void OnChangeHealth() { return; }
+        protected virtual void OnChangeHealth() { 
+            
+            // Verifies if the entity died.
+            if(health <= 0)
+                Die();
+
+        }
 
     }
 }
