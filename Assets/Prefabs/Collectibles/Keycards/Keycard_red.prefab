@@ -90,6 +90,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389f7fbaef789cd4885fa7472175a7ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   keyColor: 1
 --- !u!54 &3781799953442861250
 Rigidbody:

@@ -72,6 +72,11 @@ PrefabInstance:
       propertyPath: heal
       value: 200
       objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: hType
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7754582535152799028, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
