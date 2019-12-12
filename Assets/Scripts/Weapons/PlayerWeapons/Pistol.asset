@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc075e2e25e9f54a94bffba4b09325c, type: 3}
   m_Name: Pistol
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   ammoId: Bullet
   prefab: {fileID: 9168991451539551708, guid: e13d2e8a82ea4934eb577e98568d7bca, type: 3}

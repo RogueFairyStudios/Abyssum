@@ -49,9 +49,14 @@ namespace DEEP.Weapons.Bullets {
 			Instantiate(explosionPrefab, transform.position, Quaternion.identity);
 		}
 
+# if UNITY_EDITOR
+
 		private void OnDrawGizmos() {
 			Gizmos.color = Color.yellow;
 			Gizmos.DrawSphere(transform.position, explosionRadius);
 		}
+
+# endif
+
 	}
 }

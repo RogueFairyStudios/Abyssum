@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 3504636131235218432}
   - component: {fileID: 2398242496029678333}
   - component: {fileID: 1210010244285965948}
-  - component: {fileID: 6749213338669423701}
   - component: {fileID: 3717381912643450405}
+  - component: {fileID: 8756789639382658498}
   m_Layer: 0
   m_Name: RocketAmmo
   m_TagString: Untagged
@@ -80,20 +80,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!136 &6749213338669423701
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7647571873643786778}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  m_Radius: 0.1
-  m_Height: 0.5
-  m_Direction: 2
-  m_Center: {x: 0, y: 0.0027822785, z: 0.010027829}
 --- !u!114 &3717381912643450405
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -109,3 +95,16 @@ MonoBehaviour:
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   type: Rocket
   amount: 1
+--- !u!65 &8756789639382658498
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7647571873643786778}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 0.5, z: 0.5}
+  m_Center: {x: 0, y: 0, z: 0}
