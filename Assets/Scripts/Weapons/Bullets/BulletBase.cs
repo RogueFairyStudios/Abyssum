@@ -39,12 +39,12 @@ namespace DEEP.Weapons.Bullets
             if (entity != null)
             {
                 
+                // Spawn the blood splatter effect if avaliable.
                 if(bloodEffect != null) {
-
                     GameObject blood = Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
-
                 }
                 
+                // Does the damage.
                 entity.Damage(damage, 0);
 
             }

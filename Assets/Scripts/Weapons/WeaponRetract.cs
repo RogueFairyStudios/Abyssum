@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DEEP.Utility {
+namespace DEEP.Weapons {
 
     // Retracts the weapon to not go through walls.
     public class WeaponRetract : MonoBehaviour
