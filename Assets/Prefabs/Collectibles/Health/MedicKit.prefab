@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3e11cda4b0c6d942a4d1e9b1e1fbbab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collectionSound: {fileID: 8300000, guid: ac1b289a78ccff259a8037b95fd00cde, type: 3}
+  collectionSound: {fileID: 8300000, guid: 66df0715b38974dfab5f67ef460e4331, type: 3}
   hType: 0
   heal: 50
 --- !u!65 &5045862249035050676
