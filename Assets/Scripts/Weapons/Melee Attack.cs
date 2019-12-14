@@ -9,6 +9,9 @@ public class MeleeAttack : weaponBase
     private float delayTimer = 0; //Used to count the time between shots.
     [Tooltip("List of targets that can be attacked")]
     public List<GameObject> targets;
+     [Tooltip("Damage inflicted by the attack.")]
+     [SerializeField]protected int damage;
+     [SerializeField]protected float knockbackForce;
 
     protected virtual start(){
         // Allows the weapon to be fired at start.
@@ -27,22 +30,46 @@ public class MeleeAttack : weaponBase
     }
 
      // Attempts to fire the weapon.
-        public override void Shot()
-        {
+    public override void Shot()
+    {
+        // Verifies if the weapon can be fired.
+        if(delayTimer >= delayBetweenShots)
+            base.Shot();
 
-            // Verifies if the weapon can be fired.
-            if(delayTimer >= delayBetweenShots)
-                base.Shot();
+    }
 
-        }
-
-        // Fires the weapon.
-        protected override void Fire(){
+    // Attacks all the targets
+    protected override void Fire(){
             
-        }
+            Vector3 dir;//knockback direction
 
-        protected void OnTriggerEnter(Collider col){
-            GameObject inComing = col.gameObject;
+            for(int i=0; i<targets.Count; i++){
+                //target i knockback
+                dir = targets[i].transform.position -  this.transform.position;
+                dir.y = 1;
+                targets[i]..GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
+                if(targets[i].GetComponent(typeof(EntityBase)) != null){
+                    EntityBase entity = targets[i].GetComponent<EntityBase>();
+                    entity.Damage(damage,0);//applying the damage
+                }
+            }
+    }
+
+    protected void OnTriggerEnter(Collider col){
+        GameObject inComing = col.gameObject;
             
+        //the gameObject can be punched ?
+        if(inComing.rigidBody){
+            if(!targets.Contains(inComing))
+                targets.Add(inComing);
         }
+    }
+
+    protected void OnTriggerExit(Collider col){
+        GameObject exited = col.gameObject;
+        if(targets.Contains(exited))
+            targets.Remove(exited);
+        
+    }
+
 }
