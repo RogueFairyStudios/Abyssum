@@ -51,7 +51,7 @@ namespace DEEP.Weapons{
                 for(int i=0; i<targets.Count; i++){
                     //target i knockback
                     dir = targets[i].transform.position -  Attacker.transform.position;
-                    dir.y = 0.2f;
+                    dir.y = 0.1f;
                     targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
                     if(targets[i].GetComponent(typeof(EntityBase)) != null){
                         EntityBase entity = targets[i].GetComponent<EntityBase>();
