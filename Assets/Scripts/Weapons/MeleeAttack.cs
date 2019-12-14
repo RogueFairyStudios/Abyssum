@@ -13,7 +13,7 @@ namespace DEEP.Weapons{
         public List<GameObject> targets;
         [Tooltip("Damage inflicted by the attack.")]
         public int damage;
-        public float knockbackForce;
+        public float knockbackForce; // when used by enemy multiply by the player mass
         [Tooltip("this is the owner of the attack")]
         public GameObject Attacker;
 
@@ -50,8 +50,8 @@ namespace DEEP.Weapons{
 
                 for(int i=0; i<targets.Count; i++){
                     //target i knockback
-                    dir = targets[i].transform.position -  this.transform.position;
-                    dir.y = 1;
+                    dir = targets[i].transform.position -  Attacker.transform.position;
+                    dir.y = 0.2f;
                     targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
                     if(targets[i].GetComponent(typeof(EntityBase)) != null){
                         EntityBase entity = targets[i].GetComponent<EntityBase>();

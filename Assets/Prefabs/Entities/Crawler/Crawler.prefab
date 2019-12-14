@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5037521927314600466}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.39, z: 1.47}
+  m_LocalPosition: {x: 0, y: 0.57, z: 1.47}
   m_LocalScale: {x: 2.4, y: 1, z: 2.21}
   m_Children: []
   m_Father: {fileID: 563735449897490569}
@@ -43,7 +43,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Size: {x: 1, y: 1.54, z: 1.38}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &3382763391186448729
 MonoBehaviour:
@@ -59,10 +59,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoSource: {fileID: 0}
   ammoUsage: 1
-  delayBetweenShots: 0.3
+  delayBetweenShots: 1
   targets: []
   damage: 5
-  knockbackForce: 1000
+  knockbackForce: 120000
   Attacker: {fileID: 6176847882833967499}
 --- !u!1 &6176847882833967499
 GameObject:
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 5
+  radius: 3
   weapon: {fileID: 3382763391186448729}
 --- !u!114 &7594039533328880872
 MonoBehaviour:
