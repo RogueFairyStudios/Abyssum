@@ -35,9 +35,11 @@ namespace DEEP.Entities{
 
         protected void Grunt()
         {
-            _audio.clip = damage[Random.Range(0, damage.Length)];
-            _audio.Play();
-            Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
+            if(damage.Length > 0) {
+                _audio.clip = damage[Random.Range(0, damage.Length)];
+                _audio.Play();
+                Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
+            }
         }
 
         public override void Damage(int amount, DamageType type){
