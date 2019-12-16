@@ -127,8 +127,10 @@ namespace DEEP.Entities
         {
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, checkRadius);
-            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance);
-            Gizmos.DrawWireSphere(transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius);
+            if(_collider != null) {
+                Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance);
+                Gizmos.DrawWireSphere(transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius);
+            }
         }
 
         protected override void Start()
