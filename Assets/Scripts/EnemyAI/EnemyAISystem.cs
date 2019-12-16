@@ -49,12 +49,13 @@ public class EnemyAISystem : MonoBehaviour
             search = true;
             enemySM.ChangeState(EnemyShootingState.Instance);//target finded, stating gun fight
         }
-        else{
+        else if(patrolPoints.Count>0){
             //randon movementation
             //is in the patrol point
             if (!agent.pathPending && agent.remainingDistance < 0.5f){
                 agent.SetDestination(patrolPoints[actualPoint].transform.position);
-                actualPoint = (actualPoint+1)%patrolPoints.Count;
+                actualPoint++;
+                actualPoint = (actualPoint)%patrolPoints.Count;
             }
 
         }
