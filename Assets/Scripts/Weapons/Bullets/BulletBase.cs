@@ -36,6 +36,8 @@ namespace DEEP.Weapons.Bullets
         {
             GameObject hitted = col.gameObject;
             EntityBase entity = hitted.GetComponent<EntityBase>();
+            if(entity == null)
+                entity = hitted.GetComponentInParent<EntityBase>();
             if (entity != null)
             {
                 

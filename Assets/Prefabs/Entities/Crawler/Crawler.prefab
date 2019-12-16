@@ -188,7 +188,7 @@ NavMeshAgent:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6176847882833967499}
   m_Enabled: 1
-  m_AgentTypeID: 0
+  m_AgentTypeID: -334000983
   m_Radius: 0.9
   m_Speed: 3.5
   m_Acceleration: 8
@@ -315,6 +315,11 @@ PrefabInstance:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 868e95c5a768bea2ea9ed35197eb5ab9, type: 2}
+    - target: {fileID: -6057140222963153312, guid: 0e91e8ba4f647e033aefbe334724171a,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: -5295224123996708082, guid: 0e91e8ba4f647e033aefbe334724171a,
         type: 3}
       propertyPath: m_Layer

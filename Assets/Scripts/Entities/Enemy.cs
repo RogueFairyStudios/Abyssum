@@ -50,14 +50,16 @@ namespace DEEP.Entities{
                 AI.hitted();
             }
 
-            _audio.clip = damage[Random.Range(0, damage.Length)];
-            _audio.Play();
+            if(damage.Length > 0){
+                _audio.clip = damage[Random.Range(0, damage.Length)];
+                _audio.Play();
+            }
 
             base.Damage(amount,type);
         }
 
         protected override void Die(){
-
+            if(death.Length > 0)
             AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
 
             //Destroys the object on collision.
