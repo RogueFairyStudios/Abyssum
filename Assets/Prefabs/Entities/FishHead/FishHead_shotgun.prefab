@@ -1500,6 +1500,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 10
   weapon: {fileID: 0}
+  patrolPoints:
+  - {fileID: 8806507968605494656}
+  actualPoint: 0
 --- !u!114 &8806507968605494665
 MonoBehaviour:
   m_ObjectHideFlags: 0

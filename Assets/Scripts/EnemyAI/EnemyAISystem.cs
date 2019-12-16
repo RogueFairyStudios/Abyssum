@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DEEP.Weapons;
@@ -11,19 +13,23 @@ public class EnemyAISystem : MonoBehaviour
 {
     [SerializeField]private float radius; //search radius
     [SerializeField]private WeaponBase weapon;
-    [SerializeField]public bool search{get;set;}
+    public bool search{get;set;}
     protected GameObject target;
     protected  NavMeshAgent agent;
     protected Vector3 LastTargetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
+    [Tooltip("random movimentation settings")]
+    [SerializeField]private List<GameObject> patrolPoints;
+    [SerializeField] private int actualPoint =0;
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
         weapon = GetComponentInChildren<WeaponBase>();
         search = false;
         enemySM = new StateMachine<EnemyAISystem>(this);
         enemySM.ChangeState(EnemyWaitingState.Instance);//first state
-        agent = GetComponent<NavMeshAgent>();
+        
     }
 
     void Update()
@@ -45,6 +51,12 @@ public class EnemyAISystem : MonoBehaviour
         }
         else{
             //randon movementation
+            //is in the patrol point
+            if (!agent.pathPending && agent.remainingDistance < 0.5f){
+                agent.SetDestination(patrolPoints[actualPoint].transform.position);
+                actualPoint = (actualPoint+1)%patrolPoints.Count;
+            }
+
         }
     }
 
