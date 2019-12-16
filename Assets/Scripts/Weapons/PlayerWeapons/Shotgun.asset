@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acc075e2e25e9f54a94bffba4b09325c, type: 3}
   m_Name: Shotgun
   m_EditorClassIdentifier: 
-  enabled: 1
+  enabled: 0
   ammoId: Shell
   prefab: {fileID: 9168991451539551708, guid: a0974e07fa4f2e948b3feb9a3098d01a, type: 3}

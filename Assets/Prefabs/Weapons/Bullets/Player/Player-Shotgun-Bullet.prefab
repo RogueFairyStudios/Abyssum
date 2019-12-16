@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 4041188500202421652}
   - component: {fileID: 2481365638519454730}
   m_Layer: 12
-  m_Name: Shotgun-Bullet
+  m_Name: Player-Shotgun-Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,6 +192,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 35
   damage: 60
+  bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
+    type: 3}
 --- !u!1 &6237404013383432572
 GameObject:
   m_ObjectHideFlags: 0
@@ -234,7 +236,7 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Radius: 0.4
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &1763562665077210024
 PrefabInstance:

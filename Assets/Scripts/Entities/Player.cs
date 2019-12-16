@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+
+using DEEP.UI;
 using DEEP.Weapons;
+using DEEP.DoorsAndKeycards;
 
 namespace DEEP.Entities
 {
@@ -14,10 +19,16 @@ namespace DEEP.Entities
     public class Player : EntityBase
     {
 
-        [Header("Movimentation")] // =======================================================================
+        // ARMOR ==========================================================================================
 
-        [Tooltip("Max velocity the Player can reach when walking.")]
-        [SerializeField] private float maxVelocity = 6f;
+        // Entity's current armor;
+        [Header("Armor")]
+        [SerializeField] protected int armor = 0;
+
+        [Tooltip("Players's max armor.")]
+        [SerializeField] protected int maxArmor = 100;
+
+        [Header("Movimentation")] // =======================================================================
 
         [Tooltip("Player acceleration on ground.")]
         [SerializeField] private float groundAcceleration = 3f;
@@ -31,20 +42,27 @@ namespace DEEP.Entities
         [Tooltip("Player acceleration when jumping.")]
         [SerializeField] private float jumpAcceleration = 4f;
 
-        [Range(0,1)]
-        [Tooltip("Drag used to slow down the Player when no walking.")]
+        [Range(0,5)]
+        [Tooltip("Drag used to slow down the Player when walking.")]
         [SerializeField] private float groundDrag = 0.25f;
+
+        [Range(0,5)]
+        [Tooltip("Drag used to slow down the Player midair.")]
+        [SerializeField] private float airDrag = 0.25f;
 
         [Space(10)]
         [Tooltip("Stores if the Player is touching the ground.")]
         [SerializeField] private bool onGround = false;
 
-        [Range(1 + float.Epsilon, Mathf.Infinity)]
+        [Range(float.Epsilon, Mathf.Infinity)]
         [Tooltip("How much height tolerance is used to determine if the Player is touching the ground (Proportional to the collider heigth).")]
-        [SerializeField] private float heigthTolerance = 1.1f;
+        [SerializeField] private float heightTolerance = 1.1f;
 
-        [Tooltip("Mask used for raycast checks")]
+        [Tooltip("Mask used for raycast checks.")]
         [SerializeField] private LayerMask raycastMask = new LayerMask();
+
+        [Tooltip("Radius for the ground check.")]
+        [SerializeField] private float checkRadius;
 
 
         [Space(10)]
@@ -75,10 +93,45 @@ namespace DEEP.Entities
         [Tooltip("If the Player should be allowed to move.")]
         public bool canMove = true;
 
+        [Header("Feedback")] // =======================================================================
+
+        [Tooltip("Audio source used to play clips related to feedback to the player.")]
+        [SerializeField] private AudioSource feedbackAudioSource = null;
+        [Tooltip("Animator used to play screen effects giving feedback to the player.")]
+        [SerializeField] private Image screenFeedback = null;
+        private Coroutine screenFeedbackAnim = null; // Stores the current screen feedback coroutine.
+        [Tooltip("Duration of the screen feedback.")]
+        [SerializeField] private float screenFeedbackDuration = 0.1f;
+        [Tooltip("Color for the damage feedback.")]
+        [SerializeField] private Color damageFeedbackColor = Color.red;
+        [Tooltip("Color for the healing feedback.")]
+        [SerializeField] private Color healingFeedbackColor = Color.green;
+        [Tooltip("Color for the armor feedback.")]
+        [SerializeField] private Color armorFeedbackColor = Color.blue;
+        [Tooltip("Color for the weapon/ammo feedback.")]
+        [SerializeField] private Color weaponAmmoFeedbackColor = Color.yellow;
+        [Tooltip("Color for the keycard feedback.")]
+        [SerializeField] private Color keycardFeedbackColor = Color.magenta;
+
+        [Header("Death")] // =======================================================================
+        [SerializeField] private GameObject deathMenu = null;
+
         // Player components ================================================================================
+
         private Rigidbody _rigidbody = null; // Player's Rigidbody.
         private CapsuleCollider _collider = null; // Player's CapsuleCollider.
         private Camera _camera = null; // Player's Camera.
+        private HUDController _hud = null; // Player's HUD controller.
+
+        private void OnDrawGizmos() // To visualize the ground check
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, checkRadius);
+            if(_collider != null) {
+                Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance);
+                Gizmos.DrawWireSphere(transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius);
+            }
+        }
 
         protected override void Start()
         {
@@ -95,7 +148,11 @@ namespace DEEP.Entities
 
             // Gets the Player's Camera.
             _camera = GetComponentInChildren<Camera>();
-            if(_camera == null) Debug.LogError("DEEP.Entities.Player.Start: Camera not found!");
+
+            // Gets the Player's HUD Controller and initializes the UI.
+            _hud = GetComponentInChildren<HUDController>();
+            _hud.SetHealthCounter(health);
+            _hud.SetArmorCounter(armor);
 
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
@@ -143,7 +200,12 @@ namespace DEEP.Entities
             // Physics ======================================================================================== 
 
             // Verifies if the Player is touching the ground.
-            onGround = Physics.Raycast(transform.position, -Vector3.up, (_collider.height / 2.0f) * heigthTolerance, raycastMask);
+            onGround = Physics.OverlapCapsule(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius, raycastMask).Length != 0;
+
+            // Turns gravity off if grounded to avoid sliding
+            _rigidbody.useGravity = !onGround;
+            _rigidbody.drag = onGround ? groundDrag : airDrag;
+
 
             // Verifies if the Player can move.
             if(canMove)
@@ -183,8 +245,15 @@ namespace DEEP.Entities
                     }
 
                 // Firing weapons ==================================================================================
-                if(Input.GetButton("Fire1") && currentWeapon != null)
+                if(Input.GetButton("Fire1") && currentWeapon != null) {
+
+                    // Tries firing the weapon.
                     currentWeapon.Shot();
+
+                    // After that, updates the ammo counter on the HUD.
+                    _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+                }
 
             }
 
@@ -202,48 +271,20 @@ namespace DEEP.Entities
             if(canMove)
             {
 
-                //Input =======================================================================================
+                //Input ====================================================================================
 
                 // Gets the input for the Player movimentation.
-                Vector3 movInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+                Vector2 movInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-                // Drag ========================================================================================
+                // Clamps so that moving diagonally isn't faster than going straight
+                if(movInput.magnitude > 1f)
+                    movInput.Normalize();
 
-                // Applies drag to the Rigidbody if the Player is on the ground (this is done via script in order to not apply 
-                // drag on the y-axis).
-                localVel.x *= (1 - groundDrag);
-                localVel.z *= (1 - groundDrag);
+                //Movement =================================================================================
 
-                // Velocity clamp ==============================================================================
-
-                Vector3 planeVel = localVel; planeVel.y = 0; // Gets the local velocity on the x-z plane.
-
-                // Guarantees the Player velocity on the x-z plane never goes above maximum.
-                if(planeVel.magnitude > maxVelocity)
-                {
-                    localVel.x = planeVel.normalized.x * maxVelocity; // Clamps the velocity.
-                    localVel.z = planeVel.normalized.z * maxVelocity;
-                }
-
-                // Assigns the new velocity to the Player.
-                _rigidbody.velocity = transform.TransformDirection(localVel);
-
-                // Movimentation =================================================================================
-
-                // Recalculates the velocity on the plane.
-                planeVel = localVel; planeVel.y = 0;
-
-                // Accelerates the Player in the x-z plane based on input and if it won't go above the maximum velocity.
-                if(onGround) // First verifies with acceleration to use.
-                {
-                    if((planeVel + movInput * groundAcceleration * Time.fixedDeltaTime).magnitude < maxVelocity)
-                        _rigidbody.AddRelativeForce(movInput * groundAcceleration * _rigidbody.mass, ForceMode.Impulse);
-                }
-                else
-                {
-                    if((planeVel + movInput * airAcceleration * Time.fixedDeltaTime).magnitude < maxVelocity)
-                        _rigidbody.AddRelativeForce(movInput * airAcceleration * _rigidbody.mass, ForceMode.Impulse);
-                }
+                // In order to make movement be based on where you're looking, we get the direction the player is facing and move accordingly
+                Vector3 movementVector = this.transform.forward * movInput.y + this.transform.right * movInput.x;
+                _rigidbody.MovePosition(transform.position + movementVector * groundAcceleration * Time.fixedDeltaTime);
 
             }
 
@@ -266,11 +307,235 @@ namespace DEEP.Entities
             // Enables the current weapon.
             currentWeapon.gameObject.SetActive(true);
 
+            // Updates the ammo counter on the HUD.
+            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+        }
+
+        public override void Damage(int amount, DamageType type) {
+
+            // Calculates the percent of damage that should be absorbed by armor.
+            float armorAbsorption = Mathf.Clamp(armor / 100f, 0.3f, 1f);
+
+            // Calculates the amount of damage to armor and health.
+            int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
+            int healthDamage = amount - armorDamage;
+
+            // Decreases armor.
+            armor -= armorDamage;
+
+            // Decreases health.
+            health -= healthDamage;
+
+            if(health > 0) {
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(damageFeedbackColor, screenFeedbackDuration);
+            }
+
+            OnChangeArmor();
+            OnChangeHealth();
+
         }
 
         protected override void Die() {
-            Debug.Log("you died");
+            
+            Debug.Log("You died!");
+
+            _rigidbody.velocity = Vector3.zero;
+
+            canMove = false;
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            deathMenu.SetActive(true);
+            
+        }
+
+        public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
+        {
+
+            // Tries to heal the entity.
+            bool healed = base.Heal(amount, type);
+
+            // If the entity was healed plays the player feedback sound.
+            if(healed && feedbackAudio != null) {
+
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(healingFeedbackColor, screenFeedbackDuration);
+
+            }
+
+            return healed;
+
+        }
+
+        // Give armor to the player.
+        public virtual bool GiveArmor(int amount, AudioClip feedbackAudio) 
+        {
+
+            // Checks if armor is not maxed out.
+            if(armor >= maxArmor) return false;
+
+            armor += amount; // Adds the armor.
+
+            // Ensures not going above max armor.
+            if(armor > maxArmor) armor = maxArmor;
+
+            // Updates the armor counter on the HUD.
+            OnChangeArmor();
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(armorFeedbackColor, screenFeedbackDuration);
+
+            return true;
+
+        }
+
+        // Pick's up a weapon and enables it's use.
+        public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
+
+            // If the weapon was collected.
+            bool collected = false;
+
+            if(!weaponInstances[slot].Item1) {
+
+                // Gets the old instance from the list.
+                Tuple<bool, GameObject> weaponInstance;
+                weaponInstance = weaponInstances[slot];
+                weaponInstances.RemoveAt(slot);
+                
+                // Creates a new instance that is enabled and re-adds it to the list.
+                Tuple<bool, GameObject> enabledInstance = new Tuple<bool, GameObject>(true, weaponInstance.Item2);
+                weaponInstances.Insert(slot, enabledInstance);
+
+                Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.transform.name + " has been collected!");
+
+                collected = true;
+
+                // Equips the weapon.
+                    SwitchWeapons(slot);
+
+            }
+
+            // Gives ammo to the player.
+            bool givenAmmo = false;
+            if(ammo > 0)
+                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
+
+            // If collected, plays the player feedback sound.
+            if((collected || givenAmmo) && feedbackAudio != null) {
+
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+                // Flicks the screen to give feedback.
+                StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
+
+            }
+
+            // Returns if the player has collected the weapon or it's ammo.
+            return collected || givenAmmo;
+
+        }
+
+        // Gives a certain type of ammo to the player.
+        public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
+
+            // Checks if the ammo type is valid.
+            if(!ammoDict.ContainsKey(type)) return false;
+            
+            // Checks if ammo is not maxed out.
+            if(ammoDict[type].ammo >= ammoDict[type].maxAmmo) return false;
+
+            // Adds ammo to the source.
+            ammoDict[type].GainAmmo(amount);
+
+            // Updates the ammo counter on the HUD.
+            if(currentWeapon != null)
+                _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
+
+            return true;
+
+        }
+
+        // Gives a keycard to the player.
+        public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
+
+            print("Adding the " + color.ToString() + " key to the inventory");
+			InventoryKey.inventory.Add(color);
+
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(keycardFeedbackColor, screenFeedbackDuration);
+
+        }
+
+        // Starts a screen feedback effect.
+        private void StartScreenFeedback(Color color, float duration) {
+
+            // If a feedback effect is already happening stop it and start a new one.
+            if(screenFeedbackAnim != null)
+                StopCoroutine(screenFeedbackAnim);
+
+            screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(color, duration));
+
+        }
+
+        private IEnumerator ScreenFeedbackAnim(Color color, float duration) {
+
+            // Sets the feedback color and show it.
+            screenFeedback.color = color;
+            screenFeedback.enabled = true;
+
+            // Waits for the duration.
+            yield return new WaitForSeconds(duration);
+
+            // Ends the feedback.
+            screenFeedback.enabled = false;
+            screenFeedbackAnim = null;
+
+        }
+
+        private void OnChangeArmor() {
+
+            _hud.SetArmorCounter(armor);
+
+        }
+
+        protected override void OnChangeHealth() {
+
+            _hud.SetHealthCounter(health);
+
+            base.OnChangeHealth();
+
+        }
+
+        public void RestartGame() {
+
             SceneManager.LoadScene(0);
+        
+        }
+
+        public void RestartLevel() {
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        
         }
 
     }

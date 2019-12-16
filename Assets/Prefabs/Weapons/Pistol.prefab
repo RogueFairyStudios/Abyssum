@@ -182,7 +182,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0
@@ -381,8 +381,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoSource: {fileID: 11400000, guid: a76853f6669a5e249a7f3583c955e465, type: 2}
   ammoUsage: 0
+  ammoSource: {fileID: 11400000, guid: a76853f6669a5e249a7f3583c955e465, type: 2}
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 4041188500202421656, guid: de612770af38ea04fa05d7402850544e,
     type: 3}

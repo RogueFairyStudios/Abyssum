@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Shell
   m_EditorClassIdentifier: 
   id: Shell
-  ammo: 12
+  ammo: 0
   maxAmmo: 120
