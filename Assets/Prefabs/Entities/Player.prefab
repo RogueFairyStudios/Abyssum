@@ -346,16 +346,18 @@ MonoBehaviour:
   armor: 0
   maxArmor: 100
   maxVelocity: 6
-  groundAcceleration: 3
+  groundAcceleration: 8
   airAcceleration: 3
   canJump: 1
-  jumpAcceleration: 4
-  groundDrag: 0.25
+  jumpAcceleration: 7.5
+  groundDrag: 4
+  airDrag: 1
   onGround: 0
-  heigthTolerance: 1.02
+  heightTolerance: 0.89
   raycastMask:
     serializedVersion: 2
     m_Bits: 3
+  checkRadius: 0.25
   mouseSensitivity: {x: 1, y: 1}
   weapons:
   - {fileID: 11400000, guid: 1d5f8048e6790ad4980a52968afa8afd, type: 2}

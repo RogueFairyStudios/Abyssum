@@ -23,7 +23,7 @@ namespace DEEP.Entities
 
         [Tooltip("Entity's max overloaded health.")]
         [SerializeField] protected int maxOverloadedHealth = 200;
-
+        
         protected virtual void Start()
         {
 

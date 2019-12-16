@@ -30,9 +30,6 @@ namespace DEEP.Entities
 
         [Header("Movimentation")] // =======================================================================
 
-        [Tooltip("Max velocity the Player can reach when walking.")]
-        [SerializeField] private float maxVelocity = 6f;
-
         [Tooltip("Player acceleration on ground.")]
         [SerializeField] private float groundAcceleration = 3f;
 
@@ -45,20 +42,27 @@ namespace DEEP.Entities
         [Tooltip("Player acceleration when jumping.")]
         [SerializeField] private float jumpAcceleration = 4f;
 
-        [Range(0,1)]
-        [Tooltip("Drag used to slow down the Player when no walking.")]
+        [Range(0,5)]
+        [Tooltip("Drag used to slow down the Player when walking.")]
         [SerializeField] private float groundDrag = 0.25f;
+
+        [Range(0,5)]
+        [Tooltip("Drag used to slow down the Player midair.")]
+        [SerializeField] private float airDrag = 0.25f;
 
         [Space(10)]
         [Tooltip("Stores if the Player is touching the ground.")]
         [SerializeField] private bool onGround = false;
 
-        [Range(1 + float.Epsilon, Mathf.Infinity)]
+        [Range(float.Epsilon, Mathf.Infinity)]
         [Tooltip("How much height tolerance is used to determine if the Player is touching the ground (Proportional to the collider heigth).")]
-        [SerializeField] private float heigthTolerance = 1.1f;
+        [SerializeField] private float heightTolerance = 1.1f;
 
-        [Tooltip("Mask used for raycast checks")]
+        [Tooltip("Mask used for raycast checks.")]
         [SerializeField] private LayerMask raycastMask = new LayerMask();
+
+        [Tooltip("Radius for the ground check.")]
+        [SerializeField] private float checkRadius;
 
 
         [Space(10)]
@@ -118,6 +122,14 @@ namespace DEEP.Entities
         private CapsuleCollider _collider = null; // Player's CapsuleCollider.
         private Camera _camera = null; // Player's Camera.
         private HUDController _hud = null; // Player's HUD controller.
+
+        private void OnDrawGizmos() // To visualize the ground check
+        {
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawWireSphere(transform.position, checkRadius);
+            Gizmos.DrawLine(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance);
+            Gizmos.DrawWireSphere(transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius);
+        }
 
         protected override void Start()
         {
@@ -186,7 +198,12 @@ namespace DEEP.Entities
             // Physics ======================================================================================== 
 
             // Verifies if the Player is touching the ground.
-            onGround = Physics.Raycast(transform.position, -Vector3.up, (_collider.height / 2.0f) * heigthTolerance, raycastMask);
+            onGround = Physics.OverlapCapsule(transform.position, transform.position + Vector3.down * (_collider.height / 2.0f) * heightTolerance, checkRadius, raycastMask).Length != 0;
+
+            // Turns gravity off if grounded to avoid sliding
+            _rigidbody.useGravity = !onGround;
+            _rigidbody.drag = onGround ? groundDrag : airDrag;
+
 
             // Verifies if the Player can move.
             if(canMove)
@@ -252,48 +269,20 @@ namespace DEEP.Entities
             if(canMove)
             {
 
-                //Input =======================================================================================
+                //Input ====================================================================================
 
                 // Gets the input for the Player movimentation.
-                Vector3 movInput = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical"));
+                Vector2 movInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
 
-                // Drag ========================================================================================
+                // Clamps so that moving diagonally isn't faster than going straight
+                if(movInput.magnitude > 1f)
+                    movInput.Normalize();
 
-                // Applies drag to the Rigidbody if the Player is on the ground (this is done via script in order to not apply 
-                // drag on the y-axis).
-                localVel.x *= (1 - groundDrag);
-                localVel.z *= (1 - groundDrag);
+                //Movement =================================================================================
 
-                // Velocity clamp ==============================================================================
-
-                Vector3 planeVel = localVel; planeVel.y = 0; // Gets the local velocity on the x-z plane.
-
-                // Guarantees the Player velocity on the x-z plane never goes above maximum.
-                if(planeVel.magnitude > maxVelocity)
-                {
-                    localVel.x = planeVel.normalized.x * maxVelocity; // Clamps the velocity.
-                    localVel.z = planeVel.normalized.z * maxVelocity;
-                }
-
-                // Assigns the new velocity to the Player.
-                _rigidbody.velocity = transform.TransformDirection(localVel);
-
-                // Movimentation =================================================================================
-
-                // Recalculates the velocity on the plane.
-                planeVel = localVel; planeVel.y = 0;
-
-                // Accelerates the Player in the x-z plane based on input and if it won't go above the maximum velocity.
-                if(onGround) // First verifies with acceleration to use.
-                {
-                    if((planeVel + movInput * groundAcceleration * Time.fixedDeltaTime).magnitude < maxVelocity)
-                        _rigidbody.AddRelativeForce(movInput * groundAcceleration * _rigidbody.mass, ForceMode.Impulse);
-                }
-                else
-                {
-                    if((planeVel + movInput * airAcceleration * Time.fixedDeltaTime).magnitude < maxVelocity)
-                        _rigidbody.AddRelativeForce(movInput * airAcceleration * _rigidbody.mass, ForceMode.Impulse);
-                }
+                // In order to make movement be based on where you're looking, we get the direction the player is facing and move accordingly
+                Vector3 movementVector = this.transform.forward * movInput.y + this.transform.right * movInput.x;
+                _rigidbody.MovePosition(transform.position + movementVector * groundAcceleration * Time.fixedDeltaTime);
 
             }
 
@@ -428,7 +417,7 @@ namespace DEEP.Entities
 
                 collected = true;
 
-                if(currentWeapon == null) // If no weapon is equiped equips the weapon.
+                // Equips the weapon.
                     SwitchWeapons(slot);
 
             }

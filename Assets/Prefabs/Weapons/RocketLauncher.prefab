@@ -76,12 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoSource: {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   ammoUsage: 1
+  ammoSource: {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   bulletSpawn: {fileID: 4171265578445106677}
   bulletPrefab: {fileID: 783353297757611019, guid: 512e10dec6a33d345aaf923e45c0cb53,
     type: 3}
-  delayBetweenShots: 1.5
+  delayBetweenShots: 1
   shotClip: {fileID: 8300000, guid: 55475a585b5e129cd87bb20df0f1314e, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
 --- !u!1 &3353184937841985651
@@ -237,7 +237,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

@@ -58,10 +58,10 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     public bool RayCastHitTarget(){
-        Vector3 targetDirection = target.transform.position -transform.position;
-        Ray searchRay = new Ray(transform.position, targetDirection);
+        Vector3 targetDirection = (target.transform.position - (transform.position + Vector3.up)).normalized;
+        Ray searchRay = new Ray(transform.position + Vector3.up, targetDirection);
         RaycastHit hit;
-        Debug.DrawLine(transform.position, radius * targetDirection);
+        Debug.DrawLine(transform.position + Vector3.up, transform.position + radius * targetDirection);
 
         if(Physics.Raycast(searchRay, out hit, radius)){
             if (hit.transform.gameObject == target)//verify if is something between the target and the enemy
