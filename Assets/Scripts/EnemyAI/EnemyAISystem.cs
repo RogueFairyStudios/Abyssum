@@ -37,13 +37,13 @@ public class EnemyAISystem : MonoBehaviour
         enemySM.update();//update the actual state
     }
 
-    public void Shooting(){
+    public virtual void Shooting(){
         getAim();
         if (weapon != null)
             weapon.Shot();
     }
 
-    public void waiting(){
+    public virtual void waiting(){
         if (inRange())
         {
             search = true;
@@ -103,11 +103,11 @@ public class EnemyAISystem : MonoBehaviour
         return false;
     }
 
-    public void Pursuing(){
+    public virtual void Pursuing(){
         agent.SetDestination(LastTargetLocation);
     }
 
-    public void ChangeState(State<EnemyAISystem> newState){
+    public virtual void ChangeState(State<EnemyAISystem> newState){
         enemySM.ChangeState(newState);
     }
 
