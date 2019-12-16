@@ -9869,6 +9869,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3362889825641133038, guid: 6f115ac721caf384294f21bd6d310c66,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4127988897996294114, guid: 6f115ac721caf384294f21bd6d310c66,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -18542,6 +18547,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Door
       objectReference: {fileID: 0}
+    - target: {fileID: 3362889825641133038, guid: 2cd442a2b4d6d7648b250f33e42ac68b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4127988897996294114, guid: 2cd442a2b4d6d7648b250f33e42ac68b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -19307,6 +19317,31 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6516014619735580340, guid: edd4274b99418424cbc6f535c9afb112,
+        type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146931565270511084, guid: edd4274b99418424cbc6f535c9afb112,
+        type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146931565270511084, guid: edd4274b99418424cbc6f535c9afb112,
+        type: 3}
+      propertyPath: m_textInfo.spaceCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146931565270511084, guid: edd4274b99418424cbc6f535c9afb112,
+        type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146931565270511084, guid: edd4274b99418424cbc6f535c9afb112,
+        type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7146931565270511084, guid: edd4274b99418424cbc6f535c9afb112,
         type: 3}
       propertyPath: m_textInfo.pageCount
       value: 0
@@ -31539,6 +31574,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3362889825641133038, guid: 6f115ac721caf384294f21bd6d310c66,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4127988897996294114, guid: 6f115ac721caf384294f21bd6d310c66,
         type: 3}
@@ -44073,6 +44113,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ColorDoor
+      objectReference: {fileID: 0}
+    - target: {fileID: 3362889825641133038, guid: 6f115ac721caf384294f21bd6d310c66,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6f115ac721caf384294f21bd6d310c66, type: 3}

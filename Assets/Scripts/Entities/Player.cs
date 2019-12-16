@@ -93,6 +93,13 @@ namespace DEEP.Entities
         [Tooltip("If the Player should be allowed to move.")]
         public bool canMove = true;
 
+        [Header("Pause")]
+
+        [Tooltip("If the game is paused.")]
+        public bool isPaused = true;
+        [Tooltip("GameObject that contains the pause menu.")]
+        [SerializeField] private GameObject pauseMenu = null;
+
         [Header("Feedback")] // =======================================================================
 
         [Tooltip("Audio source used to play clips related to feedback to the player.")]
@@ -137,6 +144,9 @@ namespace DEEP.Entities
         {
 
             base.Start();
+
+            // Sets pause to false.
+            isPaused = false;
 
             // Get components ===========================================================================================
 
@@ -196,6 +206,12 @@ namespace DEEP.Entities
 
         private void Update()
         {
+
+            // Pause ======================================================================================== 
+
+            // Pauses or unpauses the game.
+            if(Input.GetButtonDown("Cancel"))
+                TogglePause();
 
             // Physics ======================================================================================== 
 
@@ -344,11 +360,12 @@ namespace DEEP.Entities
             _rigidbody.velocity = Vector3.zero;
 
             canMove = false;
+            deathMenu.SetActive(true);
 
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
-            deathMenu.SetActive(true);
+            Time.timeScale = 0;
             
         }
 
@@ -526,14 +543,46 @@ namespace DEEP.Entities
 
         }
 
+        public void TogglePause() {
+
+            isPaused = !isPaused;
+
+            if(isPaused) {
+
+                canMove = false;
+                pauseMenu.SetActive(true);
+
+                Cursor.visible = true;
+                Cursor.lockState = CursorLockMode.None;
+
+                Time.timeScale = 0;
+
+            } else {
+
+                canMove = true;
+                pauseMenu.SetActive(false);
+
+                Cursor.visible = false;
+                Cursor.lockState = CursorLockMode.Locked;
+
+                Time.timeScale = 1;
+
+            }
+
+        }
+
         public void RestartGame() {
 
+            // Ensures time is reset.
+            Time.timeScale = 1;
             SceneManager.LoadScene(0);
         
         }
 
         public void RestartLevel() {
 
+            // Ensures time is reset.
+            Time.timeScale = 1;
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         
         }

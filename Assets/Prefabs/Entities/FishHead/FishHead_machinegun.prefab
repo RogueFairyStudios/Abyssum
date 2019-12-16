@@ -591,9 +591,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radius: 10
   weapon: {fileID: 0}
-  blockPlayerMask:
-    serializedVersion: 2
-    m_Bits: 1025
 --- !u!114 &1423937652085240148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -937,14 +934,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2187484647445670926}
-  m_LocalRotation: {x: 0.21973681, y: 0.7012729, z: 0.6301144, w: -0.25077498}
+  m_LocalRotation: {x: 0.20337307, y: 0.6945553, z: 0.6355845, w: -0.26882106}
   m_LocalPosition: {x: 0.00028, y: 0.00133, z: -0.00086}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4965332702136584080}
   m_Father: {fileID: 521478969349721394}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -83.706, y: -136.97101, z: 355.897}
+  m_LocalEulerAnglesHint: {x: -82.857, y: -112.475006, z: 331.565}
 --- !u!1 &2509188889823282406
 GameObject:
   m_ObjectHideFlags: 0

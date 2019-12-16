@@ -15,7 +15,7 @@ Deep is a game developed by Fellowship of the Game.
 * Eleazar Fernando
 * Luís Eduardo Rozante
 * Óliver Becker
-* Vinicíus Carvalho
+* Vinícius Carvalho
 
 ---
 
