@@ -112,5 +112,9 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     //
-    public void hitted(){LastTargetLocation = target.transform.position;}
+    public void hitted() {
+        
+        LastTargetLocation = target.transform.position;
+        
+    }
 }

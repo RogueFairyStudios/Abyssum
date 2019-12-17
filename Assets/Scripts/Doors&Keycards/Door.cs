@@ -13,7 +13,7 @@ namespace DEEP.DoorsAndKeycards {
 		[Header("Component References")]
 		[SerializeField] private Animator _animator = null;
 		[SerializeField] private AudioSource _source = null;
-		[SerializeField] private NavMeshObstacle _aiObstacle = null;
+		[SerializeField] private GameObject _navLinkObj = null;
 		[SerializeField] private OcclusionPortal _occlusion = null;
 
 		public void TryOpenDoor() {
@@ -46,8 +46,8 @@ namespace DEEP.DoorsAndKeycards {
 				_source.Play();
 			}
 
-			if(_aiObstacle != null)
-				_aiObstacle.enabled = false;
+			if(_navLinkObj != null)
+				_navLinkObj.SetActive(true);
 
 			if(_occlusion != null)
 				_occlusion.open = true;

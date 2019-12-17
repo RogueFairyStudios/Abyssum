@@ -9,18 +9,18 @@ namespace DEEP.UI {
     {
         public void QuitGame()
         {
-            Debug.Log("quit");
+            Debug.Log("Application.Quit()");
             Application.Quit();
         }
 
         public void StartGame(){
-            Debug.Log("starting game");
+            Debug.Log("Starting game...");
             SceneManager.LoadScene(2);
         }
 
         public void Showcase()
         {
-            Debug.Log("showcase");
+            Debug.Log("Starting showcase...");
             SceneManager.LoadScene(1);
         }
     }

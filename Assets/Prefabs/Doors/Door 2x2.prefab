@@ -87,7 +87,7 @@ MonoBehaviour:
   lockedClip: {fileID: 0}
   _animator: {fileID: 8331932631044017831}
   _source: {fileID: 4891137674046897651}
-  _aiObstacle: {fileID: 0}
+  _navLinkObj: {fileID: 5901902026983752690}
   _occlusion: {fileID: 3825793202881806880}
 --- !u!65 &5875556298745910845
 BoxCollider:
@@ -184,7 +184,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7969588270031314551
 Transform:
   m_ObjectHideFlags: 0

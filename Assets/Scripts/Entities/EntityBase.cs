@@ -60,7 +60,6 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
-
             OnChangeHealth();
 
         }
