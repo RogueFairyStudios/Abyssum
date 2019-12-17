@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+using DEEP.Stage;
+
 namespace DEEP.DoorsAndKeycards {
+	
 	public class Door : MonoBehaviour, ITrappable {
 
 		[SerializeField] private bool needKey = false;
@@ -68,8 +71,8 @@ namespace DEEP.DoorsAndKeycards {
 		{
 			_animator.SetBool("Open", false);
 
-			if(_aiObstacle != null)
-				_aiObstacle.enabled = true;
+			if(_navLinkObj != null)
+				_navLinkObj.SetActive(false);
 
 			if(_occlusion != null)
 				_occlusion.open = false;

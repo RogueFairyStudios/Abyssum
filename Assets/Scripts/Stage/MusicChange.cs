@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace DEEP.Utility
+namespace DEEP.Stage
 {
     public class MusicChange : MonoBehaviour
     {

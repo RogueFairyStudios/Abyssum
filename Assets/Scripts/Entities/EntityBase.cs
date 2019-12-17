@@ -24,6 +24,9 @@ namespace DEEP.Entities
         [Tooltip("Entity's max overloaded health.")]
         [SerializeField] protected int maxOverloadedHealth = 200;
         
+        [Tooltip("Prefab to be spawned when the entity dies.")]
+        [SerializeField] protected GameObject deathPrefab = null;
+
         protected virtual void Start()
         {
 
@@ -65,7 +68,14 @@ namespace DEEP.Entities
         }
 
         // "Kills" an entity.
-        protected abstract void Die();
+        protected virtual void Die() {
+
+            if(deathPrefab != null) // SPawns a prefab after death if assigned.
+                Instantiate(deathPrefab, transform.position, transform.rotation);
+
+            Destroy(gameObject);
+
+        }
 
         // Called when health changes.
         protected virtual void OnChangeHealth() { 

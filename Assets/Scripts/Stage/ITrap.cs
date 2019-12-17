@@ -2,7 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ITrappable
+namespace DEEP.Stage
 {
-    void ActivateTrap();
+
+    public interface ITrappable
+    {
+        void ActivateTrap();
+    }
+
 }

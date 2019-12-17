@@ -1723,7 +1723,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 8806507968605494656}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.5
   m_Speed: 3.5
   m_Acceleration: 8
   avoidancePriority: 50
@@ -1732,8 +1732,8 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 1.52
-  m_BaseOffset: -0.08
+  m_Height: 1.7
+  m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
 --- !u!114 &8806507968605494671
@@ -1767,6 +1767,8 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   maxOverloadedHealth: 200
+  deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
+    type: 3}
   _audio: {fileID: 155577590734253887}
   grunt:
   - {fileID: 8300000, guid: 00d5874fc0254fb2f858564ff8190296, type: 3}
@@ -1785,7 +1787,6 @@ MonoBehaviour:
   growl: []
   minGrowlInterval: 0
   maxGrowlInterval: 0
-  stopGruntsWhileGrowling: 0
 --- !u!114 &8424088776244172399
 MonoBehaviour:
   m_ObjectHideFlags: 0

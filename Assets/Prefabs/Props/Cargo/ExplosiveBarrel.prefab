@@ -15,7 +15,7 @@ MonoBehaviour:
   health: 30
   maxHealth: 30
   maxOverloadedHealth: 30
-  objectToSpawn: {fileID: 1020696033834269181, guid: 2b1c4e186366a7a86b8c57308b1f7abb,
+  deathPrefab: {fileID: 1020696033834269181, guid: 2b1c4e186366a7a86b8c57308b1f7abb,
     type: 3}
 --- !u!1001 &5245055757193629271
 PrefabInstance:

@@ -6,9 +6,6 @@ namespace DEEP.Entities
     public class DestructibleObject : EntityBase
     {
 
-        [Tooltip("Object to be spawned when this object is destroyed.")]
-        [SerializeField] protected GameObject objectToSpawn = null;
-
         private bool destroyed;
 
         protected override void Start() {
@@ -24,8 +21,7 @@ namespace DEEP.Entities
                 return;
 
             destroyed = true;
-            Instantiate(objectToSpawn, transform.position, transform.rotation);
-            Destroy(gameObject);
+            base.Die();
 
         }
 
