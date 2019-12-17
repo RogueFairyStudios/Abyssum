@@ -26,9 +26,13 @@ public class EnemyShootingState: State<EnemyAISystem>{
     }
 
     public override void EnterState(EnemyAISystem owner){
+        
         Debug.Log("entering Enemy Shooting State");
         owner.Shooting();
-        owner.OnAggro();
+
+        if(owner.OnAggro != null)
+            owner.OnAggro();
+
     }
 
     public override void ExitState(EnemyAISystem owner){
@@ -36,7 +40,7 @@ public class EnemyShootingState: State<EnemyAISystem>{
     }
 
     public override void UpdateState(EnemyAISystem owner){
-        if (owner.inRange())
+        if (owner.InAttackRange())
             owner.Shooting();
         else//the enemy is trying to flee
             owner.ChangeState(EnemyPursuingState.Instance);

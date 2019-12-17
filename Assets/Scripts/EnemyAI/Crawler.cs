@@ -11,12 +11,14 @@ using DEEP.Entities;
 [RequireComponent(typeof(NavMeshAgent))]
 public class Crawler : EnemyAISystem
 {
-    public override void Shooting(){
+    public override void Shooting() {
+
         if(Vector3.Distance(LastTargetLocation, this.transform.position) > 1.8f){   
             agent.SetDestination(LastTargetLocation);
         }else{
             agent.SetDestination(this.transform.position);
         }
         base.Shooting();
+        
     }
 }

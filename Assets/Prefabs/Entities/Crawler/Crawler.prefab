@@ -205,7 +205,7 @@ GameObject:
   - component: {fileID: 8225873976410506939}
   - component: {fileID: 3938113005341435163}
   - component: {fileID: 3382763391186448729}
-  m_Layer: 2
+  m_Layer: 11
   m_Name: MeleeAttacker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -251,9 +251,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635f145806c4a684db3171e45c00b69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoUsage: 1
+  ammoUsage: 0
   ammoSource: {fileID: 0}
-  delayBetweenShots: 1
+  delayBetweenShots: 1.5
   targets: []
   damage: 10
   knockbackForce: 12000
@@ -342,10 +342,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53d2d0f403eed74985600d0946419c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
+  engageRange: 10
+  disengageRange: 20
+  attackRange: 2
   weapon: {fileID: 0}
   patrolPoints: []
   actualPoint: 0
+  sightMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!114 &7594039533328880872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -656,7 +661,7 @@ PrefabInstance:
     - target: {fileID: -1365210699641510231, guid: 0e91e8ba4f647e033aefbe334724171a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: -1052188290127306561, guid: 0e91e8ba4f647e033aefbe334724171a,
         type: 3}
@@ -681,7 +686,7 @@ PrefabInstance:
     - target: {fileID: -444521105353760620, guid: 0e91e8ba4f647e033aefbe334724171a,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 129350255495253916, guid: 0e91e8ba4f647e033aefbe334724171a,
         type: 3}

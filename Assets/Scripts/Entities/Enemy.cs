@@ -78,7 +78,7 @@ namespace DEEP.Entities{
 
             if(!this.AI.search){
                 AI.search = true;
-                AI.hitted();
+                AI.Hitted();
             }
 
             if(damage.Length > 0) {

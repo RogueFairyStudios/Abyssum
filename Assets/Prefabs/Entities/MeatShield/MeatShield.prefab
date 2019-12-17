@@ -118,9 +118,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 635f145806c4a684db3171e45c00b69f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoUsage: 1
+  ammoUsage: 0
   ammoSource: {fileID: 0}
-  delayBetweenShots: 1
+  delayBetweenShots: 1.5
   targets: []
   damage: 50
   knockbackForce: 12000
@@ -1123,10 +1123,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53d2d0f403eed74985600d0946419c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 15
+  engageRange: 10
+  disengageRange: 20
+  attackRange: 2
   weapon: {fileID: 0}
   patrolPoints: []
   actualPoint: 0
+  sightMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!1 &6564529772366089259
 GameObject:
   m_ObjectHideFlags: 0

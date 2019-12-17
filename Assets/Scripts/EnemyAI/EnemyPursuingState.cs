@@ -13,7 +13,7 @@ public class EnemyPursuingState : State<EnemyAISystem>
 
     public static EnemyPursuingState Instance{
 
-        get{
+        get {
 
             if(instance == null){
                 new EnemyPursuingState();
@@ -27,16 +27,19 @@ public class EnemyPursuingState : State<EnemyAISystem>
 
     public override void ExitState(EnemyAISystem owner){}
 
-    public override void UpdateState(EnemyAISystem owner){
-        if (owner.inRange())
-            owner.ChangeState(EnemyShootingState.Instance);
-        else{
-            owner.Pursuing();//go to last know enemy position
-            if (owner.outRange())
-            {
-                owner.ChangeState(EnemyWaitingState.Instance);
-            }
-            owner.Shooting();
+    public override void UpdateState(EnemyAISystem owner) {
+        
+        if (owner.OutRange()) {
+            owner.ChangeState(EnemyWaitingState.Instance);
+            return;
         }
+
+        if (owner.InAttackRange()) {
+            owner.ChangeState(EnemyShootingState.Instance);
+            return;
+        }
+
+        owner.Pursuing();//go to last know enemy position
+
     }
 }

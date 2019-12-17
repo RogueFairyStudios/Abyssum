@@ -33,9 +33,6 @@ namespace DEEP.Entities
         [Tooltip("Player acceleration on ground.")]
         [SerializeField] private float groundAcceleration = 3f;
 
-        [Tooltip("Player acceleration on air.")]
-        [SerializeField] private float airAcceleration = 3f;
-
         [Tooltip("If the Player is allowed jumping.")]
         [SerializeField] private bool canJump = true;
 
@@ -62,7 +59,7 @@ namespace DEEP.Entities
         [SerializeField] private LayerMask raycastMask = new LayerMask();
 
         [Tooltip("Radius for the ground check.")]
-        [SerializeField] private float checkRadius;
+        [SerializeField] private float checkRadius = 0.25f;
 
 
         [Space(10)]

@@ -7,7 +7,7 @@ namespace DEEP.Stage
 
     public class TrapTrigger : MonoBehaviour
     {
-        [SerializeField] GameObject[] traps;
+        [SerializeField] GameObject[] traps = new GameObject[0];
         
         private void OnTriggerEnter(Collider other)
         {
