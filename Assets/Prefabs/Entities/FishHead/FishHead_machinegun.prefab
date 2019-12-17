@@ -589,8 +589,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 10
+  radius: 15
   weapon: {fileID: 0}
+  patrolPoints: []
+  actualPoint: 0
 --- !u!114 &1423937652085240148
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -621,6 +623,10 @@ MonoBehaviour:
   death:
   - {fileID: 8300000, guid: fd53f7e1742f8234cbc9d5ab8ba3d861, type: 3}
   - {fileID: 8300000, guid: b742bb1f1ca4505f1a49fe3ae1228ccd, type: 3}
+  growl: []
+  minGrowlInterval: 0
+  maxGrowlInterval: 0
+  stopGruntsWhileGrowling: 0
 --- !u!114 &2098034819167107762
 MonoBehaviour:
   m_ObjectHideFlags: 0

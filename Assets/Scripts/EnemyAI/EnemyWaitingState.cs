@@ -28,6 +28,7 @@ public class EnemyWaitingState : State <EnemyAISystem>
     }
     public override void EnterState(EnemyAISystem owner){
         owner.waiting();
+        owner.OnLoseAggro();
         Debug.Log("entering waiting state");
     }
 
