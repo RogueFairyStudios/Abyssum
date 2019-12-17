@@ -2,9 +2,10 @@
 using UnityEngine.AI;
 
 namespace DEEP.DoorsAndKeycards {
-	public class Door : MonoBehaviour {
+	public class Door : MonoBehaviour, ITrappable {
 
 		[SerializeField] private bool needKey = false;
+		[SerializeField] private bool isOpen = false;
 		[SerializeField] private KeysColors doorColor = 0;
 
 		[SerializeField] private AudioClip openClip = null;
@@ -15,12 +16,18 @@ namespace DEEP.DoorsAndKeycards {
 		[SerializeField] private AudioSource _source = null;
 		[SerializeField] private NavMeshObstacle _aiObstacle = null;
 		[SerializeField] private OcclusionPortal _occlusion = null;
+		[SerializeField] private Collider _collider = null;
+
+		private void Start()
+		{
+			_animator.SetBool("Open", isOpen);
+		}
 
 		public void TryOpenDoor() {
 
 			print("Trying to open the door");
 			
-			if (!needKey || InventoryKey.inventory.Contains(doorColor)) {
+			if (!needKey || InventoryKey.inventory.Contains(doorColor) && !isOpen) {
 				OpenDoor();
 			} else if(_source != null && !_source.isPlaying) {
 				_source.clip = lockedClip;
@@ -39,6 +46,7 @@ namespace DEEP.DoorsAndKeycards {
 			}
 
 			_animator.SetBool("Open", true);
+			isOpen = true;
 
 			
 			if(_source != null) {
@@ -52,8 +60,27 @@ namespace DEEP.DoorsAndKeycards {
 			if(_occlusion != null)
 				_occlusion.open = true;
 
-			Destroy(this);
+			if(_collider != null)
+				_collider.enabled = false;
+		}
 
+		public void CloseDoor() //For traps and special events
+		{
+			_animator.SetBool("Open", false);
+
+			if(_aiObstacle != null)
+				_aiObstacle.enabled = true;
+
+			if(_occlusion != null)
+				_occlusion.open = false;
+		}
+
+		public void ActivateTrap()
+		{
+			if(isOpen)
+				CloseDoor();
+			else
+				OpenDoor();
 		}
 	}
 }

@@ -28,6 +28,7 @@ public class EnemyShootingState: State<EnemyAISystem>{
     public override void EnterState(EnemyAISystem owner){
         Debug.Log("entering Enemy Shooting State");
         owner.Shooting();
+        owner.OnAggro();
     }
 
     public override void ExitState(EnemyAISystem owner){
