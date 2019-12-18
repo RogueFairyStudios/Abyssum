@@ -61,10 +61,17 @@ namespace DEEP.Entities
         [Tooltip("Radius for the ground check.")]
         [SerializeField] private float checkRadius = 0.25f;
 
+        [Header("MouseLook")] // ==============================================================================
 
-        [Space(10)]
-        [Tooltip("How fast the Player should turn.")]
-        [SerializeField] private Vector2 mouseSensitivity = new Vector2(1, 1);
+        [Tooltip("Sensitivity for the mouselook")]
+        [SerializeField] private float sensitivity = 6.0f;
+
+        // Original rotations for body and camera.
+        private Quaternion originalBodyRotation;
+        private Quaternion originalCamRotation;
+
+        float rotationX = 0F; // Rotation on the x angle.
+	    float rotationY = 0F; // Rotation on the y angle.
 
         [Header("Weapons")] // ==============================================================================
 
@@ -115,7 +122,9 @@ namespace DEEP.Entities
         [Tooltip("Color for the weapon/ammo feedback.")]
         [SerializeField] private Color weaponAmmoFeedbackColor = Color.yellow;
         [Tooltip("Color for the keycard feedback.")]
-        [SerializeField] private Color keycardFeedbackColor = Color.magenta;
+        [SerializeField] private Color keycardFeedbackColor = Color.cyan;
+        [Tooltip("Color for the secret feedback.")]
+        [SerializeField] private Color secretFeedbackColor = Color.magenta;
 
         [Header("Death")] // =======================================================================
         [SerializeField] private GameObject deathMenu = null;
@@ -149,6 +158,7 @@ namespace DEEP.Entities
 
             // Gets the Player's Rigidbody.
             _rigidbody = GetComponent<Rigidbody>();
+            _rigidbody.freezeRotation = true; // Freezes rotation for mouselook.		
 
             // Gets the Player's Rigidbody.
             _collider = GetComponent<CapsuleCollider>();
@@ -160,6 +170,10 @@ namespace DEEP.Entities
             _hud = GetComponentInChildren<HUDController>();
             _hud.SetHealthCounter(health);
             _hud.SetArmorCounter(armor);
+
+            // Gets the original rotations for mouselook.
+            originalBodyRotation = transform.localRotation;
+            originalCamRotation = _camera.transform.localRotation;
 
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
@@ -224,21 +238,21 @@ namespace DEEP.Entities
             if(canMove)
             {
 
-                // Rotation =======================================================================================
+                // MouseLook =======================================================================================
 
-                // Gets the input for the Player rotation.
-                Vector2 mouseInput = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
+                // Rotates on the x-axis.
+                rotationX += Input.GetAxis("Mouse X") * sensitivity;
+                rotationX = ClampAngle (rotationX, -360.0f, 360.0f);
 
-                // Rotates the Player arount the y-axis.
-                transform.transform.Rotate(new Vector3(0, mouseInput.x * 360 * mouseSensitivity.x * Time.deltaTime, 0));
+                Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
+                transform.localRotation = originalBodyRotation * xQuaternion;
 
-                // Rotates the Player's camera arount the x-axis.
-                Vector3 camRotation = _camera.transform.localEulerAngles; // Gets the actual rotation.
-                if(camRotation.x > 180) camRotation.x -= 360; // Converts the angle to allow negative values.
+                // Rotates on the y-axis.
+                rotationY += Input.GetAxis("Mouse Y") * sensitivity;
+                rotationY = ClampAngle (rotationY, -90.0f, 90.0f);
 
-                // Performs and clamps the camera rotation.
-                camRotation.x = Mathf.Clamp(camRotation.x - (mouseInput.y * 360 * mouseSensitivity.y * Time.deltaTime), -90, 90);
-                _camera.transform.localEulerAngles = camRotation; // Assigns the correct rotation.
+                Quaternion yQuaternion = Quaternion.AngleAxis (rotationY, Vector3.left);
+                _camera.transform.localRotation = originalCamRotation * yQuaternion;
 
                 // Jumping =======================================================================================
 
@@ -301,6 +315,16 @@ namespace DEEP.Entities
 
             }
 
+        }
+
+        // Clamps pĺayer's rotation angles.
+        private float ClampAngle (float angle, float min, float max)
+        {
+            if (angle < -360.0f)
+                angle += 360.0f;
+            if (angle > 360.0f)
+                angle -= 360.0f;
+            return Mathf.Clamp (angle, min, max);
         }
 
         // Switches between the Player weapons.
@@ -500,6 +524,14 @@ namespace DEEP.Entities
 
         }
 
+        // Sinalizes the player has found a secret;
+        public void FoundSecret() {
+            
+            // Flicks the screen to give feedback.
+            StartScreenFeedback(secretFeedbackColor, screenFeedbackDuration);
+
+        }
+
         // Starts a screen feedback effect.
         private void StartScreenFeedback(Color color, float duration) {
 
@@ -566,6 +598,22 @@ namespace DEEP.Entities
 
             }
 
+        }
+
+        public void EndLevel() {
+            
+            Debug.Log("Level completed!");
+
+            _rigidbody.velocity = Vector3.zero;
+
+            canMove = false;
+            FindObjectOfType<EndScreen>().ShowScreen();
+
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+
+            Time.timeScale = 0;
+            
         }
 
         public void RestartGame() {
