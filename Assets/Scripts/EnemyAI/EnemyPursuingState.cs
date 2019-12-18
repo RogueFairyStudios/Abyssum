@@ -23,13 +23,17 @@ public class EnemyPursuingState : State<EnemyAISystem>
         }
     }
 
-    public override void EnterState(EnemyAISystem owner){}
+    public override void EnterState(EnemyAISystem owner){
+
+        owner.OnAggro();
+
+    }
 
     public override void ExitState(EnemyAISystem owner){}
 
     public override void UpdateState(EnemyAISystem owner) {
         
-        if (owner.OutRange()) {
+        if (!owner.HasSight(owner.target.transform.position) && owner.ReachedLastPosition()) {
             owner.ChangeState(EnemyWaitingState.Instance);
             return;
         }
