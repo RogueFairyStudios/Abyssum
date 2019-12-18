@@ -581,7 +581,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8291346311349099943}
-  - component: {fileID: 5863096473695726834}
+  - component: {fileID: 8343769620995970270}
   m_Layer: 0
   m_Name: Shotgun
   m_TagString: Untagged
@@ -606,7 +606,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5863096473695726834
+--- !u!114 &8343769620995970270
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -615,14 +615,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 9168991451539551708}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a221e6131b616342b0a4eec1486aaf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ammoUsage: 1
-  ammoSource: {fileID: 11400000, guid: 032c43652db8dea4ebb2ca508471f132, type: 2}
+  ammoSource: {fileID: 0}
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 4041188500202421656, guid: bb74042c0a6c66ef8941b51e5505c98b,
     type: 3}
   delayBetweenShots: 0.9
   shotClip: {fileID: 8300000, guid: 805ac1c11c4e80afd9b45c5fddb53ccd, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
+  pelletsPerShot: 6
+  shotSpreadAngle: 30
