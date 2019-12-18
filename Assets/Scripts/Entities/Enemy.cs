@@ -78,7 +78,7 @@ namespace DEEP.Entities{
 
             if(!this.AI.search){
                 AI.search = true;
-                AI.hitted();
+                AI.Hitted();
             }
 
             if(damage.Length > 0) {
@@ -94,8 +94,8 @@ namespace DEEP.Entities{
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
 
-            //Destroys the object on collision.
-                Destroy(gameObject);
+            base.Die();
+            
         }
     }
 }

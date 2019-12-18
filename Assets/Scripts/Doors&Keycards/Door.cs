@@ -1,7 +1,10 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
 
+using DEEP.Stage;
+
 namespace DEEP.DoorsAndKeycards {
+	
 	public class Door : MonoBehaviour, ITrappable {
 
 		[SerializeField] private bool needKey = false;
@@ -14,7 +17,7 @@ namespace DEEP.DoorsAndKeycards {
 		[Header("Component References")]
 		[SerializeField] private Animator _animator = null;
 		[SerializeField] private AudioSource _source = null;
-		[SerializeField] private NavMeshObstacle _aiObstacle = null;
+		[SerializeField] private GameObject _navLinkObj = null;
 		[SerializeField] private OcclusionPortal _occlusion = null;
 		[SerializeField] private Collider _collider = null;
 
@@ -54,8 +57,8 @@ namespace DEEP.DoorsAndKeycards {
 				_source.Play();
 			}
 
-			if(_aiObstacle != null)
-				_aiObstacle.enabled = false;
+			if(_navLinkObj != null)
+				_navLinkObj.SetActive(true);
 
 			if(_occlusion != null)
 				_occlusion.open = true;
@@ -68,8 +71,8 @@ namespace DEEP.DoorsAndKeycards {
 		{
 			_animator.SetBool("Open", false);
 
-			if(_aiObstacle != null)
-				_aiObstacle.enabled = true;
+			if(_navLinkObj != null)
+				_navLinkObj.SetActive(false);
 
 			if(_occlusion != null)
 				_occlusion.open = false;

@@ -11,47 +11,62 @@ using DEEP.Entities;
 [RequireComponent(typeof(NavMeshAgent))]
 public class EnemyAISystem : MonoBehaviour
 {
-    [SerializeField]private float radius; //search radius
-    [SerializeField]private WeaponBase weapon;
+
+    [SerializeField] private float detectRange = 40.0f;
+
+    [SerializeField] private WeaponBase weapon;
+    [SerializeField] private float attackRange = 10;
+
     public bool search{get;set;}
-    protected GameObject target;
-    protected  NavMeshAgent agent;
+
+    public NavMeshAgent agent;
+    protected Animator anim;
+
+    public GameObject target;
+
     protected Vector3 LastTargetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
     [Tooltip("random movimentation settings")]
-    [SerializeField]private List<GameObject> patrolPoints;
+    [SerializeField] private List<GameObject> patrolPoints = new List<GameObject>();
     [SerializeField] private int actualPoint =0;
+
     public delegate void Reaction();
     public Reaction OnAggro, OnLoseAggro;
+
+    [SerializeField] protected LayerMask sightMask = new LayerMask();
+
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
+        anim = GetComponentInChildren<Animator>();
         target = GameObject.FindGameObjectWithTag("Player");
         weapon = GetComponentInChildren<WeaponBase>();
         search = false;
         enemySM = new StateMachine<EnemyAISystem>(this);
         enemySM.ChangeState(EnemyWaitingState.Instance);//first state
+
+        // Setups delegates.
+        OnAggro += AlertAllies;
         
     }
 
     void Update()
     {
         enemySM.update();//update the actual state
+
     }
 
-    public virtual void Shooting(){
-        getAim();
-        if (weapon != null)
-            weapon.Shot();
-    }
+    public virtual void Waiting() {
 
-    public virtual void waiting(){
-        if (inRange())
-        {
+        if (HasSight(target.transform.position)) {
+
             search = true;
-            enemySM.ChangeState(EnemyShootingState.Instance);//target finded, stating gun fight
-        }
-        else if(patrolPoints.Count>0){
+            enemySM.ChangeState(EnemyPursuingState.Instance);//target finded, engaging
+            return;
+
+        } 
+        
+        if(patrolPoints.Count>0) {
             //randon movementation
             //is in the patrol point
             if (!agent.pathPending && agent.remainingDistance < 0.5f){
@@ -60,11 +75,36 @@ public class EnemyAISystem : MonoBehaviour
                 actualPoint = (actualPoint)%patrolPoints.Count;
             }
 
+            anim.SetBool("Walk", true);
+            return;
+
         }
+
+        anim.SetBool("Walk", false);
+
+    }
+
+    public virtual void Pursuing() {
+
+        agent.SetDestination(LastTargetLocation);
+        anim.SetBool("Walk", true);
+
+    }
+
+    public virtual void Shooting() {
+
+        anim.SetBool("Walk", false);
+        getAim();
+        if (weapon != null) {
+            bool attacked = weapon.Shot();
+            if(attacked)
+                anim.SetBool("Attack", true);
+        }
+        
     }
 
     public void getAim(){
-        var pos = (target.transform.position -transform.position).normalized;
+        var pos = (target.transform.position-transform.position).normalized;
         /*if(pos.y != 0){
             //arms movimentation
         }*/
@@ -72,47 +112,88 @@ public class EnemyAISystem : MonoBehaviour
         transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * 10.0f);
     }
 
-    public bool RayCastHitTarget(){
-        Vector3 targetDirection = (target.transform.position - (transform.position + Vector3.up)).normalized;
-        Ray searchRay = new Ray(transform.position + Vector3.up, targetDirection);
-        RaycastHit hit;
-        Debug.DrawLine(transform.position + Vector3.up, transform.position + radius * targetDirection);
+    public bool HasSight(Vector3 point) {
 
-        if(Physics.Raycast(searchRay, out hit, radius)){
-            if (hit.transform.gameObject == target)//verify if is something between the target and the enemy
-            {
-                return true;
-            }
-        }
-        return false;
+        if (Physics.Linecast(point, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f)), sightMask))
+            return false;
+
+        if (Vector3.Distance(point, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f))) > detectRange)
+            return false;
+
+        LastTargetLocation = target.transform.position;
+        return true;
+    }
+    
+    public bool InAttackRange() {
+
+        return (HasSight(target.transform.position) && (Vector3.Distance(transform.position, target.transform.position) <= attackRange));
+
     }
 
-    public bool inRange(){
-        if (RayCastHitTarget() && (Vector3.Distance(transform.position, target.transform.position) <= radius))
-        {
-            LastTargetLocation = target.transform.position;
-            return true;
-        }
-        return false;
-    }
+    public bool OutAttackRange() { return !InAttackRange(); }
 
-    public bool outRange(){
-        if (RayCastHitTarget() && (Vector3.Distance(transform.position, target.transform.position) >= radius * 2))
-        {
-            LastTargetLocation = target.transform.position;
-            return true;
-        }
-        return false;
-    }
+    public virtual void ChangeState(State<EnemyAISystem> newState) {
 
-    public virtual void Pursuing(){
-        agent.SetDestination(LastTargetLocation);
-    }
-
-    public virtual void ChangeState(State<EnemyAISystem> newState){
         enemySM.ChangeState(newState);
+
+    }
+
+    public bool ReachedLastPosition() {
+        
+        return (Vector3.Distance(transform.position, LastTargetLocation) < agent.radius * 1.5f);
+
     }
 
     //
-    public void hitted(){LastTargetLocation = target.transform.position;}
+    public void Hitted() {
+        
+        if(enemySM.currentState != EnemyWaitingState.Instance)
+            return;
+
+        LastTargetLocation = target.transform.position;
+        enemySM.ChangeState(EnemyPursuingState.Instance);
+        
+    }
+
+    // Alerts close allies.
+    public void AlertAllies() {
+
+        EnemyAISystem[] allies = FindObjectsOfType<EnemyAISystem>();
+
+        foreach (EnemyAISystem ally in allies)
+        {
+
+            if(HasSight(ally.transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f))))
+                ally.Hitted();
+
+        }
+
+    }
+
+# if UNITY_EDITOR
+
+    void OnDrawGizmos() {
+
+        if(target == null) 
+            return;
+
+        float distance = Vector3.Distance(transform.position, target.transform.position);
+
+        if(HasSight(target.transform.position)) {
+
+            Gizmos.color = Color.blue;
+
+            if(distance < attackRange)
+                Gizmos.color = Color.red;
+
+            
+        } else
+            Gizmos.color = Color.white;
+
+        Gizmos.DrawLine(target.transform.position, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f)));
+
+    }
+
+# endif
+
 }

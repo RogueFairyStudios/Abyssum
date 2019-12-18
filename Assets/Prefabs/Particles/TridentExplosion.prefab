@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1020696033834269183}
   - component: {fileID: 1020696033834269180}
   - component: {fileID: 8491978699861503541}
+  - component: {fileID: -4041159590583177697}
   m_Layer: 0
   m_Name: TridentExplosion
   m_TagString: Untagged
@@ -4918,6 +4919,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &-4041159590583177697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020696033834269181}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e5057e14562d81a78fbb6fd879784e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entityDamage: 100
+  explosionRadius: 5
+  explosionForce: 45
+  explosionDuration: 5
+  playerDamage: 50
+  maxPowerRadius: 2.5
+  upwardsForce: 0
 --- !u!1 &7249526531135741603
 GameObject:
   m_ObjectHideFlags: 0

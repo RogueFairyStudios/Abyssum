@@ -2,16 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrapTrigger : MonoBehaviour
+namespace DEEP.Stage
 {
-    [SerializeField] GameObject[] traps;
-    
-    private void OnTriggerEnter(Collider other)
-    {
-        Debug.Log("Trap triggered.");
-        foreach(var trap in traps)
-            trap.GetComponentInChildren<ITrappable>()?.ActivateTrap();
 
-        Destroy(this.gameObject);
+    public class TrapTrigger : MonoBehaviour
+    {
+        [SerializeField] GameObject[] traps = new GameObject[0];
+        
+        private void OnTriggerEnter(Collider other)
+        {
+            Debug.Log("Trap triggered.");
+            foreach(var trap in traps)
+                trap.GetComponentInChildren<ITrappable>()?.ActivateTrap();
+
+            Destroy(this.gameObject);
+        }
     }
 }
