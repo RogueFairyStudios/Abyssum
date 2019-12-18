@@ -14,10 +14,10 @@ namespace DEEP.Weapons
 
         [Tooltip("Amount of time to wait between two consecutive shots.")]
         [SerializeField] protected float delayBetweenShots = 0.3f;
-        private float delayTimer = 0; //Used to count the time between shots.
+        protected float delayTimer = 0; //Used to count the time between shots.
 
-        private Animator _animator; // Stores the weapon's Animator.
-        private AudioSource _audio; // Stores the weapon's AudioSource.
+        protected Animator _animator; // Stores the weapon's Animator.
+        protected AudioSource _audio; // Stores the weapon's AudioSource.
 
         [Tooltip("AudioClip to be played when shooting.")]
         [SerializeField] protected AudioClip shotClip = null;
