@@ -1,8 +1,10 @@
 # Features:
 
-* [] Animações FishHead
-* [] Shotgun
-* [] Sensibilidade do mouse
-* [] Patrulha de inimigos
+* [ ] Animações FishHead
+* [ ] Shotgun
+* [ ] Opção de ajustar sensibilidade do mouse
+* [ ] Patrulha de inimigos
 
 # Fixes:
+
+* [ ] Concertar LightProbes
