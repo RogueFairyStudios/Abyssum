@@ -49,12 +49,14 @@ namespace DEEP.Weapons {
         }
 
         // Attempts to fire the weapon.
-        public override void Shot()
+        public override bool Shot()
         {
 
             // Verifies if the weapon can be fired.
             if(delayTimer >= delayBetweenShots)
-                base.Shot();
+                return base.Shot();
+
+            return false;
 
         }
 

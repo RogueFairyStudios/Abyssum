@@ -19,11 +19,13 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Damage inflicted by the projectile.")]
         [SerializeField] protected int damage = 15;
 
-        [Tooltip("Bllod effect to be spawned when hitting an entity.")]
+        [Tooltip("Blood effect to be spawned when hitting an entity.")]
         [SerializeField] protected GameObject bloodEffect = null;
 
-        protected virtual void Start()
-        {
+        [Tooltip("Effect to be spawned when hitting other objects.")]
+        [SerializeField] protected GameObject otherHitEffect = null;
+
+        protected virtual void Start() {
 
             //Gets the rigidbody.
             _rigidbody = GetComponent<Rigidbody>();
@@ -32,24 +34,28 @@ namespace DEEP.Weapons.Bullets
             
         }
 
-        protected virtual void OnCollisionEnter(Collision col)
-        {
-            GameObject hitted = col.gameObject;
-            EntityBase entity = hitted.GetComponent<EntityBase>();
-            if(entity == null)
-                entity = hitted.GetComponentInParent<EntityBase>();
-            if (entity != null)
-            {
+        protected virtual void OnCollisionEnter(Collision col) {
+
+            // Tries to get an entity component from the object.
+            EntityBase entity;
+            Rigidbody rigid = col.rigidbody; // Verifies if the object hit has a rigidbody.
+            if(rigid != null)
+                entity = rigid.GetComponent<EntityBase>();
+            else
+                entity = col.gameObject.GetComponent<EntityBase>();
+
+            // Checks if an entity was hit.
+            if (entity != null) {
                 
-                // Spawn the blood splatter effect if avaliable.
-                if(bloodEffect != null) {
-                    GameObject blood = Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
-                }
+                // Spawn the blood splatter effect if avaliable and hit a player or enemy.
+                if(bloodEffect != null  && (entity.GetType() == typeof(Player) || entity.GetType() == typeof(Enemy))) 
+                    Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
                 
                 // Does the damage.
                 entity.Damage(damage, 0);
 
-            }
+            } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.
+                Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
 
             //Destroys the object on collision.
             Destroy(gameObject);

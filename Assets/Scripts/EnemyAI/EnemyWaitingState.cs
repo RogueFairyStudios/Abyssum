@@ -27,26 +27,26 @@ public class EnemyWaitingState : State <EnemyAISystem>
         }
     }
     public override void EnterState(EnemyAISystem owner){
-        owner.waiting();
-        owner.OnLoseAggro();
+
+        owner.Waiting();
+        if(owner.OnLoseAggro != null)
+            owner.OnLoseAggro();
+
         Debug.Log("entering waiting state");
+
     }
 
     public override void ExitState(EnemyAISystem owner){
-        Debug.Log("exiting wating state");
+        Debug.Log("exiting waiting state");
     }
 
     public override void UpdateState(EnemyAISystem owner){
         
-        if (owner.search)//verify if the enemy know where the target is
-        {
-            if(owner.inRange())
-                owner.ChangeState(EnemyShootingState.Instance);
-            else
-                owner.ChangeState(EnemyPursuingState.Instance);
-        }
+        if (owner.search) //verify if the enemy know where the target is
+            owner.ChangeState(EnemyPursuingState.Instance);
         else
-            owner.waiting();
+            owner.Waiting();
+            
     }
 
 }

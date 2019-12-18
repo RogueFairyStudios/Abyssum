@@ -49,13 +49,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   needKey: 1
+  isOpen: 0
   doorColor: 0
   openClip: {fileID: 8300000, guid: 66df0715b38974dfab5f67ef460e4331, type: 3}
   lockedClip: {fileID: 8300000, guid: 44759f1f486a3660397054f37c4abbda, type: 3}
   _animator: {fileID: 5692047907694197194}
   _source: {fileID: 9132737315718498974}
-  _aiObstacle: {fileID: 0}
+  _navLinkObj: {fileID: 7834305537671247007}
   _occlusion: {fileID: 597075885490484557}
+  _collider: {fileID: 0}
 --- !u!65 &7842144285251887440
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -346,13 +348,14 @@ GameObject:
   - component: {fileID: 6036905639653239066}
   - component: {fileID: 553189117659856859}
   - component: {fileID: 7700176007013215742}
+  - component: {fileID: 2090946302632572492}
   m_Layer: 10
   m_Name: navLink
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6036905639653239066
 Transform:
   m_ObjectHideFlags: 0
@@ -402,6 +405,26 @@ MonoBehaviour:
   m_AgentTypeID: -334000983
   m_StartPoint: {x: 0, y: 0, z: -2}
   m_EndPoint: {x: 0, y: 0, z: 2}
+  m_Width: 3
+  m_CostModifier: 0
+  m_Bidirectional: 1
+  m_AutoUpdatePosition: 1
+  m_Area: 0
+--- !u!114 &2090946302632572492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7834305537671247007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eeb5dc026fdf4b488bc7ae0138ab719, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AgentTypeID: 1479372276
+  m_StartPoint: {x: 0, y: 0, z: -2.5}
+  m_EndPoint: {x: 0, y: 0, z: 2.5}
   m_Width: 3
   m_CostModifier: 0
   m_Bidirectional: 1

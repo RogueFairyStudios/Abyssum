@@ -343,6 +343,7 @@ MonoBehaviour:
   health: 100
   maxHealth: 100
   maxOverloadedHealth: 200
+  deathPrefab: {fileID: 0}
   armor: 0
   maxArmor: 100
   groundAcceleration: 8
@@ -485,7 +486,7 @@ GameObject:
   - component: {fileID: 8376341709191073237}
   - component: {fileID: 1259005248210097692}
   - component: {fileID: 5523124260999010788}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +563,7 @@ GameObject:
   - component: {fileID: 4396091216479871211}
   - component: {fileID: 4474050800900696332}
   - component: {fileID: 1981237651453478553}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -640,7 +641,7 @@ GameObject:
   - component: {fileID: 1287530236326054268}
   - component: {fileID: 1400205587152260261}
   - component: {fileID: 8848182722993023106}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -770,7 +771,7 @@ GameObject:
   - component: {fileID: 4721211301067614921}
   - component: {fileID: 8320037502113974227}
   - component: {fileID: 8091185767358222392}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -888,7 +889,7 @@ GameObject:
   - component: {fileID: 6303145670475244856}
   - component: {fileID: 6339733563871367771}
   - component: {fileID: 6369271385977848453}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Armor_Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -964,7 +965,7 @@ GameObject:
   - component: {fileID: 3081049654768337823}
   - component: {fileID: 696845416019774941}
   - component: {fileID: 539601324931855744}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1093,7 +1094,7 @@ GameObject:
   - component: {fileID: 8093171784589980522}
   - component: {fileID: 6736818430918919063}
   - component: {fileID: 457673140204904585}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ContinueButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1221,7 +1222,7 @@ GameObject:
   - component: {fileID: 9109377208992212969}
   - component: {fileID: 4127153714304790974}
   - component: {fileID: 7227471256273386463}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: DeathMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1297,7 +1298,7 @@ GameObject:
   - component: {fileID: 8791770289457460467}
   - component: {fileID: 6529066505532440275}
   - component: {fileID: 2226781344785441942}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Health_Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1372,7 +1373,7 @@ GameObject:
   - component: {fileID: 6423255744032033156}
   - component: {fileID: 1515714888765455028}
   - component: {fileID: 7146931565270511084}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1527,7 +1528,7 @@ GameObject:
   - component: {fileID: 7746770648950213877}
   - component: {fileID: 7404954671448975911}
   - component: {fileID: 1917121836794492325}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ScreenFeedback
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1600,7 +1601,7 @@ GameObject:
   - component: {fileID: 2582324575537339215}
   - component: {fileID: 2834262403798350584}
   - component: {fileID: 6014146375055147777}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: EventSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1666,7 +1667,7 @@ GameObject:
   - component: {fileID: 2637123823884688901}
   - component: {fileID: 415456384867860642}
   - component: {fileID: 2079920495608792259}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1821,7 +1822,7 @@ GameObject:
   - component: {fileID: 2371388410766380473}
   - component: {fileID: 7049278260710658859}
   - component: {fileID: 6516014619735580340}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1976,7 +1977,7 @@ GameObject:
   - component: {fileID: 5556514374979411814}
   - component: {fileID: 1156181443674957969}
   - component: {fileID: 2212364261578776012}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: PauseMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2053,7 +2054,7 @@ GameObject:
   - component: {fileID: 2272346992093511991}
   - component: {fileID: 4617900711285154564}
   - component: {fileID: 2918356827855702732}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2130,7 +2131,7 @@ GameObject:
   - component: {fileID: 703457742312301647}
   - component: {fileID: 7654948229376971420}
   - component: {fileID: 8263606505975812051}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2209,7 +2210,7 @@ GameObject:
   - component: {fileID: 184155076359738299}
   - component: {fileID: 5716647536712074215}
   - component: {fileID: 8334928491762877576}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2286,7 +2287,7 @@ GameObject:
   - component: {fileID: 3617944857985411140}
   - component: {fileID: 1100627868890718749}
   - component: {fileID: 4406371161134150929}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Armor
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2441,7 +2442,7 @@ GameObject:
   - component: {fileID: 6723047353017093508}
   - component: {fileID: 4325585251364274703}
   - component: {fileID: 8375331110520037035}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Health
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2597,7 +2598,7 @@ GameObject:
   - component: {fileID: 8229471857302506873}
   - component: {fileID: 5677445629180495521}
   - component: {fileID: 8335252434047722532}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: RestartButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2725,7 +2726,7 @@ GameObject:
   - component: {fileID: 7110470592194328056}
   - component: {fileID: 6263098051815626842}
   - component: {fileID: 2483609456613443943}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: Ammo_Counter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2801,7 +2802,7 @@ GameObject:
   - component: {fileID: 1934146177902451681}
   - component: {fileID: 2806613522937507480}
   - component: {fileID: 2969256215643729183}
-  m_Layer: 5
+  m_Layer: 9
   m_Name: ExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
