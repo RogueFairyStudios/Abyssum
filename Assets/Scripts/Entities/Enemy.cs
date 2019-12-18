@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+
+using DEEP.AI;
 using DEEP.Weapons;
 
 namespace DEEP.Entities{
