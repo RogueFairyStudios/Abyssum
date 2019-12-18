@@ -23,6 +23,12 @@ namespace DEEP.Entities{
         [Tooltip("Sound that plays out when the enemy dies.")]
         [SerializeField] protected AudioClip[] death;
 
+        [Tooltip("Sound that plays out when the enemy is chasing the player.")]
+        [SerializeField] protected AudioClip[] growl;
+
+        [Tooltip("Min and max interval between growls.")]
+        [SerializeField] protected float minGrowlInterval, maxGrowlInterval;
+
 
         private EnemyAISystem AI;
 
@@ -30,15 +36,40 @@ namespace DEEP.Entities{
         {
             base.Start();
             AI = GetComponent<EnemyAISystem>();
+
+            // Sets delegates to start and stop growling.
+            if(growl.Length > 0)
+            {
+                AI.OnAggro      = () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
+                AI.OnLoseAggro  = () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
+            }
+
             Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
         }
 
         protected void Grunt()
         {
-            if(damage.Length > 0) {
-                _audio.clip = damage[Random.Range(0, damage.Length)];
-                _audio.Play();
+            if(grunt.Length > 0)
+            {
+                if(!_audio.isPlaying)
+                {
+                    _audio.clip = grunt[Random.Range(0, grunt.Length)];
+                    _audio.Play();
+                }
                 Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
+            }
+        }
+
+        private void Growl()
+        {
+            if(growl.Length > 0)
+            {
+                if(!_audio.isPlaying)
+                {
+                    _audio.clip = growl[Random.Range(0, growl.Length)];
+                    _audio.Play();
+                }
+                Invoke(nameof(Growl), Random.Range(minGrowlInterval, maxGrowlInterval));
             }
         }
 

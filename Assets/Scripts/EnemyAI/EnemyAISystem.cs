@@ -21,6 +21,8 @@ public class EnemyAISystem : MonoBehaviour
     [Tooltip("random movimentation settings")]
     [SerializeField]private List<GameObject> patrolPoints;
     [SerializeField] private int actualPoint =0;
+    public delegate void Reaction();
+    public Reaction OnAggro, OnLoseAggro;
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
