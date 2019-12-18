@@ -1,11 +1,9 @@
 ﻿using UnityEngine;
 
-namespace DEEP.Weapons
-{
+namespace DEEP.Weapons {
 
-    // Base script for a simple weapons that fires common bullets..
-    public class SimpleWeapon : WeaponBase
-    {
+    // Base script for a simple weapons that fires common bullets.
+    public class SimpleWeapon : WeaponBase {
 
         [Tooltip("Where the bullet should be spawned.")]
         [SerializeField] protected Transform bulletSpawn = null;

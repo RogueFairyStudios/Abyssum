@@ -76,14 +76,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoSource: {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   ammoUsage: 1
+  ammoSource: {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   bulletSpawn: {fileID: 4171265578445106677}
   bulletPrefab: {fileID: 783353297757611019, guid: 512e10dec6a33d345aaf923e45c0cb53,
     type: 3}
-  delayBetweenShots: 1.5
-  shotClip: {fileID: 8300000, guid: 7171fe885cd8aca95b0beab7e30c4434, type: 3}
-  noAmmoCLip: {fileID: 8300000, guid: ed8756c2018d65b239dce15b83b827c0, type: 3}
+  delayBetweenShots: 1
+  shotClip: {fileID: 8300000, guid: 55475a585b5e129cd87bb20df0f1314e, type: 3}
+  noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
 --- !u!1 &3353184937841985651
 GameObject:
   m_ObjectHideFlags: 0
@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 1788982623412288096}
   - component: {fileID: 7316300491721982038}
   - component: {fileID: 3941830428839722159}
+  - component: {fileID: 7742805622865475704}
   m_Layer: 0
   m_Name: mesh
   m_TagString: Untagged
@@ -164,6 +165,25 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!95 &7742805622865475704
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3353184937841985651}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 95dd03b53712ffe1b9be2109369052a5, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &3908921870063053298
 GameObject:
   m_ObjectHideFlags: 0
@@ -204,7 +224,8 @@ AudioSource:
   m_GameObject: {fileID: 3908921870063053298}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7632088498357130972, guid: c193f48fb764b9beca687f5467467b60,
+    type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
   m_Volume: 1
@@ -216,7 +237,7 @@ AudioSource:
   Priority: 128
   DopplerLevel: 1
   MinDistance: 1
-  MaxDistance: 500
+  MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0
   BypassEffects: 0

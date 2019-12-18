@@ -1,4 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DEEP.Weapons;
@@ -7,24 +9,27 @@ using DEEP.Entities;
 
 
 [RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(Enemy))]
 public class EnemyAISystem : MonoBehaviour
 {
     [SerializeField]private float radius; //search radius
     [SerializeField]private WeaponBase weapon;
-    [SerializeField]public bool search{get;set;}
+    public bool search{get;set;}
     protected GameObject target;
     protected  NavMeshAgent agent;
     protected Vector3 LastTargetLocation; //location to search if the target has been missed
     protected StateMachine<EnemyAISystem> enemySM;
+    [Tooltip("random movimentation settings")]
+    [SerializeField]private List<GameObject> patrolPoints;
+    [SerializeField] private int actualPoint =0;
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
         target = GameObject.FindGameObjectWithTag("Player");
         weapon = GetComponentInChildren<WeaponBase>();
         search = false;
         enemySM = new StateMachine<EnemyAISystem>(this);
         enemySM.ChangeState(EnemyWaitingState.Instance);//first state
-        agent = GetComponent<NavMeshAgent>();
+        
     }
 
     void Update()
@@ -32,20 +37,27 @@ public class EnemyAISystem : MonoBehaviour
         enemySM.update();//update the actual state
     }
 
-    public void Shooting(){
+    public virtual void Shooting(){
         getAim();
         if (weapon != null)
             weapon.Shot();
     }
 
-    public void waiting(){
+    public virtual void waiting(){
         if (inRange())
         {
             search = true;
             enemySM.ChangeState(EnemyShootingState.Instance);//target finded, stating gun fight
         }
-        else{
+        else if(patrolPoints.Count>0){
             //randon movementation
+            //is in the patrol point
+            if (!agent.pathPending && agent.remainingDistance < 0.5f){
+                agent.SetDestination(patrolPoints[actualPoint].transform.position);
+                actualPoint++;
+                actualPoint = (actualPoint)%patrolPoints.Count;
+            }
+
         }
     }
 
@@ -59,10 +71,10 @@ public class EnemyAISystem : MonoBehaviour
     }
 
     public bool RayCastHitTarget(){
-        Vector3 targetDirection = target.transform.position -transform.position;
-        Ray searchRay = new Ray(transform.position, targetDirection);
+        Vector3 targetDirection = (target.transform.position - (transform.position + Vector3.up)).normalized;
+        Ray searchRay = new Ray(transform.position + Vector3.up, targetDirection);
         RaycastHit hit;
-        Debug.DrawLine(transform.position, radius * targetDirection);
+        Debug.DrawLine(transform.position + Vector3.up, transform.position + radius * targetDirection);
 
         if(Physics.Raycast(searchRay, out hit, radius)){
             if (hit.transform.gameObject == target)//verify if is something between the target and the enemy
@@ -91,11 +103,11 @@ public class EnemyAISystem : MonoBehaviour
         return false;
     }
 
-    public void Pursuing(){
+    public virtual void Pursuing(){
         agent.SetDestination(LastTargetLocation);
     }
 
-    public void ChangeState(State<EnemyAISystem> newState){
+    public virtual void ChangeState(State<EnemyAISystem> newState){
         enemySM.ChangeState(newState);
     }
 
