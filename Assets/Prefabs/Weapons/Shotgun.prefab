@@ -627,4 +627,4 @@ MonoBehaviour:
   shotClip: {fileID: 8300000, guid: 805ac1c11c4e80afd9b45c5fddb53ccd, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
   pelletsPerShot: 12
-  shotSpreadAngle: 15
+  shotSpreadAngle: 20
