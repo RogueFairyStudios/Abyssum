@@ -191,10 +191,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   velocity: 35
-  damage: 12
+  damage: 5
   bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
     type: 3}
-  otherHitEffect: {fileID: 0}
+  otherHitEffect: {fileID: 4981454918395137139, guid: f95ecb6af4d1666e79d4a55a8a4d97a7,
+    type: 3}
 --- !u!1 &6237404013383432572
 GameObject:
   m_ObjectHideFlags: 0
@@ -246,16 +247,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4041188500202421656}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
-        type: 3}
-      propertyPath: m_Name
-      value: mesh
-      objectReference: {fileID: 0}
-    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
-        type: 3}
-      propertyPath: m_Layer
-      value: 12
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: 7460bfee70e57d645846d3b7fd3b4500,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -331,6 +322,16 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 787e9ae483150736ba783092a6d9cd2e, type: 2}
+    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
+        type: 3}
+      propertyPath: m_Name
+      value: mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
+        type: 3}
+      propertyPath: m_Layer
+      value: 12
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7460bfee70e57d645846d3b7fd3b4500, type: 3}
 --- !u!4 &6702440539792920754 stripped

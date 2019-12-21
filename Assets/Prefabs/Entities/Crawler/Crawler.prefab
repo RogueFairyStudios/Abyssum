@@ -342,10 +342,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53d2d0f403eed74985600d0946419c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engageRange: 10
-  disengageRange: 20
-  attackRange: 2
+  detectRange: 40
   weapon: {fileID: 0}
+  attackRange: 2
+  agent: {fileID: 0}
+  target: {fileID: 0}
   patrolPoints: []
   actualPoint: 0
   sightMask:
@@ -363,9 +364,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42980d3a7948c744789c937643eb09ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 50
-  maxHealth: 100
-  maxOverloadedHealth: 200
+  health: 35
+  maxHealth: 35
+  maxOverloadedHealth: 70
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   _audio: {fileID: 8202180400921605158}
