@@ -1023,7 +1023,7 @@ Animator:
   m_GameObject: {fileID: 6135578479782273010}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 021a66b7e1c19f242bd267dadef88531, type: 3}
-  m_Controller: {fileID: 9100000, guid: 8ffcec1b8d1a37daf82e59df97e0e3e6, type: 2}
+  m_Controller: {fileID: 9100000, guid: 55172b7f1bbca3349a38f9ca199ac85c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1856,11 +1856,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  temp: 0
   detectRange: 40
   weapon: {fileID: 0}
   attackRange: 10
   agent: {fileID: 0}
   target: {fileID: 0}
+  LastTargetLocation: {x: 0, y: 0, z: 0}
   patrolPoints: []
   actualPoint: 0
   sightMask:
