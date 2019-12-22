@@ -29,25 +29,30 @@ namespace DEEP.AI
             }
         }
 
-        public override void EnterState(EnemyAISystem owner){
+        public override void EnterState(EnemyAISystem owner) {
             
             Debug.Log("entering Enemy Shooting State");
             owner.Shooting();
+
+            // Make enemy not move when shooting.
+            owner.agent.SetDestination(owner.transform.position);
 
             if(owner.OnAggro != null)
                 owner.OnAggro();
 
         }
 
-        public override void ExitState(EnemyAISystem owner){
+        public override void ExitState(EnemyAISystem owner) {
             Debug.Log("exiting Enemy Shooting State");
         }
 
-        public override void UpdateState(EnemyAISystem owner){
+        public override void UpdateState(EnemyAISystem owner) {
+
             if (owner.InAttackRange())
                 owner.Shooting();
             else//the enemy is trying to flee
                 owner.ChangeState(EnemyPursuingState.Instance);
+                
         }
     }
 }

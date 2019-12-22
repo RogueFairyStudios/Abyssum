@@ -15,7 +15,7 @@ namespace DEEP.AI
 
     [RequireComponent(typeof(NavMeshAgent))]
     public class EnemyAISystem : MonoBehaviour
-    {
+    {public float temp = 0;
 
         [SerializeField] private float detectRange = 40.0f;
 
@@ -29,7 +29,7 @@ namespace DEEP.AI
 
         public GameObject target;
 
-        protected Vector3 LastTargetLocation; //location to search if the target has been missed
+        public Vector3 LastTargetLocation; //location to search if the target has been missed
         protected StateMachine<EnemyAISystem> enemySM;
         [Tooltip("random movimentation settings")]
         [SerializeField] private List<GameObject> patrolPoints = new List<GameObject>();
@@ -91,12 +91,17 @@ namespace DEEP.AI
 
         public virtual void Pursuing() {
 
-            agent.SetDestination(LastTargetLocation);
+            if(HasSight(target.transform.position))
+                GoToTarget();
+
             anim.SetBool("Walk", true);
 
         }
 
         public virtual void Shooting() {
+
+            if(HasSight(target.transform.position))
+                LastTargetLocation = target.transform.position;
 
             anim.SetBool("Walk", false);
             getAim();
@@ -104,12 +109,22 @@ namespace DEEP.AI
                 bool attacked = weapon.Shot();
                 if(attacked)
                     anim.SetBool("Attack", true);
+                else
+                    anim.SetBool("Attack", false);
             }
             
         }
 
+        public void GoToTarget() {
+
+            LastTargetLocation = target.transform.position;
+            agent.SetDestination(LastTargetLocation);
+
+        }
+
         public void getAim(){
-            var pos = (target.transform.position-transform.position).normalized;
+
+            var pos = (LastTargetLocation - transform.position).normalized;
             /*if(pos.y != 0){
                 //arms movimentation
             }*/
@@ -125,7 +140,6 @@ namespace DEEP.AI
             if (Vector3.Distance(point, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f))) > detectRange)
                 return false;
 
-            LastTargetLocation = target.transform.position;
             return true;
         }
         
@@ -145,17 +159,16 @@ namespace DEEP.AI
 
         public bool ReachedLastPosition() {
             
-            return (Vector3.Distance(transform.position, LastTargetLocation) < agent.radius * 1.5f);
+            temp = Vector3.Distance(transform.position, LastTargetLocation);
+            return (Vector3.Distance(transform.position, LastTargetLocation) < agent.radius * 2.5f);
 
         }
 
-        //
         public void Hitted() {
             
             if(enemySM.currentState != EnemyWaitingState.Instance)
                 return;
 
-            LastTargetLocation = target.transform.position;
             enemySM.ChangeState(EnemyPursuingState.Instance);
             
         }
@@ -195,7 +208,7 @@ namespace DEEP.AI
             } else
                 Gizmos.color = Color.white;
 
-            Gizmos.DrawLine(target.transform.position, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f)));
+            Gizmos.DrawLine(LastTargetLocation, transform.position + Vector3.up * (agent.baseOffset + (agent.height * 0.4f)));
 
         }
 

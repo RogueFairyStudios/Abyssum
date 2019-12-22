@@ -31,11 +31,9 @@ namespace DEEP.Weapons {
 
             // Gets the weapon's animator.
             _animator = GetComponentInChildren<Animator>();
-            if(_animator == null) Debug.LogError("DEEP.Weapons.SimpleWeapon.Start: Animator not found!");
 
             // Gets the weapon's AudioSource.
             _audio = GetComponentInChildren<AudioSource>();
-            if(_audio == null) Debug.LogError("DEEP.Weapons.SimpleWeapon.Start: AudioSource not found!");
 
         }
 
@@ -68,12 +66,16 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
-            _animator.SetBool("Fire", true);
-            _animator.SetBool("NoAmmo", false);
+            if(_animator != null) {
+                _animator.SetBool("Fire", true);
+                _animator.SetBool("NoAmmo", false);
+            }
 
             // Plays the audio.
-            _audio.clip = shotClip;
-            _audio.Play();
+            if(_audio != null) {
+                _audio.clip = shotClip;
+                _audio.Play();
+            }
 
         }
 
@@ -84,8 +86,10 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the audio.
-            _audio.clip = noAmmoCLip;
-            _audio.Play();
+            if(_audio != null) {
+                _audio.clip = noAmmoCLip;
+                _audio.Play();
+            }
 
         }
 

@@ -12,7 +12,6 @@ namespace DEEP.Weapons {
         [SerializeField] protected float shotSpreadAngle = 90.0f;
 
 		protected override void Fire() {
-			Debug.Log("Firing the Shotgun!");
 
 			for (int i = 0; i < pelletsPerShot; ++i) {
 				Debug.Log("baseRotation = " + bulletSpawn.rotation.eulerAngles);
@@ -23,12 +22,16 @@ namespace DEEP.Weapons {
 			delayTimer = 0; // Resets the delay.
 
 			// Plays the animation.
-			_animator.SetBool("Fire", true);
-			_animator.SetBool("NoAmmo", false);
+			if(_animator != null) {
+				_animator.SetBool("Fire", true);
+				_animator.SetBool("NoAmmo", false);
+			}
 
 			// Plays the audio.
-			_audio.clip = shotClip;
-			_audio.Play();
+			if(_audio != null) {
+				_audio.clip = shotClip;
+				_audio.Play();
+			}
 
 		}
 
