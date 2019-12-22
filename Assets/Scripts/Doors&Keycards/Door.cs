@@ -20,7 +20,7 @@ namespace DEEP.DoorsAndKeycards {
 		[Header("Component References")]
 		private Animator _animator = null;
 		[SerializeField] private AudioSource _source = null;
-		[SerializeField] private GameObject _navLinkObj = null;
+		[SerializeField] private NavMeshObstacle _navObstacle = null;
 		[SerializeField] private OcclusionPortal _occlusion = null;
 		[SerializeField] private Collider _collider = null;
 
@@ -32,8 +32,8 @@ namespace DEEP.DoorsAndKeycards {
 			if(_collider != null)
 				_collider.enabled = !isOpen;
 
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(isOpen);
+			if(_navObstacle != null)
+				_navObstacle.enabled = !isOpen;
 
 			if(_occlusion != null)
 				_occlusion.open = isOpen;
@@ -94,8 +94,8 @@ namespace DEEP.DoorsAndKeycards {
 			if(_collider != null)
 				_collider.enabled = false;
 
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(true);
+			if(_navObstacle != null)
+				_navObstacle.enabled = false;
 			
 		}
 
@@ -104,8 +104,8 @@ namespace DEEP.DoorsAndKeycards {
 			if(_collider != null)
 				_collider.enabled = true;
 
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(false);
+			if(_navObstacle != null)
+				_navObstacle.enabled = true;
 
 		}
 

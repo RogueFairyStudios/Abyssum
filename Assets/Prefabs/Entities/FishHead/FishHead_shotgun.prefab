@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8189968146301846563}
   - component: {fileID: 7213196332959716923}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -139,7 +139,7 @@ GameObject:
   - component: {fileID: 6423236305287170634}
   - component: {fileID: 4780321611448791512}
   - component: {fileID: 7384147360239278832}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -217,7 +217,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1764380272573450576}
   - component: {fileID: 1776554929451614249}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -538,7 +538,7 @@ GameObject:
   - component: {fileID: 5976929405281138681}
   - component: {fileID: 7465776169554169116}
   - component: {fileID: 2604509711427247363}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: fire_magnetic
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -614,7 +614,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1079800004651666896}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -708,7 +708,7 @@ GameObject:
   - component: {fileID: 3020327647240366602}
   - component: {fileID: 3339711246742937592}
   - component: {fileID: 4896444258677899675}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: barrel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1229,7 +1229,7 @@ GameObject:
   - component: {fileID: 6042426479076138035}
   - component: {fileID: 4790322384238084356}
   - component: {fileID: 656209249738591496}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1685,7 +1685,7 @@ GameObject:
   - component: {fileID: 3637239783562066924}
   - component: {fileID: 7009460451703080725}
   - component: {fileID: 4841886146761335013}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

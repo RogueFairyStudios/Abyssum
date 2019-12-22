@@ -171,6 +171,11 @@ namespace DEEP.Entities
             _hud.SetHealthCounter(health);
             _hud.SetArmorCounter(armor);
 
+            // Gets the mouse sensitivity for mouselook.
+            if(!PlayerPrefs.HasKey("Mouse sensitivity"))
+                PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
+            sensitivity = PlayerPrefs.GetFloat("Mouse sensitivity");
+
             // Gets the original rotations for mouselook.
             originalBodyRotation = transform.localRotation;
             originalCamRotation = _camera.transform.localRotation;

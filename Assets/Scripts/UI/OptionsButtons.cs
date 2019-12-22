@@ -9,15 +9,23 @@ namespace DEEP.UI {
     public class OptionsButtons : MonoBehaviour
     {
 
+        public Slider mouseSensitivity;//mouse sensitivity slider
         public Toggle fullscreen;//fullscreen toggle
         private bool startscreen;//fullscreen or not in start
         public Dropdown quality;//dropdown quality
         public Dropdown resolutionDropdown;//Dropdown resolution
         Resolution[] resolution;//vetor de resol.
+        public Slider volume;//volume sensitivity slider
 
 
         void Start()
         {
+            
+            //pega o valor inicial do volume
+            if(!PlayerPrefs.HasKey("Mouse sensitivity"))
+                PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
+            mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
+
             startscreen = Screen.fullScreen;
             resolution = Screen.resolutions;//get the possible resolutions 
             resolutionDropdown.ClearOptions();//clear the dropdown
@@ -42,6 +50,18 @@ namespace DEEP.UI {
 
             quality.value = QualitySettings.GetQualityLevel();
             fullscreen.isOn = startscreen;   
+
+            //pega o valor inicial do volume
+            if(!PlayerPrefs.HasKey("Volume"))
+                PlayerPrefs.SetFloat("Volume", 1.0f);
+            volume.value = PlayerPrefs.GetFloat("Volume");
+
+        }
+
+        //muda a sensibilidade do mouse
+        public void SetMouseSensitivity()
+        {
+            PlayerPrefs.SetFloat("Mouse sensitivity", mouseSensitivity.value);
         }
 
             //muda a resolucao pelo index selecionado
@@ -60,6 +80,13 @@ namespace DEEP.UI {
         public void SetQuality(int qualityindex)//seleciona a qualidade de a cordo com o index atual aplicando ele no sistema base da unity
         {
             QualitySettings.SetQualityLevel(qualityindex);
+        }
+
+        //muda o volume
+        public void SetVolume()
+        {
+            PlayerPrefs.SetFloat("Volume", volume.value);
+            AudioListener.volume = volume.value;
         }
 
     }

@@ -291,7 +291,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   detectRange: 40
   weapon: {fileID: 0}
-  attackRange: 10
+  attackRange: 20
   agent: {fileID: 0}
   target: {fileID: 0}
   patrolPoints: []

@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 1290923199053767415}
   - component: {fileID: 3468025483194010991}
   - component: {fileID: 3918105451425663616}
-  m_Layer: 2
+  m_Layer: 11
   m_Name: MeleeAttacker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1123,10 +1123,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f53d2d0f403eed74985600d0946419c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  engageRange: 10
-  disengageRange: 20
-  attackRange: 2
+  detectRange: 40
   weapon: {fileID: 0}
+  attackRange: 2
+  agent: {fileID: 0}
+  target: {fileID: 0}
   patrolPoints: []
   actualPoint: 0
   sightMask:
