@@ -85,11 +85,11 @@ MonoBehaviour:
   isOpen: 0
   doorColor: 0
   openClip: {fileID: 8300000, guid: 66df0715b38974dfab5f67ef460e4331, type: 3}
-  lockedClip: {fileID: 0}
+  lockedClip: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   _source: {fileID: 4891137674046897651}
-  _navObstacle: {fileID: 0}
+  _navObstacle: {fileID: 4735521160928947235}
   _occlusion: {fileID: 3825793202881806880}
-  _collider: {fileID: 0}
+  _collider: {fileID: 5875556298745910845}
 --- !u!65 &5875556298745910845
 BoxCollider:
   m_ObjectHideFlags: 0
