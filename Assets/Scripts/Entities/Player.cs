@@ -225,9 +225,10 @@ namespace DEEP.Entities
 
             // Pause ======================================================================================== 
 
-            // Pauses or unpauses the game.
+            // Pauses and unpauses the game.
             if(Input.GetButtonDown("Cancel"))
-                TogglePause();
+                if(isPaused || canMove)
+                    TogglePause();
 
             // Physics ======================================================================================== 
 
@@ -237,7 +238,6 @@ namespace DEEP.Entities
             // Turns gravity off if grounded to avoid sliding
             _rigidbody.useGravity = !onGround;
             _rigidbody.drag = onGround ? groundDrag : airDrag;
-
 
             // Verifies if the Player can move.
             if(canMove)

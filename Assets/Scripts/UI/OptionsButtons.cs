@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,14 +8,12 @@ namespace DEEP.UI {
     public class OptionsButtons : MonoBehaviour
     {
 
-        public Slider mouseSensitivity;//mouse sensitivity slider
-        public Toggle fullscreen;//fullscreen toggle
-        private bool startscreen;//fullscreen or not in start
-        public Dropdown quality;//dropdown quality
-        public Dropdown resolutionDropdown;//Dropdown resolution
+        [SerializeField] Slider mouseSensitivity = null;//mouse sensitivity slider
+        [SerializeField] Toggle fullscreen = null;//fullscreen toggle
+        [SerializeField] Dropdown quality = null;//dropdown quality
+        [SerializeField] Dropdown resolutionDropdown = null;//Dropdown resolution
         Resolution[] resolution;//vetor de resol.
-        public Slider volume;//volume sensitivity slider
-
+        [SerializeField] Slider volume = null;//volume sensitivity slider
 
         void Start()
         {
@@ -26,7 +23,6 @@ namespace DEEP.UI {
                 PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
             mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
 
-            startscreen = Screen.fullScreen;
             resolution = Screen.resolutions;//get the possible resolutions 
             resolutionDropdown.ClearOptions();//clear the dropdown
 
@@ -49,7 +45,7 @@ namespace DEEP.UI {
             resolutionDropdown.RefreshShownValue();//atualiza
 
             quality.value = QualitySettings.GetQualityLevel();
-            fullscreen.isOn = startscreen;   
+            fullscreen.isOn = Screen.fullScreen;   
 
             //pega o valor inicial do volume
             if(!PlayerPrefs.HasKey("Volume"))

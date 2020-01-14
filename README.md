@@ -33,7 +33,7 @@ Deep is a game developed by Fellowship of the Game.
     - Windows 7 or later
     - Linux Ubuntu 16.04 or later [other main stream distros are probably compatible]
     Processor: 2C/2T 2.0 Ghz Processor or better
-    Memory: 4GB RAM
+    Memory: 2GB RAM
     Graphics: 2nd Gen Intel HD Graphics or better
     Storage: 110MB available space
     Other: 1024x768 minimum supported resolution
