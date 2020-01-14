@@ -3,6 +3,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using DEEP.Entities;
+
 namespace DEEP.UI { 
 
     public class OptionsButtons : MonoBehaviour
@@ -20,7 +22,7 @@ namespace DEEP.UI {
             
             //pega o valor inicial do volume
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
-                PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
+                PlayerPrefs.SetFloat("Mouse sensitivity", 4.0f);
             mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             resolution = Screen.resolutions;//get the possible resolutions 
@@ -35,9 +37,8 @@ namespace DEEP.UI {
                 options.Add(option);//adiciona a nova opcao na string
 
                 if (resolution[i].height == Screen.height && resolution[i].width == Screen.width)
-                {
                     currentindex = i;//indica qual e o index da resolucao atual
-                }
+                
             }
 
             resolutionDropdown.AddOptions(options);//adiciona as novas opcoes
@@ -58,6 +59,11 @@ namespace DEEP.UI {
         public void SetMouseSensitivity()
         {
             PlayerPrefs.SetFloat("Mouse sensitivity", mouseSensitivity.value);
+
+            Player player = FindObjectOfType<Player>();
+            if (player != null)
+                player.UpdateMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
+
         }
 
             //muda a resolucao pelo index selecionado

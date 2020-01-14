@@ -1,13 +1,5 @@
-﻿using System.Runtime.CompilerServices;
-using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-
-using DEEP.Weapons;
-using DEEP.StateMachine;
-using DEEP.Entities;
 
 namespace DEEP.AI
 {
@@ -17,8 +9,8 @@ namespace DEEP.AI
     {
         public override void Shooting() {
 
-            if(Vector3.Distance(LastTargetLocation, this.transform.position) > 1.8f){   
-                agent.SetDestination(LastTargetLocation);
+            if(Vector3.Distance(lastTargetLocation, this.transform.position) > 1.8f){   
+                agent.SetDestination(lastTargetLocation);
             }else{
                 agent.SetDestination(this.transform.position);
             }

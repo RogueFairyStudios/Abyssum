@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3504636131235218432}
   - component: {fileID: 2120368039845594046}
   - component: {fileID: 4275474618342950811}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: CrystalAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: 60162245173324370}
   - component: {fileID: 6527074140738913758}
   - component: {fileID: 6566671589884384462}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -115,6 +115,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

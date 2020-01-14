@@ -32,10 +32,10 @@ namespace DEEP.AI
         public override void EnterState(EnemyAISystem owner) {
             
             Debug.Log("entering Enemy Shooting State");
-            owner.Shooting();
 
-            // Make enemy not move when shooting.
-            owner.agent.SetDestination(owner.transform.position);
+            // Makes sure enemy is not move when shooting.
+            owner.anim.SetBool("Walk", false);
+            owner.agent.ResetPath();
 
             if(owner.OnAggro != null)
                 owner.OnAggro();
@@ -48,9 +48,20 @@ namespace DEEP.AI
 
         public override void UpdateState(EnemyAISystem owner) {
 
-            if (owner.InAttackRange())
+            // Waits for attack to end.
+            if (owner.anim.GetBool("Attack"))
+            {
+                // Aims towards target during attack.
+                if (owner.aimOnAttack)
+                    owner.getAim(); 
+
+                return;
+            }
+
+            owner.getAim();// Aims towards target.
+            if (owner.InAttackRange()) // Check if can attack.
                 owner.Shooting();
-            else//the enemy is trying to flee
+            else //the enemy is trying to flee
                 owner.ChangeState(EnemyPursuingState.Instance);
                 
         }

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 36297765117952109}
   - component: {fileID: 573399606290086692}
   - component: {fileID: 5045862249035050676}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MedicKit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,6 +153,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: b8f526861f86f6443a64b3119bf14757,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b8f526861f86f6443a64b3119bf14757, type: 3}

@@ -1,12 +1,19 @@
 ﻿using UnityEngine;
 
+using DEEP.Entities;
+
 namespace DEEP.Weapons {
 
     // Base script for a simple weapons that fires common bullets.
     public class SimpleWeapon : WeaponBase {
 
+        [Tooltip("If the weapon is owned by a player")]
+        [SerializeField] protected bool isPlayerWeapon = false;
+        [SerializeField] protected LayerMask raycastMask = new LayerMask();
+
         [Tooltip("Where the bullet should be spawned.")]
         [SerializeField] protected Transform bulletSpawn = null;
+
         [Tooltip("Where the bullet should be spawned.")]
         [SerializeField] protected Transform bulletPrefab = null;
 
@@ -34,15 +41,16 @@ namespace DEEP.Weapons {
 
             // Gets the weapon's AudioSource.
             _audio = GetComponentInChildren<AudioSource>();
+            
 
         }
 
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
 
             // Waits for the delay between shots.
             if(delayTimer < delayBetweenShots)
-                delayTimer += Time.deltaTime;
+                delayTimer += Time.fixedDeltaTime;
 
         }
 
@@ -51,8 +59,26 @@ namespace DEEP.Weapons {
         {
 
             // Verifies if the weapon can be fired.
-            if(delayTimer >= delayBetweenShots)
+            if (delayTimer >= delayBetweenShots)
+            {
+                // Ensures bullet spawn is facing the exact center of the screen if marked.
+                if (isPlayerWeapon)
+                {
+
+                    Debug.Log("looking weapon");
+                    // Gets a point far away into the horizon.
+                    RaycastHit rayHit;
+                    if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 1000f, raycastMask))
+                    {
+                        // Looks to the point.
+                        bulletSpawn.LookAt(rayHit.point);
+                    }
+
+                }
+
                 return base.Shot();
+
+            }
 
             return false;
 

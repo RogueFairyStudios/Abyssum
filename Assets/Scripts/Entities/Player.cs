@@ -64,7 +64,7 @@ namespace DEEP.Entities
         [Header("MouseLook")] // ==============================================================================
 
         [Tooltip("Sensitivity for the mouselook")]
-        [SerializeField] private float sensitivity = 6.0f;
+        [SerializeField] private float sensitivity = 4.0f;
 
         // Original rotations for body and camera.
         private Quaternion originalBodyRotation;
@@ -127,6 +127,9 @@ namespace DEEP.Entities
         [SerializeField] private Color secretFeedbackColor = Color.magenta;
 
         [Header("Death")] // =======================================================================
+        [Tooltip("The screen overlay for when the player dies.")]
+        [SerializeField] private GameObject deathScreen = null;
+        [Tooltip("The menu items for when the player dies.")]
         [SerializeField] private GameObject deathMenu = null;
 
         // Player components ================================================================================
@@ -383,16 +386,44 @@ namespace DEEP.Entities
             
             Debug.Log("You died!");
 
+            // Stops player.
             _rigidbody.velocity = Vector3.zero;
 
+            // Blocks player interactiuon.
             canMove = false;
+
+            // Enables the death menu overlay.
+            deathScreen.SetActive(true);
+
+            // Plays death animation.
+            _camera.GetComponent<Animator>().SetBool("Death", true);
+
+            // Shows the menu after some time.
+            StartCoroutine(ShowDeathMenu());
+            
+        }
+
+        // Shows death menu after a certain amount of time.
+        protected IEnumerator ShowDeathMenu()
+        {
+
+            float time = 0;
+            while(time < 2.0f) // Waits for the delay.
+            {
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            // Enables menu.
             deathMenu.SetActive(true);
 
+            // Unlocks the mouse.
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
+            // Pauses the game time.
             Time.timeScale = 0;
-            
+
         }
 
         public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
@@ -602,6 +633,14 @@ namespace DEEP.Entities
                 Time.timeScale = 1;
 
             }
+
+        }
+
+        // Updates mouse sensitivity from an outside script.
+        public void UpdateMouseSensitivity(float sensitivity)
+        {
+
+            this.sensitivity = sensitivity;
 
         }
 

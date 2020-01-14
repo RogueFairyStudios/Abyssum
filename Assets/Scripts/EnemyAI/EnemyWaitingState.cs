@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
 
 using DEEP.StateMachine;
 
@@ -33,8 +31,11 @@ namespace DEEP.AI
         }
         public override void EnterState(EnemyAISystem owner){
 
-            owner.Waiting();
-            if(owner.OnLoseAggro != null)
+            // Makes sure enemy movement is reset.
+            owner.anim.SetBool("Walk", false);
+            owner.agent.ResetPath();
+
+            if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();
 
             Debug.Log("entering waiting state");
@@ -46,13 +47,28 @@ namespace DEEP.AI
         }
 
         public override void UpdateState(EnemyAISystem owner){
-            
-            if (owner.search) //verify if the enemy know where the target is
-                owner.ChangeState(EnemyPursuingState.Instance);
-            else
-                owner.Waiting();
-                
-        }
 
+            if(owner.InAttackRange()) // Checks if can attack.
+            {
+                owner.ChangeState(EnemyShootingState.Instance);
+                return;
+            }
+
+            if (owner.HasTargetSight()) // Checks  if target is on sight.
+            {
+
+                // If can reach target start pursuing.
+                if (owner.GetPath(owner.target.transform.position).status == NavMeshPathStatus.PathComplete)
+                    owner.ChangeState(EnemyPursuingState.Instance);//target finded, engaging
+                else // If it can't be reached, just stares at it.
+                    owner.getAim();
+
+                return;
+            }
+
+            // Execute other waiting behaviours otherwise.
+            owner.Waiting();
+
+        }
     }
 }

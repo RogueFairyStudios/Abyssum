@@ -31,9 +31,9 @@ namespace DEEP.AI
 
             Debug.Log("entering Enemy Pursuing State");
 
-            owner.GoToTarget();
+            owner.anim.SetBool("Walk", true);
 
-            if(owner.OnAggro != null)
+            if (owner.OnAggro != null)
                 owner.OnAggro();
         }
 
@@ -46,15 +46,15 @@ namespace DEEP.AI
         }
 
         public override void UpdateState(EnemyAISystem owner) {
-            
-            owner.Pursuing();//go to last know enemy position
+
+            owner.Pursuing();
 
             if (owner.InAttackRange()) {
                 owner.ChangeState(EnemyShootingState.Instance);
                 return;
             }
 
-            if (!owner.HasSight(owner.target.transform.position) && owner.ReachedLastPosition()) {
+            if (owner.ReachedLastPosition()) {
                 owner.ChangeState(EnemyWaitingState.Instance);
                 return;
             }
