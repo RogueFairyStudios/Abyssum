@@ -179,7 +179,7 @@ MonoBehaviour:
   autoClose: 1
   autoCloseDelay: 4
   clearanceHalfHeight: 1.25
-  clearanceRadius: 2.25
+  clearanceRadius: 3.25
   openClip: {fileID: 8300000, guid: 66df0715b38974dfab5f67ef460e4331, type: 3}
   lockedClip: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   _source: {fileID: 4891137674046897651}
