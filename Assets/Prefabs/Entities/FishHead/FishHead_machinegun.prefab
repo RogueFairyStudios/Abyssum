@@ -638,8 +638,8 @@ MonoBehaviour:
   - {fileID: 8300000, guid: fd53f7e1742f8234cbc9d5ab8ba3d861, type: 3}
   - {fileID: 8300000, guid: b742bb1f1ca4505f1a49fe3ae1228ccd, type: 3}
   growl: []
-  minGrowlInterval: 0
-  maxGrowlInterval: 0
+  minGrowlInterval: 1.5
+  maxGrowlInterval: 2.5
 --- !u!114 &2098034819167107762
 MonoBehaviour:
   m_ObjectHideFlags: 0

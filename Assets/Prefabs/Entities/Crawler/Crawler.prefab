@@ -371,7 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  agentSightOffset: {x: 0, y: 0, z: 0}
   anim: {fileID: 0}
   detectRange: 40
   attackRange: 1.8
@@ -414,8 +413,8 @@ MonoBehaviour:
   growl:
   - {fileID: 8300000, guid: df19d8fc7be387645b3b02e57e9f10fe, type: 3}
   - {fileID: 8300000, guid: 0b72e982c045b2f4db03b2795247d59f, type: 3}
-  minGrowlInterval: 1.5
-  maxGrowlInterval: 2.5
+  minGrowlInterval: 2.5
+  maxGrowlInterval: 3.5
 --- !u!54 &5807958048283582659
 Rigidbody:
   m_ObjectHideFlags: 0

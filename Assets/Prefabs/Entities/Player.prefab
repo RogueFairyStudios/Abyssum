@@ -873,7 +873,7 @@ MonoBehaviour:
   heightTolerance: 0.89
   raycastMask:
     serializedVersion: 2
-    m_Bits: 3
+    m_Bits: 166915
   checkRadius: 0.25
   sensitivity: 6
   weapons:

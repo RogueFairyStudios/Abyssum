@@ -11,14 +11,13 @@ Deep is a game developed by Fellowship of the Game.
 * Added death animation
 * Removed non-explosive barrels with explosive barrel textures
 * Replaced placeholder props in the large red office
-* Removed some collectible itens from the map and moved others
-* Small changes to the scenery
+* Removed some itens from the map and moved others
+* Changes to the scenery
 * Fixed bullets not going exactly to the crosshair
 * Fixed FishHeads never appearing with blue armor versions of skins
 * Quality settings changed a bit, also set default quality to High on Windows and Linux (previously Low)
 * Reduced distance at which enemy sounds are heard
-* Changed MeatShield sounds
-* * Improved trident explosion effect
+* Improved trident explosion effect
 * Improved doors
     - Improved door graphics
     - Doors now close after some time if no one is around
@@ -37,10 +36,10 @@ Deep is a game developed by Fellowship of the Game.
 * Reduced lightmap scale on some props and scenery (decreases build sizes at very little quality loss for shadows)
 * Experiments with improved occlusion culling and batching: apparently FPS increases in lower end systems (with bad or no discrete GPUs), but might decrease a bit in other systems (this can happen due to increased CPU usage, should be small but if you notice this change decreases your FPS too much, please leave a comment in the game's page)
 * Unity:
-    - Updated engine version (this causes the initial configuration dialog to be removed)
+    - Updated engine version (this causes the initial configuration dialog to be removed on Windows)
     - Updated from LWRP to the new URP
     - Enabled experimental garbage collection
-    - Now using IL2CPP
+    - Now using IL2CPP on Windows
 * Experimental WebGL version
 
 ---
@@ -72,7 +71,7 @@ Deep is a game developed by Fellowship of the Game.
     Processor: 2C/2T 2.0 Ghz Processor or better
     Memory: 2GB RAM
     Graphics: 2nd Gen Intel HD Graphics or better
-    Storage: 110MB available space
+    Storage: 90MB available space
     Other: 1024x768 minimum supported resolution
 
 ---

@@ -417,8 +417,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 0.7
-  m_Pitch: 0.2
+  m_Volume: 1
+  m_Pitch: 0.5
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1023,8 +1023,8 @@ GameObject:
   - component: {fileID: 1845812744470756964}
   - component: {fileID: 8178077098438819930}
   - component: {fileID: 6413256529914622933}
+  - component: {fileID: 6170750041167520956}
   - component: {fileID: 6258835700556502776}
-  - component: {fileID: 7254571021744041724}
   m_Layer: 11
   m_Name: MeatShield
   m_TagString: Untagged
@@ -1108,6 +1108,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &6170750041167520956
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176847882833967499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agent: {fileID: 0}
+  anim: {fileID: 0}
+  detectRange: 40
+  attackRange: 2
+  weapon: {fileID: 0}
+  aimOnAttack: 0
+  target: {fileID: 0}
+  lastTargetLocation: {x: 0, y: 0, z: 0}
+  patrolPoints: []
+  actualPoint: 0
+  sightMask:
+    serializedVersion: 2
+    m_Bits: 1025
 --- !u!114 &6258835700556502776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1138,34 +1163,8 @@ MonoBehaviour:
   growl:
   - {fileID: 8300000, guid: df19d8fc7be387645b3b02e57e9f10fe, type: 3}
   - {fileID: 8300000, guid: 0b72e982c045b2f4db03b2795247d59f, type: 3}
-  minGrowlInterval: 1.5
-  maxGrowlInterval: 2.5
---- !u!114 &7254571021744041724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6176847882833967499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f53d2d0f403eed74985600d0946419c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agent: {fileID: 0}
-  agentSightOffset: {x: 0, y: 0, z: 0}
-  anim: {fileID: 0}
-  detectRange: 40
-  attackRange: 2
-  weapon: {fileID: 0}
-  aimOnAttack: 0
-  target: {fileID: 0}
-  lastTargetLocation: {x: 0, y: 0, z: 0}
-  patrolPoints: []
-  actualPoint: 0
-  sightMask:
-    serializedVersion: 2
-    m_Bits: 1025
+  minGrowlInterval: 2.5
+  maxGrowlInterval: 3.5
 --- !u!1 &6564529772366089259
 GameObject:
   m_ObjectHideFlags: 0
