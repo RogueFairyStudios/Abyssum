@@ -29,7 +29,7 @@ namespace DEEP.AI
 
         public override void EnterState(EnemyAISystem owner){
 
-            Debug.Log("entering Enemy Pursuing State");
+            Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
 
             owner.anim.SetBool("Walk", true);
 
@@ -39,8 +39,9 @@ namespace DEEP.AI
 
         public override void ExitState(EnemyAISystem owner){
 
-             Debug.Log("exiting Enemy Pursuing State");
-            if(owner.OnLoseAggro != null)
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+
+            if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();
 
         }

@@ -29,7 +29,8 @@ namespace DEEP.AI
                 return instance;
             }
         }
-        public override void EnterState(EnemyAISystem owner){
+        public override void EnterState(EnemyAISystem owner)
+        {
 
             // Makes sure enemy movement is reset.
             owner.anim.SetBool("Walk", false);
@@ -38,12 +39,13 @@ namespace DEEP.AI
             if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();
 
-            Debug.Log("entering waiting state");
+            Debug.Log(owner.transform.name + ": Entering Enemy Waiting State");
 
         }
 
-        public override void ExitState(EnemyAISystem owner){
-            Debug.Log("exiting waiting state");
+        public override void ExitState(EnemyAISystem owner)
+        {
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
         }
 
         public override void UpdateState(EnemyAISystem owner){

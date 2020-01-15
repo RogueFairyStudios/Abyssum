@@ -29,9 +29,10 @@ namespace DEEP.AI
             }
         }
 
-        public override void EnterState(EnemyAISystem owner) {
+        public override void EnterState(EnemyAISystem owner)
+        {
             
-            Debug.Log("entering Enemy Shooting State");
+            Debug.Log(owner.transform.name + ": Entering Enemy Shooting State");
 
             // Makes sure enemy is not move when shooting.
             owner.anim.SetBool("Walk", false);
@@ -42,8 +43,10 @@ namespace DEEP.AI
 
         }
 
-        public override void ExitState(EnemyAISystem owner) {
-            Debug.Log("exiting Enemy Shooting State");
+        public override void ExitState(EnemyAISystem owner)
+        {
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+
         }
 
         public override void UpdateState(EnemyAISystem owner) {

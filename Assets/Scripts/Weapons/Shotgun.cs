@@ -14,9 +14,7 @@ namespace DEEP.Weapons {
 		protected override void Fire() {
 
 			for (int i = 0; i < pelletsPerShot; ++i) {
-				Debug.Log("baseRotation = " + bulletSpawn.rotation.eulerAngles);
 				Quaternion direction = GenerateRandomRotation(bulletSpawn.rotation);
-				Debug.Log("RandRotation = " + direction.eulerAngles);
 				Instantiate(bulletPrefab, bulletSpawn.position, direction); // Creates the bullet.
 			}
 			delayTimer = 0; // Resets the delay.

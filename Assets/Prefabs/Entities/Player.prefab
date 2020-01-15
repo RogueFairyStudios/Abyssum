@@ -916,6 +916,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b92c104d713fc4988bcb056a5a18fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tryOpenMask:
+    serializedVersion: 2
+    m_Bits: 33795
 --- !u!1 &784329732505918586
 GameObject:
   m_ObjectHideFlags: 0

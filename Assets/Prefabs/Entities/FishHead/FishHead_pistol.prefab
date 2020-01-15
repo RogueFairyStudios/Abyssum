@@ -290,12 +290,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   agent: {fileID: 0}
-  agentSightOffset: {x: 0, y: 0, z: 0}
   anim: {fileID: 0}
   detectRange: 40
   attackRange: 10
   weapon: {fileID: 0}
-  attacking: 0
+  aimOnAttack: 1
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
   patrolPoints: []
@@ -1747,7 +1746,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5473310882014678667}
   - component: {fileID: 2701905781683872753}
-  - component: {fileID: 8943986610935092317}
   m_Layer: 11
   m_Name: FishHead
   m_TagString: Untagged
@@ -1791,23 +1789,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &8943986610935092317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9056249462679485592}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c60168127fd4d2ac6983dcb5f50fe7fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  parameterName: Walk
-  parameterType: 2
-  parameterIntValue: 1
-  parameterFloatValue: 1
-  parameterBooleanValue: 1
 --- !u!1 &9069502103947979482
 GameObject:
   m_ObjectHideFlags: 0

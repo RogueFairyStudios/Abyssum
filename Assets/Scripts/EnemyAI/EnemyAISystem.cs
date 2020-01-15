@@ -1,9 +1,10 @@
-﻿using DEEP.StateMachine;
-using DEEP.Weapons;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
+
+using DEEP.StateMachine;
+using DEEP.Weapons;
 
 namespace DEEP.AI
 {
@@ -15,8 +16,8 @@ namespace DEEP.AI
         private Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;
-        [Tooltip("The offset from agent position used to calculate sight.")]
-        public Vector3 agentSightOffset;
+
+        private Vector3 agentSightOffset;
 
         public Animator anim;
 
@@ -63,18 +64,19 @@ namespace DEEP.AI
             target = GameObject.FindGameObjectWithTag("Player"); // Find the player and set it as the target.
             lastTargetLocation = transform.position; // Inititializes lastTarget location with temporary value.
 
+            // Setups delegates.
+            OnAggro += AlertAllies;
+
             // Creates and initializes the state machine.
             enemySM = new StateMachine<EnemyAISystem>(this);
             enemySM.ChangeState(EnemyWaitingState.Instance);//first state
-
-            // Setups delegates.
-            OnAggro += AlertAllies;
 
         }
 
         void Update()
         {
-            enemySM.update(); // Update the actual state
+            if(enemySM != null)
+                enemySM.update(); // Update the actual state
         }
 
         public virtual void Waiting()
@@ -92,6 +94,7 @@ namespace DEEP.AI
                 }
 
                 anim.SetBool("Walk", true);
+
                 return;
 
             }
@@ -155,12 +158,15 @@ namespace DEEP.AI
         public void getAim()
         {
 
-            var pos = (lastTargetLocation - transform.position).normalized;
-            /*if(pos.y != 0){
-                //arms movimentation
-            }*/
-            var rotate = Quaternion.LookRotation(pos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * 10.0f);
+            if (HasTargetSight())
+            {
+                Vector3 pos = new Vector3(lastTargetLocation.x - transform.position.x, 0, lastTargetLocation.z - transform.position.z).normalized;
+                /*if(pos.y != 0){
+                    //arms movimentation
+                }*/
+                var rotate = Quaternion.LookRotation(pos);
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * (3 * Mathf.Deg2Rad * agent.angularSpeed));
+            }
         }
 
         // Checks if has sight to target.

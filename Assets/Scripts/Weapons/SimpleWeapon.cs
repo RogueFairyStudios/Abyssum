@@ -65,13 +65,15 @@ namespace DEEP.Weapons {
                 if (isPlayerWeapon)
                 {
 
-                    Debug.Log("looking weapon");
                     // Gets a point far away into the horizon.
                     RaycastHit rayHit;
                     if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 1000f, raycastMask))
                     {
                         // Looks to the point.
-                        bulletSpawn.LookAt(rayHit.point);
+                        if (rayHit.distance > 0.5f) // If a point is too clsoe weird angles may happen, so uses a minimum distance
+                            bulletSpawn.LookAt(rayHit.point);
+                        else
+                            bulletPrefab.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 0.5f);
                     }
 
                 }
