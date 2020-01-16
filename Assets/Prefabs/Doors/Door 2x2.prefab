@@ -174,10 +174,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isOpen: 0
+  lockState: 0
   needKey: 0
   doorColor: 0
   autoClose: 1
-  autoCloseDelay: 3
+  autoCloseDelay: 4
   clearanceHalfHeight: 1
   clearanceRadius: 3
   openClip: {fileID: 8300000, guid: 66df0715b38974dfab5f67ef460e4331, type: 3}

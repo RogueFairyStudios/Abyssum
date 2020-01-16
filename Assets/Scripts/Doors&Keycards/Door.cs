@@ -13,7 +13,10 @@ namespace DEEP.DoorsAndKeycards {
 
 		[Header("Door Settings")]
 
+		[Tooltip("Current state of the door, will be set to the state marked here at start.")]
 		[SerializeField] private bool isOpen = false;
+		[Tooltip("If marked, the player won't be able to interact with the door.")]
+		[SerializeField] private bool lockState = false;
 
 		[SerializeField] private bool needKey = false;
 		[SerializeField] private KeysColors doorColor = 0;
@@ -60,6 +63,9 @@ namespace DEEP.DoorsAndKeycards {
 
 		public void TryOpenDoor() {
 
+			if (lockState)
+				return;
+
 			print("Trying to open the door");
 
 			// Dont open the door during an animation.
@@ -89,7 +95,7 @@ namespace DEEP.DoorsAndKeycards {
 			// The remaining of the opening process should be called by a DoorStateHandler script in the animator.	
 
 			// Closes the door after some time.
-			if(autoClose)
+			if(autoClose && !lockState)
 				StartCoroutine(AutoClose());
 			
 		}
