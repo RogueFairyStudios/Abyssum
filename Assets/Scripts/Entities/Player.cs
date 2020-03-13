@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 using DEEP.UI;
 using DEEP.Weapons;
+using DEEP.Stage;
 using DEEP.DoorsAndKeycards;
 
 namespace DEEP.Entities
@@ -658,6 +659,14 @@ namespace DEEP.Entities
 
             Time.timeScale = 0;
             
+        }
+
+        public void ContinueLevel() {
+
+            // Ensures time is reset.
+            Time.timeScale = 1;
+            SceneManager.LoadScene(StageInfo.current.nextStageSceneName);
+
         }
 
         public void RestartGame() {
