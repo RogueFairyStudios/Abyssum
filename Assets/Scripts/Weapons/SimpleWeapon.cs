@@ -1,21 +1,28 @@
 ﻿using UnityEngine;
 
+using DEEP.Entities;
+
 namespace DEEP.Weapons {
 
     // Base script for a simple weapons that fires common bullets.
     public class SimpleWeapon : WeaponBase {
 
+        [Tooltip("If the weapon is owned by a player")]
+        [SerializeField] protected bool isPlayerWeapon = false;
+        [SerializeField] protected LayerMask raycastMask = new LayerMask();
+
         [Tooltip("Where the bullet should be spawned.")]
         [SerializeField] protected Transform bulletSpawn = null;
+
         [Tooltip("Where the bullet should be spawned.")]
         [SerializeField] protected Transform bulletPrefab = null;
 
         [Tooltip("Amount of time to wait between two consecutive shots.")]
         [SerializeField] protected float delayBetweenShots = 0.3f;
-        private float delayTimer = 0; //Used to count the time between shots.
+        protected float delayTimer = 0; //Used to count the time between shots.
 
-        private Animator _animator; // Stores the weapon's Animator.
-        private AudioSource _audio; // Stores the weapon's AudioSource.
+        protected Animator _animator; // Stores the weapon's Animator.
+        protected AudioSource _audio; // Stores the weapon's AudioSource.
 
         [Tooltip("AudioClip to be played when shooting.")]
         [SerializeField] protected AudioClip shotClip = null;
@@ -31,20 +38,19 @@ namespace DEEP.Weapons {
 
             // Gets the weapon's animator.
             _animator = GetComponentInChildren<Animator>();
-            if(_animator == null) Debug.LogError("DEEP.Weapons.SimpleWeapon.Start: Animator not found!");
 
             // Gets the weapon's AudioSource.
             _audio = GetComponentInChildren<AudioSource>();
-            if(_audio == null) Debug.LogError("DEEP.Weapons.SimpleWeapon.Start: AudioSource not found!");
+            
 
         }
 
-        protected virtual void Update()
+        protected virtual void FixedUpdate()
         {
 
             // Waits for the delay between shots.
             if(delayTimer < delayBetweenShots)
-                delayTimer += Time.deltaTime;
+                delayTimer += Time.fixedDeltaTime;
 
         }
 
@@ -53,8 +59,28 @@ namespace DEEP.Weapons {
         {
 
             // Verifies if the weapon can be fired.
-            if(delayTimer >= delayBetweenShots)
+            if (delayTimer >= delayBetweenShots)
+            {
+                // Ensures bullet spawn is facing the exact center of the screen if marked.
+                if (isPlayerWeapon)
+                {
+
+                    // Gets a point far away into the horizon.
+                    RaycastHit rayHit;
+                    if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 1000f, raycastMask))
+                    {
+                        // Looks to the point.
+                        if (rayHit.distance > 0.5f) // If a point is too clsoe weird angles may happen, so uses a minimum distance
+                            bulletSpawn.LookAt(rayHit.point);
+                        else
+                            bulletPrefab.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 0.5f);
+                    }
+
+                }
+
                 return base.Shot();
+
+            }
 
             return false;
 
@@ -68,12 +94,16 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
-            _animator.SetBool("Fire", true);
-            _animator.SetBool("NoAmmo", false);
+            if(_animator != null) {
+                _animator.SetBool("Fire", true);
+                _animator.SetBool("NoAmmo", false);
+            }
 
             // Plays the audio.
-            _audio.clip = shotClip;
-            _audio.Play();
+            if(_audio != null) {
+                _audio.clip = shotClip;
+                _audio.Play();
+            }
 
         }
 
@@ -84,8 +114,10 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the audio.
-            _audio.clip = noAmmoCLip;
-            _audio.Play();
+            if(_audio != null) {
+                _audio.clip = noAmmoCLip;
+                _audio.Play();
+            }
 
         }
 

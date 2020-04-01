@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -311,6 +312,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -381,8 +383,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 268b290a465a76d45b3e76cf103230c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ammoSource: {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
   ammoUsage: 1
+  ammoSource: {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
+  isPlayerWeapon: 1
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 101379
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 783353297757611019, guid: 28e9ffd10a1b305739da384ce234884e,
     type: 3}

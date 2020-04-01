@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
 using DEEP.AI;
-using DEEP.Weapons;
 
 namespace DEEP.Entities{
 
@@ -76,12 +75,10 @@ namespace DEEP.Entities{
         }
 
         public override void Damage(int amount, DamageType type){
+
             Debug.Log("enemy hitted");
 
-            if(!this.AI.search){
-                AI.search = true;
-                AI.Hitted();
-            }
+            AI.Hitted();
 
             if(damage.Length > 0) {
                 _audio.clip = damage[Random.Range(0, damage.Length)];

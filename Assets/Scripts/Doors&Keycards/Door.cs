@@ -1,7 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 using UnityEngine.AI;
 
 using DEEP.Stage;
+using DEEP.Entities;
 
 namespace DEEP.DoorsAndKeycards {
 
@@ -9,9 +12,23 @@ namespace DEEP.DoorsAndKeycards {
 	public class Door : MonoBehaviour, ITrappable {
 
 		[Header("Door Settings")]
-		[SerializeField] private bool needKey = false;
+
+		[Tooltip("Current state of the door, will be set to the state marked here at start.")]
 		[SerializeField] private bool isOpen = false;
+		[Tooltip("If marked, the player won't be able to interact with the door.")]
+		[SerializeField] private bool lockState = false;
+
+		[SerializeField] private bool needKey = false;
 		[SerializeField] private KeysColors doorColor = 0;
+
+		[SerializeField] private bool autoClose = true;
+		[SerializeField] private float autoCloseDelay = 2.0f;
+
+		[Tooltip("Half height to check for entity clearance, door half height is recommended.")]
+		[SerializeField] private float clearanceHalfHeight = 1.25f;
+		[Tooltip("Radius to check for entity clearance, door width is recommended at minimum.")]
+		[SerializeField] private float clearanceRadius = 3.5f;
+
 
 		[Header("Door Audio")]
 		[SerializeField] private AudioClip openClip = null;
@@ -20,9 +37,11 @@ namespace DEEP.DoorsAndKeycards {
 		[Header("Component References")]
 		private Animator _animator = null;
 		[SerializeField] private AudioSource _source = null;
-		[SerializeField] private GameObject _navLinkObj = null;
+		[SerializeField] private NavMeshObstacle _navObstacle = null;
 		[SerializeField] private OcclusionPortal _occlusion = null;
 		[SerializeField] private Collider _collider = null;
+
+		private Coroutine autoCloseCoroutine;
 
 		private void Start()
 		{
@@ -32,15 +51,20 @@ namespace DEEP.DoorsAndKeycards {
 			if(_collider != null)
 				_collider.enabled = !isOpen;
 
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(isOpen);
+			if(_navObstacle != null)
+				_navObstacle.enabled = !isOpen;
 
 			if(_occlusion != null)
 				_occlusion.open = isOpen;
 
+			autoCloseCoroutine = null;
+
 		}
 
 		public void TryOpenDoor() {
+
+			if (lockState)
+				return;
 
 			print("Trying to open the door");
 
@@ -69,6 +93,10 @@ namespace DEEP.DoorsAndKeycards {
 
 			_animator.SetBool("Open", true);
 			// The remaining of the opening process should be called by a DoorStateHandler script in the animator.	
+
+			// Closes the door after some time.
+			if(autoClose && !lockState)
+				StartCoroutine(AutoClose());
 			
 		}
 
@@ -87,38 +115,92 @@ namespace DEEP.DoorsAndKeycards {
 			if(_occlusion != null)
 				_occlusion.open = true;
 
+			if (_collider != null)
+				_collider.enabled = false;
+
 		}
 
 		public void OnFinishOpening() {
 
-			if(_collider != null)
-				_collider.enabled = false;
-
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(true);
+			if(_navObstacle != null)
+				_navObstacle.enabled = false;
 			
 		}
 
 		public void OnStartClosing() {
 
-			if(_collider != null)
-				_collider.enabled = true;
-
-			if(_navLinkObj != null)
-				_navLinkObj.SetActive(false);
+			if(_navObstacle != null)
+				_navObstacle.enabled = true;
 
 		}
 
 		public void OnFinishClosing() {
-			
-			if(_occlusion != null)
+
+			if (_collider != null)
+				_collider.enabled = true;
+
+			if (_occlusion != null)
 				_occlusion.open = false;
 
 		}
 
+		IEnumerator AutoClose()
+		{
+
+			float time = 0.0f;
+			while(true)
+			{
+
+				if (time > autoCloseDelay)
+				{
+
+					if (CheckClearance()) // Of no entities nearby, ends the delay.
+						break;
+					else // Otherwise, resets the delay.
+						time = 0.0f;
+
+				}
+				else
+				{
+					time += Time.fixedDeltaTime;
+					yield return new WaitForFixedUpdate();
+				}
+
+				
+			}
+
+			// Closes the door.
+			CloseDoor();
+
+			// Clears the coroutine.
+			autoCloseCoroutine = null;
+
+		}
+
+		// Checks if no entities that could get caught in the door are nearby.
+		bool CheckClearance()
+		{
+
+			EntityBase[] entities = FindObjectsOfType<EntityBase>();
+
+			foreach(EntityBase entity in entities)
+			{
+				float heightDiff = Mathf.Abs(entity.transform.position.y - transform.position.y);
+				float distance = new Vector2(entity.transform.position.x - transform.position.x, entity.transform.position.z - transform.position.z).magnitude;
+				if (heightDiff < clearanceHalfHeight && distance < clearanceRadius)
+					return false;
+			}
+
+			return true;
+
+		}
 
 		public void ActivateTrap()
 		{
+
+			if (autoCloseCoroutine != null)
+				StopCoroutine(autoCloseCoroutine);
+
 			if(isOpen)
 				CloseDoor();
 			else

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1548368148029624964}
   - component: {fileID: 4906120441764515274}
   - component: {fileID: 868392197652050192}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: RocketLauncher (Collect)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -121,7 +122,7 @@ GameObject:
   - component: {fileID: 3346158196495511169}
   - component: {fileID: 6962938344635661242}
   - component: {fileID: 3022209221797950630}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: LauncherAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +165,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -199,7 +201,7 @@ GameObject:
   - component: {fileID: 2487981980277299379}
   - component: {fileID: 8373633331979433084}
   - component: {fileID: 3052710065363591471}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: RocketPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +244,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

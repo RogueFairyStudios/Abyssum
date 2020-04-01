@@ -12,6 +12,17 @@ namespace DEEP.Utility
         private float counter = 0;
         private float secFrames = 0;
 
+        private string OSInfo;
+        private string graphicsAPIInfo;
+
+        void Start()
+        {
+
+            OSInfo = SystemInfo.operatingSystem.ToString();
+            graphicsAPIInfo = SystemInfo.graphicsDeviceType.ToString();
+
+        }
+
         void Update()
         {
 
@@ -43,7 +54,7 @@ namespace DEEP.Utility
         {
 
             if(show)
-                GUI.Label(new Rect(10,10,200,200), "FPS: " + Mathf.Floor(fps));
+                GUI.Label(new Rect(10,10, 800, 200), "FPS: " + Mathf.Floor(fps) + "\n(running on " + OSInfo + " with "+ graphicsAPIInfo + ")");
 
         }
 

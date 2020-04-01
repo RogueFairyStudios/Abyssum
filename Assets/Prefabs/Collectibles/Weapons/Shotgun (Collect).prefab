@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5229636772943291003}
   - component: {fileID: 1984063089046670871}
   - component: {fileID: 8967127968847752620}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Shotgun (Collect)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +58,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -121,7 +122,7 @@ GameObject:
   - component: {fileID: 9067852360202431948}
   - component: {fileID: 4395399159726172296}
   - component: {fileID: 5603577977874396179}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ShotgunShell
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -164,6 +165,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -199,7 +201,7 @@ GameObject:
   - component: {fileID: 7919476462738315909}
   - component: {fileID: 7493084838552760605}
   - component: {fileID: 8497627060939603746}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ShotgunBarrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -242,6 +244,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

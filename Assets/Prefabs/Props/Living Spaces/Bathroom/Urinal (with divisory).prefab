@@ -134,7 +134,7 @@ PrefabInstance:
     - target: {fileID: 3150591383841733240, guid: 42d57f51b29b44aa5a3011ed0005c9f6,
         type: 3}
       propertyPath: m_Name
-      value: Urinal
+      value: Urinal (with divisory)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42d57f51b29b44aa5a3011ed0005c9f6, type: 3}

@@ -29,25 +29,36 @@ namespace DEEP.AI
 
         public override void EnterState(EnemyAISystem owner){
 
-            owner.OnAggro();
+            Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
+
+            owner.anim.SetBool("Walk", true);
+
+            if (owner.OnAggro != null)
+                owner.OnAggro();
+        }
+
+        public override void ExitState(EnemyAISystem owner){
+
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+
+            if (owner.OnLoseAggro != null)
+                owner.OnLoseAggro();
 
         }
 
-        public override void ExitState(EnemyAISystem owner){}
-
         public override void UpdateState(EnemyAISystem owner) {
-            
-            if (!owner.HasSight(owner.target.transform.position) && owner.ReachedLastPosition()) {
-                owner.ChangeState(EnemyWaitingState.Instance);
-                return;
-            }
+
+            owner.Pursuing();
 
             if (owner.InAttackRange()) {
                 owner.ChangeState(EnemyShootingState.Instance);
                 return;
             }
 
-            owner.Pursuing();//go to last know enemy position
+            if (owner.ReachedLastPosition()) {
+                owner.ChangeState(EnemyWaitingState.Instance);
+                return;
+            }
 
         }
     }

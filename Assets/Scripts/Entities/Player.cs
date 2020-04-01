@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 using DEEP.UI;
 using DEEP.Weapons;
+using DEEP.Stage;
 using DEEP.DoorsAndKeycards;
 
 namespace DEEP.Entities
@@ -64,7 +65,7 @@ namespace DEEP.Entities
         [Header("MouseLook")] // ==============================================================================
 
         [Tooltip("Sensitivity for the mouselook")]
-        [SerializeField] private float sensitivity = 6.0f;
+        [SerializeField] private float sensitivity = 4.0f;
 
         // Original rotations for body and camera.
         private Quaternion originalBodyRotation;
@@ -127,6 +128,9 @@ namespace DEEP.Entities
         [SerializeField] private Color secretFeedbackColor = Color.magenta;
 
         [Header("Death")] // =======================================================================
+        [Tooltip("The screen overlay for when the player dies.")]
+        [SerializeField] private GameObject deathScreen = null;
+        [Tooltip("The menu items for when the player dies.")]
         [SerializeField] private GameObject deathMenu = null;
 
         // Player components ================================================================================
@@ -151,6 +155,9 @@ namespace DEEP.Entities
 
             base.Start();
 
+            // Resets the time.
+            Time.timeScale = 1;
+
             // Sets pause to false.
             isPaused = false;
 
@@ -170,6 +177,11 @@ namespace DEEP.Entities
             _hud = GetComponentInChildren<HUDController>();
             _hud.SetHealthCounter(health);
             _hud.SetArmorCounter(armor);
+
+            // Gets the mouse sensitivity for mouselook.
+            if(!PlayerPrefs.HasKey("Mouse sensitivity"))
+                PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
+            sensitivity = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             // Gets the original rotations for mouselook.
             originalBodyRotation = transform.localRotation;
@@ -220,9 +232,10 @@ namespace DEEP.Entities
 
             // Pause ======================================================================================== 
 
-            // Pauses or unpauses the game.
+            // Pauses and unpauses the game.
             if(Input.GetButtonDown("Cancel"))
-                TogglePause();
+                if(isPaused || canMove)
+                    TogglePause();
 
             // Physics ======================================================================================== 
 
@@ -232,7 +245,6 @@ namespace DEEP.Entities
             // Turns gravity off if grounded to avoid sliding
             _rigidbody.useGravity = !onGround;
             _rigidbody.drag = onGround ? groundDrag : airDrag;
-
 
             // Verifies if the Player can move.
             if(canMove)
@@ -378,16 +390,44 @@ namespace DEEP.Entities
             
             Debug.Log("You died!");
 
+            // Stops player.
             _rigidbody.velocity = Vector3.zero;
 
+            // Blocks player interactiuon.
             canMove = false;
+
+            // Enables the death menu overlay.
+            deathScreen.SetActive(true);
+
+            // Plays death animation.
+            _camera.GetComponent<Animator>().SetBool("Death", true);
+
+            // Shows the menu after some time.
+            StartCoroutine(ShowDeathMenu());
+            
+        }
+
+        // Shows death menu after a certain amount of time.
+        protected IEnumerator ShowDeathMenu()
+        {
+
+            float time = 0;
+            while(time < 2.0f) // Waits for the delay.
+            {
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            // Enables menu.
             deathMenu.SetActive(true);
 
+            // Unlocks the mouse.
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
 
+            // Pauses the game time.
             Time.timeScale = 0;
-            
+
         }
 
         public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
@@ -600,6 +640,14 @@ namespace DEEP.Entities
 
         }
 
+        // Updates mouse sensitivity from an outside script.
+        public void UpdateMouseSensitivity(float sensitivity)
+        {
+
+            this.sensitivity = sensitivity;
+
+        }
+
         public void EndLevel() {
             
             Debug.Log("Level completed!");
@@ -616,19 +664,21 @@ namespace DEEP.Entities
             
         }
 
+        public void ContinueLevel() {
+
+            SceneManager.LoadSceneAsync(StageInfo.current.nextStageSceneName);
+
+        }
+
         public void RestartGame() {
 
-            // Ensures time is reset.
-            Time.timeScale = 1;
-            SceneManager.LoadScene(0);
+            SceneManager.LoadSceneAsync(0);
         
         }
 
         public void RestartLevel() {
 
-            // Ensures time is reset.
-            Time.timeScale = 1;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         
         }
 

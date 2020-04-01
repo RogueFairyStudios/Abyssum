@@ -4,7 +4,11 @@ using UnityEngine;
 
 namespace DEEP.DoorsAndKeycards {
 	public class InventoryKey : MonoBehaviour {
+
 		public static HashSet<KeysColors> inventory;
+
+		[SerializeField] LayerMask tryOpenMask = new LayerMask();
+
 		// Start is called before the first frame update
 		void Start() {
 			inventory = new HashSet<KeysColors>();
@@ -19,9 +23,9 @@ namespace DEEP.DoorsAndKeycards {
 		}
 
 		private void FindDoor() {
-			int layerMask = 1 << 10;
+			
 			RaycastHit hit;
-			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, layerMask)) {
+			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
 				try{
 					hit.collider.GetComponent<Door>().TryOpenDoor();
 				} catch {

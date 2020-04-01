@@ -13,6 +13,8 @@ namespace DEEP.Weapons{
         public List<GameObject> targets;
         [Tooltip("Damage inflicted by the attack.")]
         public int damage;
+        [Tooltip("Dealy before doing damage after starting attack.")]
+        public float damageDelay = 0.5f;
         public float knockbackForce; // when used by enemy multiply by the player mass
         [Tooltip("this is the owner of the attack")]
         public GameObject Attacker;
@@ -47,19 +49,40 @@ namespace DEEP.Weapons{
         // Attacks all the targets
         protected override void Fire(){
                 
-                delayTimer = 0;
-                Vector3 dir;//knockback direction
+                StartCoroutine(DoDamage());
+        }
 
-                for(int i=0; i<targets.Count; i++){
-                    //target i knockback
-                    dir = targets[i].transform.position -  Attacker.transform.position;
-                    dir.y = 0.1f;
-                    targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
-                    if(targets[i].GetComponent(typeof(EntityBase)) != null){
-                        EntityBase entity = targets[i].GetComponent<EntityBase>();
-                        entity.Damage(damage,0);//applying the damage
-                    }
+        protected IEnumerator DoDamage()
+        {
+            // Waits for the delay before doing damage.
+
+            float time = 0.0f;
+            while(time < damageDelay)
+            {
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            // Does the damage and knockbak.
+            Vector3 dir;//knockback direction
+            for (int i = 0; i < targets.Count; i++)
+            {
+
+                //target i knockback
+                dir = targets[i].transform.position - Attacker.transform.position;
+                dir.y = 0.1f;
+                targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
+                if (targets[i].GetComponent(typeof(EntityBase)) != null)
+                {
+                    EntityBase entity = targets[i].GetComponent<EntityBase>();
+                    entity.Damage(damage, 0);//applying the damage
                 }
+
+            }
+
+            // Resets weapon delay.
+            delayTimer = 0;
+
         }
 
         protected void OnTriggerEnter(Collider col){

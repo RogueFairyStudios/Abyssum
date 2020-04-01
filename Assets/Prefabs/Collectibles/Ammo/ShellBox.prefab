@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 482500302105300063}
   - component: {fileID: 6921230614376700442}
   - component: {fileID: -7426259568428202837}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: ShellBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -56,6 +56,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
