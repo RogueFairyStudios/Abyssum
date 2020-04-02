@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 using DEEP.UI;
 using DEEP.Weapons;
+using DEEP.Stage;
 using DEEP.DoorsAndKeycards;
 
 namespace DEEP.Entities
@@ -153,6 +154,9 @@ namespace DEEP.Entities
         {
 
             base.Start();
+
+            // Resets the time.
+            Time.timeScale = 1;
 
             // Sets pause to false.
             isPaused = false;
@@ -660,19 +664,21 @@ namespace DEEP.Entities
             
         }
 
+        public void ContinueLevel() {
+
+            SceneManager.LoadSceneAsync(StageInfo.current.nextStageSceneName);
+
+        }
+
         public void RestartGame() {
 
-            // Ensures time is reset.
-            Time.timeScale = 1;
-            SceneManager.LoadScene(0);
+            SceneManager.LoadSceneAsync(0);
         
         }
 
         public void RestartLevel() {
 
-            // Ensures time is reset.
-            Time.timeScale = 1;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name);
         
         }
 

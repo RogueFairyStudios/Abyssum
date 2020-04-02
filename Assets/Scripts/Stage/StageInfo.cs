@@ -16,6 +16,8 @@ namespace DEEP.Stage
 
         [SerializeField] private string stageName = "no name";
 
+        public string nextStageSceneName = "no name";
+
         private int numStageEnemies;
         private int numStageCollectibles;
         private int numStageSecrets;
@@ -63,13 +65,32 @@ namespace DEEP.Stage
         public int GetSecretCount() { return numStageSecrets - FindObjectsOfType<SecretTrigger>().Length; }
 
         // Percentage of enemies killed.
-        public float GetKillPercentage() { return (float)GetKillCount() / (float)numStageEnemies; }
+        public float GetKillPercentage() 
+        { 
+            
+            if(numStageEnemies <= 0)
+                return 1;
+
+            return (float)GetKillCount() / (float)numStageEnemies; 
+        }
 
         // Percentage of collectibles collected.
-        public float GetCollectiblePercentage() { return (float)GetCollectibleCount() / (float)numStageCollectibles; }
+        public float GetCollectiblePercentage() 
+        { 
+            if(numStageCollectibles <= 0)
+                return 1;
+
+            return (float)GetCollectibleCount() / (float)numStageCollectibles; 
+        }
 
         // Percentage of secrets collected.  
-        public float GetSecretPercentage() { return (float)GetSecretCount() / (float)numStageSecrets; }
+        public float GetSecretPercentage() 
+        { 
+            if(numStageSecrets <= 0)
+                return 1;
+                
+            return (float)GetSecretCount() / (float)numStageSecrets; 
+        }
 
         // Get current time elapsed from the start of the level, without pauses.
         public float GetDuration() { return duration; }
