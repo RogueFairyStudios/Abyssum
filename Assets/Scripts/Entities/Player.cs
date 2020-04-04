@@ -220,6 +220,12 @@ namespace DEEP.Entities
                 // Adds the weapon to the list
                 weaponInstances.Add(new Tuple<bool, GameObject>(weapon.enabled, weaponObj));
 
+                // Shows current weapons on the HUD.
+                bool[] weaponsEnabled = new bool[weaponInstances.Count];
+                for(int i = 0; i < weaponInstances.Count; i++)
+                    weaponsEnabled[i] = weaponInstances[i].Item1;
+                _hud.ShowWeaponIcons(weaponsEnabled);
+
             }
 
             // If there are weapons, equips the first one by default.
@@ -358,6 +364,8 @@ namespace DEEP.Entities
 
             // Updates the ammo counter on the HUD.
             _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+            // Updates the ammo icon on the HUD.
+            _hud.SetAmmoIcon(ammoDict[currentWeapon.ammoSource.id].icon);
 
         }
 
@@ -498,7 +506,13 @@ namespace DEEP.Entities
                 collected = true;
 
                 // Equips the weapon.
-                    SwitchWeapons(slot);
+                SwitchWeapons(slot);
+
+                // Updates the weapons on the HUD.
+                bool[] weaponsEnabled = new bool[weaponInstances.Count];
+                for(int i = 0; i < weaponInstances.Count; i++)
+                    weaponsEnabled[i] = weaponInstances[i].Item1;
+                _hud.ShowWeaponIcons(weaponsEnabled);
 
             }
 

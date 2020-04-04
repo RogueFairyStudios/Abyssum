@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 namespace DEEP.UI
@@ -9,6 +10,11 @@ namespace DEEP.UI
         [SerializeField] private TMP_Text healthCounter = null;
         [SerializeField] private TMP_Text armorCounter = null;
         [SerializeField] private TMP_Text ammoCounter = null;
+        [SerializeField] private GameObject ammoCounterPanel = null;
+
+        [SerializeField] private Image ammoIcon = null;
+
+        [SerializeField] private GameObject[] weaponIcons = null;
 
         public void SetHealthCounter(int value) {
 
@@ -43,6 +49,29 @@ namespace DEEP.UI
 
             string valueStr = value.ToString();
             ammoCounter.text = valueStr.PadLeft(3, '0');
+
+        }
+
+        public void SetAmmoIcon(Sprite icon) {
+
+            ammoIcon.sprite = icon;
+
+        }
+
+        public void ShowWeaponIcons(bool[] weaponsEnabled) {
+
+
+            bool hasAnyWeapons = false;
+
+            // Enables the icons for the weapons the player has.
+            for(int i = 0; i < weaponsEnabled.Length; i++)
+            {
+                weaponIcons[i].SetActive(weaponsEnabled[i]);
+                hasAnyWeapons = hasAnyWeapons || weaponsEnabled[i]; // Checks if the player has at least one weapon.
+            }
+
+            // HIdes ammo counter if there are no weapons.
+            ammoCounterPanel.SetActive(hasAnyWeapons);
 
         }
 

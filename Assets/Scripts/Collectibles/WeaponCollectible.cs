@@ -16,7 +16,7 @@ namespace DEEP.Collectibles
         protected override void Collect(Player player) {
 
             // Tries giving the weapon to the player and stores if it was given.
-            bool collected = player.GiveWeapon(weaponSlot, ammoAmount, collectionSound);
+            bool collected = player.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
 
             if(collected) {
                 
