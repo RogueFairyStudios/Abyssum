@@ -2,7 +2,6 @@
 
 using UnityEngine;
 using UnityEngine.AI;
-
 using DEEP.StateMachine;
 using DEEP.Weapons;
 
@@ -43,6 +42,9 @@ namespace DEEP.AI
         public Reaction OnAggro, OnLoseAggro;
 
         [SerializeField] protected LayerMask sightMask = new LayerMask();
+
+        [Tooltip("If angle matters (for shooting for example) set from where the angle will be calculated.")]
+        [SerializeField] protected Transform angleReference;
 
         void Start()
         {
@@ -134,8 +136,13 @@ namespace DEEP.AI
 
             if (weapon != null)
             {
+                bool attacked;
+
                 // Tries to attack and plays the animation on success.
-                bool attacked = weapon.Shot();
+                if(weapon is SimpleWeapon simpleWeapon)
+                    attacked = simpleWeapon.Shot(lastTargetLocation);
+                else
+                    attacked = weapon.Shot();
 
                 if (attacked)
                     anim.SetBool("Attack", true);
@@ -166,6 +173,21 @@ namespace DEEP.AI
                 }*/
                 var rotate = Quaternion.LookRotation(pos);
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * (3 * Mathf.Deg2Rad * agent.angularSpeed));
+
+                // If angle matters to the animation
+                foreach(var param in anim.parameters)
+                {
+                    if(param.name == "Angle")
+                    {
+                        Vector3 targetDir   = lastTargetLocation - angleReference.position;
+                        Vector3 right       = Vector3.Cross(-transform.right, transform.forward);
+                        Vector3 forward     = Vector3.Cross(right, -transform.right);
+                        float angle         = Mathf.Atan2(Vector3.Dot(targetDir.normalized, right), Vector3.Dot(targetDir.normalized, forward)) * Mathf.Rad2Deg;
+
+                        anim.SetFloat("Angle", angle);
+                        return;
+                    }
+                }
             }
         }
 
