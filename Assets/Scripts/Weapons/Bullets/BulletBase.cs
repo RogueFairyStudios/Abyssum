@@ -25,13 +25,28 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Effect to be spawned when hitting other objects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
 
-        protected virtual void Start() {
+        private bool isTargeted = false;
+
+        protected virtual void Awake() {
 
             //Gets the rigidbody.
-            _rigidbody = GetComponent<Rigidbody>();
-            // Applies the velocity.
-            _rigidbody.velocity = transform.forward * velocity;
-            
+            _rigidbody = GetComponent<Rigidbody>();        
+        }
+
+        private void Start()
+        {
+            if(isTargeted == false)
+                _rigidbody.velocity = transform.forward * velocity;    
+        }
+
+        /// <summary>
+        ///     Launches itself towards the target
+        /// </summary>
+        public virtual void SetTarget(Vector3 target)
+        {
+            Vector3 targetDir = target - transform.position;
+            _rigidbody.velocity = targetDir.normalized * velocity;
+            isTargeted = true;
         }
 
         protected virtual void OnCollisionEnter(Collision col) {

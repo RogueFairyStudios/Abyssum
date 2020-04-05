@@ -8,7 +8,7 @@ namespace DEEP.Weapons
     {
 
         [Tooltip("How much ammo is used for each shot.")]
-        [SerializeField] private int ammoUsage = 1;
+        [SerializeField] protected int ammoUsage = 1;
 
         // Reference to the ammo source to use.
         [HideInInspector] public AmmoSource ammoSource;
