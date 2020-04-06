@@ -8,7 +8,7 @@ namespace DEEP.Collectibles
     {
         
         // The slot that contains the weapon to be given. 
-        [SerializeField] private int weaponSlot = 1;
+        [SerializeField] private int weaponSlot = 0;
 
         // Ammo to be given. 
         [SerializeField] private int ammoAmount = 5;
@@ -16,7 +16,7 @@ namespace DEEP.Collectibles
         protected override void Collect(Player player) {
 
             // Tries giving the weapon to the player and stores if it was given.
-            bool collected = player.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
+            bool collected = player._weaponController.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
 
             if(collected) {
                 

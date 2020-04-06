@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using DEEP.UI;
@@ -74,25 +73,6 @@ namespace DEEP.Entities
         float rotationX = 0F; // Rotation on the x angle.
 	    float rotationY = 0F; // Rotation on the y angle.
 
-        [Header("Weapons")] // ==============================================================================
-
-        [Tooltip("Weapons carried by the player.")]
-        public List<PlayerWeapon> weapons;
-
-        // Stores the weapons instances with their info.
-        List<Tuple<bool, GameObject>> weaponInstances;
-
-        [Tooltip("Where Player weapons should be.")]
-        public Transform weaponPosition;
-
-        // Stores the current weapon.
-        [SerializeField] private WeaponBase currentWeapon;
-
-        [Tooltip("Ammo sources carried by the player.")]
-        public List<AmmoSource> ammoTypes;
-        // Stores a dictionary with the AmmoSource instances.
-        private Dictionary<string, AmmoSource> ammoDict;
-
         [Header("Control")] // ==============================================================================
 
         [Tooltip("If the Player should be allowed to move.")]
@@ -106,26 +86,8 @@ namespace DEEP.Entities
         [SerializeField] private GameObject pauseMenu = null;
 
         [Header("Feedback")] // =======================================================================
-
         [Tooltip("Audio source used to play clips related to feedback to the player.")]
-        [SerializeField] private AudioSource feedbackAudioSource = null;
-        [Tooltip("Animator used to play screen effects giving feedback to the player.")]
-        [SerializeField] private Image screenFeedback = null;
-        private Coroutine screenFeedbackAnim = null; // Stores the current screen feedback coroutine.
-        [Tooltip("Duration of the screen feedback.")]
-        [SerializeField] private float screenFeedbackDuration = 0.1f;
-        [Tooltip("Color for the damage feedback.")]
-        [SerializeField] private Color damageFeedbackColor = Color.red;
-        [Tooltip("Color for the healing feedback.")]
-        [SerializeField] private Color healingFeedbackColor = Color.green;
-        [Tooltip("Color for the armor feedback.")]
-        [SerializeField] private Color armorFeedbackColor = Color.blue;
-        [Tooltip("Color for the weapon/ammo feedback.")]
-        [SerializeField] private Color weaponAmmoFeedbackColor = Color.yellow;
-        [Tooltip("Color for the keycard feedback.")]
-        [SerializeField] private Color keycardFeedbackColor = Color.cyan;
-        [Tooltip("Color for the secret feedback.")]
-        [SerializeField] private Color secretFeedbackColor = Color.magenta;
+        public AudioSource feedbackAudioSource = null;
 
         [Header("Death")] // =======================================================================
         [Tooltip("The screen overlay for when the player dies.")]
@@ -134,11 +96,11 @@ namespace DEEP.Entities
         [SerializeField] private GameObject deathMenu = null;
 
         // Player components ================================================================================
-
-        private Rigidbody _rigidbody = null; // Player's Rigidbody.
-        private CapsuleCollider _collider = null; // Player's CapsuleCollider.
-        private Camera _camera = null; // Player's Camera.
-        private HUDController _hud = null; // Player's HUD controller.
+        [HideInInspector] public Rigidbody _rigidbody = null;
+        [HideInInspector] public CapsuleCollider _collider = null;
+        [HideInInspector] public Camera _camera = null;
+        [HideInInspector] public HUDController _hud = null;
+        [HideInInspector] public PlayerWeaponController _weaponController = null;
 
         private void OnDrawGizmos() // To visualize the ground check
         {
@@ -178,6 +140,15 @@ namespace DEEP.Entities
             _hud.SetHealthCounter(health);
             _hud.SetArmorCounter(armor);
 
+            // Gets the weapons controller and assigns the necessary references.
+            _weaponController = GetComponentInChildren<PlayerWeaponController>();
+            _weaponController._player = this;
+            _weaponController._hud = _hud;
+
+
+            // Gives the first weapon by default.
+            _weaponController.SwitchWeapons(0);
+
             // Gets the mouse sensitivity for mouselook.
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
                 PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
@@ -186,50 +157,6 @@ namespace DEEP.Entities
             // Gets the original rotations for mouselook.
             originalBodyRotation = transform.localRotation;
             originalCamRotation = _camera.transform.localRotation;
-
-            // Creates a dictionary with the ammo sources.
-            ammoDict = new Dictionary<string, AmmoSource>();
-            foreach(AmmoSource source in ammoTypes)
-                if(!ammoDict.ContainsKey(source.id))
-                    ammoDict.Add(source.id, Instantiate(source));
-
-            // Weapon setup =============================================================================================
-
-            // Instantiates the weapons.
-            weaponInstances = new List<Tuple<bool, GameObject>>();
-            foreach (PlayerWeapon weapon in weapons)
-            {
-
-                // Creates the weapons inside the weapon position.
-                GameObject weaponObj = Instantiate(weapon.prefab, weaponPosition.position, weaponPosition.rotation);
-                weaponObj.transform.SetParent(weaponPosition);
-                // Disables the weapon at start.
-                weaponObj.SetActive(false);
-
-                // Gets the weapon script.
-                WeaponBase weaponScript = weaponObj.GetComponent<WeaponBase>();
-                if(weaponScript == null) Debug.LogError("DEEP.Entities.Player.Start: Weapon has no weapon script!");
-
-                // Sets the ammo source of the weapon.
-                if(weapon.ammoId != null && weapon.ammoId != "")
-                    if(ammoDict.ContainsKey(weapon.ammoId))
-                        weaponScript.ammoSource = ammoDict[weapon.ammoId];
-                    else
-                        Debug.LogError("DEEP.Entities.Player.Start: Ammo type not found!");
-
-                // Adds the weapon to the list
-                weaponInstances.Add(new Tuple<bool, GameObject>(weapon.enabled, weaponObj));
-
-                // Shows current weapons on the HUD.
-                bool[] weaponsEnabled = new bool[weaponInstances.Count];
-                for(int i = 0; i < weaponInstances.Count; i++)
-                    weaponsEnabled[i] = weaponInstances[i].Item1;
-                _hud.ShowWeaponIcons(weaponsEnabled);
-
-            }
-
-            // If there are weapons, equips the first one by default.
-            if(weaponInstances.Count > 0) SwitchWeapons(0);
 
         }
 
@@ -281,22 +208,19 @@ namespace DEEP.Entities
                 //Equiping weapons ===============================================================================
 
                 // Verifies the number keys.
-                for(int i = 0; i < 10; i++)
-                    if(Input.GetKeyDown(i.ToString()))
-                    {
-                        if(i != 0) SwitchWeapons(i - 1);  // Converts the key into an order
-                        else if(i == 0) SwitchWeapons(9); // on a list.
-                        break;
-                    }
+                if(Input.GetKeyDown("0")) // Checks for 0.
+                    _weaponController.SwitchWeapons(9); // 0 is actually the last weapon (9).
+                else {
+                    for(int i = 1; i <= 9; i++) // Checks for the other keys.
+                        if(Input.GetKeyDown(i.ToString()))
+                            _weaponController.SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
+                }
 
                 // Firing weapons ==================================================================================
-                if(Input.GetButton("Fire1") && currentWeapon != null) {
+                if(Input.GetButton("Fire1")) {
 
                     // Tries firing the weapon.
-                    currentWeapon.Shot();
-
-                    // After that, updates the ammo counter on the HUD.
-                    _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+                    _weaponController.FireCurrentWeapon();
 
                 }
 
@@ -345,30 +269,6 @@ namespace DEEP.Entities
             return Mathf.Clamp (angle, min, max);
         }
 
-        // Switches between the Player weapons.
-        private void SwitchWeapons(int weaponNum)
-        {
-
-            // Verifies if it's a valid weapon, if it's not doesn't switch.
-            if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
-                return;
-
-            // Disables the current weapon object.
-            if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
-
-            // Assigns the new weapon as current weapon.
-            currentWeapon = weaponInstances[weaponNum].Item2.GetComponent<WeaponBase>();
-
-            // Enables the current weapon.
-            currentWeapon.gameObject.SetActive(true);
-
-            // Updates the ammo counter on the HUD.
-            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
-            // Updates the ammo icon on the HUD.
-            _hud.SetAmmoIcon(ammoDict[currentWeapon.ammoSource.id].icon);
-
-        }
-
         public override void Damage(int amount, DamageType type) {
 
             // Calculates the percent of damage that should be absorbed by armor.
@@ -386,7 +286,7 @@ namespace DEEP.Entities
 
             if(health > 0) {
                 // Flicks the screen to give feedback.
-                StartScreenFeedback(damageFeedbackColor, screenFeedbackDuration);
+                _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Damage);
             }
 
             OnChangeArmor();
@@ -438,7 +338,7 @@ namespace DEEP.Entities
 
         }
 
-        public virtual bool Heal (int amount, HealType type, AudioClip feedbackAudio) 
+        public virtual bool Heal(int amount, HealType type, AudioClip feedbackAudio) 
         {
 
             // Tries to heal the entity.
@@ -450,7 +350,7 @@ namespace DEEP.Entities
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
                 // Flicks the screen to give feedback.
-                StartScreenFeedback(healingFeedbackColor, screenFeedbackDuration);
+                 _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Healing);
 
             }
 
@@ -478,86 +378,7 @@ namespace DEEP.Entities
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Flicks the screen to give feedback.
-            StartScreenFeedback(armorFeedbackColor, screenFeedbackDuration);
-
-            return true;
-
-        }
-
-        // Pick's up a weapon and enables it's use.
-        public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
-
-            // If the weapon was collected.
-            bool collected = false;
-
-            if(!weaponInstances[slot].Item1) {
-
-                // Gets the old instance from the list.
-                Tuple<bool, GameObject> weaponInstance;
-                weaponInstance = weaponInstances[slot];
-                weaponInstances.RemoveAt(slot);
-                
-                // Creates a new instance that is enabled and re-adds it to the list.
-                Tuple<bool, GameObject> enabledInstance = new Tuple<bool, GameObject>(true, weaponInstance.Item2);
-                weaponInstances.Insert(slot, enabledInstance);
-
-                Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.transform.name + " has been collected!");
-
-                collected = true;
-
-                // Equips the weapon.
-                SwitchWeapons(slot);
-
-                // Updates the weapons on the HUD.
-                bool[] weaponsEnabled = new bool[weaponInstances.Count];
-                for(int i = 0; i < weaponInstances.Count; i++)
-                    weaponsEnabled[i] = weaponInstances[i].Item1;
-                _hud.ShowWeaponIcons(weaponsEnabled);
-
-            }
-
-            // Gives ammo to the player.
-            bool givenAmmo = false;
-            if(ammo > 0)
-                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
-
-            // If collected, plays the player feedback sound.
-            if((collected || givenAmmo) && feedbackAudio != null) {
-
-                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
-
-                // Flicks the screen to give feedback.
-                StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
-
-            }
-
-            // Returns if the player has collected the weapon or it's ammo.
-            return collected || givenAmmo;
-
-        }
-
-        // Gives a certain type of ammo to the player.
-        public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
-
-            // Checks if the ammo type is valid.
-            if(!ammoDict.ContainsKey(type)) return false;
-            
-            // Checks if ammo is not maxed out.
-            if(ammoDict[type].ammo >= ammoDict[type].maxAmmo) return false;
-
-            // Adds ammo to the source.
-            ammoDict[type].GainAmmo(amount);
-
-            // Updates the ammo counter on the HUD.
-            if(currentWeapon != null)
-                _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
-
-            // Plays the player feedback sound.
-            if(feedbackAudio != null)
-                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
-
-            // Flicks the screen to give feedback.
-            StartScreenFeedback(weaponAmmoFeedbackColor, screenFeedbackDuration);
+             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Armor);
 
             return true;
 
@@ -574,7 +395,7 @@ namespace DEEP.Entities
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Flicks the screen to give feedback.
-            StartScreenFeedback(keycardFeedbackColor, screenFeedbackDuration);
+             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Keycard);
 
         }
 
@@ -582,33 +403,7 @@ namespace DEEP.Entities
         public void FoundSecret() {
             
             // Flicks the screen to give feedback.
-            StartScreenFeedback(secretFeedbackColor, screenFeedbackDuration);
-
-        }
-
-        // Starts a screen feedback effect.
-        private void StartScreenFeedback(Color color, float duration) {
-
-            // If a feedback effect is already happening stop it and start a new one.
-            if(screenFeedbackAnim != null)
-                StopCoroutine(screenFeedbackAnim);
-
-            screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(color, duration));
-
-        }
-
-        private IEnumerator ScreenFeedbackAnim(Color color, float duration) {
-
-            // Sets the feedback color and show it.
-            screenFeedback.color = color;
-            screenFeedback.enabled = true;
-
-            // Waits for the duration.
-            yield return new WaitForSeconds(duration);
-
-            // Ends the feedback.
-            screenFeedback.enabled = false;
-            screenFeedbackAnim = null;
+             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Secret);
 
         }
 
