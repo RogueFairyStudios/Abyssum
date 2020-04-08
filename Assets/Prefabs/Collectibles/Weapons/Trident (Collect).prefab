@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8423862471291391462}
   - component: {fileID: 3734172253147362785}
   - component: {fileID: 8385929501147932261}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Crystal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -91,7 +92,7 @@ GameObject:
   - component: {fileID: 9201653386274406644}
   - component: {fileID: 6180055436255179992}
   - component: {fileID: 701688394213940854}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Trident (Collect)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -135,6 +136,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -185,5 +187,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
-  weaponSlot: 4
+  weaponSlot: 6
   ammoAmount: 3

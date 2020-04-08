@@ -1,42 +1,65 @@
 ﻿using UnityEngine;
+
 using DEEP.StateMachine;
 
-public class EnemyPursuingState : State<EnemyAISystem>
+namespace DEEP.AI
 {
-    private static EnemyPursuingState instance;
-    
-    public EnemyPursuingState(){
-        if (instance != null)
-            return;
-        instance = this;
-    }
 
-    public static EnemyPursuingState Instance{
-
-        get{
-
-            if(instance == null){
-                new EnemyPursuingState();
-            }
-            
-            return instance;
+    public class EnemyPursuingState : State<EnemyAISystem>
+    {
+        private static EnemyPursuingState instance;
+        
+        public EnemyPursuingState(){
+            if (instance != null)
+                return;
+            instance = this;
         }
-    }
 
-    public override void EnterState(EnemyAISystem owner){}
+        public static EnemyPursuingState Instance{
 
-    public override void ExitState(EnemyAISystem owner){}
+            get {
 
-    public override void UpdateState(EnemyAISystem owner){
-        if (owner.inRange())
-            owner.ChangeState(EnemyShootingState.Instance);
-        else{
-            owner.Pursuing();//go to last know enemy position
-            if (owner.outRange())
-            {
-                owner.ChangeState(EnemyWaitingState.Instance);
+                if(instance == null){
+                    new EnemyPursuingState();
+                }
+                
+                return instance;
             }
-            owner.Shooting();
+        }
+
+        public override void EnterState(EnemyAISystem owner){
+
+            Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
+
+            owner.anim.SetBool("Walk", true);
+
+            if (owner.OnAggro != null)
+                owner.OnAggro();
+        }
+
+        public override void ExitState(EnemyAISystem owner){
+
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+
+            if (owner.OnLoseAggro != null)
+                owner.OnLoseAggro();
+
+        }
+
+        public override void UpdateState(EnemyAISystem owner) {
+
+            owner.Pursuing();
+
+            if (owner.InAttackRange()) {
+                owner.ChangeState(EnemyShootingState.Instance);
+                return;
+            }
+
+            if (owner.ReachedLastPosition()) {
+                owner.ChangeState(EnemyWaitingState.Instance);
+                return;
+            }
+
         }
     }
 }

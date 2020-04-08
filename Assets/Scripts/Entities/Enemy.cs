@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using DEEP.Weapons;
+
+using DEEP.AI;
 
 namespace DEEP.Entities{
 
@@ -23,6 +24,12 @@ namespace DEEP.Entities{
         [Tooltip("Sound that plays out when the enemy dies.")]
         [SerializeField] protected AudioClip[] death;
 
+        [Tooltip("Sound that plays out when the enemy is chasing the player.")]
+        [SerializeField] protected AudioClip[] growl;
+
+        [Tooltip("Min and max interval between growls.")]
+        [SerializeField] protected float minGrowlInterval, maxGrowlInterval;
+
 
         private EnemyAISystem AI;
 
@@ -30,25 +37,48 @@ namespace DEEP.Entities{
         {
             base.Start();
             AI = GetComponent<EnemyAISystem>();
+
+            // Sets delegates to start and stop growling.
+            if(growl.Length > 0)
+            {
+                AI.OnAggro      = () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
+                AI.OnLoseAggro  = () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
+            }
+
             Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
         }
 
         protected void Grunt()
         {
-            if(damage.Length > 0) {
-                _audio.clip = damage[Random.Range(0, damage.Length)];
-                _audio.Play();
+            if(grunt.Length > 0)
+            {
+                if(!_audio.isPlaying)
+                {
+                    _audio.clip = grunt[Random.Range(0, grunt.Length)];
+                    _audio.Play();
+                }
                 Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
             }
         }
 
+        private void Growl()
+        {
+            if(growl.Length > 0)
+            {
+                if(!_audio.isPlaying)
+                {
+                    _audio.clip = growl[Random.Range(0, growl.Length)];
+                    _audio.Play();
+                }
+                Invoke(nameof(Growl), Random.Range(minGrowlInterval, maxGrowlInterval));
+            }
+        }
+
         public override void Damage(int amount, DamageType type){
+
             Debug.Log("enemy hitted");
 
-            if(!this.AI.search){
-                AI.search = true;
-                AI.hitted();
-            }
+            AI.Hitted();
 
             if(damage.Length > 0) {
                 _audio.clip = damage[Random.Range(0, damage.Length)];
@@ -63,8 +93,8 @@ namespace DEEP.Entities{
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
 
-            //Destroys the object on collision.
-                Destroy(gameObject);
+            base.Die();
+            
         }
     }
 }

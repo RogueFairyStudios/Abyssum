@@ -1,51 +1,76 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.AI;
+
 using DEEP.StateMachine;
 
-public class EnemyWaitingState : State <EnemyAISystem>
+namespace DEEP.AI
 {
-    private static EnemyWaitingState instance;
 
-    public EnemyWaitingState(){
-        if (instance != null)
-            return;
-        
-        instance = this;
-    }
-
-    public static EnemyWaitingState Instance
+    public class EnemyWaitingState : State <EnemyAISystem>
     {
-        get 
+        private static EnemyWaitingState instance;
+
+        public EnemyWaitingState(){
+            if (instance != null)
+                return;
+            
+            instance = this;
+        }
+
+        public static EnemyWaitingState Instance
         {
-            if (instance == null)
+            get 
             {
-                new EnemyWaitingState();
+                if (instance == null)
+                {
+                    new EnemyWaitingState();
+                }
+
+                return instance;
+            }
+        }
+        public override void EnterState(EnemyAISystem owner)
+        {
+
+            // Makes sure enemy movement is reset.
+            owner.anim.SetBool("Walk", false);
+            owner.agent.ResetPath();
+
+            if (owner.OnLoseAggro != null)
+                owner.OnLoseAggro();
+
+            Debug.Log(owner.transform.name + ": Entering Enemy Waiting State");
+
+        }
+
+        public override void ExitState(EnemyAISystem owner)
+        {
+            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+        }
+
+        public override void UpdateState(EnemyAISystem owner){
+
+            if(owner.InAttackRange()) // Checks if can attack.
+            {
+                owner.ChangeState(EnemyShootingState.Instance);
+                return;
             }
 
-            return instance;
+            if (owner.HasTargetSight()) // Checks  if target is on sight.
+            {
+
+                // If can reach target start pursuing.
+                if (owner.GetPath(owner.target.transform.position).status == NavMeshPathStatus.PathComplete)
+                    owner.ChangeState(EnemyPursuingState.Instance);//target finded, engaging
+                else // If it can't be reached, just stares at it.
+                    owner.getAim();
+
+                return;
+            }
+
+            // Execute other waiting behaviours otherwise.
+            owner.Waiting();
+
         }
     }
-    public override void EnterState(EnemyAISystem owner){
-        owner.waiting();
-        Debug.Log("entering waiting state");
-    }
-
-    public override void ExitState(EnemyAISystem owner){
-        Debug.Log("exiting wating state");
-    }
-
-    public override void UpdateState(EnemyAISystem owner){
-        
-        if (owner.search)//verify if the enemy know where the target is
-        {
-            if(owner.inRange())
-                owner.ChangeState(EnemyShootingState.Instance);
-            else
-                owner.ChangeState(EnemyPursuingState.Instance);
-        }
-        else
-            owner.waiting();
-    }
-
 }

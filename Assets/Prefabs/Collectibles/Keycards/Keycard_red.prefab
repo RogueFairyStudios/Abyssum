@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2182517848945891926}
   - component: {fileID: 2182517848945891927}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: collider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 2182517849192948387}
   - component: {fileID: 5998018751545260988}
   - component: {fileID: 3781799953442861250}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Keycard_red
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -194,6 +194,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: mesh
+      objectReference: {fileID: 0}
+    - target: {fileID: -927199367670048503, guid: f13de5f3345284a91b0d157698f049fe,
+        type: 3}
+      propertyPath: m_Layer
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f13de5f3345284a91b0d157698f049fe, type: 3}

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5057270243177935889}
   - component: {fileID: 8786149646976369414}
   - component: {fileID: 9211218921887780635}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Machinegun_Barrel1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -54,6 +54,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -89,7 +90,7 @@ GameObject:
   - component: {fileID: 294700525154871518}
   - component: {fileID: 7648409392502296191}
   - component: {fileID: 4107854713359477842}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Machinegun_Barrel2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -132,6 +133,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -169,7 +171,7 @@ GameObject:
   - component: {fileID: 6677416375837284712}
   - component: {fileID: 7909994867945242872}
   - component: {fileID: 6000006978046063526}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Machinegun (Collect)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,6 +218,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -266,7 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
-  weaponSlot: 2
+  weaponSlot: 3
   ammoAmount: 40
 --- !u!1 &6599497528592052107
 GameObject:
@@ -279,7 +282,7 @@ GameObject:
   - component: {fileID: 3140683819485128842}
   - component: {fileID: 8457587109435397810}
   - component: {fileID: 4985933834923788974}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: MachinegunAmmo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,6 +325,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -357,7 +361,7 @@ GameObject:
   - component: {fileID: 813231503799166668}
   - component: {fileID: 3598505752947390416}
   - component: {fileID: 8768770489779778141}
-  m_Layer: 0
+  m_Layer: 16
   m_Name: Machinegun_Barrel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -400,6 +404,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

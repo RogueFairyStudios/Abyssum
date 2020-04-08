@@ -10,7 +10,7 @@ namespace DEEP.StateMachine
         public State <T> currentState{get; private set;}
 
         public StateMachine(T owner){
-            this.Owner =owner;
+            this.Owner = owner;
             currentState =  null;
         }
 

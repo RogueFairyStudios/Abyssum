@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b7a8bd1ab5105a4daa06a0535eccc5a, type: 3}
+  m_Name: Eletric
+  m_EditorClassIdentifier: 
+  id: Eletric
+  ammo: 0
+  maxAmmo: 200
+  icon: {fileID: -3852854901230681081, guid: 99c762247c1f93facabec571b52d1497, type: 3}

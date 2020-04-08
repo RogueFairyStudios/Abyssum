@@ -78,6 +78,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoUsage: 1
   ammoSource: {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
+  isPlayerWeapon: 1
+  raycastMask:
+    serializedVersion: 2
+    m_Bits: 101379
   bulletSpawn: {fileID: 4171265578445106677}
   bulletPrefab: {fileID: 783353297757611019, guid: 512e10dec6a33d345aaf923e45c0cb53,
     type: 3}
@@ -141,6 +145,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -366,6 +371,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -444,6 +450,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

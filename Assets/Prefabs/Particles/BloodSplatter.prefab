@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1417333957320344168}
   - component: {fileID: 5094338677287310776}
   - component: {fileID: 8201157792670461727}
+  - component: {fileID: 1742815896667634003}
   m_Layer: 0
   m_Name: BloodSplatter
   m_TagString: Untagged
@@ -3563,9 +3564,9 @@ ParticleSystem:
         m_NumAlphaKeys: 2
     range: {x: 0, y: 1}
   CollisionModule:
-    enabled: 0
+    enabled: 1
     serializedVersion: 3
-    type: 0
+    type: 1
     collisionMode: 0
     colliderForce: 0
     multiplyColliderForceByParticleSize: 0
@@ -4712,7 +4713,7 @@ ParticleSystemRenderer:
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
-  m_LightProbeUsage: 0
+  m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
@@ -4762,3 +4763,16 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!114 &1742815896667634003
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4981454918395137139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ae7bfe633ce59690dac8b8bcd88af6e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 0.25

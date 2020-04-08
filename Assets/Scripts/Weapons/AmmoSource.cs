@@ -11,11 +11,14 @@ namespace DEEP.Weapons
         [Tooltip("The id used to refer to this type of ammo.")]        
         public string id = "Bullet";
 
-         [Tooltip("Current amount of ammo on this source.")]     
+        [Tooltip("Current amount of ammo on this source.")]     
         public int ammo = 0;
 
-         [Tooltip("Max amount of ammo this source can store.")]     
+        [Tooltip("Max amount of ammo this source can store.")]     
         public int maxAmmo = 200;
+
+        [Tooltip("Icon used to represent this ammo on the HUD.")]     
+        public Sprite icon;
 
         // Verifies if the source has a certain amount of ammo.
         public bool HasAmmo(int amount)
