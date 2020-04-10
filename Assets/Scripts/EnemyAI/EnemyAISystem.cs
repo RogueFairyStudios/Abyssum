@@ -22,7 +22,7 @@ namespace DEEP.AI
 
         [SerializeField] protected float detectRange = 40.0f;
         [SerializeField] protected float attackRange = 10.0f;
-
+        
         public WeaponBase weapon;
 
         [Tooltip("Should the enemy face the player when attacking")]
@@ -40,6 +40,8 @@ namespace DEEP.AI
 
         public delegate void Reaction();
         public Reaction OnAggro, OnLoseAggro;
+
+        [SerializeField]private bool reversePatrol = false;
 
         [SerializeField] protected LayerMask sightMask = new LayerMask();
 
@@ -83,7 +85,6 @@ namespace DEEP.AI
 
         public virtual void Waiting()
         {
-
             if (patrolPoints.Count > 0)
             {
                 //randon movementation
@@ -91,16 +92,31 @@ namespace DEEP.AI
                 if (!agent.pathPending && agent.remainingDistance < 0.5f)
                 {
                     agent.SetDestination(patrolPoints[actualPoint].transform.position);
-                    actualPoint++;
-                    actualPoint = (actualPoint) % patrolPoints.Count;
+                    if(!reversePatrol){
+                        actualPoint++;
+                        actualPoint = (actualPoint) % patrolPoints.Count;
+                        if(actualPoint == (patrolPoints.Count - 1))
+                            reversePatrol = !reversePatrol;
+                    }
+                    else{
+                        actualPoint--;
+                        actualPoint = (actualPoint) % patrolPoints.Count;
+                        if(actualPoint == 0)
+                            reversePatrol = !reversePatrol;                        
+                    }
                 }
 
                 anim.SetBool("Walk", true);
-
                 return;
-
             }
+        }
 
+        public virtual void ResetPatrol(){
+            if (patrolPoints.Count > 0){
+                actualPoint = 0;
+                agent.SetDestination(patrolPoints[actualPoint].transform.position);
+                reversePatrol = false;
+            }
         }
 
         public virtual void Pursuing()

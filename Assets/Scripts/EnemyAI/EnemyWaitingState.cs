@@ -35,6 +35,7 @@ namespace DEEP.AI
             // Makes sure enemy movement is reset.
             owner.anim.SetBool("Walk", false);
             owner.agent.ResetPath();
+            owner.ResetPatrol();
 
             if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();
@@ -45,7 +46,7 @@ namespace DEEP.AI
 
         public override void ExitState(EnemyAISystem owner)
         {
-            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+            Debug.Log(owner.transform.name + ": Exiting Enemy Waiting State");
         }
 
         public override void UpdateState(EnemyAISystem owner){
