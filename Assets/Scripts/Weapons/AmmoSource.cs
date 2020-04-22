@@ -35,7 +35,7 @@ namespace DEEP.Weapons
 
             ammo -= amount;
             if(ammo < 0) ammo = 0; // Guarantees the source doesn't goes below 0.
-
+            
         }
 
         // Receives a certain amount of ammo.

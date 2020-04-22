@@ -26,11 +26,15 @@ namespace DEEP.Weapons.Bullets
         [SerializeField] protected GameObject otherHitEffect = null;
 
         private bool isTargeted = false;
+        private bool avoidDoubleHit = true;
+        private bool hasHit = false;
 
         protected virtual void Awake() {
 
             //Gets the rigidbody.
             _rigidbody = GetComponent<Rigidbody>();        
+
+            Destroy(gameObject, 5.0f);    // Auto destroy the projectile after a while, to avoid bullets pollution
         }
 
         private void Start()
@@ -50,6 +54,9 @@ namespace DEEP.Weapons.Bullets
         }
 
         protected virtual void OnCollisionEnter(Collision col) {
+            if (avoidDoubleHit && hasHit)
+                return;
+            hasHit = true;
 
             // Tries to get an entity component from the object.
             EntityBase entity;
@@ -67,6 +74,7 @@ namespace DEEP.Weapons.Bullets
                     Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
                 
                 // Does the damage.
+                Debug.Log("Dealing damage!");
                 entity.Damage(damage, 0);
 
             } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.

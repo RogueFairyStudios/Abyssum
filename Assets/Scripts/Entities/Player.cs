@@ -145,10 +145,6 @@ namespace DEEP.Entities
             _weaponController._player = this;
             _weaponController._hud = _hud;
 
-
-            // Gives the first weapon by default.
-            _weaponController.SwitchWeapons(0);
-
             // Gets the mouse sensitivity for mouselook.
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
                 PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
@@ -214,6 +210,19 @@ namespace DEEP.Entities
                     for(int i = 1; i <= 9; i++) // Checks for the other keys.
                         if(Input.GetKeyDown(i.ToString()))
                             _weaponController.SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
+                }
+
+                // Change weapon using mouse scrollwheel
+                if (_weaponController.currentWeapon != null) // Check if player has a weapon
+                {
+                    if (Input.GetAxis("Mouse ScrollWheel") > 0f) // Scroll Up
+                    {
+                        _weaponController.SwitchWeapons(_weaponController.GetNextEnabledWeaponIndex());
+                    }
+                    else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // Scroll Down
+                    {
+                        _weaponController.SwitchWeapons(_weaponController.GetPreviousEnabledWeaponIndex());
+                    }
                 }
 
                 // Firing weapons ==================================================================================

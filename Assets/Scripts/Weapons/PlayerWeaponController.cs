@@ -20,7 +20,7 @@ namespace DEEP.Weapons {
         public Transform weaponPosition;
 
         // Stores the current weapon.
-        [SerializeField] private WeaponBase currentWeapon;
+        [SerializeField] public WeaponBase currentWeapon;
 
         [Tooltip("Ammo sources carried by the player.")]
         public List<AmmoSource> ammoTypes;
@@ -108,7 +108,10 @@ namespace DEEP.Weapons {
                 return;
 
             currentWeapon.Shot();
-
+            // Updates the ammo counter on the HUD.
+            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+            // Updates the ammo icon on the HUD.
+            _hud.SetAmmoIcon(ammoDict[currentWeapon.ammoSource.id].icon);
         }
 
         // Returns the index of the current weapon.
@@ -119,7 +122,7 @@ namespace DEEP.Weapons {
             int curWeaponIndex = -1;
             for(int i = 0; i < weaponInstances.Count; i++)
             {
-                if(weaponInstances[i].Item2 == currentWeapon)
+                if(String.Equals(weaponInstances[i].Item2.name, currentWeapon.name))
                     curWeaponIndex = i;
             }
 
