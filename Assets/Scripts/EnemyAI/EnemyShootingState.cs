@@ -51,8 +51,6 @@ namespace DEEP.AI
 
         public override void UpdateState(EnemyAISystem owner) {
 
-            Debug.Log("shot");
-
             // Waits for attack to end.
             if (owner.anim.GetBool("Attack"))
             {

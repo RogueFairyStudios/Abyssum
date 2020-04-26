@@ -48,6 +48,8 @@ namespace DEEP.AI
 
         public override void UpdateState(EnemyAISystem owner) {
 
+            owner.Pursuing();
+
             if (owner.InAttackRange()) {
                 owner.ChangeState(EnemyShootingState.Instance);
                 return;
@@ -57,8 +59,6 @@ namespace DEEP.AI
                 owner.ChangeState(EnemyWaitingState.Instance);
                 return;
             }
-
-            owner.Pursuing();
 
         }
     }
