@@ -19,7 +19,7 @@ namespace DEEP.Entities
 
         Animator _animator;
 
-        protected void Start()
+        protected override void Start()
         {
 
             base.Start();

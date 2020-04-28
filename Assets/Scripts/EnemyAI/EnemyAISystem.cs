@@ -28,6 +28,9 @@ namespace DEEP.AI
         [Tooltip("Should the enemy face the player when attacking")]
         public bool aimOnAttack = true;
 
+        [Tooltip("Is the enemy attack meele or ranged?")]
+        [SerializeField] protected bool isMeeleAttack = false;
+
         public GameObject target;
 
         public Vector3 lastTargetLocation; //location to search if the target has been missed
@@ -136,10 +139,10 @@ namespace DEEP.AI
 
                 // Tries getting a path to the destination.
                 NavMeshPath path = GetPath(navHit.position);
-                if (path.status == NavMeshPathStatus.PathComplete)
-                    agent.SetPath(path);
-                else // Returns to original position if unable to reach.
-                    agent.SetDestination(originalPosition);
+                if (path.status != NavMeshPathStatus.PathComplete && isMeeleAttack)
+                    agent.SetDestination(originalPosition); // Returns to original position if unable to reach and out of range.
+                else 
+                    agent.SetPath(path);          
 
             }
             else // Returns to original position if unable to reach.

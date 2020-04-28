@@ -1126,13 +1126,16 @@ MonoBehaviour:
   attackRange: 2
   weapon: {fileID: 0}
   aimOnAttack: 0
+  isMeeleAttack: 1
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
   patrolPoints: []
   actualPoint: 0
+  reversePatrol: 0
   sightMask:
     serializedVersion: 2
     m_Bits: 1025
+  angleReference: {fileID: 0}
 --- !u!114 &6258835700556502776
 MonoBehaviour:
   m_ObjectHideFlags: 0
