@@ -70,7 +70,7 @@ namespace DEEP.Weapons {
                     if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out rayHit, 1000f, raycastMask))
                     {
                         // Looks to the point.
-                        if (rayHit.distance > 0.5f) // If a point is too clsoe weird angles may happen, so uses a minimum distance
+                        if (rayHit.distance > 1.0f && Vector3.Angle(Camera.main.transform.forward, (rayHit.point - Camera.main.transform.position).normalized) < 5.0f) // If a point is too close weird angles may happen, so a minimum distance is used, if the anles are weird anyway ignores them.
                             bulletSpawn.LookAt(rayHit.point);
                         else
                             bulletPrefab.LookAt(Camera.main.transform.position + Camera.main.transform.forward * 0.5f);
