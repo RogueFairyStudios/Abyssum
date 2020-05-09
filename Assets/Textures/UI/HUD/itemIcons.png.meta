@@ -20,6 +20,9 @@ TextureImporter:
   - first:
       213: 7006762922748226925
     second: Ammo_Crystal
+  - first:
+      213: -4558621180998824995
+    second: Keycard
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -49,7 +52,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: 2
     mipBias: -100
     wrapU: 1
@@ -274,6 +277,27 @@ TextureImporter:
       bones: []
       spriteID: d6d29cb31c50d3160800000000000000
       internalID: 7006762922748226925
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Keycard
+      rect:
+        serializedVersion: 2
+        x: 264
+        y: 0
+        width: 44
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ddb4ef040368cb0c0800000000000000
+      internalID: -4558621180998824995
       vertices: []
       indices: 
       edges: []

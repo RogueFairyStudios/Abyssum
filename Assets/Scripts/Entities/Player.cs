@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -18,6 +17,9 @@ namespace DEEP.Entities
     [RequireComponent(typeof(CapsuleCollider))]
     public class Player : EntityBase
     {
+
+        // Singleton for the player.
+        public static Player instance;
 
         // ARMOR ==========================================================================================
 
@@ -101,6 +103,7 @@ namespace DEEP.Entities
         [HideInInspector] public Camera _camera = null;
         [HideInInspector] public HUDController _hud = null;
         [HideInInspector] public PlayerWeaponController _weaponController = null;
+        [HideInInspector] public InventoryKey _keyInventory = null;
 
         private void OnDrawGizmos() // To visualize the ground check
         {
@@ -114,6 +117,11 @@ namespace DEEP.Entities
 
         protected override void Start()
         {
+
+            // Ensures theres only one instance of this script.
+            if (instance != null)
+                Destroy(gameObject);
+            instance = this;
 
             base.Start();
 
@@ -137,16 +145,17 @@ namespace DEEP.Entities
 
             // Gets the Player's HUD Controller and initializes the UI.
             _hud = GetComponentInChildren<HUDController>();
-            _hud.SetHealthCounter(health);
-            _hud.SetArmorCounter(armor);
+            _hud.SetHealthHUD(health, maxHealth);
+            _hud.SetArmorHUD(armor, maxArmor);
 
-            // Gets the weapons controller and assigns the necessary references.
+            // Gets the weapons controller.
             _weaponController = GetComponentInChildren<PlayerWeaponController>();
-            _weaponController._player = this;
-            _weaponController._hud = _hud;
+
+            // Gets the key inventory.
+            _keyInventory = GetComponentInChildren<InventoryKey>();
 
             // Gets the mouse sensitivity for mouselook.
-            if(!PlayerPrefs.HasKey("Mouse sensitivity"))
+            if (!PlayerPrefs.HasKey("Mouse sensitivity"))
                 PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
             sensitivity = PlayerPrefs.GetFloat("Mouse sensitivity");
 
@@ -295,7 +304,7 @@ namespace DEEP.Entities
 
             if(health > 0) {
                 // Flicks the screen to give feedback.
-                _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Damage);
+                _hud.StartScreenFeedback(HUDController.FeedbackType.Damage);
             }
 
             OnChangeArmor();
@@ -359,7 +368,7 @@ namespace DEEP.Entities
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
                 // Flicks the screen to give feedback.
-                 _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Healing);
+                 _hud.StartScreenFeedback(HUDController.FeedbackType.Healing);
 
             }
 
@@ -379,15 +388,15 @@ namespace DEEP.Entities
             // Ensures not going above max armor.
             if(armor > maxArmor) armor = maxArmor;
 
-            // Updates the armor counter on the HUD.
-            OnChangeArmor();
-
             // Plays the player feedback sound.
             if(feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Flicks the screen to give feedback.
-             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Armor);
+             _hud.StartScreenFeedback(HUDController.FeedbackType.Armor);
+
+            // Updates the armor counter on the HUD.
+            OnChangeArmor();
 
             return true;
 
@@ -397,14 +406,17 @@ namespace DEEP.Entities
         public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
 
             print("Adding the " + color.ToString() + " key to the inventory");
-			InventoryKey.inventory.Add(color);
+			_keyInventory.AddKey(color);
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Flicks the screen to give feedback.
-             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Keycard);
+             _hud.StartScreenFeedback(HUDController.FeedbackType.Keycard);
+
+            // Updates the collected keys on the HUD.
+            _hud.SetKeyHUD();
 
         }
 
@@ -412,19 +424,19 @@ namespace DEEP.Entities
         public void FoundSecret() {
             
             // Flicks the screen to give feedback.
-             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Secret);
+             _hud.StartScreenFeedback(HUDController.FeedbackType.Secret);
 
         }
 
         private void OnChangeArmor() {
 
-            _hud.SetArmorCounter(armor);
+            _hud.SetArmorHUD(armor, maxArmor);
 
         }
 
         protected override void OnChangeHealth() {
 
-            _hud.SetHealthCounter(health);
+            _hud.SetHealthHUD(health, maxHealth);
 
             base.OnChangeHealth();
 
