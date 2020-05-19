@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 using DEEP.AI;
 using DEEP.Collectibles;
@@ -12,7 +9,7 @@ namespace DEEP.Stage
     public class StageInfo : MonoBehaviour
     {
 
-        public static StageInfo current;
+        public static StageInfo Instance;
 
         [SerializeField] private string stageName = "no name";
 
@@ -26,7 +23,7 @@ namespace DEEP.Stage
 
         private void Awake()
         {
-            current = this;
+            Instance = this;
 
             numStageEnemies = FindObjectsOfType<EnemyAISystem>().Length;
             numStageCollectibles = FindObjectsOfType<CollectibleBase>().Length;

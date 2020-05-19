@@ -2044,6 +2044,7 @@ GameObject:
   - component: {fileID: 784329731769305212}
   - component: {fileID: 784329731769305213}
   - component: {fileID: 784329731769305154}
+  - component: {fileID: 4047820183532755202}
   - component: {fileID: 8220724060453802220}
   m_Layer: 9
   m_Name: Player
@@ -2119,6 +2120,28 @@ MonoBehaviour:
   deathPrefab: {fileID: 0}
   armor: 0
   maxArmor: 100
+  isPaused: 1
+  pauseMenu: {fileID: 7039854621110695698}
+  deathScreen: {fileID: 3948141073903145448}
+  deathMenu: {fileID: 6183051250509740394}
+  endLevelScreen: {fileID: 8986970998938023453}
+  feedbackAudioSource: {fileID: 2214829340411246055}
+  movimentation: {fileID: 0}
+  waponController: {fileID: 0}
+  HUD: {fileID: 0}
+  keyInventory: {fileID: 0}
+--- !u!114 &4047820183532755202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784329731769305155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 252902325740b0642850858fe366df16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   groundAcceleration: 8
   canJump: 1
   jumpAcceleration: 7.5
@@ -2128,21 +2151,14 @@ MonoBehaviour:
   heightTolerance: 0.89
   raycastMask:
     serializedVersion: 2
-    m_Bits: 166915
+    m_Bits: 35843
   checkRadius: 0.25
   sensitivity: 6
-  canMove: 1
-  isPaused: 1
-  pauseMenu: {fileID: 7039854621110695698}
-  feedbackAudioSource: {fileID: 2214829340411246055}
-  deathScreen: {fileID: 3948141073903145448}
-  deathMenu: {fileID: 6183051250509740394}
-  _rigidbody: {fileID: 0}
-  _collider: {fileID: 0}
-  _camera: {fileID: 0}
-  _hud: {fileID: 0}
-  _weaponController: {fileID: 0}
-  _keyInventory: {fileID: 0}
+  originalBodyRotation: {x: 0, y: 0, z: 0, w: 0}
+  originalCamRotation: {x: 0, y: 0, z: 0, w: 0}
+  rotationX: 0
+  rotationY: 0
+  pCamera: {fileID: 0}
 --- !u!114 &8220724060453802220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7230,7 +7246,6 @@ GameObject:
   - component: {fileID: 3628085031787910056}
   - component: {fileID: 4721211301067614921}
   - component: {fileID: 8320037502113974227}
-  - component: {fileID: 3363980646882948268}
   m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
@@ -7322,24 +7337,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &3363980646882948268
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2598996604602688963}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 027507e4d7fc2dfd4a6b7d3a74d16964, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endScreen: {fileID: 6417636864987916807}
-  completionMessage: {fileID: 4513253619506689387}
-  killCount: {fileID: 8073402940387715723}
-  itemCount: {fileID: 8519054531727553153}
-  secretCount: {fileID: 4325785529964918203}
-  time: {fileID: 7574897798259361537}
 --- !u!1 &2797087428386973029
 GameObject:
   m_ObjectHideFlags: 0
@@ -12335,6 +12332,7 @@ GameObject:
   - component: {fileID: 6932594603332117406}
   - component: {fileID: 8510190443272886152}
   - component: {fileID: 5367653860772777021}
+  - component: {fileID: 8986970998938023453}
   m_Layer: 9
   m_Name: EndMenu
   m_TagString: Untagged
@@ -12399,6 +12397,24 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &8986970998938023453
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6417636864987916807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027507e4d7fc2dfd4a6b7d3a74d16964, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endScreen: {fileID: 6417636864987916807}
+  completionMessage: {fileID: 4513253619506689387}
+  killCount: {fileID: 8073402940387715723}
+  itemCount: {fileID: 8519054531727553153}
+  secretCount: {fileID: 4325785529964918203}
+  time: {fileID: 7574897798259361537}
 --- !u!1 &6432380364083390412
 GameObject:
   m_ObjectHideFlags: 0

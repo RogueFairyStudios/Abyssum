@@ -52,6 +52,7 @@ namespace DEEP.Entities
             else if(type == HealType.Overload && health > maxOverloadedHealth)
                 health = maxOverloadedHealth;
 
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
             return true;
@@ -63,6 +64,7 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
         }
