@@ -76,8 +76,6 @@ namespace DEEP.Entities{
 
         public override void Damage(int amount, DamageType type){
 
-            Debug.Log("enemy hitted");
-
             AI.Hitted();
 
             if(damage.Length > 0) {

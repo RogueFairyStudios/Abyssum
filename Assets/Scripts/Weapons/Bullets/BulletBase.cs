@@ -1,6 +1,5 @@
-﻿using System.Net;
-using System.Collections.ObjectModel;
-using UnityEngine;
+﻿using UnityEngine;
+
 using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets
@@ -74,7 +73,6 @@ namespace DEEP.Weapons.Bullets
                     Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
                 
                 // Does the damage.
-                Debug.Log("Dealing damage!");
                 entity.Damage(damage, 0);
 
             } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.

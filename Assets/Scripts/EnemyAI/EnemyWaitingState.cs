@@ -10,6 +10,11 @@ namespace DEEP.AI
     {
         private static EnemyWaitingState instance;
 
+#if UNITY_EDITOR
+        // Only used in the Editor, set to false to hide logs.
+        private bool showDebug = true;
+# endif
+
         public EnemyWaitingState(){
             if (instance != null)
                 return;
@@ -40,13 +45,19 @@ namespace DEEP.AI
             if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();
 
-            Debug.Log(owner.transform.name + ": Entering Enemy Waiting State");
+#if UNITY_EDITOR
+            if (showDebug) Debug.Log(owner.transform.name + ": Entering Enemy Waiting State");
+# endif
 
         }
 
         public override void ExitState(EnemyAISystem owner)
         {
-            Debug.Log(owner.transform.name + ": Exiting Enemy Waiting State");
+
+#if UNITY_EDITOR
+            if (showDebug) Debug.Log(owner.transform.name + ": Exiting Enemy Waiting State");
+# endif
+
         }
 
         public override void UpdateState(EnemyAISystem owner){

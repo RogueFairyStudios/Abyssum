@@ -66,7 +66,7 @@ namespace DEEP.DoorsAndKeycards {
 			if (lockState)
 				return;
 
-			print("Trying to open the door");
+			Debug.Log("Trying to open the door");
 
 			// Dont open the door during an animation.
 			if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Opening") || _animator.GetCurrentAnimatorStateInfo(0).IsName("Closing"))

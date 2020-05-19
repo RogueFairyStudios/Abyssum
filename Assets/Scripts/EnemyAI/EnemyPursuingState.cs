@@ -8,7 +8,13 @@ namespace DEEP.AI
     public class EnemyPursuingState : State<EnemyAISystem>
     {
         private static EnemyPursuingState instance;
-        
+
+# if UNITY_EDITOR
+        // Only used in the Editor, set to false to hide logs.
+        private bool showDebug = true;
+# endif
+
+
         public EnemyPursuingState(){
             if (instance != null)
                 return;
@@ -29,7 +35,9 @@ namespace DEEP.AI
 
         public override void EnterState(EnemyAISystem owner){
 
-            Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
+#if UNITY_EDITOR
+        if(showDebug) Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
+#endif
 
             owner.anim.SetBool("Walk", true);
 
@@ -39,7 +47,9 @@ namespace DEEP.AI
 
         public override void ExitState(EnemyAISystem owner){
 
-            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+#if UNITY_EDITOR
+            if (showDebug) Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+# endif
 
             if (owner.OnLoseAggro != null)
                 owner.OnLoseAggro();

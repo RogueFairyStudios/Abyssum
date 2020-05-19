@@ -321,7 +321,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3964534801763573718}
-  - component: {fileID: 7666514726129634675}
   - component: {fileID: 5390480003590336918}
   m_Layer: 9
   m_Name: Weapons
@@ -344,34 +343,6 @@ Transform:
   m_Father: {fileID: 784329730603635299}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7666514726129634675
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 141195197505039839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4df6ca35cc6451c95bdd30d38e015e59, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  weapons:
-  - {fileID: 11400000, guid: 1d5f8048e6790ad4980a52968afa8afd, type: 2}
-  - {fileID: 11400000, guid: 0590d7ba1cd542444b3e07d7f776b365, type: 2}
-  - {fileID: 11400000, guid: 3393625288611ba4a80d31ed6f8d823b, type: 2}
-  - {fileID: 11400000, guid: 4adb0beef579ebb4b816afc494a6c2e3, type: 2}
-  - {fileID: 11400000, guid: 1354b5b352be455ca80df0a9937e1b20, type: 2}
-  - {fileID: 11400000, guid: c9ee0f01377be8ecc808224d84af5dc6, type: 2}
-  weaponPosition: {fileID: 3964534801763573718}
-  currentWeapon: {fileID: 0}
-  ammoTypes:
-  - {fileID: 11400000, guid: a76853f6669a5e249a7f3583c955e465, type: 2}
-  - {fileID: 11400000, guid: 032c43652db8dea4ebb2ca508471f132, type: 2}
-  - {fileID: 11400000, guid: 4a7f11402b1b4504e9fa55577d4ead43, type: 2}
-  - {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
-  - {fileID: 11400000, guid: 01ff66f3d428bd62abbdcfbce117c172, type: 2}
-  - {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
 --- !u!114 &5390480003590336918
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2045,6 +2016,7 @@ GameObject:
   - component: {fileID: 784329731769305213}
   - component: {fileID: 784329731769305154}
   - component: {fileID: 4047820183532755202}
+  - component: {fileID: 3455191415496438039}
   - component: {fileID: 8220724060453802220}
   m_Layer: 9
   m_Name: Player
@@ -2120,6 +2092,7 @@ MonoBehaviour:
   deathPrefab: {fileID: 0}
   armor: 0
   maxArmor: 100
+  minArmorAbsorption: 0.3
   isPaused: 1
   pauseMenu: {fileID: 7039854621110695698}
   deathScreen: {fileID: 3948141073903145448}
@@ -2159,6 +2132,34 @@ MonoBehaviour:
   rotationX: 0
   rotationY: 0
   pCamera: {fileID: 0}
+--- !u!114 &3455191415496438039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784329731769305155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4df6ca35cc6451c95bdd30d38e015e59, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  weapons:
+  - {fileID: 11400000, guid: 1d5f8048e6790ad4980a52968afa8afd, type: 2}
+  - {fileID: 11400000, guid: 0590d7ba1cd542444b3e07d7f776b365, type: 2}
+  - {fileID: 11400000, guid: 3393625288611ba4a80d31ed6f8d823b, type: 2}
+  - {fileID: 11400000, guid: 4adb0beef579ebb4b816afc494a6c2e3, type: 2}
+  - {fileID: 11400000, guid: 1354b5b352be455ca80df0a9937e1b20, type: 2}
+  - {fileID: 11400000, guid: c9ee0f01377be8ecc808224d84af5dc6, type: 2}
+  weaponPosition: {fileID: 3964534801763573718}
+  currentWeapon: {fileID: 0}
+  ammoTypes:
+  - {fileID: 11400000, guid: a76853f6669a5e249a7f3583c955e465, type: 2}
+  - {fileID: 11400000, guid: 032c43652db8dea4ebb2ca508471f132, type: 2}
+  - {fileID: 11400000, guid: 4a7f11402b1b4504e9fa55577d4ead43, type: 2}
+  - {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
+  - {fileID: 11400000, guid: 01ff66f3d428bd62abbdcfbce117c172, type: 2}
+  - {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
 --- !u!114 &8220724060453802220
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12409,7 +12410,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027507e4d7fc2dfd4a6b7d3a74d16964, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endScreen: {fileID: 6417636864987916807}
   completionMessage: {fileID: 4513253619506689387}
   killCount: {fileID: 8073402940387715723}
   itemCount: {fileID: 8519054531727553153}

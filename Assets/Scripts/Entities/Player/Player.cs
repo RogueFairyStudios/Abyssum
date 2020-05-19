@@ -14,6 +14,7 @@ namespace DEEP.Entities
 
     // Class that controls the Player.
     [RequireComponent(typeof(PlayerMovimentation))]
+    [RequireComponent(typeof(PlayerWeaponController))]
     public class Player : EntityBase
     {
 

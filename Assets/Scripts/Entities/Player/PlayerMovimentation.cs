@@ -142,6 +142,8 @@ namespace DEEP.Entities
             return Mathf.Clamp(angle, min, max);
         }
 
+#if UNITY_EDITOR
+
         private void OnDrawGizmos() // To visualize the ground check
         {
             Gizmos.color = Color.yellow;
@@ -152,5 +154,7 @@ namespace DEEP.Entities
             }
         }
     }
+
+# endif
 
 }
