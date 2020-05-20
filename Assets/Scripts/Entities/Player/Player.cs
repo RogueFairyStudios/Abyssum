@@ -21,8 +21,11 @@ namespace DEEP.Entities
         // Singleton for the player.
         public static Player Instance;
 
-        // Stores if the player is alive.
-        private bool isAlive = true;
+        // Possible states for the player.
+        private enum PlayerState { Play, Paused, Dead, EndLevel }
+
+        // Current player state.
+        private PlayerState currentState;
 
         
         [Header("Armor")] // ==============================================================================
@@ -39,8 +42,6 @@ namespace DEEP.Entities
 
         [Header("Pause")] // ==============================================================================
 
-        [Tooltip("If the game is paused.")]
-        public bool isPaused = true;
         [Tooltip("GameObject that contains the pause menu.")]
         [SerializeField] private GameObject pauseMenu = null;
 
@@ -77,9 +78,8 @@ namespace DEEP.Entities
             // Resets the time.
             Time.timeScale = 1;
 
-            // Initializes with the player alive and the game unpaused.
-            isAlive = true;
-            isPaused = false;
+            // Initializes the player state.
+            currentState = PlayerState.Play;
 
             // Get components ==============================================================================
 
@@ -105,12 +105,14 @@ namespace DEEP.Entities
             // Pause =========================================================================================
 
             // Pauses and unpauses the game.
-            if (Input.GetButtonDown("Cancel") && isAlive) {
-               TogglePause();
+            if (currentState == PlayerState.Play || currentState == PlayerState.Paused) {
+                if (Input.GetButtonDown("Cancel")) {
+                    TogglePause();
+                }
             }
 
-            // Returns execution if the game is paused or the player has died. ===============================
-            if (!isAlive || isPaused)
+            // Returns execution if the game is paused, the player has died or the level has ended. ==========
+            if (currentState != PlayerState.Play)
                 return;
 
             //Equiping weapons ===============================================================================
@@ -181,7 +183,7 @@ namespace DEEP.Entities
             Debug.Log("You died!");
 
             // Marks the player as dead.
-            isAlive = false;
+            currentState = PlayerState.Dead;
 
             // Disables player control.
             movimentation.enabled = false;
@@ -305,23 +307,26 @@ namespace DEEP.Entities
         // Pauses and unpauses the game.
         public void TogglePause() {
 
-            // Inverts the value.
-            isPaused = !isPaused;
+            // Pauses or unpauses the game.
+            if (currentState == PlayerState.Play)
+                currentState = PlayerState.Paused;
+            else
+                currentState = PlayerState.Play;
 
             // Stops player movimentation.
-            movimentation.enabled = !isPaused;
+            movimentation.enabled = (currentState == PlayerState.Play);
 
             // Shows or hides the pause menu and the cursor
-            pauseMenu.SetActive(isPaused);
-            Cursor.visible = isPaused;
+            pauseMenu.SetActive(currentState == PlayerState.Paused);
+            Cursor.visible = (currentState == PlayerState.Paused);
 
             // Set the cursor LockMode and time to the correct value.
-            if (isPaused) {
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-            } else {
+            if (currentState == PlayerState.Play) {
                 Cursor.lockState = CursorLockMode.Locked;
                 Time.timeScale = 1;
+            } else {
+                Cursor.lockState = CursorLockMode.None;
+                Time.timeScale = 0;
             }
 
         }
@@ -332,6 +337,9 @@ namespace DEEP.Entities
         public void EndLevel() {
             
             Debug.Log("Level completed!");
+
+            // Marks the level as finished.
+            currentState = PlayerState.EndLevel;
 
             // Disables player control.
             movimentation.enabled = false;
