@@ -1,13 +1,10 @@
-﻿using UnityEngine;
-
-using DEEP.AI;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace DEEP.Entities{
-
-    [RequireComponent(typeof(EnemyAISystem))]
-    public class Enemy : EntityBase
+    public class StaticEnemy : EntityBase
     {
-
         [Space(5)]
         [Header("Audio")]
         [Tooltip("Audio source for the audio clips.")]
@@ -31,25 +28,13 @@ namespace DEEP.Entities{
         [Tooltip("Min and max interval between growls.")]
         [SerializeField] protected float minGrowlInterval, maxGrowlInterval;
 
-        
-        private EnemyAISystem AI;
-
+        // Start is called before the first frame update
         protected override void Start()
         {
             base.Start();
-            AI = GetComponent<EnemyAISystem>();
-            this.baseSpeed = 3.5f;
-
-            // Sets delegates to start and stop growling.
-            if(growl.Length > 0)
-            {
-                AI.OnAggro      = () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
-                AI.OnLoseAggro  = () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
-            }
-
-            Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
+            //Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
         }
-
+        
         protected void Grunt()
         {
             if(grunt.Length > 0)
@@ -80,30 +65,21 @@ namespace DEEP.Entities{
 
             Debug.Log("enemy hitted");
 
-            AI.Hitted();
-
-            if(damage.Length > 0) {
+           /* if(damage.Length > 0) {
                 _audio.clip = damage[Random.Range(0, damage.Length)];
                 _audio.Play();
-            }
+            }*/
 
             base.Damage(amount,type);
         }
 
         protected override void Die(){
 
-            if(death.Length > 0)
+            /*if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
-
-            base.Die();
-            
+            */
+            base.Die();            
         }
 
-        public override void setSlow(){
-            AI.setSpeed(0.5f);
-        }
-        public override void setBaseSpeed(){
-            AI.setSpeed(this.baseSpeed);
-        }
     }
 }

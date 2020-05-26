@@ -290,6 +290,10 @@ namespace DEEP.AI
 
         }
 
+        public void setSpeed(float newSpeed){
+            agent.speed = newSpeed;
+        }
+
 #if UNITY_EDITOR
 
         void OnDrawGizmos()

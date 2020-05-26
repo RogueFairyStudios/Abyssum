@@ -27,6 +27,8 @@ namespace DEEP.Entities
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 
+        protected float baseSpeed;
+
         protected virtual void Start()
         {
 
@@ -85,6 +87,9 @@ namespace DEEP.Entities
                 Die();
 
         }
+
+        public virtual void setSlow(){}
+        public virtual void setBaseSpeed(){}
 
     }
 }

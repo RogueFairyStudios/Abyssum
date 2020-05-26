@@ -114,9 +114,12 @@ namespace DEEP.Entities
 
         protected override void Start()
         {
-
+            
             base.Start();
-
+            
+            //set the base speed 
+            this.baseSpeed = groundAcceleration;
+            
             // Resets the time.
             Time.timeScale = 1;
 
@@ -158,6 +161,7 @@ namespace DEEP.Entities
 
         private void Update()
         {
+            Debug.Log(baseSpeed);
 
             // Pause ======================================================================================== 
 
@@ -266,6 +270,18 @@ namespace DEEP.Entities
 
             }
 
+        }
+
+        //player speed config
+        public override void setSlow()
+        {
+            this.groundAcceleration = 0.5f;
+            this.canJump = false;
+        }
+        public override void setBaseSpeed()
+        {
+            this.groundAcceleration = this.baseSpeed;
+            this.canJump = true;
         }
 
         // Clamps pĺayer's rotation angles.
