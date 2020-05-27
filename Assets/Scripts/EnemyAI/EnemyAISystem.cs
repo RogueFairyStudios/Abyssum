@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-
 using UnityEngine;
 using UnityEngine.AI;
 using DEEP.StateMachine;
@@ -32,7 +31,6 @@ namespace DEEP.AI
         [SerializeField] protected bool isMeeleAttack = false;
 
         public GameObject target;
-
         public Vector3 lastTargetLocation; //location to search if the target has been missed
 
         protected StateMachine<EnemyAISystem> enemySM;
