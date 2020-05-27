@@ -5,7 +5,7 @@ using UnityEngine;
 namespace DEEP.DoorsAndKeycards {
 	public class InventoryKey : MonoBehaviour {
 
-		public static HashSet<KeysColors> inventory;
+		public HashSet<KeysColors> inventory;
 
 		[SerializeField] LayerMask tryOpenMask = new LayerMask();
 
@@ -22,7 +22,7 @@ namespace DEEP.DoorsAndKeycards {
 			}
 		}
 
-		private void FindDoor() {
+		void FindDoor() {
 			
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
@@ -33,6 +33,19 @@ namespace DEEP.DoorsAndKeycards {
 				}
 			}
 		}
+
+		public void AddKey(KeysColors color) {
+
+			inventory.Add(color);
+
+		}
+
+		public bool HasKey(KeysColors color) {
+
+			return inventory.Contains(color);
+
+		}
+
 	}
 
 	public enum KeysColors {

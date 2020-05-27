@@ -27,12 +27,6 @@ namespace DEEP.Weapons {
         // Stores a dictionary with the AmmoSource instances.
         private Dictionary<string, AmmoSource> ammoDict;
 
-        [HideInInspector]
-        public Player _player = null; // Player's script.
-
-        [HideInInspector]
-        public HUDController _hud = null; // Player's HUD controller.
-
         private void Start() {
             
             // Creates a dictionary with the ammo sources.
@@ -72,7 +66,7 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                _hud.ShowWeaponIcons(weaponsEnabled);
+                Player.instance._hud.ShowWeaponIcons(weaponsEnabled);
 
             }
 
@@ -95,9 +89,10 @@ namespace DEEP.Weapons {
             currentWeapon.gameObject.SetActive(true);
 
             // Updates the ammo counter on the HUD.
-            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
-            // Updates the ammo icon on the HUD.
-            _hud.SetAmmoIcon(ammoDict[currentWeapon.ammoSource.id].icon);
+            Player.instance._hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+
+            // Updates the current weapon icon on the HUD.
+            Player.instance._hud.SetCurrentWeapon(weaponNum);
 
         }
 
@@ -109,9 +104,8 @@ namespace DEEP.Weapons {
 
             currentWeapon.Shot();
             // Updates the ammo counter on the HUD.
-            _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
-            // Updates the ammo icon on the HUD.
-            _hud.SetAmmoIcon(ammoDict[currentWeapon.ammoSource.id].icon);
+            Player.instance._hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+
         }
 
         // Returns the index of the current weapon.
@@ -213,7 +207,7 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                _hud.ShowWeaponIcons(weaponsEnabled);
+                Player.instance._hud.ShowWeaponIcons(weaponsEnabled);
 
             }
 
@@ -225,10 +219,10 @@ namespace DEEP.Weapons {
             // If collected, plays the player feedback sound.
             if((collected || givenAmmo) && feedbackAudio != null) {
 
-                _player.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                Player.instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
                 // Flicks the screen to give feedback.
-                 _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Weapon);
+                Player.instance._hud.StartScreenFeedback(HUDController.FeedbackType.Weapon);
 
             }
 
@@ -251,14 +245,14 @@ namespace DEEP.Weapons {
 
             // Updates the ammo counter on the HUD.
             if(currentWeapon != null)
-                _hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo);
+                Player.instance._hud.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                _player.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                Player.instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Flicks the screen to give feedback.
-             _hud.StartScreenFeedback(HUDController.PlayerFeedback.Type.Weapon);
+            Player.instance._hud.StartScreenFeedback(HUDController.FeedbackType.Weapon);
 
             return true;
 
