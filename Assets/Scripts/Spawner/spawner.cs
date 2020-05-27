@@ -5,6 +5,7 @@ using UnityEngine;
 public class spawner : MonoBehaviour
 {
     [SerializeField] private List<GameObject> entitieList = new List<GameObject>();
+    public GameObject startingPoint;
     public int i = 0;
     float time = 2;
     // Start is called before the first frame update
@@ -32,7 +33,8 @@ public class spawner : MonoBehaviour
             return;
         }
 
-        Instantiate(entitieList[id],this.transform);
+        GameObject instance = Instantiate(entitieList[id],this.transform);
+        instance.GetComponent<EnemyAISystem>().addPatrolPoint(startingPoint);
     }
 
     public void spawnNObject(int id, int n){

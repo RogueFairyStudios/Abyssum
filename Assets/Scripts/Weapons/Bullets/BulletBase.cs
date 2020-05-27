@@ -61,6 +61,7 @@ namespace DEEP.Weapons.Bullets
             // Tries to get an entity component from the object.
             EntityBase entity;
             Rigidbody rigid = col.rigidbody; // Verifies if the object hit has a rigidbody.
+            Debug.Log(col.gameObject);
             if(rigid != null)
                 entity = rigid.GetComponent<EntityBase>();
             else

@@ -294,6 +294,20 @@ namespace DEEP.AI
             agent.speed = newSpeed;
         }
 
+        public void addPatrolPoint(GameObject newPoint)
+        {
+            patrolPoints.Add(newPoint);
+        }
+
+        public void removePatrolPoint(int i)
+        {
+            if(i >= 0 && i < patrolPoints.Count)
+                patrolPoints.Remove(patrolPoints[i]);
+        }
+        public void removePatrolPoint(){
+            removePatrolPoint(0);
+        }
+
 #if UNITY_EDITOR
 
         void OnDrawGizmos()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class spawnerManager : MonoBehaviour
 {
-   // [SerializeField] private List<GameObject> spawnerList = new List<spawner>();
+   [SerializeField] private List<spawner> spawnerList = new List<spawner>();
     
     public void createWave(){}
 
