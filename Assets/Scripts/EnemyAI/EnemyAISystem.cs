@@ -12,6 +12,9 @@ namespace DEEP.AI
     public class EnemyAISystem : MonoBehaviour
     {
 
+        // Has this enemy been spawned after the start of the game.
+        public bool spawned = false;
+
         private Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;

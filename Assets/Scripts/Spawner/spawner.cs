@@ -83,10 +83,13 @@ namespace DEEP.Spawn
 
             currentEntity = (currentEntity + 1) % entityList.Count;
 
+            EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
+            enemyAI.spawned = true;
+
             if (patrolStartingPoint != null) {
 
-                instance.GetComponent<EnemyAISystem>().addPatrolPoint(patrolStartingPoint);
-                instance.GetComponent<EnemyAISystem>().ResetPatrol();
+                enemyAI.addPatrolPoint(patrolStartingPoint);
+                enemyAI.ResetPatrol();
 
             }
 
@@ -105,10 +108,13 @@ namespace DEEP.Spawn
 
                 currentEntity = (currentEntity + 1) % entityList.Count;
 
+                EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
+                enemyAI.spawned = true;
+
                 if (patrolStartingPoint != null) {
 
-                    instance.GetComponent<EnemyAISystem>().addPatrolPoint(patrolStartingPoint);
-                    instance.GetComponent<EnemyAISystem>().ResetPatrol();
+                    enemyAI.addPatrolPoint(patrolStartingPoint);
+                    enemyAI.ResetPatrol();
 
                 }
 

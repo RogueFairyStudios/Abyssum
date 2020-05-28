@@ -2,6 +2,9 @@
 
 using DEEP.AI;
 using DEEP.Collectibles;
+using System.Collections.Generic;
+using DEEP.Entities;
+using System.Linq;
 
 namespace DEEP.Stage
 {
@@ -53,7 +56,21 @@ namespace DEEP.Stage
         public int GetTotalSecrets() { return numStageSecrets;  }
 
         // Number of enemies killed.
-        public int GetKillCount() { return numStageEnemies - FindObjectsOfType<EnemyAISystem>().Length; }
+        public int GetKillCount() {
+
+            // Detects all enemeis alive.
+            EnemyAISystem[] allEnemies = FindObjectsOfType<EnemyAISystem>();
+
+            // Removes enemies spawned after start.
+            int enemyCount = allEnemies.Length;
+            foreach(EnemyAISystem enemy in allEnemies) {
+                if (enemy.spawned)
+                    enemyCount--;
+            }
+
+            // Calculates how many of the original enemies have been killed.
+            return numStageEnemies - enemyCount;
+        }
 
         // Number of collectibles collected.
         public int GetCollectibleCount() { return numStageCollectibles - FindObjectsOfType<CollectibleBase>().Length; }
