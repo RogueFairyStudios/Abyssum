@@ -7,6 +7,7 @@ namespace DEEP.Entities{
     [RequireComponent(typeof(EnemyAISystem))]
     public class Enemy : EntityBase
     {
+
         [Space(5)]
         [Header("Audio")]
         [Tooltip("Audio source for the audio clips.")]
@@ -30,13 +31,14 @@ namespace DEEP.Entities{
         [Tooltip("Min and max interval between growls.")]
         [SerializeField] protected float minGrowlInterval, maxGrowlInterval;
 
-
+        
         private EnemyAISystem AI;
 
         protected override void Start()
         {
             base.Start();
             AI = GetComponent<EnemyAISystem>();
+            this.baseSpeed = 3.5f;
 
             // Sets delegates to start and stop growling.
             if(growl.Length > 0)
@@ -93,6 +95,13 @@ namespace DEEP.Entities{
 
             base.Die();
             
+        }
+
+        public override void setSlow(){
+            AI.setSpeed(0.5f);
+        }
+        public override void setBaseSpeed(){
+            AI.setSpeed(this.baseSpeed);
         }
     }
 }

@@ -360,6 +360,17 @@ namespace DEEP.Entities
 
         public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
 
+        public override void setSlow() {
+
+            movimentation.SetSlow();
+
+        }
+        public override void setBaseSpeed() {
+
+            movimentation.SetBaseSpeed();
+
+        }
+
     }
 
 }

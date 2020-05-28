@@ -9,7 +9,12 @@ namespace DEEP.Entities
     {
 
         [Tooltip("Player acceleration on ground.")]
-        public float groundAcceleration = 8.0f;
+        public float baseGroundAcceleration = 8.0f;
+
+        [Tooltip("Player acceleration on ground when under the slow effect.")]
+        public float slowGroundAcceleration = 1.5f;
+
+        private float groundAcceleration;
 
         [Tooltip("If the Player is allowed jumping.")]
         public bool canJump = true;
@@ -68,6 +73,9 @@ namespace DEEP.Entities
             // Gets the original rotations for mouselook.
             originalBodyRotation = transform.localRotation;
             originalCamRotation = pCamera.transform.localRotation;
+
+            // Initializes the player speed.
+            SetBaseSpeed();
 
         }
 
@@ -140,6 +148,20 @@ namespace DEEP.Entities
             if (angle > 360.0f)
                 angle -= 360.0f;
             return Mathf.Clamp(angle, min, max);
+        }
+
+        public void SetSlow() {
+
+            groundAcceleration = slowGroundAcceleration;
+            canJump = false;
+
+        }
+
+        public void SetBaseSpeed() {
+
+            groundAcceleration = baseGroundAcceleration;
+            canJump = true;
+
         }
 
 #if UNITY_EDITOR

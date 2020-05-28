@@ -2093,7 +2093,6 @@ MonoBehaviour:
   armor: 0
   maxArmor: 100
   minArmorAbsorption: 0.3
-  isPaused: 1
   pauseMenu: {fileID: 7039854621110695698}
   deathScreen: {fileID: 3948141073903145448}
   deathMenu: {fileID: 6183051250509740394}
@@ -2115,7 +2114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 252902325740b0642850858fe366df16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  groundAcceleration: 8
+  baseGroundAcceleration: 8
+  slowGroundAcceleration: 1.5
   canJump: 1
   jumpAcceleration: 7.5
   groundDrag: 4
