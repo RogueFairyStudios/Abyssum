@@ -8,9 +8,9 @@ namespace DEEP.Weapons.Bullets
     [RequireComponent(typeof(Rigidbody))]
     public class BulletBase : MonoBehaviour
     {
-        
+
         //Bullet's rigidbody.
-        private Rigidbody _rigidbody;
+        protected Rigidbody _rigidbody;
 
         [Tooltip("Velocity of the projectile.")]
         [SerializeField] protected float velocity = 10f;
@@ -24,9 +24,9 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Effect to be spawned when hitting other objects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
 
-        private bool isTargeted = false;
-        private bool avoidDoubleHit = true;
-        private bool hasHit = false;
+        protected bool isTargeted = false;
+        protected bool avoidDoubleHit = true;
+        protected bool hasHit = false;
 
         protected virtual void Awake() {
 
@@ -36,7 +36,7 @@ namespace DEEP.Weapons.Bullets
             Destroy(gameObject, 5.0f);    // Auto destroy the projectile after a while, to avoid bullets pollution
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if(isTargeted == false)
                 _rigidbody.velocity = transform.forward * velocity;    
