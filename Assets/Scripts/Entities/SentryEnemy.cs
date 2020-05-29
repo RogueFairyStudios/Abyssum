@@ -1,6 +1,5 @@
-﻿using DEEP.Weapons;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
+
 using UnityEngine;
 
 namespace DEEP.Entities
@@ -17,6 +16,10 @@ namespace DEEP.Entities
 
             public GameObject attackObject;
             public Transform attackSpawn;
+
+            public ParticleSystem particles;
+
+            public AudioClip attackClip;
 
         }
 
@@ -65,8 +68,29 @@ namespace DEEP.Entities
 
         protected void Attack() {
 
+            // Plays animations.
             animator.SetBool("Attack", true);
+
+            // Plays a particle effect.
+            sentry.particles.Play();
+
+            // Plays the attack audio.
+            _audio.clip = sentry.attackClip;
+            _audio.Play();
+
+            // Spawns the attack.
             Instantiate(sentry.attackObject, sentry.attackSpawn.position, sentry.attackSpawn.rotation);
+
+        }
+
+        public override void Damage(int amount, DamageType type) {
+
+            base.Damage(amount, type);
+
+            if (delayTimer >= sentry.attackDelay) {
+                Attack();
+                delayTimer = 0.0f;
+            }
 
         }
 

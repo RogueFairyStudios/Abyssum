@@ -50,7 +50,7 @@ TrailRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 52c3a88edd7747db79641ea2da8f207b, type: 2}
+  - {fileID: 2100000, guid: 319e7b9dd12ae24478d41c37f5f78bff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -74,26 +74,35 @@ TrailRenderer:
   m_Time: 5
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.1
+    widthMultiplier: 0.3
     widthCurve:
       serializedVersion: 2
       m_Curve:
       - serializedVersion: 3
         time: 0
+        value: 0.06349182
+        inSlope: 39.06668
+        outSlope: 39.06668
+        tangentMode: 0
+        weightedMode: 0
+        inWeight: 0
+        outWeight: 0.3125
+      - serializedVersion: 3
+        time: 0.05460751
         value: 1
         inSlope: 0
         outSlope: 0
         tangentMode: 0
         weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
+        inWeight: 0
+        outWeight: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.3773585, g: 0.332562, b: 0.10857955, a: 0.09803922}
-      key1: {r: 0.38039216, g: 0.33333334, b: 0.10980392, a: 0}
+      key0: {r: 0.3773585, g: 0.332562, b: 0.10857955, a: 0}
+      key1: {r: 0.38039216, g: 0.33333334, b: 0.10980392, a: 0.93574333}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -108,9 +117,9 @@ TrailRenderer:
       ctime5: 0
       ctime6: 0
       ctime7: 0
-      atime0: 578
-      atime1: 48188
-      atime2: 0
+      atime0: 0
+      atime1: 3084
+      atime2: 47995
       atime3: 0
       atime4: 0
       atime5: 0
@@ -118,14 +127,14 @@ TrailRenderer:
       atime7: 0
       m_Mode: 0
       m_NumColorKeys: 2
-      m_NumAlphaKeys: 2
+      m_NumAlphaKeys: 3
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
     textureMode: 1
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.01
+  m_MinVertexDistance: 0.1
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!1 &4041188500202421651
@@ -154,7 +163,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4041188500202421651}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2, z: 4}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 6702440539792920754}
@@ -323,7 +332,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: feaa1b945af2b3ff2999d64ad1547e6c, type: 2}
+      objectReference: {fileID: 2100000, guid: a49c43339cffb99c1ac5af6d4ba0588b, type: 2}
     - target: {fileID: -927199367670048503, guid: 7460bfee70e57d645846d3b7fd3b4500,
         type: 3}
       propertyPath: m_Name
