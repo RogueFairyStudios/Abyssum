@@ -48,7 +48,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858496c808e96c240952574a36e73d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 40
+  detectRange: 30
   sightMask:
     serializedVersion: 2
     m_Bits: 1025
