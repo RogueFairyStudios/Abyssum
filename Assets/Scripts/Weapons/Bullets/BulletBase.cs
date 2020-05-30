@@ -1,6 +1,5 @@
-﻿using System.Net;
-using System.Collections.ObjectModel;
-using UnityEngine;
+﻿using UnityEngine;
+
 using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets
@@ -9,9 +8,9 @@ namespace DEEP.Weapons.Bullets
     [RequireComponent(typeof(Rigidbody))]
     public class BulletBase : MonoBehaviour
     {
-        
+
         //Bullet's rigidbody.
-        private Rigidbody _rigidbody;
+        protected Rigidbody _rigidbody;
 
         [Tooltip("Velocity of the projectile.")]
         [SerializeField] protected float velocity = 10f;
@@ -25,9 +24,9 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Effect to be spawned when hitting other objects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
 
-        private bool isTargeted = false;
-        private bool avoidDoubleHit = true;
-        private bool hasHit = false;
+        protected bool isTargeted = false;
+        protected bool avoidDoubleHit = true;
+        protected bool hasHit = false;
 
         protected virtual void Awake() {
 
@@ -37,7 +36,7 @@ namespace DEEP.Weapons.Bullets
             Destroy(gameObject, 5.0f);    // Auto destroy the projectile after a while, to avoid bullets pollution
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             if(isTargeted == false)
                 _rigidbody.velocity = transform.forward * velocity;    
@@ -61,6 +60,7 @@ namespace DEEP.Weapons.Bullets
             // Tries to get an entity component from the object.
             EntityBase entity;
             Rigidbody rigid = col.rigidbody; // Verifies if the object hit has a rigidbody.
+            Debug.Log(col.gameObject);
             if(rigid != null)
                 entity = rigid.GetComponent<EntityBase>();
             else
@@ -74,7 +74,6 @@ namespace DEEP.Weapons.Bullets
                     Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
                 
                 // Does the damage.
-                Debug.Log("Dealing damage!");
                 entity.Damage(damage, 0);
 
             } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.

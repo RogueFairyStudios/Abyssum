@@ -3,16 +3,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+
 using DEEP.Entities;
-using System.Collections.Generic;
 using DEEP.DoorsAndKeycards;
 
 namespace DEEP.UI
 {
 
     public class HUDController : MonoBehaviour {
-
-
 
         [System.Serializable]
         protected class HealthHUD
@@ -202,9 +200,9 @@ namespace DEEP.UI
 
         public void SetKeyHUD() {
 
-            keyHUD.blueKeyIcon.SetActive(Player.instance._keyInventory.HasKey(KeysColors.Blue));
-            keyHUD.redKeyIcon.SetActive(Player.instance._keyInventory.HasKey(KeysColors.Red));
-            keyHUD.yellowKeyIcon.SetActive(Player.instance._keyInventory.HasKey(KeysColors.Yellow));
+            keyHUD.blueKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Blue));
+            keyHUD.redKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Red));
+            keyHUD.yellowKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Yellow));
 
         }
 

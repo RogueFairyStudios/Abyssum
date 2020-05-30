@@ -27,6 +27,8 @@ namespace DEEP.Entities
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 
+        protected float baseSpeed;
+
         protected virtual void Start()
         {
 
@@ -52,6 +54,7 @@ namespace DEEP.Entities
             else if(type == HealType.Overload && health > maxOverloadedHealth)
                 health = maxOverloadedHealth;
 
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
             return true;
@@ -63,6 +66,7 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
         }
@@ -85,6 +89,9 @@ namespace DEEP.Entities
                 Die();
 
         }
+
+        public virtual void setSlow(){}
+        public virtual void setBaseSpeed(){}
 
     }
 }

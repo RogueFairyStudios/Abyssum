@@ -7,6 +7,7 @@ namespace DEEP.Entities{
     [RequireComponent(typeof(BaseEntityAI))]
     public class Enemy : EntityBase
     {
+
         [Space(5)]
         [Header("Audio")]
         [Tooltip("Audio source for the audio clips.")]
@@ -37,6 +38,7 @@ namespace DEEP.Entities{
         {
             base.Start();
             AI = GetComponent<BaseEntityAI>();
+            this.baseSpeed = 3.5f;
 
             // Sets delegates to start and stop growling.
             if(growl.Length > 0)
@@ -76,8 +78,6 @@ namespace DEEP.Entities{
 
         public override void Damage(int amount, DamageType type){
 
-            Debug.Log("enemy hitted");
-
             AI.Aggro();
 
             if(damage.Length > 0) {
@@ -95,6 +95,15 @@ namespace DEEP.Entities{
 
             base.Die();
             
+        }
+
+        public override void setSlow(){
+            if(AI is EnemyAISystem navmeshAI)
+                navmeshAI.setSpeed(0.5f);
+        }
+        public override void setBaseSpeed(){
+            if(AI is EnemyAISystem navmeshAI)
+                navmeshAI.setSpeed(this.baseSpeed);
         }
     }
 }

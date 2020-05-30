@@ -12,6 +12,9 @@ namespace DEEP.AI
     public class EnemyAISystem : BaseEntityAI
     {
 
+        // Has this enemy been spawned after the start of the game.
+        public bool spawned = false;
+
         private Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;
@@ -230,6 +233,24 @@ namespace DEEP.AI
 
             enemySM.ChangeState(EnemyPursuingState.Instance);
 
+        }
+
+        public void setSpeed(float newSpeed){
+            agent.speed = newSpeed;
+        }
+
+        public void addPatrolPoint(GameObject newPoint)
+        {
+            patrolPoints.Add(newPoint);
+        }
+
+        public void removePatrolPoint(int i)
+        {
+            if(i >= 0 && i < patrolPoints.Count)
+                patrolPoints.Remove(patrolPoints[i]);
+        }
+        public void removePatrolPoint(){
+            removePatrolPoint(0);
         }
 
 #if UNITY_EDITOR
