@@ -28,7 +28,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5141375089255132248}
+  - component: {fileID: 7381030407535219150}
   - component: {fileID: 7383721831286621123}
+  - component: {fileID: 6367357940101571223}
+  - component: {fileID: 5769856171750613187}
   m_Layer: 0
   m_Name: JellyFish
   m_TagString: Untagged
@@ -51,6 +54,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7381030407535219150
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680501943909845909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 648a43d69f5f416428e50571c6a56dfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 0}
+  _rigid: {fileID: 0}
+  _collider: {fileID: 0}
+  collisionMask:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &7383721831286621123
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,19 +81,43 @@ MonoBehaviour:
   m_GameObject: {fileID: 2680501943909845909}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e72e7d0ed98cae163a6228f0e3199259, type: 3}
+  m_Script: {fileID: 11500000, guid: 20f4e230a30ca794aa2e85bf80cc15b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 100
-  maxHealth: 100
-  maxOverloadedHealth: 200
-  deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
-    type: 3}
   minMovementDelay: 5
   maxMovementDelay: 10
   movementBoxSize: {x: 5, y: 5, z: 5}
-  movementVelocity: 2
+  movementSpeed: 2
   rotationVelocity: 90
+--- !u!54 &6367357940101571223
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680501943909845909}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
+--- !u!135 &5769856171750613187
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2680501943909845909}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.6236162
+  m_Center: {x: 0, y: 0, z: 0.63}
 --- !u!1001 &9086701055836799855
 PrefabInstance:
   m_ObjectHideFlags: 0

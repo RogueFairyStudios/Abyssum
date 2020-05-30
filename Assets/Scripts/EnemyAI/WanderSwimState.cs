@@ -1,9 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace DEEP.Entities
+namespace DEEP.AI
 {
-    public class BaseSwimNav : MonoBehaviour
+    [RequireComponent(typeof(BaseSwimAI))]
+    public class WanderSwimState : MonoBehaviour
     {
 
         protected Vector3 initialPosition;
@@ -17,26 +18,25 @@ namespace DEEP.Entities
         [SerializeField] private float movementSpeed = 2.0f;
         [SerializeField] private float rotationVelocity = 90.0f;
 
-        protected Animator _animator;
-        protected Rigidbody _rigid;
+        BaseSwimAI baseSwimAI;
 
-        protected void Start()
+        private void Awake()
         {
+            baseSwimAI = GetComponent<BaseSwimAI>();
+            this.enabled = false;
+        }
 
+        protected void OnEnable()
+        {
             // Initializes variables.
             initialPosition = transform.position;
             targetPosition = initialPosition;
             
-            // Gets the aniamtor component.
-            _animator = GetComponentInChildren<Animator>();
-            _rigid = GetComponentInChildren<Rigidbody>();
-
             // Starts the movement cycle.
-            StartCoroutine(WaitForDelay());
-
+            StartCoroutine(WanderDelay());
         }
 
-        private IEnumerator WaitForDelay()
+        private IEnumerator WanderDelay()
         {
 
             // Waits for a random time inside the allowed range.
@@ -50,20 +50,25 @@ namespace DEEP.Entities
             }
 
             // Start movement.
-            StartCoroutine(MoveTo());
+            StartCoroutine(WanderAround());
 
         }
 
-        private IEnumerator MoveTo()
+        private IEnumerator WanderAround()
         {
-
-            // Gets a random position.
-            targetPosition = initialPosition + new Vector3(Random.Range(-movementBoxSize.x, movementBoxSize.x) / 2.0f,
-                                                              Random.Range(-movementBoxSize.y, movementBoxSize.y) / 2.0f,
-                                                              Random.Range(-movementBoxSize.z, movementBoxSize.z) / 2.0f);
+            Vector3 deltaPos;
+            do
+            {
+                // Gets a random position.
+                targetPosition = initialPosition + new Vector3(Random.Range(-movementBoxSize.x, movementBoxSize.x) / 2.0f,
+                                                                Random.Range(-movementBoxSize.y, movementBoxSize.y) / 2.0f,
+                                                                Random.Range(-movementBoxSize.z, movementBoxSize.z) / 2.0f);
+                deltaPos = targetPosition - transform.position;
+            }
+            while (Physics.BoxCast(baseSwimAI._collider.bounds.center, baseSwimAI._collider.bounds.extents, deltaPos, Quaternion.LookRotation(deltaPos.normalized), deltaPos.magnitude)); // Makes sure there isn't anything in the way
 
             // Rotates the body.
-            Quaternion rotate = Quaternion.LookRotation((targetPosition - transform.position).normalized);
+            Quaternion rotate = Quaternion.LookRotation(deltaPos.normalized);
             while(Quaternion.Angle(transform.rotation, rotate) > 0.01f)
             {
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.fixedDeltaTime * Mathf.Deg2Rad * rotationVelocity);
@@ -74,22 +79,22 @@ namespace DEEP.Entities
             transform.LookAt(targetPosition);
 
             // Swims.
-            _animator.SetBool("Swim", true);
+            baseSwimAI._animator.SetBool("Swim", true);
 
-            while(Vector3.Distance(transform.position, targetPosition) > 0.05f)
+            while(Vector3.Distance(transform.position, targetPosition) > 0.1f)
             {
                 // Moves
-                Vector3 deltaPos = targetPosition - transform.position;
-                _rigid.velocity = 1f/Time.fixedDeltaTime * deltaPos * movementSpeed * 0.01f;
+                deltaPos = targetPosition - transform.position;
+                baseSwimAI._rigid.velocity = 1f/Time.fixedDeltaTime * deltaPos * movementSpeed * 0.01f;
 
                 yield return new WaitForFixedUpdate();
             }
 
             // Stops swimming.
-            _animator.SetBool("Swim", false);
+            baseSwimAI._animator.SetBool("Swim", false);
             
             // Restarts the cycle.
-            StartCoroutine(WaitForDelay());  
+            StartCoroutine(WanderDelay());  
 
         }
 
@@ -104,6 +109,11 @@ namespace DEEP.Entities
             Gizmos.DrawLine(transform.position, targetPosition);
         }
 
+        protected void OnDisable()
+        {
+            // Stops all movement
+            StopAllCoroutines();
+        }
     }
 
 }
