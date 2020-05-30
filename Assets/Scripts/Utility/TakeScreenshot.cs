@@ -18,7 +18,7 @@ namespace DEEP.Utility
                 int random = Random.Range(1000000, 10000000);
                 // The format of the image.
                 string format = ".png";
-                ScreenCapture.CaptureScreenshot("SB_Screenshot_" + date + '_' + random + format);
+                ScreenCapture.CaptureScreenshot("DEEP_Screenshot_" + date + '_' + random + format);
 
             }
 

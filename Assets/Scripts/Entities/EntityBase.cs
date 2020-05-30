@@ -74,7 +74,7 @@ namespace DEEP.Entities
         // "Kills" an entity.
         protected virtual void Die() {
 
-            if(deathPrefab != null) // SPawns a prefab after death if assigned.
+            if(deathPrefab != null) // Spawns a prefab after death if assigned.
                 Instantiate(deathPrefab, transform.position, transform.rotation);
 
             Destroy(gameObject);
