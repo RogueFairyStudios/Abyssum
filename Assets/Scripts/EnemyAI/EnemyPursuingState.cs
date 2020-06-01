@@ -40,9 +40,7 @@ namespace DEEP.AI
 #endif
 
             owner.anim.SetBool("Walk", true);
-
-            if (owner.OnAggro != null)
-                owner.OnAggro();
+            
         }
 
         public override void ExitState(EnemyAISystem owner){

@@ -1,21 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace DEEP.Entities
-{
+using DEEP.AI;
+
+namespace DEEP.Entities{
+
     public class Blowfish : Enemy
     {
-        // Start is called before the first frame update
-        void Start()
+        [SerializeField] GameObject explosionPrefab;
+
+        // Will be a loop instead
+        protected override void Growl()
         {
             
         }
 
-        // Update is called once per frame
-        void Update()
+        public void Explode()
         {
-            
+            Transform currentPosition = this.transform;
+            Destroy(this.gameObject);
+            Instantiate(explosionPrefab, currentPosition.position, currentPosition.rotation);
         }
     }
 }

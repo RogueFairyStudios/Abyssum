@@ -1,0 +1,120 @@
+using UnityEngine;
+using System.Collections;
+
+namespace DEEP.AI
+{
+    [RequireComponent(typeof(BlowfishAI))]
+    public class ChaseSwimState : MonoBehaviour
+    {
+        [SerializeField] private float minChasingSpeed, maxChasingSpeed, chasingSpeedScaling;
+        [SerializeField] private float minChasingTurningSpeed, maxChasingTurningSpeed, chasingTurningSpeedScaling;
+        [SerializeField] private float pointOfNoReturn, timeBeforeExploding;
+        [SerializeField] private float startExpandingRange;
+
+        BlowfishAI blowfishAI;
+        float fuseTime;
+
+        private void Awake()
+        {
+            blowfishAI = GetComponent<BlowfishAI>();
+        }
+
+        private void OnEnable()
+        {
+            Debug.Log("Start chasing state");
+            StartCoroutine(Chase());
+        }
+
+        private IEnumerator Chase()
+        {
+            float chasingTurningSpeed, chasingSpeed;
+            bool chasing = true;
+            Vector3 deltaPos;
+            Quaternion rotate;
+
+            do
+            {
+                // Update location
+                blowfishAI.HasTargetSight();
+                deltaPos = blowfishAI.lastTargetLocation - transform.position;
+                rotate = Quaternion.LookRotation(deltaPos.normalized);
+
+                // Face target
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.fixedDeltaTime * Mathf.Deg2Rad * maxChasingTurningSpeed * 10f);
+                
+                yield return new WaitForFixedUpdate();
+
+                Debug.Log("Angle:" + Quaternion.Angle(transform.rotation, rotate));
+
+            } while(Quaternion.Angle(transform.rotation, rotate) > 5f);
+
+            // Clamps the rotation.
+            transform.LookAt(blowfishAI.lastTargetLocation);
+            rotate = Quaternion.LookRotation(deltaPos.normalized);
+
+            // Swims.
+            blowfishAI._animator.SetBool("Swim", true);
+
+            while(chasing)
+            {
+                // Scale speeds with distance
+                chasingTurningSpeed = Mathf.Lerp(minChasingTurningSpeed, maxChasingTurningSpeed, 1/(deltaPos.magnitude / chasingTurningSpeedScaling + 1));
+                chasingSpeed = Mathf.Lerp(minChasingSpeed, maxChasingSpeed, (deltaPos.magnitude * chasingSpeedScaling) / blowfishAI.DetectRange);
+
+                // Rotates
+                transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.fixedDeltaTime * Mathf.Deg2Rad * chasingTurningSpeed * 10f);
+
+                // Moves
+                blowfishAI._rigid.velocity = 1f/Time.fixedDeltaTime * transform.forward * chasingSpeed * 0.1f;
+
+                yield return new WaitForFixedUpdate();
+
+                // Check Line of Sight
+                bool withinLoS = blowfishAI.HasTargetSight();
+
+                // Update distances
+                deltaPos = blowfishAI.lastTargetLocation - transform.position;
+                rotate = Quaternion.LookRotation(deltaPos.normalized);
+                
+                // If within sight, if it's within expanding range or past the point of no return, expand
+                if(withinLoS && (deltaPos.magnitude < startExpandingRange || fuseTime >= pointOfNoReturn))
+                {
+                    blowfishAI._animator.SetBool("Attack", true);
+                    fuseTime += Time.fixedDeltaTime;
+                }
+                else // Else, shrink back to normal
+                    fuseTime -= Time.fixedDeltaTime;
+                
+                // Clamps fuse time
+                fuseTime = Mathf.Clamp(fuseTime, 0f, timeBeforeExploding);
+
+                // Sets animation time
+                blowfishAI._animator.SetFloat("FuseTime", fuseTime / timeBeforeExploding);
+                
+                // If the fuse reaches it's limit, explode
+                if(fuseTime == timeBeforeExploding)
+                    blowfishAI.Explode();
+                // If it's shrunk back to normal size
+                else if(fuseTime == 0f) // 
+                {
+                    // Stop expanding animation
+                    blowfishAI._animator.SetBool("Attack", false);
+
+                    // If it's reached the target's last known position and can't see him anymore
+                    if(!withinLoS && deltaPos.magnitude < 0.5f)
+                    {
+                        // Go back to the wander state (Idle)
+                        blowfishAI._animator.SetBool("Swim", false);
+                        blowfishAI.Wander();
+                        chasing = false;
+                    }
+                }
+            }
+        } 
+
+        private void OnDisable()
+        {
+            StopAllCoroutines();
+        }
+    }
+}
