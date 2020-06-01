@@ -738,6 +738,8 @@ MonoBehaviour:
   health: 0
   maxHealth: 200
   maxOverloadedHealth: 400
+  bloodEffect: {fileID: 4981454918395137139, guid: d9e807bb920001244a22e202bb87cf42,
+    type: 3}
   deathPrefab: {fileID: 6215489283981922205, guid: e4ceb210b7e1daa4db80fb8c19ea824f,
     type: 3}
   _audio: {fileID: 0}
@@ -749,6 +751,8 @@ MonoBehaviour:
   growl: []
   minGrowlInterval: 0
   maxGrowlInterval: 0
+  deathPositionDelta: {x: 0, y: -3, z: 0}
+  deathFadeVelocity: 0.1
 --- !u!54 &7365553900994442014
 Rigidbody:
   m_ObjectHideFlags: 0

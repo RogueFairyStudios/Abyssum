@@ -1136,6 +1136,8 @@ MonoBehaviour:
   health: 300
   maxHealth: 300
   maxOverloadedHealth: 500
+  bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
+    type: 3}
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   _audio: {fileID: 2579516681668796992}

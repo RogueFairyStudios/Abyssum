@@ -23,7 +23,10 @@ namespace DEEP.Entities
 
         [Tooltip("Entity's max overloaded health.")]
         [SerializeField] protected int maxOverloadedHealth = 200;
-        
+
+        [Tooltip("Prefab to be spawned for the blood effect.")]
+        public GameObject bloodEffect = null;
+
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 

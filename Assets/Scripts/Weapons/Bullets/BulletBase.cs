@@ -18,9 +18,6 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Damage inflicted by the projectile.")]
         [SerializeField] protected int damage = 15;
 
-        [Tooltip("Blood effect to be spawned when hitting an entity.")]
-        [SerializeField] protected GameObject bloodEffect = null;
-
         [Tooltip("Effect to be spawned when hitting other objects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
 
@@ -68,11 +65,13 @@ namespace DEEP.Weapons.Bullets
 
             // Checks if an entity was hit.
             if (entity != null) {
-                
+
                 // Spawn the blood splatter effect if avaliable and hit a player or enemy.
-                if(bloodEffect != null  && (entity.GetType() == typeof(Player) || entity.GetType() == typeof(Enemy))) 
-                    Instantiate(bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
-                
+                if (entity.bloodEffect != null)
+                    Instantiate(entity.bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+                else
+                    Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+
                 // Does the damage.
                 entity.Damage(damage, 0);
 
