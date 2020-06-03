@@ -27,7 +27,12 @@ namespace DEEP.Utility {
             halfExtents = box.size / 2;
             if (box.attachedRigidbody != null){
                 entity = box.attachedRigidbody.GetComponent<EntityBase>();
-                entity.conductorBox = this;
+                if (entity == null) {
+                    Debug.LogWarning("ERRO!!! O objeto " + name + " de " + box.attachedRigidbody.name + " não tem um EntityBase");
+                }
+                else {
+                    entity.conductorBox = this;
+                }
             }
             layerMask = LayerMask.GetMask("Conductor");
         }
