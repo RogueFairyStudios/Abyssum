@@ -26,8 +26,8 @@ namespace DEEP.Weapons.Bullets
         [SerializeField] protected GameObject otherHitEffect = null;
 
         private bool isTargeted = false;
-        private bool avoidDoubleHit = true;
-        private bool hasHit = false;
+        protected bool avoidDoubleHit = true;
+        protected bool hasHit = false;
 
         protected virtual void Awake() {
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DEEP.Utility;
 
 namespace DEEP.Entities
 {
@@ -6,7 +7,7 @@ namespace DEEP.Entities
     // Contains possible heal types.
     public enum HealType { Regular, Overload };
     // Contains possible damage types.
-    public enum DamageType { Regular, Fire, Eletric, Drowning };
+    public enum DamageType { Regular, Fire, Electric, Drowning };
 
     // Base script for an entity (any object that has health).
     public abstract class EntityBase : MonoBehaviour
@@ -26,6 +27,10 @@ namespace DEEP.Entities
         
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
+
+
+        [Tooltip("Reference to the ConductorBox that represents the conductive range of this entity.")]
+        [SerializeField] public ConductorBox conductorBox;
 
         protected virtual void Start()
         {

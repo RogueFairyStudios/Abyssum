@@ -78,7 +78,7 @@ namespace DEEP.Entities{
 
             Debug.Log("enemy hitted");
 
-            AI.Hitted();
+            //AI.Hitted();
 
             if(damage.Length > 0) {
                 _audio.clip = damage[Random.Range(0, damage.Length)];

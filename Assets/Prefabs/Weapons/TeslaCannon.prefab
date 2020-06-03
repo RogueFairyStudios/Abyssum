@@ -390,7 +390,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 101379
   bulletSpawn: {fileID: 7318535671360887079}
-  bulletPrefab: {fileID: 4041188500202421656, guid: de612770af38ea04fa05d7402850544e,
+  bulletPrefab: {fileID: 783353297757611019, guid: 0c926ae830afabe44b408120a5c8d04b,
     type: 3}
   delayBetweenShots: 0.5
   shotClip: {fileID: 8300000, guid: 0e447db95c9a54b0ea7a862cdff60fdb, type: 3}
