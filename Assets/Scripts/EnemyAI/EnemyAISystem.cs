@@ -9,18 +9,18 @@ namespace DEEP.AI
 {
 
     [RequireComponent(typeof(NavMeshAgent))]
-    public class EnemyAISystem : MonoBehaviour
+    public class EnemyAISystem : BaseEntityAI
     {
+
+        // Has this enemy been spawned after the start of the game.
+        public bool spawned = false;
 
         private Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;
 
-        private Vector3 agentSightOffset;
-
         public Animator anim;
 
-        [SerializeField] protected float detectRange = 40.0f;
         [SerializeField] protected float attackRange = 10.0f;
         
         public WeaponBase weapon;
@@ -31,22 +31,13 @@ namespace DEEP.AI
         [Tooltip("Is the enemy attack meele or ranged?")]
         [SerializeField] protected bool isMeeleAttack = false;
 
-        public GameObject target;
-
-        public Vector3 lastTargetLocation; //location to search if the target has been missed
-
         protected StateMachine<EnemyAISystem> enemySM;
 
         [Tooltip("Random movimentation settings")]
         [SerializeField] protected List<GameObject> patrolPoints = new List<GameObject>();
         [SerializeField] protected int actualPoint = 0;
 
-        public delegate void Reaction();
-        public Reaction OnAggro, OnLoseAggro;
-
         [SerializeField]private bool reversePatrol = false;
-
-        [SerializeField] protected LayerMask sightMask = new LayerMask();
 
         [Tooltip("If angle matters (for shooting for example) set from where the angle will be calculated.")]
         [SerializeField] protected Transform angleReference;
@@ -210,36 +201,6 @@ namespace DEEP.AI
             }
         }
 
-        // Checks if has sight to target.
-        public bool HasTargetSight()
-        {
-
-            // Checks for sight.
-            bool hasSight = HasSight(target.transform.position);
-
-            // Stores the target location if it is seen.
-            if (hasSight)
-                lastTargetLocation = target.transform.position;
-
-            return hasSight;
-
-        }
-
-        // Checks if AI has sight of a point.
-        public bool HasSight(Vector3 point)
-        {
-
-            // Checks for visibility blocks.
-            if (Physics.Linecast(point, transform.position + agentSightOffset, sightMask))
-                return false;
-
-            // Checks for detection range.
-            if (Vector3.Distance(point, transform.position + agentSightOffset) > detectRange)
-                return false;
-
-            return true;
-        }
-
         public bool InAttackRange()
         {
 
@@ -264,7 +225,7 @@ namespace DEEP.AI
 
         }
 
-        public void Hitted()
+        public override void Aggro()
         {
 
             if (enemySM.currentState != EnemyWaitingState.Instance)
@@ -274,20 +235,22 @@ namespace DEEP.AI
 
         }
 
-        // Alerts close allies.
-        public void AlertAllies()
+        public void setSpeed(float newSpeed){
+            agent.speed = newSpeed;
+        }
+
+        public void addPatrolPoint(GameObject newPoint)
         {
+            patrolPoints.Add(newPoint);
+        }
 
-            EnemyAISystem[] allies = FindObjectsOfType<EnemyAISystem>();
-
-            foreach (EnemyAISystem ally in allies)
-            {
-
-                if (HasSight(ally.transform.position + ally.agentSightOffset))
-                    ally.Hitted();
-
-            }
-
+        public void removePatrolPoint(int i)
+        {
+            if(i >= 0 && i < patrolPoints.Count)
+                patrolPoints.Remove(patrolPoints[i]);
+        }
+        public void removePatrolPoint(){
+            removePatrolPoint(0);
         }
 
 #if UNITY_EDITOR

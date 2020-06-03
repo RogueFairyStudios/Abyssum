@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-
-using UnityEngine;
+﻿using UnityEngine;
 
 using TMPro;
 
@@ -12,8 +9,6 @@ namespace DEEP.UI
 
     public class EndScreen : MonoBehaviour
     {
-        
-        [SerializeField] private GameObject endScreen = null;
 
         [SerializeField] private TMP_Text completionMessage = null;
 
@@ -25,8 +20,10 @@ namespace DEEP.UI
 
         public void ShowScreen() {
 
-            StageInfo info = StageInfo.current;
+            // Reference to the stage info (mainly to reduce the size of the kinda big lines below).
+            StageInfo info = StageInfo.Instance;
 
+            // Calculates and assigns the stage information to the end screen.
             completionMessage.text = info.GetStageName().ToUpper() + " COMPLETED!";
 
             killCount.text = info.GetKillCount() + "/" + info.GetTotalEnemies() + " (" + (info.GetKillPercentage() * 100).ToString("0.0") + "%)";
@@ -41,7 +38,8 @@ namespace DEEP.UI
 
             time.text = minutes + ":" + seconds.ToString().PadLeft(2, '0') + "." + secondFraction;
 
-            endScreen.SetActive(true);
+            // Enables this gameObject.
+            gameObject.SetActive(true);
 
         }
 

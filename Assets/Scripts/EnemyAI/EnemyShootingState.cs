@@ -9,6 +9,11 @@ namespace DEEP.AI
 
         private static EnemyShootingState instance;
 
+#if UNITY_EDITOR
+        // Only used in the Editor, set to false to hide logs.
+        private bool showDebug = true;
+# endif
+
         public EnemyShootingState(){
             if (instance != null)
                 return;
@@ -31,8 +36,10 @@ namespace DEEP.AI
 
         public override void EnterState(EnemyAISystem owner)
         {
-            
-            Debug.Log(owner.transform.name + ": Entering Enemy Shooting State");
+
+#if UNITY_EDITOR
+            if (showDebug) Debug.Log(owner.transform.name + ": Entering Enemy Shooting State");
+# endif
 
             // Makes sure enemy is not move when shooting.
             owner.anim.SetBool("Walk", false);
@@ -45,7 +52,10 @@ namespace DEEP.AI
 
         public override void ExitState(EnemyAISystem owner)
         {
-            Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+
+#if UNITY_EDITOR
+            if (showDebug) Debug.Log(owner.transform.name + ": Exiting Enemy Shooting State");
+# endif
 
         }
 

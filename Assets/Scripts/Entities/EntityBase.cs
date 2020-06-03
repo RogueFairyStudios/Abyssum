@@ -24,13 +24,16 @@ namespace DEEP.Entities
 
         [Tooltip("Entity's max overloaded health.")]
         [SerializeField] protected int maxOverloadedHealth = 200;
-        
+
+        [Tooltip("Prefab to be spawned for the blood effect.")]
+        public GameObject bloodEffect = null;
+
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 
-
         [Tooltip("Reference to the ConductorBox that represents the conductive range of this entity.")]
         [SerializeField] public ConductorBox conductorBox;
+        protected float baseSpeed;
 
         protected virtual void Start()
         {
@@ -57,6 +60,7 @@ namespace DEEP.Entities
             else if(type == HealType.Overload && health > maxOverloadedHealth)
                 health = maxOverloadedHealth;
 
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
             return true;
@@ -68,6 +72,7 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
         }
@@ -75,7 +80,7 @@ namespace DEEP.Entities
         // "Kills" an entity.
         protected virtual void Die() {
 
-            if(deathPrefab != null) // SPawns a prefab after death if assigned.
+            if(deathPrefab != null) // Spawns a prefab after death if assigned.
                 Instantiate(deathPrefab, transform.position, transform.rotation);
 
             Destroy(gameObject);
@@ -90,6 +95,9 @@ namespace DEEP.Entities
                 Die();
 
         }
+
+        public virtual void setSlow(){}
+        public virtual void setBaseSpeed(){}
 
     }
 }
