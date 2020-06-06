@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using DEEP.Utility;
 
 namespace DEEP.Entities
 {
@@ -6,7 +7,7 @@ namespace DEEP.Entities
     // Contains possible heal types.
     public enum HealType { Regular, Overload };
     // Contains possible damage types.
-    public enum DamageType { Regular, Fire, Eletric, Drowning };
+    public enum DamageType { Regular, Fire, Electric, Drowning };
 
     // Base script for an entity (any object that has health).
     public abstract class EntityBase : MonoBehaviour
@@ -23,10 +24,15 @@ namespace DEEP.Entities
 
         [Tooltip("Entity's max overloaded health.")]
         [SerializeField] protected int maxOverloadedHealth = 200;
-        
+
+        [Tooltip("Prefab to be spawned for the blood effect.")]
+        public GameObject bloodEffect = null;
+
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 
+        [Tooltip("Reference to the ConductorBox that represents the conductive range of this entity.")]
+        [SerializeField] public ConductorBox conductorBox;
         protected float baseSpeed;
 
         protected virtual void Start()
@@ -74,7 +80,7 @@ namespace DEEP.Entities
         // "Kills" an entity.
         protected virtual void Die() {
 
-            if(deathPrefab != null) // SPawns a prefab after death if assigned.
+            if(deathPrefab != null) // Spawns a prefab after death if assigned.
                 Instantiate(deathPrefab, transform.position, transform.rotation);
 
             Destroy(gameObject);

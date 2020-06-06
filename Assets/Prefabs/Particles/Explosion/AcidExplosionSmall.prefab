@@ -120,12 +120,14 @@ PrefabInstance:
     - target: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
         type: 3}
       propertyPath: m_Name
-      value: AcidExplosion
+      value: AcidExplosionSmall
       objectReference: {fileID: 0}
     - target: {fileID: 7111229750393269489, guid: 3eb80257d5c1733fba85ee0241f5101c,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: c54448769351f5143acfdb32d29d185c, type: 2}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7111229750393269489, guid: 3eb80257d5c1733fba85ee0241f5101c, type: 3}
+    - {fileID: 6184232018483844694, guid: 3eb80257d5c1733fba85ee0241f5101c, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3eb80257d5c1733fba85ee0241f5101c, type: 3}

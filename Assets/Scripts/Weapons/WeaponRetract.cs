@@ -20,15 +20,12 @@ namespace DEEP.Weapons {
 
         void Update() {
 
-            RaycastHit hit;
-            if(Physics.Raycast(cameraTransform.position + transform.TransformDirection(originalLocalPosition), transform.forward, out hit, 2 * safeDistance, raycastMask)) {
-
-                transform.localPosition = originalLocalPosition - transform.InverseTransformDirection(transform.forward * (safeDistance - Mathf.Clamp(hit.distance, 0, safeDistance)));
-
+            // Gets a point far away into the horizon.
+            RaycastHit rayHit;
+            if (Physics.Linecast(cameraTransform.position + transform.TransformDirection(originalLocalPosition), cameraTransform.position + transform.TransformDirection(originalLocalPosition) + transform.forward * 5.0f, out rayHit, raycastMask, QueryTriggerInteraction.Ignore)) {
+                transform.localPosition = originalLocalPosition - transform.InverseTransformDirection(transform.forward * (safeDistance - Mathf.Clamp(rayHit.distance, 0, safeDistance)));
             } else {
-
                 transform.localPosition = originalLocalPosition;
-            
             }
 
         }
