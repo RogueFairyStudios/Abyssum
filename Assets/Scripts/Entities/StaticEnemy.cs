@@ -65,19 +65,19 @@ namespace DEEP.Entities{
 
             Debug.Log("enemy hitted");
 
-           /* if(damage.Length > 0) {
+            if(damage.Length > 0) {
                 _audio.clip = damage[Random.Range(0, damage.Length)];
                 _audio.Play();
-            }*/
+            }
 
             base.Damage(amount,type);
         }
 
         protected override void Die(){
 
-            /*if(death.Length > 0)
+           if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
-            */
+           
             base.Die();            
         }
 
