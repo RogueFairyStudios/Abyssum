@@ -2,64 +2,125 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DEEP.AI;
+using DEEP.Stage;
 
-public class spawner : MonoBehaviour
+
+namespace DEEP.Spawn
 {
-    [SerializeField] private List<GameObject> entitieList = new List<GameObject>();
-    public GameObject startingPoint;
-    public int i = 0;
-    float time = 15f;
-    
-    //test
-    void Start()
+    public class Spawner : MonoBehaviour, ITrappable
     {
-       // spawnObjects();
-    }
 
-    void Update(){
-        time -= Time.deltaTime;
-        if(time <= 0){
-            spawnObject(i);
-            i++;
-            i = i% entitieList.Count;
-            time = 3f;
-        }
+        protected enum SpawnMode { Single, Loop };
 
-    }
+        [SerializeField] protected SpawnMode spawnMode = SpawnMode.Single;
 
-    public void spawnObject(int id){
+        [SerializeField] protected List<GameObject> entityList = new List<GameObject>();
 
-        if (id < 0 || id > entitieList.Count)
+        [SerializeField] protected Transform spawnPoint = null;
+
+        [SerializeField] protected GameObject patrolStartingPoint = null;
+
+        [SerializeField] protected float spawnDelay = 2.0f;
+
+        [SerializeField] protected bool enableAtStart = false;
+
+        protected bool active = false;
+
+        protected int currentEntity = 0;
+
+        protected virtual void Start()
         {
-            Debug.Log("Invalid Id");
-            return;
+
+            if (spawnPoint == null)
+                spawnPoint = transform;
+
+            currentEntity = 0;
+
+            active = enableAtStart;
+
+            if (active)
+                StartCoroutine(SpawnRoutine());
+
         }
 
-        GameObject instance = Instantiate(entitieList[id],this.transform);
-        instance.GetComponent<EnemyAISystem>().addPatrolPoint(startingPoint);
-        
+        public virtual void ActivateTrap() {
+
+            active = !active;
+
+            if(active)
+                StartCoroutine(SpawnRoutine());
+
+        }
+
+        protected IEnumerator SpawnRoutine() {
+            
+            while(active) {
+
+                Spawn();
+
+                if (spawnMode == SpawnMode.Loop) {
+
+                    float time = 0.0f;
+                    while (time < spawnDelay) {
+
+                        time += Time.fixedDeltaTime;
+                        yield return new WaitForFixedUpdate();
+
+                    }
+
+                } else {
+                    active = false;
+                    break;
+                }
+
+                yield return new WaitForFixedUpdate();
+
+            }
+        }
+
+        public void Spawn() {
+
+            GameObject instance = Instantiate(entityList[currentEntity], spawnPoint.position, spawnPoint.rotation);
+
+            currentEntity = (currentEntity + 1) % entityList.Count;
+
+            EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
+            enemyAI.spawned = true;
+
+            if (patrolStartingPoint != null) {
+
+                enemyAI.addPatrolPoint(patrolStartingPoint);
+                enemyAI.ResetPatrol();
+
+            }
+
+        }
+
+        public void SpawnMultiple(int index, int amount) {
+
+            if (index < 0 || index > entityList.Count) {
+                Debug.LogError("Invalid index!");
+                return;
+            }
+
+            for (int i = 0; i < amount; i++) {
+
+                GameObject instance = Instantiate(entityList[index], spawnPoint.position, spawnPoint.rotation);
+
+                currentEntity = (currentEntity + 1) % entityList.Count;
+
+                EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
+                enemyAI.spawned = true;
+
+                if (patrolStartingPoint != null) {
+
+                    enemyAI.addPatrolPoint(patrolStartingPoint);
+                    enemyAI.ResetPatrol();
+
+                }
+
+            }
+        }
     }
-
-    public void spawnNObject(int id, int n){
-
-        if (id < 0 || id > entitieList.Count)
-        {
-            Debug.Log("Invalid Id");
-            return;
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            spawnObject(id);    
-        }
-    }
-
-    public void spawnObjects(){
-        for (int i = 0; i < entitieList.Count; i++)
-        {
-            spawnObject(i);
-        }
-    }
-
 }
     

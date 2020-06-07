@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -16,6 +15,7 @@ public class spawnerManager : MonoBehaviour
         for (int i = 0; i < spawnerList.Count; i++)
         {
             createWave(i, enemyId, enemyAmount);
+
         }
     }
 }
