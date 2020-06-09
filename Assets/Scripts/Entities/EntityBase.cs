@@ -7,7 +7,7 @@ namespace DEEP.Entities
     // Contains possible heal types.
     public enum HealType { Regular, Overload };
     // Contains possible damage types.
-    public enum DamageType { Regular, Fire, Electric, Drowning };
+    public enum DamageType { Regular, Fire, Electric, Drowning, IgnoreArmor };
 
     // Base script for an entity (any object that has health).
     public abstract class EntityBase : MonoBehaviour
@@ -43,6 +43,9 @@ namespace DEEP.Entities
         }
 
         // =================================================================================================
+
+        // Returns the current health of the entity.
+        public int CurrentHealth() { return health; }
 
         // Heals the entity by a certain amount, allows the specification of a heal type.
         public virtual bool Heal (int amount, HealType type) 

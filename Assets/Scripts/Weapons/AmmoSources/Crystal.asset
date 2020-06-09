@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Crystal
   ammo: 0
-  maxAmmo: 3
+  maxAmmo: 1
   icon: {fileID: 7006762922748226925, guid: 99c762247c1f93facabec571b52d1497, type: 3}
