@@ -108,4 +108,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   type: Rocket
-  amount: 5
+  amount: 4

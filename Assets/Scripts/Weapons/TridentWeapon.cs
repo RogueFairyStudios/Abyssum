@@ -31,6 +31,9 @@ namespace DEEP.Weapons {
         [Tooltip("The time the visual effect is on.")]
         [SerializeField] private float visualEffectDuration = 0.1f;
 
+        [Tooltip("Offset where the effect should be placed (Used because lots of entitys have their bases on their feet).")]
+        [SerializeField] private Vector3 visualEffectOffset = new Vector3(0, 0.5f, 0);
+
         // Object used to wait in coroutines.
         private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
@@ -143,7 +146,7 @@ namespace DEEP.Weapons {
 
                 // Does the visual effect.
                 lineRenderer.positionCount = 2;
-                lineRenderer.SetPositions(new Vector3[] { bulletSpawn.transform.position, randomTargetPos });
+                lineRenderer.SetPositions(new Vector3[] { bulletSpawn.transform.position, randomTargetPos + visualEffectOffset });
 
                 // Waits for the duration.
                 float time = 0.0f;

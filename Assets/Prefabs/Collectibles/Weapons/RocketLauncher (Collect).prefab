@@ -110,7 +110,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
   weaponSlot: 4
-  ammoAmount: 5
+  ammoAmount: 4
 --- !u!1 &1880818945913918859
 GameObject:
   m_ObjectHideFlags: 0
