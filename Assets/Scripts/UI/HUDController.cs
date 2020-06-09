@@ -67,7 +67,7 @@ namespace DEEP.UI
         [SerializeField] protected KeyHUD keyHUD = null;
 
         // Types of feedback, used to choose screen feedback color.
-        public enum FeedbackType { Damage, Healing, Armor, Weapon, Keycard, Secret }
+        public enum FeedbackType { Damage, Healing, Armor, Weapon, Keycard, Secret, Toxic }
 
         [System.Serializable]
         protected class PlayerFeedback
@@ -88,8 +88,12 @@ namespace DEEP.UI
             public Color weaponAmmoFeedbackColor = Color.yellow;
             [Tooltip("Color for the keycard feedback.")]
             public Color keycardFeedbackColor = Color.cyan;
+            [Tooltip("Color for the toxic feedback.")]
+            public Color toxicFeedbackColor = Color.green;
             [Tooltip("Color for the secret feedback.")]
             public Color secretFeedbackColor = Color.magenta;
+            [HideInInspector] public bool constantFeedbackActive;
+            [HideInInspector] public Color currentConstantFeedbackColor;
 
         }
         [Header("Feedback")]
@@ -242,10 +246,15 @@ namespace DEEP.UI
                 feedbackColor = playerFeedback.secretFeedbackColor;
                 break;
 
+                // Constant effect
+                case FeedbackType.Toxic:
+                feedbackColor = playerFeedback.toxicFeedbackColor;
+                StartConstantScreenFeedback(feedbackColor);
+                return;
+
             }
 
             playerFeedback.screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(feedbackColor, playerFeedback.duration));
-
         }
 
         protected IEnumerator ScreenFeedbackAnim(Color color, float duration) {
@@ -257,10 +266,40 @@ namespace DEEP.UI
             // Waits for the duration.
             yield return new WaitForSeconds(duration);
 
-            // Ends the feedback.
-            playerFeedback.screenFeedback.enabled = false;
-            playerFeedback.screenFeedbackAnim = null;
+            // If there are no constant feedbacks active
+            if(!playerFeedback.constantFeedbackActive)
+            {
+                // Ends the feedback
+                playerFeedback.screenFeedback.enabled = false;
+            }
+            else
+            {
+                // Turns the feedback back to the constant color
+                playerFeedback.screenFeedback.color = playerFeedback.currentConstantFeedbackColor;
+            }
 
+            playerFeedback.screenFeedbackAnim = null;
+        }
+
+        protected void StartConstantScreenFeedback(Color color)
+        {
+            // Sets the feedback color and shows it
+            playerFeedback.screenFeedback.color = color;
+            playerFeedback.screenFeedback.enabled = true;
+
+            // Sets up flags
+            playerFeedback.constantFeedbackActive = true;                
+            playerFeedback.currentConstantFeedbackColor = color;
+        }
+
+        public void StopConstantScreenFeedback()
+        {
+            // Sets up flags
+            playerFeedback.constantFeedbackActive = false;
+
+            // If there are no other feedbacks going on, turn the feedback image off
+            if(playerFeedback.screenFeedbackAnim == null)
+                playerFeedback.screenFeedback.enabled = false;
         }
 
     }
