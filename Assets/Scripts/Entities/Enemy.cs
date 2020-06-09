@@ -91,7 +91,7 @@ namespace DEEP.Entities{
         protected override void Die(){
 
             if(death.Length > 0)
-                AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
+                AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
 
             base.Die();
             
