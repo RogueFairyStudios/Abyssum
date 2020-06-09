@@ -12,8 +12,9 @@ namespace DEEP.Utility
 
         private Player target;
         private Coroutine damageCoroutine;
+        private float time = 0.0f;
 
-        [SerializeField] private float delay = 0.2f;
+        [SerializeField] private float delay = 0.2f, timeToReset = 2f;
         [SerializeField] private int amount = 10;
 
         // Object used to wait in coroutines.
@@ -27,7 +28,10 @@ namespace DEEP.Utility
 
             // Does the damage.
             if(target != null)
+            {
+                CancelInvoke(nameof(ResetTimer));
                 damageCoroutine = StartCoroutine(DamageOverTime());
+            }
 
         }
 
@@ -39,7 +43,10 @@ namespace DEEP.Utility
 
             // Stop doing damage.
             if (target != null)
+            {
                 StopCoroutine(damageCoroutine);
+                Invoke(nameof(ResetTimer), timeToReset);
+            }
         
         }
 
@@ -47,7 +54,6 @@ namespace DEEP.Utility
         IEnumerator DamageOverTime()
         {
 
-            float time = 0.0f;
             while(true) 
             {
 
@@ -64,5 +70,9 @@ namespace DEEP.Utility
 
         }
 
+        void ResetTimer()
+        {
+            time = 0.0f;
+        }
     }
 }

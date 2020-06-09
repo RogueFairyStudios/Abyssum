@@ -63,6 +63,7 @@ namespace DEEP.AI
                 // Scale speeds with distance
                 chasingTurningSpeed = Mathf.Lerp(minChasingTurningSpeed, maxChasingTurningSpeed, 1/(deltaPos.magnitude / chasingTurningSpeedScaling + 1));
                 chasingSpeed = Mathf.Lerp(minChasingSpeed, maxChasingSpeed, (deltaPos.magnitude * chasingSpeedScaling) / blowfishAI.DetectRange);
+                blowfishAI._animator.SetFloat("Speed", chasingSpeed / maxChasingSpeed);
 
                 // Rotates
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.fixedDeltaTime * Mathf.Deg2Rad * chasingTurningSpeed * 10f);
@@ -82,11 +83,18 @@ namespace DEEP.AI
                 // If within sight, if it's within expanding range or past the point of no return, expand
                 if(withinLoS && (deltaPos.magnitude < startExpandingRange || fuseTime >= pointOfNoReturn))
                 {
+                    // Set animation and sound to inflate
+                    blowfishAI.Inflate();
                     blowfishAI._animator.SetBool("Attack", true);
+                
+                    // Inflate
                     fuseTime += Time.fixedDeltaTime;
                 }
                 else // Else, shrink back to normal
+                {
+                    blowfishAI.Deflate();
                     fuseTime -= Time.fixedDeltaTime;
+                }
                 
                 // Clamps fuse time
                 fuseTime = Mathf.Clamp(fuseTime, 0f, timeBeforeExploding);

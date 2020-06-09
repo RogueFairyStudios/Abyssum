@@ -3,7 +3,7 @@
 using DEEP.Entities;
 
 using System.Collections;
-using Boo.Lang;
+using System.Collections.Generic;
 
 namespace DEEP.Weapons {
 
@@ -139,7 +139,7 @@ namespace DEEP.Weapons {
             if (targets.Count > 0) {
 
                 // Gets the position of a random target.
-                Vector3 randomTargetPos = targets[Random.Range(0, targets.Count)].position;
+                Vector3 randomTargetPos = targets[UnityEngine.Random.Range(0, targets.Count)].position;
 
                 // Instantiates the attack at the target.
                 Instantiate(bulletPrefab, randomTargetPos, new Quaternion());
