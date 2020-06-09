@@ -16,6 +16,9 @@ namespace DEEP.Utility
         [SerializeField] private float delay = 0.2f;
         [SerializeField] private int amount = 10;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         void OnTriggerEnter(Collider other) 
         {
 
@@ -55,7 +58,7 @@ namespace DEEP.Utility
                     time = 0.0f;
                 }
 
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
             }
 

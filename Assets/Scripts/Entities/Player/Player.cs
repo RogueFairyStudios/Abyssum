@@ -65,6 +65,8 @@ namespace DEEP.Entities
         public HUDController HUD = null;
         public InventoryKey keyInventory = null;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
         protected override void Start()
         {
 
@@ -218,7 +220,7 @@ namespace DEEP.Entities
             while(time < 2.0f) // Waits for the delay.
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Enables menu.

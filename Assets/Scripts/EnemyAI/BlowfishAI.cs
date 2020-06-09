@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using DEEP.Entities;
 
 namespace DEEP.AI

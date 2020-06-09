@@ -27,6 +27,9 @@ namespace DEEP.Spawn
 
         protected int currentEntity = 0;
 
+        // Object used to wait in coroutines.
+        protected WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected virtual void Start()
         {
 
@@ -63,7 +66,7 @@ namespace DEEP.Spawn
                     while (time < spawnDelay) {
 
                         time += Time.fixedDeltaTime;
-                        yield return new WaitForFixedUpdate();
+                        yield return waitForFixed;
 
                     }
 
@@ -72,7 +75,7 @@ namespace DEEP.Spawn
                     break;
                 }
 
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
             }
         }

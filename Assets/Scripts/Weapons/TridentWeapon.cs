@@ -31,6 +31,9 @@ namespace DEEP.Weapons {
         [Tooltip("The time the visual effect is on.")]
         [SerializeField] private float visualEffectDuration = 0.1f;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected void OnEnable() {
 
             // Ensures effects are off at start.
@@ -82,6 +85,8 @@ namespace DEEP.Weapons {
         // Shoots lightning beams on nearby entities.
         protected IEnumerator Shooting() {
 
+            
+
             // Fires the weapon bursts.
             float time = 0.0f;
             int curBurst = 1;
@@ -95,7 +100,7 @@ namespace DEEP.Weapons {
                 }
 
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
             }
 
@@ -148,7 +153,7 @@ namespace DEEP.Weapons {
                     lineRenderer.SetPosition(0, bulletSpawn.transform.position);
 
                     time += Time.fixedDeltaTime;
-                    yield return new WaitForFixedUpdate();
+                    yield return waitForFixed;
 
                 }
 

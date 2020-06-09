@@ -6,13 +6,16 @@ namespace DEEP.AI
     [RequireComponent(typeof(BlowfishAI))]
     public class ChaseSwimState : MonoBehaviour
     {
-        [SerializeField] private float minChasingSpeed, maxChasingSpeed, chasingSpeedScaling;
-        [SerializeField] private float minChasingTurningSpeed, maxChasingTurningSpeed, chasingTurningSpeedScaling;
-        [SerializeField] private float pointOfNoReturn, timeBeforeExploding;
-        [SerializeField] private float startExpandingRange;
+        [SerializeField] private float minChasingSpeed = 0.0f, maxChasingSpeed = 6.0f, chasingSpeedScaling = 1.2f;
+        [SerializeField] private float minChasingTurningSpeed = 16.0f, maxChasingTurningSpeed = 32.0f, chasingTurningSpeedScaling = 2.0f;
+        [SerializeField] private float pointOfNoReturn = 1.0f, timeBeforeExploding = 1.5f;
+        [SerializeField] private float startExpandingRange = 5.0f;
 
         BlowfishAI blowfishAI;
         float fuseTime;
+
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
         private void Awake()
         {
@@ -42,7 +45,7 @@ namespace DEEP.AI
                 // Face target
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.fixedDeltaTime * Mathf.Deg2Rad * maxChasingTurningSpeed * 10f);
                 
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
                 Debug.Log("Angle:" + Quaternion.Angle(transform.rotation, rotate));
 
@@ -67,7 +70,7 @@ namespace DEEP.AI
                 // Moves
                 blowfishAI._rigid.velocity = 1f/Time.fixedDeltaTime * transform.forward * chasingSpeed * 0.1f;
 
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
                 // Check Line of Sight
                 bool withinLoS = blowfishAI.HasTargetSight();

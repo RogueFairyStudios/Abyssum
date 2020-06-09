@@ -18,6 +18,8 @@ namespace DEEP.Entities
         [Tooltip("The velocity in which the object is moved during the death effect.")]
         [SerializeField] protected float deathFadeVelocity = 0.1f;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
         protected override void Start() {
 
             base.Start();
@@ -57,7 +59,7 @@ namespace DEEP.Entities
 
             while (Vector3.Distance(originalPosition, originalPosition + deathPositionDelta) > 0.05f) {
                 transform.Translate(deathPositionDelta.normalized * deathFadeVelocity * Time.fixedDeltaTime);
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
         }

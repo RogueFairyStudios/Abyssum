@@ -29,6 +29,9 @@ namespace DEEP.Weapons
         [Tooltip("The time the visual effect is on.")]
         [SerializeField] private float visualEffectDuration = 0.1f;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected void OnEnable() {
 
             // Disables the effects.
@@ -139,7 +142,7 @@ namespace DEEP.Weapons
                 lineRenderers[index].SetPosition(0, bulletSpawn.transform.position);
 
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
             }
 

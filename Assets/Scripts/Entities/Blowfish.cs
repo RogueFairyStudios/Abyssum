@@ -6,7 +6,7 @@ namespace DEEP.Entities{
 
     public class Blowfish : Enemy
     {
-        [SerializeField] GameObject explosionPrefab;
+        [SerializeField] GameObject explosionPrefab = null;
 
         // Will be a loop instead
         protected override void Growl()

@@ -20,6 +20,9 @@ namespace DEEP.AI
 
         BaseSwimAI baseSwimAI;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         private void Awake()
         {
             baseSwimAI = GetComponent<BaseSwimAI>();
@@ -46,7 +49,7 @@ namespace DEEP.AI
             while(time < delay)
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Start movement.
