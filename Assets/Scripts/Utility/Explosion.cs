@@ -34,6 +34,9 @@ namespace DEEP.Utility
         // to not apply damage multiple times for entities with more than 1 collider.
         HashSet<EntityBase> entitiesHit;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         // Explodes immediatly.
         void Start() { 
 
@@ -107,7 +110,7 @@ namespace DEEP.Utility
             while (time < explosionDuration)
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             Destroy(gameObject);

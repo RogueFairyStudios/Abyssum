@@ -1,5 +1,21 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!54 &8180879172124165001
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3378670117672350251}
+  serializedVersion: 2
+  m_Mass: 100
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &-6549709143006626888
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15,8 +31,68 @@ MonoBehaviour:
   health: 30
   maxHealth: 30
   maxOverloadedHealth: 30
+  bloodEffect: {fileID: 0}
   deathPrefab: {fileID: 1020696033834269181, guid: 2b1c4e186366a7a86b8c57308b1f7abb,
     type: 3}
+  conductorBox: {fileID: 0}
+--- !u!1 &8131637271477136151
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5687117712340873152}
+  - component: {fileID: 8496758470023620694}
+  - component: {fileID: 4098097960813574608}
+  m_Layer: 18
+  m_Name: Conductor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5687117712340873152
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131637271477136151}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1781221253185568824}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &8496758470023620694
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131637271477136151}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.8, y: 0.8, z: 1.2}
+  m_Center: {x: 0, y: 0, z: 0.6}
+--- !u!114 &4098097960813574608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8131637271477136151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2fa161e552a774ca4d12953dae318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  entity: {fileID: 0}
 --- !u!1001 &5245055757193629271
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -99,6 +175,12 @@ PrefabInstance:
 --- !u!1 &3378670117672350251 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7361517293713669244, guid: 639f7a4dd94b4958f8d685ad016eab96,
+    type: 3}
+  m_PrefabInstance: {fileID: 5245055757193629271}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1781221253185568824 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5796701310411886191, guid: 639f7a4dd94b4958f8d685ad016eab96,
     type: 3}
   m_PrefabInstance: {fileID: 5245055757193629271}
   m_PrefabAsset: {fileID: 0}

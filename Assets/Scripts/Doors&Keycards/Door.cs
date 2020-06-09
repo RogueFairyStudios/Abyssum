@@ -43,6 +43,9 @@ namespace DEEP.DoorsAndKeycards {
 
 		private Coroutine autoCloseCoroutine;
 
+		// Object used to wait in coroutines.
+		private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
 		private void Start()
 		{
 			_animator = GetComponent<Animator>();
@@ -163,7 +166,7 @@ namespace DEEP.DoorsAndKeycards {
 				else
 				{
 					time += Time.fixedDeltaTime;
-					yield return new WaitForFixedUpdate();
+					yield return waitForFixed;
 				}
 
 				

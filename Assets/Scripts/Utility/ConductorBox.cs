@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DEEP.Entities;
 
 namespace DEEP.Utility {
@@ -41,31 +43,41 @@ namespace DEEP.Utility {
             Initialize();
         }
 
-        private void Electrify(List<ConductorBox> conductorsActivated, int chainDamage) {
-            List<ConductorBox> conductorsInContact = GetConductorsInContact();
+        public List<ConductorBox> Electrify(int chainDamage) {
 
-            foreach (ConductorBox conductor in conductorsInContact) {
-                // Check if the conductor hasnt been electrified yet
-                if (!conductorsActivated.Contains(conductor)){
-                    conductorsActivated.Add(conductor);
-
-                    // Recursively calls the Electrify method of the conductor reached
-                    conductor.Electrify(conductorsActivated, chainDamage);
-
-                    // Check if this conductor is attached to an entity
-                    if (conductor.entity != null) {
-                        conductor.entity.Damage(chainDamage, DamageType.Electric);
-                    }
-                }
-            }
-        }
-
-        public void Electrify(int chainDamage) {
             List<ConductorBox> conductorsActivated = new List<ConductorBox>();
             conductorsActivated.Add(this);
 
-            print("STARTING to electrify!");
-            Electrify(conductorsActivated, chainDamage);
+# if UNITY_EDITOR
+            Debug.Log("STARTING to electrify!");
+# endif
+            ElectrifySubroutine(conductorsActivated, chainDamage);
+
+            return conductorsActivated;
+
+        }
+
+        private void ElectrifySubroutine(List<ConductorBox> conductorsActivated, int chainDamage) {
+
+            List<ConductorBox> conductorsInContact = GetConductorsInContact();
+
+            foreach (ConductorBox conductor in conductorsInContact) {
+
+                // Check if the conductor hasnt been electrified yet
+                if (!conductorsActivated.Contains(conductor)) {
+
+                    conductorsActivated.Add(conductor);
+
+                    // Recursively calls the ElectrifySubroutine method of the conductor reached
+                    conductor.ElectrifySubroutine(conductorsActivated, chainDamage);
+
+                    // Check if this conductor is attached to an entity
+                    if (conductor.entity != null)
+                        conductor.entity.Damage(chainDamage, DamageType.Electric);
+
+                }
+            }
+
         }
 
         /// <summary>

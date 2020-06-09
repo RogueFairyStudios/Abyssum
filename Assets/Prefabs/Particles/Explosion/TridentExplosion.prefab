@@ -4960,11 +4960,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e5057e14562d81a78fbb6fd879784e1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entityDamage: 400
-  explosionRadius: 10
+  entityDamage: 200
+  explosionRadius: 3
   explosionForce: 45
   explosionDuration: 5
-  playerDamage: 50
+  playerDamage: 0
   maxPowerRadius: 2.5
   upwardsForce: 0
 --- !u!1 &3633632725729321844

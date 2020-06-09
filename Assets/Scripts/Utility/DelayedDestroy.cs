@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 
 using UnityEngine;
 
@@ -9,6 +8,9 @@ namespace  DEEP.Utility
     public class DelayedDestroy : MonoBehaviour {
 
         [SerializeField] private float delay = 2.0f;
+
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
         void Start()
         {
@@ -22,7 +24,7 @@ namespace  DEEP.Utility
             float time = 0.0f;
             while(time < delay) {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             Destroy(gameObject);

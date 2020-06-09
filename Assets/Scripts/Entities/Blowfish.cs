@@ -7,7 +7,7 @@ namespace DEEP.Entities{
 
     public class Blowfish : EntityBase
     {
-        [SerializeField] GameObject explosionPrefab;
+        [SerializeField] GameObject explosionPrefab = null;
         [SerializeField] AudioClip swim, inflate;
         [SerializeField] bool swimSoundEnabled;
         [SerializeField] float minSwimPitch, maxSwimPitch;

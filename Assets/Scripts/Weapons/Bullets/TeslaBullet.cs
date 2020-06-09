@@ -1,6 +1,5 @@
-﻿using System.Net;
-using System.Collections.ObjectModel;
-using UnityEngine;
+﻿using UnityEngine;
+
 using DEEP.Entities;
 using DEEP.Utility;
 
@@ -11,7 +10,7 @@ namespace DEEP.Weapons.Bullets {
 	public class TeslaBullet : BulletBase {
 
         [Tooltip("Damage dealt to other entities in contact.")]
-		[SerializeField] private int eletricDamage;
+		[SerializeField] private int eletricDamage = 10;
 
 		protected override void OnCollisionEnter(Collision col) {
             if (avoidDoubleHit && hasHit)

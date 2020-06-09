@@ -33,7 +33,7 @@ namespace DEEP.Weapons {
 
 		}
 
-		private Quaternion GenerateRandomRotation(Quaternion baseRotation) {
+		protected Quaternion GenerateRandomRotation(Quaternion baseRotation) {
 			float angleVariation = shotSpreadAngle / 2.0f;
 			float xVariation = Random.Range(-angleVariation, angleVariation);
 			float yVariation = Random.Range(-angleVariation, angleVariation);

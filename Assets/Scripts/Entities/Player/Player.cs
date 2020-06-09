@@ -65,6 +65,8 @@ namespace DEEP.Entities
         public HUDController HUD = null;
         public InventoryKey keyInventory = null;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
         protected override void Start()
         {
 
@@ -154,27 +156,38 @@ namespace DEEP.Entities
 
         public override void Damage(int amount, DamageType type) {
 
-            // Calculates the percent of damage that should be absorbed by armor.
-            float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
+            if (type != DamageType.IgnoreArmor) { // Calculates armor damage absorption.
 
-            // Calculates the amount of damage to armor and health.
-            int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
-            int healthDamage = amount - armorDamage;
+                // Calculates the percent of damage that should be absorbed by armor.
+                float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
 
-            // Decreases armor.
-            armor -= armorDamage;
+                // Calculates the amount of damage to armor and health.
+                int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
+                int healthDamage = amount - armorDamage;
 
-            // Decreases health.
-            health -= healthDamage;
+                // Decreases armor.
+                armor -= armorDamage;
 
-            if(health > 0) {
+                // Decreases health.
+                health -= healthDamage;
+
+                // Handles any changes that have to be made when modifying armor or health.
+                OnChangeArmor();
+                OnChangeHealth();
+
+            } else { // Does damage ignoring armor.
+
+                // Decreases health.
+                health -= amount;
+
+                // Handles any changes that have to be made when modifying health.
+                OnChangeHealth();
+            }
+
+            if (health > 0) {
                 // Flicks the screen to give feedback.
                 HUD.StartScreenFeedback(HUDController.FeedbackType.Damage);
             }
-
-            // Handles any changes that have to be made when modifying armor or health.
-            OnChangeArmor();
-            OnChangeHealth();
 
         }
 
@@ -207,7 +220,7 @@ namespace DEEP.Entities
             while(time < 2.0f) // Waits for the delay.
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Enables menu.

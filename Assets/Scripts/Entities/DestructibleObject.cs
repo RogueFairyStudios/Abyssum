@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-
-namespace DEEP.Entities
+﻿namespace DEEP.Entities
 {
 
     public class DestructibleObject : EntityBase

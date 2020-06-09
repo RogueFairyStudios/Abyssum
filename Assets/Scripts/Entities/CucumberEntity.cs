@@ -18,9 +18,17 @@ namespace DEEP.Entities
         [Tooltip("The velocity in which the object is moved during the death effect.")]
         [SerializeField] protected float deathFadeVelocity = 0.1f;
 
+        // Used to mark the the fade death effect is happening.
+        private bool isDying;
+
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
         protected override void Start() {
 
             base.Start();
+
+            // Not dying at start.
+            isDying = false;
 
             // Gets the necessary components at start.
             meshRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
@@ -30,6 +38,9 @@ namespace DEEP.Entities
         }
 
         protected override void Die() {
+
+            // Ensures death doesn't happen twice.
+            if (isDying) return;
 
             // Hides the gameObject.
             meshRenderer.enabled = false;
@@ -48,6 +59,9 @@ namespace DEEP.Entities
             // Moves the object to "fade" the pool.
             StartCoroutine(DyingFade());
 
+            // Marks as dead.
+            isDying = true;
+
         }
 
         protected IEnumerator DyingFade() {
@@ -57,7 +71,7 @@ namespace DEEP.Entities
 
             while (Vector3.Distance(originalPosition, originalPosition + deathPositionDelta) > 0.05f) {
                 transform.Translate(deathPositionDelta.normalized * deathFadeVelocity * Time.fixedDeltaTime);
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
         }

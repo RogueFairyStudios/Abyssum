@@ -19,6 +19,9 @@ namespace DEEP.Weapons{
         [Tooltip("this is the owner of the attack")]
         public GameObject Attacker;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected virtual void start(){
             // Allows the weapon to be fired at start.
             delayTimer = delayBetweenShots;
@@ -54,13 +57,13 @@ namespace DEEP.Weapons{
 
         protected IEnumerator DoDamage()
         {
-            // Waits for the delay before doing damage.
 
+            // Waits for the delay before doing damage.
             float time = 0.0f;
             while(time < damageDelay)
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Does the damage and knockbak.
