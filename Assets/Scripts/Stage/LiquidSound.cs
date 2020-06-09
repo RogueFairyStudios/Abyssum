@@ -8,12 +8,12 @@ using DEEP.UI;
 public class LiquidSound : MonoBehaviour
 {
     [Header("Ambient liquid settings")]
-    [SerializeField] AudioClip ambientLiquidSound;
-    [SerializeField] float extraHearingRange, decayTangent, ambientVolume, ambientSpatialBlend;
+    [SerializeField] AudioClip ambientLiquidSound = null;
+    [SerializeField] float extraHearingRange = 5, decayTangent = -0.5f, ambientVolume = 0.4f, ambientSpatialBlend = 1;
 
     [Header("Inside liquid settings")]
     [SerializeField] AudioClip insideLiquidSound;
-    [SerializeField] float insideVolume;
+    [SerializeField] float insideVolume = 1;
 
     private MeshRenderer _mesh;
     private AudioSource _audio;
