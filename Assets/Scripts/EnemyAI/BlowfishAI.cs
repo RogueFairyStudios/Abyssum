@@ -41,6 +41,16 @@ namespace DEEP.AI
             wanderState.enabled = false;
         }
 
+        public void Inflate()
+        {
+            entityScript.Inflate();
+        }
+
+        public void Deflate()
+        {
+            entityScript.Deflate();
+        }
+
         public void Explode()
         {
             entityScript.Explode();
