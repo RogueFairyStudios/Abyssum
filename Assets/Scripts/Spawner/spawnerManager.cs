@@ -1,21 +1,23 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using  DEEP.Spawn;
 
 
-public class spawnerManager : MonoBehaviour
+public class SpawnerManager : MonoBehaviour
 {
-    [SerializeField] private List<spawner> spawnerList = new List<spawner>();
 
-    public void createWave(int spawnerId, int enemyId, int enemyAmount){
+    [SerializeField] private List<Spawner> spawnerList = new List<Spawner>();
+
+    public void CreateWave(int spawnerId, int enemyId, int enemyAmount){
         if (spawnerId >= 0  && spawnerId< spawnerList.Count)
-            spawnerList[spawnerId].spawnNObject(enemyId, enemyAmount);
+            spawnerList[spawnerId].SpawnMultiple(enemyId, enemyAmount);
     }
 
-    public void createBigWave(int enemyId, int enemyAmount){
+    public void CreateBigWave(int enemyId, int enemyAmount){
         for (int i = 0; i < spawnerList.Count; i++)
         {
-            createWave(i, enemyId, enemyAmount);
-
+            CreateWave(i, enemyId, enemyAmount);
         }
     }
 }
+
