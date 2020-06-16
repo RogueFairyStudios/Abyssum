@@ -43,9 +43,9 @@ namespace DEEP.Weapons {
             postProcessingVolume.SetActive(false);
 
             // Sets the no ammo animations.
-            if (_animator != null) {
+            if (wAnimator != null) {
                 if (!ammoSource.HasAmmo(1))
-                    _animator.SetBool("NoAmmo", true);
+                    wAnimator.SetBool("NoAmmo", true);
             }
 
         }
@@ -62,19 +62,19 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
-            if (_animator != null)  _animator.SetBool("Fire", true);
+            if (wAnimator != null)  wAnimator.SetBool("Fire", true);
 
             // Plays the audio.
-            if (_audio != null) {
-                _audio.clip = shotClip;
-                _audio.Play();
+            if (wAudio != null) {
+                wAudio.clip = shotClip;
+                wAudio.Play();
             }
 
             // Enables effects.
             postProcessingVolume.SetActive(true);
 
             // Sets the no ammo animations.
-            if (!ammoSource.HasAmmo(1))  _animator.SetBool("NoAmmo", true);
+            if (!ammoSource.HasAmmo(1))  wAnimator.SetBool("NoAmmo", true);
 
         }
 
@@ -108,7 +108,7 @@ namespace DEEP.Weapons {
             }
 
             // Disables the shooting animation.
-            _animator.SetBool("Fire", false);
+            wAnimator.SetBool("Fire", false);
 
         }
 

@@ -75,6 +75,7 @@ namespace DEEP.Entities
         { 
             // Decreases health and verifies if the entity has "died".
             health -= amount;
+
             // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
@@ -99,8 +100,8 @@ namespace DEEP.Entities
 
         }
 
-        public virtual void setSlow(){}
-        public virtual void setBaseSpeed(){}
+        public virtual void SetSlow(){}
+        public virtual void SetBaseSpeed(){}
 
     }
 }

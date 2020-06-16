@@ -14,7 +14,7 @@ namespace DEEP.Weapons {
         public List<PlayerWeapon> weapons;
 
         // Stores the weapons instances with their info.
-        List<Tuple<bool, GameObject>> weaponInstances;
+        List<Tuple<bool, WeaponBase>> weaponInstances;
 
         [Tooltip("Where Player weapons should be.")]
         public Transform weaponPosition;
@@ -38,7 +38,7 @@ namespace DEEP.Weapons {
             // Weapon setup =============================================================================================
 
             // Instantiates the weapons.
-            weaponInstances = new List<Tuple<bool, GameObject>>();
+            weaponInstances = new List<Tuple<bool, WeaponBase>>();
             foreach (PlayerWeapon weapon in weapons)
             {
 
@@ -60,7 +60,7 @@ namespace DEEP.Weapons {
                         Debug.LogError("DEEP.Entities.Player.Start: Ammo type not found!");
 
                 // Adds the weapon to the list
-                weaponInstances.Add(new Tuple<bool, GameObject>(weapon.enabled, weaponObj));
+                weaponInstances.Add(new Tuple<bool, WeaponBase>(weapon.enabled, weaponScript));
 
                 // Shows current weapons on the HUD.
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
@@ -83,7 +83,7 @@ namespace DEEP.Weapons {
             if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
 
             // Assigns the new weapon as current weapon.
-            currentWeapon = weaponInstances[weaponNum].Item2.GetComponent<WeaponBase>();
+            currentWeapon = weaponInstances[weaponNum].Item2;
 
             // Enables the current weapon.
             currentWeapon.gameObject.SetActive(true);
@@ -116,7 +116,7 @@ namespace DEEP.Weapons {
             int curWeaponIndex = -1;
             for(int i = 0; i < weaponInstances.Count; i++)
             {
-                if(String.Equals(weaponInstances[i].Item2.name, currentWeapon.name))
+                if(Equals(weaponInstances[i].Item2.name, currentWeapon.name))
                     curWeaponIndex = i;
             }
 
@@ -188,15 +188,15 @@ namespace DEEP.Weapons {
             if(!weaponInstances[slot].Item1) {
 
                 // Gets the old instance from the list.
-                Tuple<bool, GameObject> weaponInstance;
+                Tuple<bool, WeaponBase> weaponInstance;
                 weaponInstance = weaponInstances[slot];
                 weaponInstances.RemoveAt(slot);
                 
                 // Creates a new instance that is enabled and re-adds it to the list.
-                Tuple<bool, GameObject> enabledInstance = new Tuple<bool, GameObject>(true, weaponInstance.Item2);
+                Tuple<bool, WeaponBase> enabledInstance = new Tuple<bool, WeaponBase>(true, weaponInstance.Item2);
                 weaponInstances.Insert(slot, enabledInstance);
 
-                Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.transform.name + " has been collected!");
+                Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.name + " has been collected!");
 
                 collected = true;
 
@@ -214,7 +214,7 @@ namespace DEEP.Weapons {
             // Gives ammo to the player.
             bool givenAmmo = false;
             if(ammo > 0)
-                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.GetComponent<WeaponBase>().ammoSource.id, null);
+                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, null);
 
             // If collected, plays the player feedback sound.
             if((collected || givenAmmo) && feedbackAudio != null) {

@@ -20,15 +20,15 @@ namespace DEEP.Weapons {
 			delayTimer = 0; // Resets the delay.
 
 			// Plays the animation.
-			if(_animator != null) {
-				_animator.SetBool("Fire", true);
-				_animator.SetBool("NoAmmo", false);
+			if(wAnimator != null) {
+				wAnimator.SetBool("Fire", true);
+				wAnimator.SetBool("NoAmmo", false);
 			}
 
 			// Plays the audio.
-			if(_audio != null) {
-				_audio.clip = shotClip;
-				_audio.Play();
+			if(wAudio != null) {
+				wAudio.clip = shotClip;
+				wAudio.Play();
 			}
 
 		}

@@ -97,11 +97,11 @@ namespace DEEP.Entities{
             
         }
 
-        public override void setSlow(){
+        public override void SetSlow(){
             if(AI is EnemyAISystem navmeshAI)
                 navmeshAI.setSpeed(0.5f);
         }
-        public override void setBaseSpeed(){
+        public override void SetBaseSpeed(){
             if(AI is EnemyAISystem navmeshAI)
                 navmeshAI.setSpeed(this.baseSpeed);
         }

@@ -13,7 +13,7 @@ namespace DEEP.Entities{
          EntityBase obj = col.gameObject.GetComponentInParent<EntityBase>();
          if (obj != null && !entitieList.Contains(obj))
          {
-            obj.setSlow();
+            obj.SetSlow();
             entitieList.Add(obj);
          }      
       }
@@ -24,7 +24,7 @@ namespace DEEP.Entities{
          EntityBase obj = col.gameObject.GetComponentInParent<EntityBase>();
          if (obj != null && entitieList.Contains(obj))
          {
-            obj.setBaseSpeed();
+            obj.SetBaseSpeed();
             entitieList.Remove(obj);
          }
       }
@@ -33,7 +33,7 @@ namespace DEEP.Entities{
       {
          for (int i = 0; i < entitieList.Count; i++)
          {
-            entitieList[i].setBaseSpeed();
+            entitieList[i].SetBaseSpeed();
          }
       }
 
