@@ -4,6 +4,7 @@ using UnityEngine;
 using DEEP.AI;
 using DEEP.Stage;
 
+
 namespace DEEP.Spawn
 {
     public class Spawner : MonoBehaviour, ITrappable
@@ -122,9 +123,7 @@ namespace DEEP.Spawn
                 }
 
             }
-
         }
-
     }
-    
 }
+    
