@@ -7596,6 +7596,7 @@ MonoBehaviour:
     weaponAmmoFeedbackColor: {r: 0.3019608, g: 0.19607843, b: 0.09411765, a: 0.32156864}
     keycardFeedbackColor: {r: 0.09411765, g: 0.3019608, b: 0.3019608, a: 0.32156864}
     toxicFeedbackColor: {r: 0.30980393, g: 0.3921569, b: 0.015686275, a: 0.18431373}
+    mudFeedbackColor: {r: 0.4339623, g: 0.29551372, b: 0.14124244, a: 0.19215687}
     secretFeedbackColor: {r: 0.3019608, g: 0.09411765, b: 0.29803923, a: 0.32156864}
     constantFeedbackActive: 0
     currentConstantFeedbackColor: {r: 0, g: 0, b: 0, a: 0}

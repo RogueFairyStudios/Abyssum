@@ -45,6 +45,10 @@ namespace DEEP.Entities
             // Hides the gameObject.
             meshRenderer.enabled = false;
 
+            // Plays death audio
+            if(death.Length > 0)
+                AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
+
             // Disable physics and all colliders on the object (with the exception of the slowness trigger).
             cRigidbody.useGravity = false;
             cRigidbody.isKinematic = true;

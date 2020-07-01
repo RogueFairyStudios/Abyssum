@@ -67,7 +67,7 @@ namespace DEEP.UI
         [SerializeField] protected KeyHUD keyHUD = null;
 
         // Types of feedback, used to choose screen feedback color.
-        public enum FeedbackType { Damage, Healing, Armor, Weapon, Keycard, Secret, Toxic }
+        public enum FeedbackType { Damage, Healing, Armor, Weapon, Keycard, Secret, Toxic, Mud }
 
         [System.Serializable]
         protected class PlayerFeedback
@@ -90,6 +90,8 @@ namespace DEEP.UI
             public Color keycardFeedbackColor = Color.cyan;
             [Tooltip("Color for the toxic feedback.")]
             public Color toxicFeedbackColor = Color.green;
+            [Tooltip("Color for the mud feedback.")]
+            public Color mudFeedbackColor = Color.green;
             [Tooltip("Color for the secret feedback.")]
             public Color secretFeedbackColor = Color.magenta;
             [HideInInspector] public bool constantFeedbackActive;
@@ -246,12 +248,16 @@ namespace DEEP.UI
                 feedbackColor = playerFeedback.secretFeedbackColor;
                 break;
 
-                // Constant effect
+                // Constant effects
                 case FeedbackType.Toxic:
                 feedbackColor = playerFeedback.toxicFeedbackColor;
                 StartConstantScreenFeedback(feedbackColor);
                 return;
 
+                case FeedbackType.Mud:
+                feedbackColor = playerFeedback.mudFeedbackColor;
+                StartConstantScreenFeedback(feedbackColor);
+                return;
             }
 
             playerFeedback.screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(feedbackColor, playerFeedback.duration));
