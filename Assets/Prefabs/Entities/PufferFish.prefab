@@ -87,9 +87,12 @@ MonoBehaviour:
     type: 3}
   swim: {fileID: 8300000, guid: d130f306ec6ed694a83e7241dd77b8dd, type: 3}
   inflate: {fileID: 8300000, guid: 1ea2e136dbd291244a51e897c10e27ed, type: 3}
-  swimSoundEnabled: 0
+  swimSoundEnabled: 1
   minSwimPitch: 0.8
   maxSwimPitch: 1.2
+  growl:
+  - {fileID: 8300000, guid: ad463f13f98c0c84f8fb6ad4f9f185b0, type: 3}
+  - {fileID: 8300000, guid: 192773a4e3f4f564c80522b9e318e19f, type: 3}
   damage:
   - {fileID: 8300000, guid: 44e54c7a4d384314895bab23a6cf2f62, type: 3}
   - {fileID: 8300000, guid: e7291c68385f78241b547b2c2ed3780a, type: 3}
@@ -116,6 +119,7 @@ MonoBehaviour:
   minChasingTurningSpeed: 16
   maxChasingTurningSpeed: 32
   chasingTurningSpeedScaling: 2
+  timeBeforeCharging: 1
   pointOfNoReturn: 1
   timeBeforeExploding: 1.5
   startExpandingRange: 5

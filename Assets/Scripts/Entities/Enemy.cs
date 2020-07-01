@@ -43,8 +43,8 @@ namespace DEEP.Entities{
             // Sets delegates to start and stop growling.
             if(growl.Length > 0)
             {
-                AI.OnAggro      = () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
-                AI.OnLoseAggro  = () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
+                AI.OnAggro      += () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
+                AI.OnLoseAggro  += () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
             }
 
             Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
