@@ -25,7 +25,7 @@ namespace DEEP.AI
         private void Update()
         {
             if(HasTargetSight() && !chaseState.enabled)
-                Chase();
+                Aggro();
         }
 
         public void Wander()
@@ -60,6 +60,7 @@ namespace DEEP.AI
             if(wanderState.enabled)
             {
                 OnAggro?.Invoke();
+                entityScript.Growl();
                 Chase();
             }
         }

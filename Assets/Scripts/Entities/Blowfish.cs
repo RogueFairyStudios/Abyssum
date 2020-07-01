@@ -12,6 +12,9 @@ namespace DEEP.Entities{
         [SerializeField] bool swimSoundEnabled;
         [SerializeField] float minSwimPitch, maxSwimPitch;
 
+        [Tooltip("Sound that plays out when the enemy spots the enemy.")]
+        [SerializeField] protected AudioClip[] growl;
+
         [Tooltip("Sound that plays out when the enemy is hit.")]
         [SerializeField] protected AudioClip[] damage;
 
@@ -68,6 +71,16 @@ namespace DEEP.Entities{
         {
             if(_audio.clip == inflate)
                 _audio.Stop();
+        }
+
+        public void Growl()
+        {
+            if(growl.Length > 0)
+            {
+                _audio.Stop();
+                _audio.clip = growl[Random.Range(0, damage.Length)];
+                _audio.Play();
+            }
         }
 
         private void Update()

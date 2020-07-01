@@ -8,6 +8,7 @@ namespace DEEP.AI
     {
         [SerializeField] private float minChasingSpeed = 0.0f, maxChasingSpeed = 6.0f, chasingSpeedScaling = 1.2f;
         [SerializeField] private float minChasingTurningSpeed = 16.0f, maxChasingTurningSpeed = 32.0f, chasingTurningSpeedScaling = 2.0f;
+        [SerializeField] private float timeBeforeCharging = 0.3f;
         [SerializeField] private float pointOfNoReturn = 1.0f, timeBeforeExploding = 1.5f;
         [SerializeField] private float startExpandingRange = 5.0f;
 
@@ -50,6 +51,9 @@ namespace DEEP.AI
                 Debug.Log("Angle:" + Quaternion.Angle(transform.rotation, rotate));
 
             } while(Quaternion.Angle(transform.rotation, rotate) > 5f);
+
+            // Waits before charging
+            yield return new WaitForSeconds(timeBeforeCharging);
 
             // Clamps the rotation.
             transform.LookAt(blowfishAI.lastTargetLocation);

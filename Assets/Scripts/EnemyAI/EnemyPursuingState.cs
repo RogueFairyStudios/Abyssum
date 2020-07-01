@@ -41,6 +41,8 @@ namespace DEEP.AI
 
             owner.anim.SetBool("Walk", true);
             
+            if(owner.HasTargetSight())
+                owner.OnAggro?.Invoke();
         }
 
         public override void ExitState(EnemyAISystem owner){
