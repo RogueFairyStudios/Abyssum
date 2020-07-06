@@ -39,7 +39,7 @@ namespace DEEP.Entities{
       {
          for (int i = 0; i < entitieList.Count; i++)
          {
-            entitieList[i].setBaseSpeed();
+            entitieList[i].SetBaseSpeed();
             if(entitieList[i].gameObject.CompareTag("Player"))
             {
                Player.Instance.HUD.StopConstantScreenFeedback();
