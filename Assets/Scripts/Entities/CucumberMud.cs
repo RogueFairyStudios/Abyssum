@@ -26,6 +26,12 @@ namespace DEEP.Entities{
          {
             obj.SetBaseSpeed();
             entitieList.Remove(obj);
+
+            if(obj.gameObject.CompareTag("Player"))
+            {
+               Player.Instance.HUD.StopConstantScreenFeedback();
+               GetComponent<LiquidSound>().Stop();
+            }
          }
       }
 
@@ -33,7 +39,12 @@ namespace DEEP.Entities{
       {
          for (int i = 0; i < entitieList.Count; i++)
          {
-            entitieList[i].SetBaseSpeed();
+            entitieList[i].setBaseSpeed();
+            if(entitieList[i].gameObject.CompareTag("Player"))
+            {
+               Player.Instance.HUD.StopConstantScreenFeedback();
+               GetComponent<LiquidSound>().Stop();
+            }
          }
       }
 

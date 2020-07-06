@@ -85,4 +85,14 @@ public class LiquidSound : MonoBehaviour
         }
     }
 
+    public void Stop()
+    {
+        _audio.Stop();
+    }
+
+    private void OnDestroy()
+    {
+        Player.Instance.HUD.StopConstantScreenFeedback();
+    }
+
 }
