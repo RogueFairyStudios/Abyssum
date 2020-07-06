@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 using DEEP.Utility;
 using DEEP.Entities;
-using UnityEditor.Experimental.GraphView;
 
 namespace DEEP.Weapons
 {
