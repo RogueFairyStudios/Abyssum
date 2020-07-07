@@ -33,7 +33,7 @@ namespace DEEP.UI {
             int currentindex = 0;
             for (int i = 0; i < resolution.Length; i++)
             {
-                string option = resolution[i].width + " X " + resolution[i].height;// string no formato [widht X height]
+                string option = resolution[i].width + " X " + resolution[i].height + "(" + resolution[i].refreshRate + "Hz)";// string no formato [widht X height (refreshRate)]
                 options.Add(option);//adiciona a nova opcao na string
 
                 if (resolution[i].height == Screen.height && resolution[i].width == Screen.width)
@@ -70,7 +70,7 @@ namespace DEEP.UI {
         public void SetResolution(int index)
         {
             Resolution newresolution = resolution[index];//seleciona com base no index
-            Screen.SetResolution(newresolution.width, newresolution.height, Screen.fullScreen);//aplica a nova resolucao
+            Screen.SetResolution(newresolution.width, newresolution.height, Screen.fullScreen, newresolution.refreshRate); //aplica a nova resolucao
         }
 
         //entra e sai de FullScreen

@@ -340,7 +340,7 @@ namespace DEEP.Entities
         }
 
         // Updates mouse sensitivity from an outside script.
-        public void UpdateMouseSensitivity(float sensitivity) { /*this.sensitivity = sensitivity;*/ }
+        public void UpdateMouseSensitivity(float sensitivity) { movimentation.sensitivity = sensitivity; }
 
         public void EndLevel() {
             

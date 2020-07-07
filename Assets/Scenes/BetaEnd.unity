@@ -590,8 +590,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "<b><size=48><align=\"center\">Thank you for playing <color=#FF8C00>DEEP
     BETA 0.5.2</color>!</align></size></b>\n\n\tThis update mainly contains bug fixes,
-    improvements and estetic changes to the first level, but a preview of content
-    we've been working on for version 0.6 is avaliable on the <color=#00A1FF>SHOWCASE</color>
+    improvements and changes to the first level, but a preview of content we've been
+    working on for version 0.6 is avaliable on the <color=#00A1FF>SHOWCASE</color>
     level. You can also read about future new levels by checking the <color=#FF8C00>development
     logs</color> on our <color=#00A1FF>Itch.io</color> page."
   m_isRightToLeft: 0
@@ -662,10 +662,10 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 756547347}
-    characterCount: 327
+    characterCount: 319
     spriteCount: 0
-    spaceCount: 57
-    wordCount: 60
+    spaceCount: 56
+    wordCount: 59
     linkCount: 0
     lineCount: 8
     pageCount: 1
