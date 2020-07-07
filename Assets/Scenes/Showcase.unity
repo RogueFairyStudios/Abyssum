@@ -59451,6 +59451,7 @@ MonoBehaviour:
   damageDelay: 0.2
   knockbackForce: 12000
   Attacker: {fileID: 6176847883593499079}
+  attackClip: {fileID: 0}
 --- !u!114 &3918105451962496200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59471,6 +59472,7 @@ MonoBehaviour:
   damageDelay: 0.2
   knockbackForce: 12000
   Attacker: {fileID: 6176847882297034691}
+  attackClip: {fileID: 0}
 --- !u!114 &3918105452654327383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -59491,6 +59493,7 @@ MonoBehaviour:
   damageDelay: 0.2
   knockbackForce: 12000
   Attacker: {fileID: 6176847881873769820}
+  attackClip: {fileID: 0}
 --- !u!1 &3928147911505676641
 GameObject:
   m_ObjectHideFlags: 0

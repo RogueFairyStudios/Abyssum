@@ -145,7 +145,7 @@ namespace DEEP.Weapons {
         ///     Will probably clean up later.
         /// </summary>
         /// <param name="target"></param>
-        protected void Fire(Vector3 target)
+        protected virtual void Fire(Vector3 target)
         {
             Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullets.BulletBase>().SetTarget(target); // Creates the bullet and sets its target.
             delayTimer = 0; // Resets the delay.

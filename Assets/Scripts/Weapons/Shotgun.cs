@@ -33,6 +33,19 @@ namespace DEEP.Weapons {
 
 		}
 
+		/// <summary>
+		///     Again, this is just copy paste the other fire function because I didn't want to change the code structure.
+		///     Will probably clean up later.
+		/// </summary>
+		/// <param name="target"></param>
+		protected override void Fire(Vector3 target)
+		{
+			
+			// As shootgun bullets are random, there's no need to worry about the target.
+			Fire();
+
+		}
+
 		protected Quaternion GenerateRandomRotation(Quaternion baseRotation) {
 			float angleVariation = shotSpreadAngle / 2.0f;
 			float xVariation = Random.Range(-angleVariation, angleVariation);
@@ -41,7 +54,5 @@ namespace DEEP.Weapons {
 
 			return randRotation;
 		}
-
-	}
-
+	}		
 }
