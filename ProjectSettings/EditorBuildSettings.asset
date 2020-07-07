@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Military.unity
     guid: 277ee6fa5ebfbb3fe9f22090dd5b8660
+  - enabled: 1
+    path: Assets/Scenes/BetaEnd.unity
+    guid: d5d512113d644f54489d95417a4b45e1
   m_configObjects: {}

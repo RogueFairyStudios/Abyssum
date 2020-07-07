@@ -436,7 +436,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: EXIT
+  m_Text: MENU
 --- !u!1 &280461901852162174
 GameObject:
   m_ObjectHideFlags: 0
@@ -7048,7 +7048,7 @@ GameObject:
   - component: {fileID: 1400205587152260261}
   - component: {fileID: 8848182722993023106}
   m_Layer: 9
-  m_Name: ExitButton
+  m_Name: MenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -17,6 +17,11 @@ namespace DEEP.UI {
             Debug.Log("Loading " + levelName + "...");
             SceneManager.LoadScene(levelName);
         }
+
+        public void LoadURL(string url){
+            Debug.Log("Opening URL " + url + "...");
+            Application.OpenURL(url);
+        }
     }
 
 }
