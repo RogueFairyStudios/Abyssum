@@ -1192,6 +1192,7 @@ MonoBehaviour:
   ambientSpatialBlend: 0
   insideLiquidSound: {fileID: 8300000, guid: edc63d0b0c7407b48ab6898989d8ac49, type: 3}
   insideVolume: 0.1
+  feedbackType: 7
 --- !u!1 &7650067990197141104
 GameObject:
   m_ObjectHideFlags: 0

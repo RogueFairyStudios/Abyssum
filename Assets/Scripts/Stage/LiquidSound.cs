@@ -15,6 +15,8 @@ public class LiquidSound : MonoBehaviour
     [SerializeField] AudioClip insideLiquidSound;
     [SerializeField] float insideVolume = 1;
 
+    [SerializeField] HUDController.FeedbackType feedbackType;
+
     private MeshRenderer _mesh;
     private AudioSource _audio;
 
@@ -57,7 +59,7 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Player.Instance.HUD.StartScreenFeedback(HUDController.FeedbackType.Toxic);
+            Player.Instance.HUD.StartScreenFeedback(feedbackType);
 
             if(insideLiquidSound != null)
             {
