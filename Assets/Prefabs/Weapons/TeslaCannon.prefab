@@ -1117,13 +1117,13 @@ MonoBehaviour:
     m_Bits: 363523
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 0}
-  delayBetweenShots: 0.2
+  delayBetweenShots: 1
   shotClip: {fileID: 8300000, guid: 06b7db19d11a0c9448875d2b9b679bff, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
   pelletsPerShot: 5
   shotSpreadAngle: 75
-  baseDamage: 8
-  chainDamage: 5
+  baseDamage: 25
+  chainDamage: 20
   firingLayerMask:
     serializedVersion: 2
     m_Bits: 361475
@@ -1134,3 +1134,4 @@ MonoBehaviour:
   - {fileID: 2822026891149356533}
   - {fileID: 5561184097205348523}
   visualEffectDuration: 0.15
+  visualEffectOffset: {x: 0, y: 0.5, z: 0}
