@@ -33,7 +33,7 @@ namespace DEEP.UI {
             int currentindex = 0;
             for (int i = 0; i < resolution.Length; i++)
             {
-                string option = resolution[i].width + " X " + resolution[i].height + "(" + resolution[i].refreshRate + "Hz)";// string no formato [widht X height (refreshRate)]
+                string option = resolution[i].width + " X " + resolution[i].height + " (" + resolution[i].refreshRate + "Hz)";// string no formato [widht X height (refreshRate)]
                 options.Add(option);//adiciona a nova opcao na string
 
                 if (resolution[i].height == Screen.height && resolution[i].width == Screen.width)
