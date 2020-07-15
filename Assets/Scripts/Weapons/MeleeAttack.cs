@@ -19,6 +19,20 @@ namespace DEEP.Weapons{
         [Tooltip("this is the owner of the attack")]
         public GameObject Attacker;
 
+        protected AudioSource _audio; // Stores the weapon's AudioSource.
+
+        [Tooltip("AudioClip to be played when attacking.")]
+        [SerializeField] protected AudioClip attackClip = null;
+
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
+        private void Awake()
+        {
+            // Gets the weapon's AudioSource.
+            _audio = GetComponentInChildren<AudioSource>();
+        }
+
         protected virtual void start(){
             // Allows the weapon to be fired at start.
             delayTimer = delayBetweenShots;
@@ -47,20 +61,28 @@ namespace DEEP.Weapons{
         }
 
         // Attacks all the targets
-        protected override void Fire(){
-                
-                StartCoroutine(DoDamage());
+        protected override void Fire()
+        {        
+            StartCoroutine(DoDamage());
+
+            // Plays audio
+            if(_audio != null)
+            {
+                _audio.Stop();
+                _audio.clip = attackClip;
+                _audio.Play();
+            }
         }
 
         protected IEnumerator DoDamage()
         {
-            // Waits for the delay before doing damage.
 
+            // Waits for the delay before doing damage.
             float time = 0.0f;
             while(time < damageDelay)
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Does the damage and knockbak.

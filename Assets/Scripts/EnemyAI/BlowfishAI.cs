@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 using DEEP.Entities;
 
 namespace DEEP.AI
@@ -26,7 +25,7 @@ namespace DEEP.AI
         private void Update()
         {
             if(HasTargetSight() && !chaseState.enabled)
-                Chase();
+                Aggro();
         }
 
         public void Wander()
@@ -41,6 +40,16 @@ namespace DEEP.AI
             wanderState.enabled = false;
         }
 
+        public void Inflate()
+        {
+            entityScript.Inflate();
+        }
+
+        public void Deflate()
+        {
+            entityScript.Deflate();
+        }
+
         public void Explode()
         {
             entityScript.Explode();
@@ -51,6 +60,7 @@ namespace DEEP.AI
             if(wanderState.enabled)
             {
                 OnAggro?.Invoke();
+                entityScript.Growl();
                 Chase();
             }
         }

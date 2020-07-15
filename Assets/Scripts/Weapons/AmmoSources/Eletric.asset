@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Eletric
   ammo: 0
-  maxAmmo: 200
+  maxAmmo: 80
   icon: {fileID: -3852854901230681081, guid: 99c762247c1f93facabec571b52d1497, type: 3}

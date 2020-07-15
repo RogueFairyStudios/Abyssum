@@ -175,8 +175,8 @@ namespace DEEP.Entities
                 Gizmos.DrawWireSphere(transform.position + Vector3.down * (pCollider.height / 2.0f) * heightTolerance, checkRadius);
             }
         }
-    }
 
 # endif
 
+    }
 }

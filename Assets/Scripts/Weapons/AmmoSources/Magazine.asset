@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: Magazine
   ammo: 0
-  maxAmmo: 400
+  maxAmmo: 240
   icon: {fileID: -1775287886864792066, guid: 99c762247c1f93facabec571b52d1497, type: 3}

@@ -28,6 +28,9 @@ namespace DEEP.Entities
         protected Animator animator;
         protected float delayTimer = 0.0f;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected override void Start() {
 
             base.Start();
@@ -48,7 +51,7 @@ namespace DEEP.Entities
                 while (delayTimer < sentry.attackDelay) {
 
                     delayTimer += Time.fixedDeltaTime;
-                    yield return new WaitForFixedUpdate();
+                    yield return waitForFixed;
 
                 }
 
@@ -60,7 +63,7 @@ namespace DEEP.Entities
 
                 }
 
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
 
             }
 

@@ -65,6 +65,8 @@ namespace DEEP.Entities
         public HUDController HUD = null;
         public InventoryKey keyInventory = null;
 
+        // Object used to wait in coroutines.
+        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
         protected override void Start()
         {
 
@@ -102,20 +104,19 @@ namespace DEEP.Entities
         private void Update()
         {
 
-            // Pause =========================================================================================
+            // Pause ============================================================================================
 
             // Pauses and unpauses the game.
             if (currentState == PlayerState.Play || currentState == PlayerState.Paused) {
-                if (Input.GetButtonDown("Cancel")) {
-                    TogglePause();
-                }
+                if (Input.GetButtonDown("Cancel")) 
+                    TogglePause(); 
             }
 
-            // Returns execution if the game is paused, the player has died or the level has ended. ==========
+            // Returns execution if the game is paused, the player has died or the level has ended. ==============
             if (currentState != PlayerState.Play)
                 return;
 
-            //Equiping weapons ===============================================================================
+            //Equiping weapons ===================================================================================
 
             // Verifies the number keys.
             if(Input.GetKeyDown("0")) // Checks for 0.
@@ -126,55 +127,62 @@ namespace DEEP.Entities
                         waponController.SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
             }
 
-            // Change weapon using mouse scrollwheel =========================================================
-            if (waponController.currentWeapon != null) // Check if player has a weapon
+            // Check if player has a weapon
+            if (waponController.currentWeapon != null)
             {
+
+                // Change weapon using mouse scrollwheel =========================================================
                 if (Input.GetAxis("Mouse ScrollWheel") > 0f) // Scroll Up
-                {
                     waponController.SwitchWeapons(waponController.GetNextEnabledWeaponIndex());
-                }
                 else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // Scroll Down
-                {
                     waponController.SwitchWeapons(waponController.GetPreviousEnabledWeaponIndex());
-                }
 
-                // Firing weapons ============================================================================
-                if (Input.GetButton("Fire1")) {
-
-                    // Tries firing the weapon.
+                // Try firing weapons ============================================================================
+                if (Input.GetButton("Fire1"))
                     waponController.FireCurrentWeapon();
 
-                }
             }
 
-
+            // ===================================================================================================
             // Player movimentation is handled by the PlayerMovimentation script referenced by movimentation.
+            // ===================================================================================================
 
         }
 
         public override void Damage(int amount, DamageType type) {
 
-            // Calculates the percent of damage that should be absorbed by armor.
-            float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
+            // Initialy all damage is to the health.
+            int healthDamage = amount;
 
-            // Calculates the amount of damage to armor and health.
-            int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
-            int healthDamage = amount - armorDamage;
+            // Calculates armor damage absorption.
+            if (type != DamageType.IgnoreArmor) {
 
-            // Decreases armor.
-            armor -= armorDamage;
+                // Calculates the percent of damage that should be absorbed by armor.
+                float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
 
-            // Decreases health.
-            health -= healthDamage;
+                // Calculates the amount of damage to armor.
+                int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
 
-            if(health > 0) {
-                // Flicks the screen to give feedback.
-                HUD.StartScreenFeedback(HUDController.FeedbackType.Damage);
+                // Damages the armor.
+                armor -= armorDamage;
+
+                // Handles any changes that have to be made when modifying armor.
+                OnChangeArmor();
+
+                // Decreases the damage to health by the amount of damage that went to the armor instead.
+                healthDamage -= armorDamage;
+
             }
 
-            // Handles any changes that have to be made when modifying armor or health.
-            OnChangeArmor();
+            // Decreases the health.
+            health -= healthDamage;
+
+            // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
+
+            // Flicks the screen to give feedback if player is not dead.
+            if (health > 0)
+                HUD.StartScreenFeedback(HUDController.FeedbackType.Damage);
 
         }
 
@@ -207,7 +215,7 @@ namespace DEEP.Entities
             while(time < 2.0f) // Waits for the delay.
             {
                 time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
+                yield return waitForFixed;
             }
 
             // Enables menu.
@@ -271,7 +279,7 @@ namespace DEEP.Entities
         // Gives a keycard to the player.
         public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
 
-            print("Adding the " + color.ToString() + " key to the inventory");
+            Debug.Log("Adding the " + color.ToString() + " key to the inventory");
 			keyInventory.AddKey(color);
 
             // Plays the player feedback sound.
@@ -332,7 +340,7 @@ namespace DEEP.Entities
         }
 
         // Updates mouse sensitivity from an outside script.
-        public void UpdateMouseSensitivity(float sensitivity) { /*this.sensitivity = sensitivity;*/ }
+        public void UpdateMouseSensitivity(float sensitivity) { movimentation.sensitivity = sensitivity; }
 
         public void EndLevel() {
             
@@ -360,16 +368,8 @@ namespace DEEP.Entities
 
         public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
 
-        public override void setSlow() {
-
-            movimentation.SetSlow();
-
-        }
-        public override void setBaseSpeed() {
-
-            movimentation.SetBaseSpeed();
-
-        }
+        public override void SetSlow() { movimentation.SetSlow(); }
+        public override void SetBaseSpeed() { movimentation.SetBaseSpeed(); }
 
     }
 

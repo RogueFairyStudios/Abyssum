@@ -21,8 +21,8 @@ namespace DEEP.Weapons {
         [SerializeField] protected float delayBetweenShots = 0.3f;
         protected float delayTimer = 0; //Used to count the time between shots.
 
-        protected Animator _animator; // Stores the weapon's Animator.
-        protected AudioSource _audio; // Stores the weapon's AudioSource.
+        protected Animator wAnimator; // Stores the weapon's Animator.
+        protected AudioSource wAudio; // Stores the weapon's AudioSource.
 
         [Tooltip("AudioClip to be played when shooting.")]
         [SerializeField] protected AudioClip shotClip = null;
@@ -37,10 +37,10 @@ namespace DEEP.Weapons {
             delayTimer = delayBetweenShots;
 
             // Gets the weapon's animator.
-            _animator = GetComponentInChildren<Animator>();
+            wAnimator = GetComponentInChildren<Animator>();
 
             // Gets the weapon's AudioSource.
-            _audio = GetComponentInChildren<AudioSource>();
+            wAudio = GetComponentInChildren<AudioSource>();
             
 
         }
@@ -127,15 +127,15 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
-            if(_animator != null) {
-                _animator.SetBool("Fire", true);
-                _animator.SetBool("NoAmmo", false);
+            if(wAnimator != null) {
+                wAnimator.SetBool("Fire", true);
+                wAnimator.SetBool("NoAmmo", false);
             }
 
             // Plays the audio.
-            if(_audio != null) {
-                _audio.clip = shotClip;
-                _audio.Play();
+            if(wAudio != null) {
+                wAudio.clip = shotClip;
+                wAudio.Play();
             }
 
         }
@@ -145,21 +145,21 @@ namespace DEEP.Weapons {
         ///     Will probably clean up later.
         /// </summary>
         /// <param name="target"></param>
-        protected void Fire(Vector3 target)
+        protected virtual void Fire(Vector3 target)
         {
             Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullets.BulletBase>().SetTarget(target); // Creates the bullet and sets its target.
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
-            if(_animator != null) {
-                _animator.SetBool("Fire", true);
-                _animator.SetBool("NoAmmo", false);
+            if(wAnimator != null) {
+                wAnimator.SetBool("Fire", true);
+                wAnimator.SetBool("NoAmmo", false);
             }
 
             // Plays the audio.
-            if(_audio != null) {
-                _audio.clip = shotClip;
-                _audio.Play();
+            if(wAudio != null) {
+                wAudio.clip = shotClip;
+                wAudio.Play();
             }
         }
 
@@ -170,9 +170,9 @@ namespace DEEP.Weapons {
             delayTimer = 0; // Resets the delay.
 
             // Plays the audio.
-            if(_audio != null) {
-                _audio.clip = noAmmoCLip;
-                _audio.Play();
+            if(wAudio != null) {
+                wAudio.clip = noAmmoCLip;
+                wAudio.Play();
             }
 
         }

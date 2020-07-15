@@ -20,20 +20,33 @@ namespace DEEP.Weapons {
 			delayTimer = 0; // Resets the delay.
 
 			// Plays the animation.
-			if(_animator != null) {
-				_animator.SetBool("Fire", true);
-				_animator.SetBool("NoAmmo", false);
+			if(wAnimator != null) {
+				wAnimator.SetBool("Fire", true);
+				wAnimator.SetBool("NoAmmo", false);
 			}
 
 			// Plays the audio.
-			if(_audio != null) {
-				_audio.clip = shotClip;
-				_audio.Play();
+			if(wAudio != null) {
+				wAudio.clip = shotClip;
+				wAudio.Play();
 			}
 
 		}
 
-		private Quaternion GenerateRandomRotation(Quaternion baseRotation) {
+		/// <summary>
+		///     Again, this is just copy paste the other fire function because I didn't want to change the code structure.
+		///     Will probably clean up later.
+		/// </summary>
+		/// <param name="target"></param>
+		protected override void Fire(Vector3 target)
+		{
+			
+			// As shootgun bullets are random, there's no need to worry about the target.
+			Fire();
+
+		}
+
+		protected Quaternion GenerateRandomRotation(Quaternion baseRotation) {
 			float angleVariation = shotSpreadAngle / 2.0f;
 			float xVariation = Random.Range(-angleVariation, angleVariation);
 			float yVariation = Random.Range(-angleVariation, angleVariation);
@@ -41,7 +54,5 @@ namespace DEEP.Weapons {
 
 			return randRotation;
 		}
-
-	}
-
+	}		
 }

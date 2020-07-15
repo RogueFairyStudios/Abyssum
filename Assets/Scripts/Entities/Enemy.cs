@@ -43,8 +43,8 @@ namespace DEEP.Entities{
             // Sets delegates to start and stop growling.
             if(growl.Length > 0)
             {
-                AI.OnAggro      = () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
-                AI.OnLoseAggro  = () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
+                AI.OnAggro      += () => {   CancelInvoke(nameof(Grunt));    Invoke(nameof(Growl), 0f);  };
+                AI.OnLoseAggro  += () => {   CancelInvoke(nameof(Growl));    Invoke(nameof(grunt), 0f);  };
             }
 
             Invoke(nameof(Grunt), Random.Range(minGruntInterval, maxGruntInterval));
@@ -91,17 +91,17 @@ namespace DEEP.Entities{
         protected override void Die(){
 
             if(death.Length > 0)
-                AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);
+                AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
 
             base.Die();
             
         }
 
-        public override void setSlow(){
+        public override void SetSlow(){
             if(AI is EnemyAISystem navmeshAI)
                 navmeshAI.setSpeed(0.5f);
         }
-        public override void setBaseSpeed(){
+        public override void SetBaseSpeed(){
             if(AI is EnemyAISystem navmeshAI)
                 navmeshAI.setSpeed(this.baseSpeed);
         }
