@@ -14,12 +14,20 @@ namespace DEEP.Utility
 
         private string OSInfo;
         private string graphicsAPIInfo;
+        private string processorInfo;
+        private int systemMemoryInfo;
+        private string graphicsCardInfo;
+        private int graphicsMemoryInfo;
 
         void Start()
         {
 
-            OSInfo = SystemInfo.operatingSystem.ToString();
+            OSInfo = SystemInfo.operatingSystem;
             graphicsAPIInfo = SystemInfo.graphicsDeviceType.ToString();
+            processorInfo = SystemInfo.processorType;
+            systemMemoryInfo = SystemInfo.systemMemorySize;
+            graphicsCardInfo = SystemInfo.graphicsDeviceName;
+            graphicsMemoryInfo = SystemInfo.graphicsMemorySize;
 
         }
 
@@ -53,8 +61,9 @@ namespace DEEP.Utility
         void OnGUI()
         {
 
-            if(show)
-                GUI.Label(new Rect(10,10, 800, 200), "FPS: " + Mathf.Floor(fps) + "\n(running on " + OSInfo + " with "+ graphicsAPIInfo + ")");
+            if(show) {
+                GUI.Label(new Rect(10,10, 800, 200), "FPS: " + Mathf.Floor(fps) + "\nAPI: "+ graphicsAPIInfo +"\nOS: " + OSInfo + "\nCPU: " + processorInfo + "\nRAM: " + systemMemoryInfo + "MB\nGPU: " + graphicsCardInfo + "\nVRAM: " + graphicsMemoryInfo + "MB");
+            }
 
         }
 
