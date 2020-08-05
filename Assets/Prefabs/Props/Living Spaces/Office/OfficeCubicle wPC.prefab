@@ -155,10 +155,15 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 22240678640298133, guid: d3af5ab278d468241b087fd72fac7ebd,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 460521592266131852, guid: d3af5ab278d468241b087fd72fac7ebd,
         type: 3}
       propertyPath: m_Name
-      value: OfficeCubicle Variant
+      value: OfficeCubicle wPC
       objectReference: {fileID: 0}
     - target: {fileID: 4053359787734347177, guid: d3af5ab278d468241b087fd72fac7ebd,
         type: 3}
