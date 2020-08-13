@@ -18,13 +18,27 @@ namespace DEEP.Stage
 
         public string nextStageSceneName = "no name";
 
+        // Initial number of enemies in the stage.
         private int numStageEnemies;
+
+        // Initial number of collectibles in the stage.
         private int numStageCollectibles;
+
+        // Number of secrets in the stage.
         private int numStageSecrets;
+
+        // Current number of enemies killed.
+        private int numEnemiesKilled;
+
+        // Initial number of collectibles already collected.
+        private int numCollectiblesCollected;
+
+        // Number of secrets found.
+        private int numSecretsFound;
 
         private float duration;
 
-        private void Awake()
+        private void Start()
         {
             // Ensures theres only one instance of this script.
             if (Instance != null) {
@@ -34,9 +48,17 @@ namespace DEEP.Stage
             }
             Instance = this;
 
-            numStageEnemies = FindObjectsOfType<EnemyAISystem>().Length;
+            numStageEnemies = FindObjectsOfType<EnemyBase>().Length;
             numStageCollectibles = FindObjectsOfType<CollectibleBase>().Length;
             numStageSecrets = FindObjectsOfType<SecretTrigger>().Length;
+
+            numEnemiesKilled = 0;
+            numCollectiblesCollected = 0;
+            numSecretsFound = 0;
+
+            Player.Instance.HUD.SetKillCount(numEnemiesKilled, numStageEnemies);
+            Player.Instance.HUD.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            Player.Instance.HUD.SetSecretCount(numSecretsFound, numStageSecrets);
 
             duration = 0.0f;
 
@@ -45,8 +67,27 @@ namespace DEEP.Stage
         private void FixedUpdate()
         {
 
+            // Counts the time spent on the stage.
             duration += Time.fixedDeltaTime;
 
+        }
+
+        // Counts an enemy kill.
+        public void CountKill() { 
+            numEnemiesKilled++; 
+            Player.Instance.HUD.SetKillCount(numEnemiesKilled, numStageEnemies);
+        }
+
+        // Counts a collected item.
+        public void CountCollection() { 
+            numCollectiblesCollected++; 
+            Player.Instance.HUD.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+        }
+
+        // Counts a secret found.
+        public void CountSecretFound() { 
+            numSecretsFound++; 
+            Player.Instance.HUD.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.
@@ -62,27 +103,13 @@ namespace DEEP.Stage
         public int GetTotalSecrets() { return numStageSecrets;  }
 
         // Number of enemies killed.
-        public int GetKillCount() {
-
-            // Detects all enemeis alive.
-            EnemyAISystem[] allEnemies = FindObjectsOfType<EnemyAISystem>();
-
-            // Removes enemies spawned after start.
-            int enemyCount = allEnemies.Length;
-            foreach(EnemyAISystem enemy in allEnemies) {
-                if (enemy.spawned)
-                    enemyCount--;
-            }
-
-            // Calculates how many of the original enemies have been killed.
-            return numStageEnemies - enemyCount;
-        }
+        public int GetKillCount() { return numEnemiesKilled; }
 
         // Number of collectibles collected.
-        public int GetCollectibleCount() { return numStageCollectibles - FindObjectsOfType<CollectibleBase>().Length; }
+        public int GetCollectibleCount() { return numCollectiblesCollected; }
 
         // Number of secrets found.  
-        public int GetSecretCount() { return numStageSecrets - FindObjectsOfType<SecretTrigger>().Length; }
+        public int GetSecretCount() { return numSecretsFound; }
 
         // Percentage of enemies killed.
         public float GetKillPercentage() 
@@ -112,8 +139,19 @@ namespace DEEP.Stage
             return (float)GetSecretCount() / (float)numStageSecrets; 
         }
 
-        // Get current time elapsed from the start of the level, without pauses.
+        // Get current time elapsed from the start of the level, without pauses and returns as a float.
         public float GetDuration() { return duration; }
+
+        // Get current time elapsed from the start of the level, without pauses and returns as a formated string.
+        public string GetDurationString() {  
+
+            float minutes = (int)Mathf.Floor(duration / 60);
+            float seconds = (int)Mathf.Floor(duration - (minutes * 60));
+            float secondFraction = (int)Mathf.Floor((duration - seconds - (minutes * 60)) * 10);
+
+            return minutes + ":" + seconds.ToString().PadLeft(2, '0') + "." + secondFraction;
+
+        }
 
     }
 

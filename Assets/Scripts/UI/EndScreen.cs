@@ -26,17 +26,11 @@ namespace DEEP.UI
             // Calculates and assigns the stage information to the end screen.
             completionMessage.text = info.GetStageName().ToUpper() + " COMPLETED!";
 
+            time.text = info.GetDurationString();
+
             killCount.text = info.GetKillCount() + "/" + info.GetTotalEnemies() + " (" + (info.GetKillPercentage() * 100).ToString("0.0") + "%)";
             itemCount.text = info.GetCollectibleCount() + "/" + info.GetTotalCollectibles() + " (" + (info.GetCollectiblePercentage() * 100).ToString("0.0") + "%)";
             secretCount.text = info.GetSecretCount() + "/" + info.GetTotalSecrets() + " (" + (info.GetSecretPercentage() * 100).ToString("0.0") + "%)";
-
-            float completionTime = info.GetDuration();
-
-            float minutes = (int)Mathf.Floor(completionTime / 60);
-            float seconds = (int)Mathf.Floor(completionTime - minutes * 60);
-            float secondFraction = (int)Mathf.Round((completionTime - seconds - (minutes * 60)) * 10);
-
-            time.text = minutes + ":" + seconds.ToString().PadLeft(2, '0') + "." + secondFraction;
 
             // Enables this gameObject.
             gameObject.SetActive(true);

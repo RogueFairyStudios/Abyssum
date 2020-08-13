@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+using DEEP.Stage;
 using DEEP.Entities;
 using DEEP.DoorsAndKeycards;
 
@@ -65,6 +66,26 @@ namespace DEEP.UI
         [Header("Keycards")]
         [SerializeField] protected KeyHUD keyHUD = null;
 
+        [System.Serializable]
+        protected class LogHUD
+        {
+            public TMP_Text text = null;
+            public Image icon = null;
+        }
+        [Header("Log")]
+        [SerializeField] protected LogHUD logHUD = null;
+
+        [System.Serializable]
+        protected class SpeedrunHUD
+        {
+            public TMP_Text kills = null;
+            public TMP_Text items = null;
+            public TMP_Text secrets = null;
+            public TMP_Text time = null;
+        }
+        [Header("Speedrun")]
+        [SerializeField] protected SpeedrunHUD speedrunHUD = null;
+
         // Types of feedback, used to choose screen feedback color.
         public enum FeedbackType { Damage, Toxic, Mud }
 
@@ -89,6 +110,14 @@ namespace DEEP.UI
         }
         [Header("Feedback")]
         [SerializeField] protected PlayerFeedback playerFeedback = null;
+
+        void FixedUpdate() {
+
+            // Constantly updates the speedrun clock.
+            speedrunHUD.time.text = StageInfo.Instance.GetDurationString();
+
+        }
+
 
         public void SetHealthHUD(int current, int max) {
 
@@ -175,6 +204,27 @@ namespace DEEP.UI
 
         }
 
+        public void Log(string message, Sprite icon, Color color) {
+
+            logHUD.text.color = color;
+            logHUD.text.text = StageInfo.Instance.GetDurationString() + ": " + message;
+
+            logHUD.icon.color = color;
+            logHUD.icon.sprite = icon;
+
+        }
+
+        public void SetKillCount(int current, int total) {
+            speedrunHUD.kills.text = current + "/" + total;
+        }
+
+        public void SetItemCount(int current, int total) {
+            speedrunHUD.items.text = current + "/" + total;
+        }
+
+        public void SetSecretCount(int current, int total) {
+            speedrunHUD.secrets.text = current + "/" + total;
+        }
 
         // Starts a screen feedback effect.
         public void StartScreenFeedback(FeedbackType type) {

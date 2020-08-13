@@ -182,9 +182,7 @@ namespace DEEP.Weapons {
          // Pick's up a weapon and enables it's use.
         public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
 
-            // If the weapon was collected.
-            bool collected = false;
-
+            // Collects the weapon if the player doesn't have it yet.
             if(!weaponInstances[slot].Item1) {
 
                 // Gets the old instance from the list.
@@ -198,8 +196,6 @@ namespace DEEP.Weapons {
 
                 Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.name + " has been collected!");
 
-                collected = true;
-
                 // Equips the weapon.
                 SwitchWeapons(slot);
 
@@ -209,19 +205,19 @@ namespace DEEP.Weapons {
                     weaponsEnabled[i] = weaponInstances[i].Item1;
                 Player.Instance.HUD.ShowWeaponIcons(weaponsEnabled);
 
+                // Give the initial ammo to the player.
+                GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, feedbackAudio);
+
+                // If collected, plays the player feedback sound.
+                if(feedbackAudio != null)
+                    Player.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+
+                return true;
+
             }
 
-            // Gives ammo to the player.
-            bool givenAmmo = false;
-            if(ammo > 0)
-                givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, null);
-
-            // If collected, plays the player feedback sound.
-            if((collected || givenAmmo) && feedbackAudio != null)
-                Player.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
-
-            // Returns if the player has collected the weapon or it's ammo.
-            return collected || givenAmmo;
+            // Tries giving ammo to the player if it already has the weapon.
+            return GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, feedbackAudio);
 
         }
 

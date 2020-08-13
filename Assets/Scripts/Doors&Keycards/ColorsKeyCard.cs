@@ -9,11 +9,11 @@ namespace DEEP.DoorsAndKeycards {
 
 		public KeysColors keyColor = KeysColors.Blue;
 
-		protected override void Collect(Player player) {
+		protected override void Collect() {
 
-			player.GiveKeyCard(keyColor, collectionSound);
-
-			Destroy(gameObject);
+			// Gives the keycard to the player.
+			Player.Instance.GiveKeyCard(keyColor, collectionSound);
+			base.Collect();
 
 		}
 	}

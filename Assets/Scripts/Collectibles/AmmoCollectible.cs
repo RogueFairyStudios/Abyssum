@@ -8,17 +8,11 @@ namespace DEEP.Collectibles
         [SerializeField] private string type = "Shell";
         [SerializeField] private int amount = 10;
 
-        protected override void Collect(Player player) {
+        protected override void Collect() {
 
-            // Tries healing the player and stores if it was healed.
-            bool collected = player.weaponController.GiveAmmo(amount, type, collectionSound);
-            
-            if(collected) {
-                
-                // Destroys the object if the collectible is used.
-                Destroy(gameObject);
-
-            }
+            // Tries giving ammo to the player.
+            if(Player.Instance.weaponController.GiveAmmo(amount, type, collectionSound))     
+                base.Collect();
 
         }
 

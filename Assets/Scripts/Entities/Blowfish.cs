@@ -5,7 +5,7 @@ using DEEP.AI;
 
 namespace DEEP.Entities{
 
-    public class Blowfish : EntityBase
+    public class Blowfish : EnemyBase
     {
         [SerializeField] GameObject explosionPrefab = null;
         [SerializeField] AudioClip swim, inflate;
@@ -48,6 +48,11 @@ namespace DEEP.Entities{
 
         protected override void Die()
         {
+
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
+
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
 

@@ -2,7 +2,7 @@
 
 namespace DEEP.Entities{
 
-    public class StaticEnemy : EntityBase
+    public class StaticEnemy : EnemyBase
     {
         [Space(5)]
         [Header("Audio")]
@@ -74,6 +74,9 @@ namespace DEEP.Entities{
 
         protected override void Die(){
 
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
 
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, 1f);

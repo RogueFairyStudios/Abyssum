@@ -35,10 +35,14 @@ namespace DEEP.Entities
         [SerializeField] public ConductorBox conductorBox;
         protected float baseSpeed;
 
+        // Used to ensure Die(), can't be called twice.
+        protected bool isDead;
+
         protected virtual void Start()
         {
 
             health = maxHealth; // Sets the initial health to the maximum health.
+            isDead = false;
 
         }
 
@@ -83,6 +87,11 @@ namespace DEEP.Entities
 
         // "Kills" an entity.
         protected virtual void Die() {
+
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
+            isDead = true;
 
             if(deathPrefab != null) // Spawns a prefab after death if assigned.
                 Instantiate(deathPrefab, transform.position, transform.rotation);

@@ -77,6 +77,26 @@ PrefabInstance:
       propertyPath: hType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: logText
+      value: <b>SUPER medic kit collected!</b>
+      objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: logColor.r
+      value: 0.5529412
+      objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: logColor.g
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
+        type: 3}
+      propertyPath: logColor.b
+      value: 0.5882353
+      objectReference: {fileID: 0}
     - target: {fileID: 7754582535152799028, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

@@ -8,17 +8,11 @@ namespace DEEP.Collectibles
 
         [SerializeField] private int amount = 50;
 
-        protected override void Collect(Player player) {
+        protected override void Collect() {
 
-            // Tries giving armor to the player and stores if the item was collected.
-            bool collected = player.GiveArmor(amount, collectionSound);
-            
-            if(collected) {
-                
-                // Destroys the object if the collectible is used.
-                Destroy(gameObject);
-
-            }
+            // Tries giving armor to the player.
+            if(Player.Instance.GiveArmor(amount, collectionSound))      
+                base.Collect();
 
         }
 

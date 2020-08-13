@@ -5,7 +5,7 @@ using DEEP.AI;
 namespace DEEP.Entities
 {
 
-    public class Voidmouth : EntityBase
+    public class Voidmouth : EnemyBase
     {
         [SerializeField] AudioClip idleHum, persueHum;
 
@@ -68,6 +68,10 @@ namespace DEEP.Entities
         }
 
         protected override void Die(){
+
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
 
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
