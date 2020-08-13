@@ -15,18 +15,14 @@ namespace DEEP.UI
         [System.Serializable]
         protected class HealthHUD
         {
-            public Slider slider = null;
-            public Image sliderGraphic = null;
 
             public TMP_Text counter = null;
 
-            public Image backgroundGraphic = null;
+            public TMP_Text counterTitle = null;
 
             public Color defaultColor = Color.green;
             public Color overloadColor = Color.cyan;
 
-            public Color defaultColorBrigth = Color.green;
-            public Color overloadColorBrigth = Color.cyan;
         }
         [Header("Health")]
         [SerializeField] protected HealthHUD healthHUD = null;
@@ -34,7 +30,6 @@ namespace DEEP.UI
         [System.Serializable]
         protected class ArmorHUD
         {
-            public Slider slider = null;
             public TMP_Text counter = null;
         }
         [Header("Armor")]
@@ -43,15 +38,19 @@ namespace DEEP.UI
         [System.Serializable]
         protected class WeaponHUD
         {
-            public Slider slider = null;
+
             public TMP_Text counter = null;
 
-            public GameObject weaponAmmoPanel = null;
+            public GameObject weaponPanel = null;
 
-            public GameObject[] weaponIcons = null;
-            [HideInInspector] public RectTransform[] weaponIconsTransform = null;
+            public TMP_Text[] weaponNumbers = null;
 
-            public Vector2 weaponTabClosedOffset = Vector2.zero;
+            public Image weaponIcon = null;
+            public Image ammoIcon = null;
+
+            public Color activeColor = Color.yellow;
+            public Color inactiveColor = Color.gray;
+
         }
         [Header("Ammo & Weapons")]
         [SerializeField] protected WeaponHUD weaponHUD = null;
@@ -59,15 +58,15 @@ namespace DEEP.UI
         [System.Serializable]
         protected class KeyHUD
         {
-            public GameObject blueKeyIcon = null;
-            public GameObject redKeyIcon = null;
-            public GameObject yellowKeyIcon = null;
+            public Image blueKeyIcon = null;
+            public Image redKeyIcon = null;
+            public Image yellowKeyIcon = null;
         }
         [Header("Keycards")]
         [SerializeField] protected KeyHUD keyHUD = null;
 
         // Types of feedback, used to choose screen feedback color.
-        public enum FeedbackType { Damage, Healing, Armor, Weapon, Keycard, Secret, Toxic, Mud }
+        public enum FeedbackType { Damage, Toxic, Mud }
 
         [System.Serializable]
         protected class PlayerFeedback
@@ -76,24 +75,14 @@ namespace DEEP.UI
             [Tooltip("Animator used to play screen effects giving feedback to the player.")]
             public Image screenFeedback = null;
             public Coroutine screenFeedbackAnim = null; // Stores the current screen feedback coroutine.
-            [Tooltip("Duration of the screen feedback.")]
+            [Tooltip("Duration of screen flash feedbacks.")]
             public float duration = 0.1f;
             [Tooltip("Color for the damage feedback.")]
             public Color damageFeedbackColor = Color.red;
-            [Tooltip("Color for the healing feedback.")]
-            public Color healingFeedbackColor = Color.green;
-            [Tooltip("Color for the armor feedback.")]
-            public Color armorFeedbackColor = Color.blue;
-            [Tooltip("Color for the weapon/ammo feedback.")]
-            public Color weaponAmmoFeedbackColor = Color.yellow;
-            [Tooltip("Color for the keycard feedback.")]
-            public Color keycardFeedbackColor = Color.cyan;
             [Tooltip("Color for the toxic feedback.")]
             public Color toxicFeedbackColor = Color.green;
             [Tooltip("Color for the mud feedback.")]
             public Color mudFeedbackColor = Color.green;
-            [Tooltip("Color for the secret feedback.")]
-            public Color secretFeedbackColor = Color.magenta;
             [HideInInspector] public bool constantFeedbackActive;
             [HideInInspector] public Color currentConstantFeedbackColor;
 
@@ -105,7 +94,6 @@ namespace DEEP.UI
 
             // Sets the slider and counter if life is less than 0.
             if(current < 0) {
-                healthHUD.slider.value = 0;
                 healthHUD.counter.text = "-";
                 return;
             }
@@ -115,20 +103,14 @@ namespace DEEP.UI
 
             // Sets the slider and color for overload health.
             if(current > max) {
-                healthHUD.slider.value = 1;
-                healthHUD.backgroundGraphic.color = healthHUD.overloadColor;
-                healthHUD.sliderGraphic.color = healthHUD.overloadColorBrigth;
-                healthHUD.counter.color = healthHUD.overloadColorBrigth;
+                healthHUD.counter.color = healthHUD.overloadColor;
+                healthHUD.counterTitle.color = healthHUD.overloadColor;
                 return;
             }
 
-            // Sets the slider otherwise.
-            healthHUD.slider.value = (float)current / (float)max;
-
             // Uses the default colors.
-            healthHUD.backgroundGraphic.color = healthHUD.defaultColor;
-            healthHUD.sliderGraphic.color = healthHUD.defaultColorBrigth;
-            healthHUD.counter.color = healthHUD.defaultColorBrigth;
+            healthHUD.counter.color = healthHUD.defaultColor;
+            healthHUD.counterTitle.color = healthHUD.defaultColor;
 
             return;
 
@@ -137,14 +119,11 @@ namespace DEEP.UI
         public void SetArmorHUD(int current, int max) {
 
             if (current < 0) {
-                armorHUD.slider.value = 0;
                 armorHUD.counter.text = "-";
                 return;
             }
 
             armorHUD.counter.text = current.ToString();
-
-            armorHUD.slider.value = (float)current / (float)max;
 
         }
 
@@ -152,39 +131,23 @@ namespace DEEP.UI
 
             if(current < 0) {
                 weaponHUD.counter.text = "-";
-                weaponHUD.slider.value = 1;
                 return;
             }
 
             weaponHUD.counter.text = current.ToString();
 
-            weaponHUD.slider.value = (float)current / (float)max;
-
         }
 
-        public void SetCurrentWeapon(int weapon) {
+        public void SetCurrentWeapon(int weapon, Sprite weaponIcon, Sprite ammoIcon) {
 
-            // If the RectTransform of the weapon icons hasn't been obtained yet.
-            if (weaponHUD.weaponIconsTransform == null || weaponHUD.weaponIconsTransform.Length != weaponHUD.weaponIcons.Length) {
+            // Colors the weapon numbers correctly based on the active weapon.
+            for(int i = 0; i < weaponHUD.weaponNumbers.Length; i++)
+                    weaponHUD.weaponNumbers[i].color = weaponHUD.inactiveColor; // Sets all numbers inactive.
+            weaponHUD.weaponNumbers[weapon].color = weaponHUD.activeColor; // Sets the current weapon active.
 
-                // Gets each weapon icon RectTransform.
-                weaponHUD.weaponIconsTransform = new RectTransform[weaponHUD.weaponIcons.Length];
-                for (int i = 0; i < weaponHUD.weaponIconsTransform.Length; i++)
-                    weaponHUD.weaponIconsTransform[i] = weaponHUD.weaponIcons[i].GetComponent<RectTransform>();
-
-            }
-
-            // Enables the icons for the weapons the player has.
-            for (int i = 0; i < weaponHUD.weaponIcons.Length; i++) {
-                
-                if(i == weapon) {
-                    weaponHUD.weaponIconsTransform[i].anchoredPosition = Vector2.zero;
-                    continue;
-                }
-
-                weaponHUD.weaponIconsTransform[i].anchoredPosition = weaponHUD.weaponTabClosedOffset;
-
-            }
+            // Sets the correct weapons and ammo icons.
+            weaponHUD.weaponIcon.sprite = weaponIcon;
+            weaponHUD.ammoIcon.sprite = ammoIcon;
 
         }
 
@@ -192,23 +155,23 @@ namespace DEEP.UI
 
             bool hasAnyWeapons = false;
 
-            // Enables the icons for the weapons the player has.
+            // Enables the numbers for the weapons the player has.
             for(int i = 0; i < weaponsEnabled.Length; i++)
             {
-                weaponHUD.weaponIcons[i].SetActive(weaponsEnabled[i]);
+                weaponHUD.weaponNumbers[i].gameObject.SetActive(weaponsEnabled[i]);
                 hasAnyWeapons = hasAnyWeapons || weaponsEnabled[i]; // Checks if the player has at least one weapon.
             }
 
             // Hides ammo counter if there are no weapons.
-            weaponHUD.weaponAmmoPanel.SetActive(hasAnyWeapons);
+            weaponHUD.weaponPanel.SetActive(hasAnyWeapons);
 
         }
 
         public void SetKeyHUD() {
 
-            keyHUD.blueKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Blue));
-            keyHUD.redKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Red));
-            keyHUD.yellowKeyIcon.SetActive(Player.Instance.keyInventory.HasKey(KeysColors.Yellow));
+            keyHUD.blueKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Blue);
+            keyHUD.redKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Red);
+            keyHUD.yellowKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Yellow);
 
         }
 
@@ -224,43 +187,26 @@ namespace DEEP.UI
             Color feedbackColor = Color.black;
             switch(type) {
 
+                // Quick flash effects.
                 case FeedbackType.Damage:
                 feedbackColor = playerFeedback.damageFeedbackColor;
+                playerFeedback.screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(feedbackColor, playerFeedback.duration));
                 break;
 
-                case FeedbackType.Healing:
-                feedbackColor = playerFeedback.healingFeedbackColor;
-                break;
-
-                case FeedbackType.Armor:
-                feedbackColor = playerFeedback.armorFeedbackColor;
-                break;
-
-                case FeedbackType.Weapon:
-                feedbackColor = playerFeedback.weaponAmmoFeedbackColor;
-                break;
-
-                case FeedbackType.Keycard:
-                feedbackColor = playerFeedback.keycardFeedbackColor;
-                break;
-
-                case FeedbackType.Secret:
-                feedbackColor = playerFeedback.secretFeedbackColor;
-                break;
-
-                // Constant effects
+                // Constant effects.
                 case FeedbackType.Toxic:
                 feedbackColor = playerFeedback.toxicFeedbackColor;
                 StartConstantScreenFeedback(feedbackColor);
-                return;
+                break;
 
                 case FeedbackType.Mud:
                 feedbackColor = playerFeedback.mudFeedbackColor;
                 StartConstantScreenFeedback(feedbackColor);
-                return;
+                break;
+
             }
 
-            playerFeedback.screenFeedbackAnim = StartCoroutine(ScreenFeedbackAnim(feedbackColor, playerFeedback.duration));
+            
         }
 
         protected IEnumerator ScreenFeedbackAnim(Color color, float duration) {

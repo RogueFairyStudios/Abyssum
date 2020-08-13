@@ -11,7 +11,7 @@ namespace DEEP.Collectibles
         protected override void Collect(Player player) {
 
             // Tries healing the player and stores if it was healed.
-            bool collected = player.waponController.GiveAmmo(amount, type, collectionSound);
+            bool collected = player.weaponController.GiveAmmo(amount, type, collectionSound);
             
             if(collected) {
                 

@@ -5,7 +5,7 @@ namespace DEEP.Entities
 
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
-    public class PlayerMovimentation : MonoBehaviour
+    public class PlayerMovementation : MonoBehaviour
     {
 
         [Tooltip("Player acceleration on ground.")]

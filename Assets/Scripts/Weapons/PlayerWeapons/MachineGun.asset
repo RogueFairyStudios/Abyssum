@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Magazine
   prefab: {fileID: 9168991451539551708, guid: 3a5f3f247c84c0569ac1dbe088541f47, type: 3}
+  icon: {fileID: 3755808541234319545, guid: 87f14276aff19c24e9a83a39b975e3ae, type: 3}

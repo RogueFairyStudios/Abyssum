@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Crystal
   prefab: {fileID: 9168991451539551708, guid: bb604aeffb8570245bb8426afa40dfe1, type: 3}
+  icon: {fileID: 4238560554397997201, guid: e54dc161f541b544d8f3dfa54b04839d, type: 3}

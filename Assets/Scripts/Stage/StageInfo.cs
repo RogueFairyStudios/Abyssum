@@ -26,6 +26,12 @@ namespace DEEP.Stage
 
         private void Awake()
         {
+            // Ensures theres only one instance of this script.
+            if (Instance != null) {
+                Debug.LogError("StageInfo: more than one instance of singleton found!");
+                Destroy(gameObject);
+                return;
+            }
             Instance = this;
 
             numStageEnemies = FindObjectsOfType<EnemyAISystem>().Length;

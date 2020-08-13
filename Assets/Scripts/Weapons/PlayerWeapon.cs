@@ -13,4 +13,7 @@ public class PlayerWeapon : ScriptableObject
     [Tooltip("Prefab to be used as the GameObject of the weapon.")]
     public GameObject prefab;
 
+    [Tooltip("Icon used to represent this weapon on the HUD.")]     
+    public Sprite icon;
+
 }

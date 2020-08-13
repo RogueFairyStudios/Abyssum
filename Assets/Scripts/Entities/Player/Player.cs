@@ -13,8 +13,9 @@ namespace DEEP.Entities
 {
 
     // Class that controls the Player.
-    [RequireComponent(typeof(PlayerMovimentation))]
+    [RequireComponent(typeof(PlayerMovementation))]
     [RequireComponent(typeof(PlayerWeaponController))]
+    [RequireComponent(typeof(InventoryKey))]
     public class Player : EntityBase
     {
 
@@ -43,36 +44,40 @@ namespace DEEP.Entities
         [Header("Pause")] // ==============================================================================
 
         [Tooltip("GameObject that contains the pause menu.")]
-        [SerializeField] private GameObject pauseMenu = null;
+        [SerializeField] protected GameObject pauseMenu = null;
 
         [Header("Death")] // ==============================================================================
         [Tooltip("The screen overlay for when the player dies.")]
-        [SerializeField] private GameObject deathScreen = null;
+        [SerializeField] protected GameObject deathScreen = null;
         [Tooltip("The menu items for when the player dies.")]
-        [SerializeField] private GameObject deathMenu = null;
+        [SerializeField] protected GameObject deathMenu = null;
 
         [Header("Level-End")] // ==============================================================================
         [Tooltip("The screen overlay for when the level ends.")]
-        [SerializeField] private EndScreen endLevelScreen = null;
+        [SerializeField] protected EndScreen endLevelScreen = null;
 
         [Header("Feedback")] // ===========================================================================
         [Tooltip("Audio source used to play clips related to feedback to the player.")]
         public AudioSource feedbackAudioSource = null;
 
         [Header("Components")] // =========================================================================
-        public PlayerMovimentation movimentation = null;
-        public PlayerWeaponController waponController = null;
+        public PlayerMovementation movementation = null;
+        public PlayerWeaponController weaponController = null;
         public HUDController HUD = null;
         public InventoryKey keyInventory = null;
 
         // Object used to wait in coroutines.
-        private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+        protected WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
         protected override void Start()
         {
 
             // Ensures theres only one instance of this script.
-            if (Instance != null)
+            if (Instance != null) {
+                Debug.LogError("Player: more than one instance of singleton found!");
                 Destroy(gameObject);
+                return;
+            }
             Instance = this;
 
             base.Start();
@@ -85,8 +90,8 @@ namespace DEEP.Entities
 
             // Get components ==============================================================================
 
-            // Gets the Player's Movimentation script.
-            movimentation = GetComponentInChildren<PlayerMovimentation>();
+            // Gets the Player's Movementation script.
+            movementation = GetComponent<PlayerMovementation>();
 
             // Gets the Player's HUD Controller and initializes the UI.
             HUD = GetComponentInChildren<HUDController>();
@@ -94,10 +99,10 @@ namespace DEEP.Entities
             HUD.SetArmorHUD(armor, maxArmor);
 
             // Gets the weapons controller.
-            waponController = GetComponentInChildren<PlayerWeaponController>();
+            weaponController = GetComponent<PlayerWeaponController>();
 
             // Gets the key inventory.
-            keyInventory = GetComponentInChildren<InventoryKey>();
+            keyInventory = GetComponent<InventoryKey>();
 
         }
 
@@ -106,7 +111,7 @@ namespace DEEP.Entities
 
             // Pause ============================================================================================
 
-            // Pauses and unpauses the game.
+            // Pauses and un-pauses the game.
             if (currentState == PlayerState.Play || currentState == PlayerState.Paused) {
                 if (Input.GetButtonDown("Cancel")) 
                     TogglePause(); 
@@ -120,38 +125,38 @@ namespace DEEP.Entities
 
             // Verifies the number keys.
             if(Input.GetKeyDown("0")) // Checks for 0.
-                waponController.SwitchWeapons(9); // 0 is the rightmost key so it's actually the last weapon at index 9.
+                weaponController.SwitchWeapons(9); // 0 is the rightmost key so it's actually the last weapon at index 9.
             else {
                 for(int i = 1; i <= 9; i++) // Checks for the other keys.
                     if(Input.GetKeyDown(i.ToString()))
-                        waponController.SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
+                        weaponController.SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
             }
 
             // Check if player has a weapon
-            if (waponController.currentWeapon != null)
+            if (weaponController.currentWeapon != null)
             {
 
                 // Change weapon using mouse scrollwheel =========================================================
                 if (Input.GetAxis("Mouse ScrollWheel") > 0f) // Scroll Up
-                    waponController.SwitchWeapons(waponController.GetNextEnabledWeaponIndex());
+                    weaponController.SwitchWeapons(weaponController.GetNextEnabledWeaponIndex());
                 else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // Scroll Down
-                    waponController.SwitchWeapons(waponController.GetPreviousEnabledWeaponIndex());
+                    weaponController.SwitchWeapons(weaponController.GetPreviousEnabledWeaponIndex());
 
                 // Try firing weapons ============================================================================
                 if (Input.GetButton("Fire1"))
-                    waponController.FireCurrentWeapon();
+                    weaponController.FireCurrentWeapon();
 
             }
 
             // ===================================================================================================
-            // Player movimentation is handled by the PlayerMovimentation script referenced by movimentation.
+            // Player movementation is handled by the PlayerMovimentation script referenced by movementation.
             // ===================================================================================================
 
         }
 
         public override void Damage(int amount, DamageType type) {
 
-            // Initialy all damage is to the health.
+            // Initially all damage is to the health.
             int healthDamage = amount;
 
             // Calculates armor damage absorption.
@@ -194,7 +199,7 @@ namespace DEEP.Entities
             currentState = PlayerState.Dead;
 
             // Disables player control.
-            movimentation.enabled = false;
+            movementation.enabled = false;
 
             // Enables the death menu overlay.
             deathScreen.SetActive(true);
@@ -237,14 +242,8 @@ namespace DEEP.Entities
             bool healed = base.Heal(amount, type);
 
             // If the entity was healed plays the player feedback sound.
-            if(healed && feedbackAudio != null) {
-
+            if(healed && feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
-
-                // Flicks the screen to give feedback.
-                 HUD.StartScreenFeedback(HUDController.FeedbackType.Healing);
-
-            }
 
             return healed;
 
@@ -266,9 +265,6 @@ namespace DEEP.Entities
             if(feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
-            // Flicks the screen to give feedback.
-             HUD.StartScreenFeedback(HUDController.FeedbackType.Armor);
-
             // Updates the armor counter on the HUD.
             OnChangeArmor();
 
@@ -286,19 +282,17 @@ namespace DEEP.Entities
             if(feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
-            // Flicks the screen to give feedback.
-             HUD.StartScreenFeedback(HUDController.FeedbackType.Keycard);
-
             // Updates the collected keys on the HUD.
             HUD.SetKeyHUD();
 
         }
 
-        // Sinalizes the player has found a secret;
-        public void FoundSecret() {
+        // Signalizes the player has found a secret;
+        public void FoundSecret(AudioClip feedbackAudio) {
             
-            // Flicks the screen to give feedback.
-             HUD.StartScreenFeedback(HUDController.FeedbackType.Secret);
+            // Plays the player feedback sound.
+            if(feedbackAudio != null)
+                feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
         }
 
@@ -312,17 +306,17 @@ namespace DEEP.Entities
 
         }
 
-        // Pauses and unpauses the game.
+        // Pauses and un-pauses the game.
         public void TogglePause() {
 
-            // Pauses or unpauses the game.
+            // Pauses or un-pauses the game.
             if (currentState == PlayerState.Play)
                 currentState = PlayerState.Paused;
             else
                 currentState = PlayerState.Play;
 
             // Stops player movimentation.
-            movimentation.enabled = (currentState == PlayerState.Play);
+            movementation.enabled = (currentState == PlayerState.Play);
 
             // Shows or hides the pause menu and the cursor
             pauseMenu.SetActive(currentState == PlayerState.Paused);
@@ -340,7 +334,7 @@ namespace DEEP.Entities
         }
 
         // Updates mouse sensitivity from an outside script.
-        public void UpdateMouseSensitivity(float sensitivity) { movimentation.sensitivity = sensitivity; }
+        public void UpdateMouseSensitivity(float sensitivity) { movementation.sensitivity = sensitivity; }
 
         public void EndLevel() {
             
@@ -350,7 +344,7 @@ namespace DEEP.Entities
             currentState = PlayerState.EndLevel;
 
             // Disables player control.
-            movimentation.enabled = false;
+            movementation.enabled = false;
 
             // Displays the ebnd level screen
             endLevelScreen.ShowScreen();
@@ -368,8 +362,8 @@ namespace DEEP.Entities
 
         public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
 
-        public override void SetSlow() { movimentation.SetSlow(); }
-        public override void SetBaseSpeed() { movimentation.SetBaseSpeed(); }
+        public override void SetSlow() { movementation.SetSlow(); }
+        public override void SetBaseSpeed() { movementation.SetBaseSpeed(); }
 
     }
 

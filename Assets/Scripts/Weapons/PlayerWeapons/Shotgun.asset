@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Shell
   prefab: {fileID: 9168991451539551708, guid: a0974e07fa4f2e948b3feb9a3098d01a, type: 3}
+  icon: {fileID: -7942946101351199261, guid: be02a4b62b4e5394bb87f6d555c66659, type: 3}

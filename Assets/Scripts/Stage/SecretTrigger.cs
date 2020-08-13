@@ -10,13 +10,16 @@ namespace DEEP.Stage
 
     public class SecretTrigger : MonoBehaviour
     {
+
+        [SerializeField] protected AudioClip feedbackAudio = null;
+
         private void OnTriggerEnter(Collider other)
         {
 
             Debug.Log("Secret found!");
 
             Player player = FindObjectOfType<Player>();
-            player.FoundSecret();
+            player.FoundSecret(feedbackAudio);
 
             Destroy(this.gameObject);
         }

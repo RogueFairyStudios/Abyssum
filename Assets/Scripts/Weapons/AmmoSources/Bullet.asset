@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Bullet
   ammo: -1
   maxAmmo: -1
-  icon: {fileID: -5173725939769576238, guid: 99c762247c1f93facabec571b52d1497, type: 3}
+  icon: {fileID: -7158203971577093194, guid: 9d2acb80db25ab44b979918fdf36cda9, type: 3}
