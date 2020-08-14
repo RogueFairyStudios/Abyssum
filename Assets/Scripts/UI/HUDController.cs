@@ -172,10 +172,17 @@ namespace DEEP.UI
         [System.Serializable] // Speedrun =========================================================================
         public class SpeedrunHUD
         {
+
+            [SerializeField] protected GameObject panel = null;
+
             [SerializeField] protected TMP_Text kills = null;
             [SerializeField] protected TMP_Text items = null;
             [SerializeField] protected TMP_Text secrets = null;
             [SerializeField] protected TMP_Text time = null;
+
+            public void SetEnabled(bool enabled) {
+                panel.SetActive(enabled);
+            }
 
             public void SetKillCount(int current, int total) {
                 kills.text = current + "/" + total;
@@ -199,6 +206,9 @@ namespace DEEP.UI
         [System.Serializable] // Statistics =======================================================================
         public class StatisticsHUD
         {
+
+            [SerializeField] protected GameObject panel = null;
+
             [SerializeField] protected TMP_Text stats = null;
 
             // FPS
@@ -216,6 +226,10 @@ namespace DEEP.UI
 
             // Info about API nad OS version along with hardware config.
             protected string computerInfo;
+
+            public void SetEnabled(bool enabled) {
+                panel.SetActive(enabled);
+            }
 
             public void Initialize() {
 
@@ -263,23 +277,53 @@ namespace DEEP.UI
                 float fps = (FPSSampleCount / sampleSum);
 
                 // Colors the FPS text based on how high it is.
-                string fpsText;
+                string fpsText = "<b>FPS:</b> ";
                 if(fps < 30) {
-                    fpsText = "<color=#ff0000>" + Mathf.Floor(fps) + "</color>";
+                    fpsText += "<color=#ff0000>" + Mathf.Floor(fps) + "</color>";
                 } else if (fps < 60) {
-                    fpsText = "<color=#ffff00>" + Mathf.Floor(fps) + "</color>";
+                    fpsText += "<color=#ffff00>" + Mathf.Floor(fps) + "</color>";
                 } else if (fps < 120) {
-                    fpsText = "<color=#00ff00>" + Mathf.Floor(fps) + "</color>";
+                    fpsText += "<color=#00ff00>" + Mathf.Floor(fps) + "</color>";
+                } else if (fps < 240) {
+                    fpsText += "<color=#00ffff>" + Mathf.Floor(fps) + "</color>";
                 } else {
-                    fpsText = "<color=#00ffff>" + Mathf.Floor(fps) + "</color>";
+                    fpsText += "<color=#ff00ff>" + Mathf.Floor(fps) + "</color>";
+                }
+
+                // Creates a string with screen resolution info.
+                string resolutionText = "<b>Resolution:</b> ";
+                int gcd = GCD(Screen.width, Screen.height);
+                resolutionText += Screen.width + "x" + Screen.height + " (" + (Screen.width / gcd) + ":" + (Screen.height / gcd) + ")";
+
+                // Creates a string with window info.
+                string windowText = "<b>Window Mode:</b> ";
+                if(Screen.fullScreenMode == FullScreenMode.ExclusiveFullScreen) {
+                    windowText += "FullScreen";
+                } else if(Screen.fullScreenMode == FullScreenMode.FullScreenWindow) {
+                    windowText += "Windowed FullScreen";
+                } else {
+                    windowText += "Windowed";
                 }
 
                 // Puts the stats on the screen.
-                stats.text = "<b>FPS:</b> "  + fpsText + "<br>" + computerInfo;
+                stats.text = fpsText + "<br>" + computerInfo + "<br>" + resolutionText + "<br>" + windowText;
 
                 // Saves the update time.
                 lastUpdateTime = Time.time;
 
+            }
+
+            // Are you serious that neither UnityEngine.Mathf neither System.Math has a GCD function?
+            private int GCD(int a, int b)
+            {
+                while (a != 0 && b != 0)
+                {
+                    if (a > b)
+                        a %= b;
+                    else
+                        b %= a;
+                }
+                return a | b;
             }
 
         }
@@ -395,6 +439,16 @@ namespace DEEP.UI
 
             // Gathers initial information for the statistics.
             statistics.Initialize();
+
+            // Gets initial speedrun HUD value.
+            if(!PlayerPrefs.HasKey("SpeedrunHUD"))
+                PlayerPrefs.SetInt("SpeedrunHUD", 0);
+            speedrun.SetEnabled(PlayerPrefs.GetInt("SpeedrunHUD") == 1);
+
+            // Gets initial statistics HUD value.
+            if(!PlayerPrefs.HasKey("StatisticsHUD"))
+                PlayerPrefs.SetInt("StatisticsHUD", 0);
+            statistics.SetEnabled(PlayerPrefs.GetInt("StatisticsHUD") == 1);
 
         }
 

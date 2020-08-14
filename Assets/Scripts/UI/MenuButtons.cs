@@ -7,6 +7,17 @@ namespace DEEP.UI {
 
     public class MenuButtons : MonoBehaviour
     {
+
+        [Tooltip("Optional reference to an options menu.")]
+        [SerializeField] protected OptionsButtons optionsMenu = null;
+
+        void Start() {
+
+            if(optionsMenu != null)
+                optionsMenu.Initialize();
+
+        }
+
         public void QuitGame()
         {
             Debug.Log("Application.Quit()");

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4171265578445106677}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,7 +40,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3414609303162595701}
   - component: {fileID: 949698453859981344}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RocketLauncher
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 7316300491721982038}
   - component: {fileID: 3941830428839722159}
   - component: {fileID: 7742805622865475704}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -146,6 +146,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -170,6 +171,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &7742805622865475704
 Animator:
   serializedVersion: 3
@@ -199,7 +201,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5095800096405365766}
   - component: {fileID: 5982218785854354974}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -328,7 +330,7 @@ GameObject:
   - component: {fileID: 983799461205803178}
   - component: {fileID: 4857566281604306321}
   - component: {fileID: 736850933793282701}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: LauncherAim
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -372,6 +374,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -396,6 +399,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &6673297201127791179
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,7 +411,7 @@ GameObject:
   - component: {fileID: 94521916643391128}
   - component: {fileID: 6340441987619347031}
   - component: {fileID: 690667995865108228}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: RocketPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -451,6 +455,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -475,3 +480,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}

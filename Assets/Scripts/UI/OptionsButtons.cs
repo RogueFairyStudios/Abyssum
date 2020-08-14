@@ -17,7 +17,12 @@ namespace DEEP.UI {
         Resolution[] resolution;//vetor de resol.
         [SerializeField] Slider volume = null;//volume sensitivity slider
 
-        void Start()
+        [SerializeField] Toggle speedrun = null;// Speedrun HUD toggle
+
+        [SerializeField] Toggle statistics = null;// Statistics hUD toggle
+
+        // Initializes the options, should be called by the main menu.
+        public void Initialize()
         {
             
             //pega o valor inicial do volume
@@ -53,6 +58,16 @@ namespace DEEP.UI {
                 PlayerPrefs.SetFloat("Volume", 1.0f);
             volume.value = PlayerPrefs.GetFloat("Volume");
 
+            // Gets initial speedrun HUD value.
+            if(!PlayerPrefs.HasKey("SpeedrunHUD"))
+                PlayerPrefs.SetInt("SpeedrunHUD", 0);
+            speedrun.isOn = (PlayerPrefs.GetInt("SpeedrunHUD") == 1);
+
+            // Gets initial statistics HUD value.
+            if(!PlayerPrefs.HasKey("StatisticsHUD"))
+                PlayerPrefs.SetInt("StatisticsHUD", 0);
+            statistics.isOn = (PlayerPrefs.GetInt("StatisticsHUD") == 1);
+
         }
 
         //muda a sensibilidade do mouse
@@ -74,9 +89,9 @@ namespace DEEP.UI {
         }
 
         //entra e sai de FullScreen
-        public void SetFullScreen(bool isFullScreen)
+        public void SetFullScreen(bool isOn)
         {
-            Screen.fullScreen = isFullScreen;
+            Screen.fullScreen = isOn;
         }
 
         public void SetQuality(int qualityindex)//seleciona a qualidade de a cordo com o index atual aplicando ele no sistema base da unity
@@ -89,6 +104,22 @@ namespace DEEP.UI {
         {
             PlayerPrefs.SetFloat("Volume", volume.value);
             AudioListener.volume = volume.value;
+        }
+
+        // Enables or disables the speedrun HUD.
+        public void SetSpeedrunHUD(bool isOn)
+        {
+            PlayerPrefs.SetInt("SpeedrunHUD", isOn ? 1 : 0);
+            if(Player.Instance != null && Player.Instance.HUD != null)
+                Player.Instance.HUD.speedrun.SetEnabled(isOn);
+        }
+
+        // Enables or disables the statistics HUD.
+        public void SetStatisticsHUD(bool isOn)
+        {
+            PlayerPrefs.SetInt("StatisticsHUD", isOn ? 1 : 0);
+            if(Player.Instance != null && Player.Instance.HUD != null)
+                Player.Instance.HUD.statistics.SetEnabled(isOn);
         }
 
     }

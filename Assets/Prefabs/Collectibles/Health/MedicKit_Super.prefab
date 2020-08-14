@@ -85,12 +85,12 @@ PrefabInstance:
     - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
       propertyPath: logColor.r
-      value: 0.5529412
+      value: 0.19607843
       objectReference: {fileID: 0}
     - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}
       propertyPath: logColor.g
-      value: 0.19607843
+      value: 0.5846521
       objectReference: {fileID: 0}
     - target: {fileID: 573399606290086692, guid: 4508a7622ffc7fc4ca5416ba04794ee9,
         type: 3}

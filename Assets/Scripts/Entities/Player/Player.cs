@@ -46,6 +46,9 @@ namespace DEEP.Entities
         [Tooltip("GameObject that contains the pause menu.")]
         [SerializeField] protected GameObject pauseMenu = null;
 
+        [Tooltip("Reference to the settings screen on the pause menu.")]
+        [SerializeField] protected OptionsButtons optionsMenu = null;
+
         [Header("Death")] // ==============================================================================
         [Tooltip("The screen overlay for when the player dies.")]
         [SerializeField] protected GameObject deathScreen = null;
@@ -103,6 +106,9 @@ namespace DEEP.Entities
 
             // Gets the key inventory.
             keyInventory = GetComponent<InventoryKey>();
+
+            // Initializes the options menu.
+            optionsMenu.Initialize();
 
         }
 
