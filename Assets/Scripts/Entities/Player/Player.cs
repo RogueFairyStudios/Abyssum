@@ -95,8 +95,8 @@ namespace DEEP.Entities
 
             // Gets the Player's HUD Controller and initializes the UI.
             HUD = GetComponentInChildren<HUDController>();
-            HUD.SetHealthHUD(health, maxHealth);
-            HUD.SetArmorHUD(armor, maxArmor);
+            HUD.health.SetValue(health, maxHealth);
+            HUD.armor.SetValue(armor, maxArmor);
 
             // Gets the weapons controller.
             weaponController = GetComponent<PlayerWeaponController>();
@@ -283,7 +283,7 @@ namespace DEEP.Entities
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the collected keys on the HUD.
-            HUD.SetKeyHUD();
+            HUD.keycards.UpdateValues();
 
         }
 
@@ -296,11 +296,11 @@ namespace DEEP.Entities
 
         }
 
-        private void OnChangeArmor() { HUD.SetArmorHUD(armor, maxArmor); }
+        private void OnChangeArmor() { HUD.armor.SetValue(armor, maxArmor); }
 
         protected override void OnChangeHealth() {
 
-            HUD.SetHealthHUD(health, maxHealth);
+            HUD.health.SetValue(health, maxHealth);
 
             base.OnChangeHealth();
 

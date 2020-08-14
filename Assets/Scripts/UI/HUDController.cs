@@ -13,78 +13,279 @@ namespace DEEP.UI
 
     public class HUDController : MonoBehaviour {
 
-        [System.Serializable]
-        protected class HealthHUD
+        [System.Serializable] // Health ===========================================================================
+        public class HealthHUD
         {
 
-            public TMP_Text counter = null;
+            [SerializeField] protected TMP_Text counter = null;
 
-            public TMP_Text counterTitle = null;
+            [SerializeField] protected TMP_Text counterTitle = null;
 
-            public Color defaultColor = Color.green;
-            public Color overloadColor = Color.cyan;
+            [SerializeField] protected Color defaultColor = Color.green;
+            [SerializeField] protected Color overloadColor = Color.magenta;
+
+            public void SetValue(int current, int max) {
+
+            // Sets the slider and counter if life is less than 0.
+            if(current < 0) {
+                counter.text = "-";
+                return;
+            }
+
+            // Sets the counter text.
+            counter.text = current.ToString();
+
+            // Sets the slider and color for overload health.
+            if(current > max) {
+                counter.color = overloadColor;
+                counterTitle.color = overloadColor;
+                return;
+            }
+
+            // Uses the default colors.
+            counter.color = defaultColor;
+            counterTitle.color = defaultColor;
+
+            return;
 
         }
-        [Header("Health")]
-        [SerializeField] protected HealthHUD healthHUD = null;
 
-        [System.Serializable]
-        protected class ArmorHUD
+        }
+        public HealthHUD health = null;
+
+        [System.Serializable] // Armor ============================================================================
+        public class ArmorHUD
         {
-            public TMP_Text counter = null;
-        }
-        [Header("Armor")]
-        [SerializeField] protected ArmorHUD armorHUD = null;
+            [SerializeField] protected TMP_Text counter = null;
 
-        [System.Serializable]
-        protected class WeaponHUD
+            public void SetValue(int current, int max) {
+
+                if (current < 0) {
+                    counter.text = "-";
+                    return;
+                }
+
+                counter.text = current.ToString();
+
+            }
+        }
+        public ArmorHUD armor = null;
+
+        [System.Serializable] // Ammo & Weapons ===================================================================
+        public class AmmoAndWeaponHUD 
         {
 
-            public TMP_Text counter = null;
+            [SerializeField] protected TMP_Text counter = null;
 
-            public GameObject weaponPanel = null;
+            [SerializeField] protected GameObject weaponPanel = null;
 
-            public TMP_Text[] weaponNumbers = null;
+            [SerializeField] protected TMP_Text[] weaponNumbers = null;
 
-            public Image weaponIcon = null;
-            public Image ammoIcon = null;
+            [SerializeField] protected Image weaponIcon = null;
+            [SerializeField] protected Image ammoIcon = null;
 
-            public Color activeColor = Color.yellow;
-            public Color inactiveColor = Color.gray;
+            [SerializeField] protected Color activeColor = Color.yellow;
+            [SerializeField] protected Color inactiveColor = Color.gray;
+
+            // Sets the ammo counter.
+            public void SetAmmo(int current, int max) {
+
+                if(current < 0) {
+                    counter.text = "-";
+                    return;
+                }
+
+                counter.text = current.ToString();
+
+            }
+
+            // Sets the current weapon on the HUD.
+            public void SetCurrentWeapon(int weapon, Sprite weaponIcon, Sprite ammoIcon) {
+
+                // Colors the weapon numbers correctly based on the active weapon.
+                for(int i = 0; i < weaponNumbers.Length; i++)
+                        weaponNumbers[i].color = inactiveColor; // Sets all numbers inactive.
+                weaponNumbers[weapon].color = activeColor; // Sets the current weapon active.
+
+                // Sets the correct weapons and ammo icons.
+                this.weaponIcon.sprite = weaponIcon;
+                this.ammoIcon.sprite = ammoIcon;
+
+            }
+
+            // Sets the numbers for the weapons to indicate which ones the player has.
+            public void SetWeaponNumbers(bool[] weaponsEnabled) {
+
+                bool hasAnyWeapons = false;
+
+                // Enables the numbers for the weapons the player has.
+                for(int i = 0; i < weaponsEnabled.Length; i++)
+                {
+                    weaponNumbers[i].gameObject.SetActive(weaponsEnabled[i]);
+                    hasAnyWeapons = hasAnyWeapons || weaponsEnabled[i]; // Checks if the player has at least one weapon.
+                }
+
+                // Hides ammo counter if there are no weapons.
+                weaponPanel.SetActive(hasAnyWeapons);
+
+            }
 
         }
-        [Header("Ammo & Weapons")]
-        [SerializeField] protected WeaponHUD weaponHUD = null;
+        public AmmoAndWeaponHUD ammoAndWeapons = null;
 
-        [System.Serializable]
-        protected class KeyHUD
+        [System.Serializable] // Keycards =========================================================================
+        public class KeyHUD 
         {
-            public Image blueKeyIcon = null;
-            public Image redKeyIcon = null;
-            public Image yellowKeyIcon = null;
-        }
-        [Header("Keycards")]
-        [SerializeField] protected KeyHUD keyHUD = null;
+            [SerializeField] protected Image blueKeyIcon = null;
+            [SerializeField] protected Image redKeyIcon = null;
+            [SerializeField] protected Image yellowKeyIcon = null;
 
-        [System.Serializable]
-        protected class LogHUD
-        {
-            public TMP_Text text = null;
-            public Image icon = null;
-        }
-        [Header("Log")]
-        [SerializeField] protected LogHUD logHUD = null;
+            public void UpdateValues() {
 
-        [System.Serializable]
-        protected class SpeedrunHUD
-        {
-            public TMP_Text kills = null;
-            public TMP_Text items = null;
-            public TMP_Text secrets = null;
-            public TMP_Text time = null;
+                blueKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Blue);
+                redKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Red);
+                yellowKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Yellow);
+
+            }
+
         }
-        [Header("Speedrun")]
-        [SerializeField] protected SpeedrunHUD speedrunHUD = null;
+        public KeyHUD keycards = null;
+
+        [System.Serializable] // Log ==============================================================================
+        public class LogHUD
+        {
+            [SerializeField] protected TMP_Text text = null;
+            [SerializeField] protected Image icon = null;
+
+            public void Message(string message, Sprite icon, Color color) {
+
+                text.color = color;
+                text.text = StageInfo.Instance.GetDurationString() + ": " + message;
+
+                this.icon.color = color;
+                this.icon.sprite = icon;
+
+            }
+        }
+        public LogHUD Log = null;
+
+        [System.Serializable] // Speedrun =========================================================================
+        public class SpeedrunHUD
+        {
+            [SerializeField] protected TMP_Text kills = null;
+            [SerializeField] protected TMP_Text items = null;
+            [SerializeField] protected TMP_Text secrets = null;
+            [SerializeField] protected TMP_Text time = null;
+
+            public void SetKillCount(int current, int total) {
+                kills.text = current + "/" + total;
+            }
+
+            public void SetItemCount(int current, int total) {
+                items.text = current + "/" + total;
+            }
+
+            public void SetSecretCount(int current, int total) {
+                secrets.text = current + "/" + total;
+            }
+
+            public void SetStageTime(string formatedTime) {
+                time.text = formatedTime;
+            }
+
+        }
+        public SpeedrunHUD speedrun = null;
+
+        [System.Serializable] // Statistics =======================================================================
+        public class StatisticsHUD
+        {
+            [SerializeField] protected TMP_Text stats = null;
+
+            // FPS
+            [Tooltip("Number of frames to average for the FPS.")]
+            [SerializeField] protected int FPSSampleCount = 30;
+
+            [Tooltip("Delay between updates (in seconds).")]
+            [SerializeField] protected float updateFPSDelay = 0.5f;
+
+            protected float[] frameTimeSamples;
+            protected float sampleSum;
+            protected int currentSample;
+
+            protected float lastUpdateTime;
+
+            // Info about API nad OS version along with hardware config.
+            protected string computerInfo;
+
+            public void Initialize() {
+
+                // Creates and initializes the FPS sample buffer and sample sum.
+                frameTimeSamples = new float[FPSSampleCount];
+                for(int i = 0; i < FPSSampleCount; i++)
+                    frameTimeSamples[i] = Time.unscaledDeltaTime;
+                sampleSum = FPSSampleCount * Time.unscaledDeltaTime;
+                currentSample = 0;
+
+                lastUpdateTime = Time.time;
+
+                // Gets the computer info.
+                string OSInfo = SystemInfo.operatingSystem;
+                string graphicsAPIInfo = SystemInfo.graphicsDeviceType.ToString();
+                string processorInfo = SystemInfo.processorType;
+                int systemMemoryInfo = SystemInfo.systemMemorySize;
+                string graphicsCardInfo = SystemInfo.graphicsDeviceName;
+                int graphicsMemoryInfo = SystemInfo.graphicsMemorySize;
+
+                // Creates the string.
+                computerInfo = "";
+                computerInfo += "<b>API:</b> "   + graphicsAPIInfo       + "<br>";
+                computerInfo += "<b>OS:</b> "    + OSInfo                + "<br>";
+                computerInfo += "<b>CPU:</b> "   + processorInfo         + "<br>";
+                computerInfo += "<b>RAM:</b> "   + systemMemoryInfo      + "MB<br>";
+                computerInfo += "<b>GPU:</b> "   + graphicsCardInfo      + "<br>";
+                computerInfo += "<b>VRAM:</b> "  + graphicsMemoryInfo    + "MB";
+
+            }
+
+            public void UpdateStats() {
+
+                // Removes the oldest sample from the average and adds a new one.
+                sampleSum -= frameTimeSamples[currentSample];
+                frameTimeSamples[currentSample] = Time.unscaledDeltaTime;
+                sampleSum += frameTimeSamples[currentSample];
+                currentSample = (currentSample + 1) % FPSSampleCount;
+                
+                // Waits for the delay before updating.
+                if(Time.time - lastUpdateTime < updateFPSDelay)
+                    return;
+
+                // Calculates the average of the frame time samples and converts to FPS.
+                float fps = (FPSSampleCount / sampleSum);
+
+                // Colors the FPS text based on how high it is.
+                string fpsText;
+                if(fps < 30) {
+                    fpsText = "<color=#ff0000>" + Mathf.Floor(fps) + "</color>";
+                } else if (fps < 60) {
+                    fpsText = "<color=#ffff00>" + Mathf.Floor(fps) + "</color>";
+                } else if (fps < 120) {
+                    fpsText = "<color=#00ff00>" + Mathf.Floor(fps) + "</color>";
+                } else {
+                    fpsText = "<color=#00ffff>" + Mathf.Floor(fps) + "</color>";
+                }
+
+                // Puts the stats on the screen.
+                stats.text = "<b>FPS:</b> "  + fpsText + "<br>" + computerInfo;
+
+                // Saves the update time.
+                lastUpdateTime = Time.time;
+
+            }
+
+        }
+        public StatisticsHUD statistics = null;
+
+        // Feedback ===============================================================================================
 
         // Types of feedback, used to choose screen feedback color.
         public enum FeedbackType { Damage, Toxic, Mud }
@@ -108,123 +309,7 @@ namespace DEEP.UI
             [HideInInspector] public Color currentConstantFeedbackColor;
 
         }
-        [Header("Feedback")]
         [SerializeField] protected PlayerFeedback playerFeedback = null;
-
-        void FixedUpdate() {
-
-            // Constantly updates the speedrun clock.
-            speedrunHUD.time.text = StageInfo.Instance.GetDurationString();
-
-        }
-
-
-        public void SetHealthHUD(int current, int max) {
-
-            // Sets the slider and counter if life is less than 0.
-            if(current < 0) {
-                healthHUD.counter.text = "-";
-                return;
-            }
-
-            // Sets the counter text.
-            healthHUD.counter.text = current.ToString();
-
-            // Sets the slider and color for overload health.
-            if(current > max) {
-                healthHUD.counter.color = healthHUD.overloadColor;
-                healthHUD.counterTitle.color = healthHUD.overloadColor;
-                return;
-            }
-
-            // Uses the default colors.
-            healthHUD.counter.color = healthHUD.defaultColor;
-            healthHUD.counterTitle.color = healthHUD.defaultColor;
-
-            return;
-
-        }
-
-        public void SetArmorHUD(int current, int max) {
-
-            if (current < 0) {
-                armorHUD.counter.text = "-";
-                return;
-            }
-
-            armorHUD.counter.text = current.ToString();
-
-        }
-
-        public void SetAmmoCounter(int current, int max) {
-
-            if(current < 0) {
-                weaponHUD.counter.text = "-";
-                return;
-            }
-
-            weaponHUD.counter.text = current.ToString();
-
-        }
-
-        public void SetCurrentWeapon(int weapon, Sprite weaponIcon, Sprite ammoIcon) {
-
-            // Colors the weapon numbers correctly based on the active weapon.
-            for(int i = 0; i < weaponHUD.weaponNumbers.Length; i++)
-                    weaponHUD.weaponNumbers[i].color = weaponHUD.inactiveColor; // Sets all numbers inactive.
-            weaponHUD.weaponNumbers[weapon].color = weaponHUD.activeColor; // Sets the current weapon active.
-
-            // Sets the correct weapons and ammo icons.
-            weaponHUD.weaponIcon.sprite = weaponIcon;
-            weaponHUD.ammoIcon.sprite = ammoIcon;
-
-        }
-
-        public void ShowWeaponIcons(bool[] weaponsEnabled) {
-
-            bool hasAnyWeapons = false;
-
-            // Enables the numbers for the weapons the player has.
-            for(int i = 0; i < weaponsEnabled.Length; i++)
-            {
-                weaponHUD.weaponNumbers[i].gameObject.SetActive(weaponsEnabled[i]);
-                hasAnyWeapons = hasAnyWeapons || weaponsEnabled[i]; // Checks if the player has at least one weapon.
-            }
-
-            // Hides ammo counter if there are no weapons.
-            weaponHUD.weaponPanel.SetActive(hasAnyWeapons);
-
-        }
-
-        public void SetKeyHUD() {
-
-            keyHUD.blueKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Blue);
-            keyHUD.redKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Red);
-            keyHUD.yellowKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Yellow);
-
-        }
-
-        public void Log(string message, Sprite icon, Color color) {
-
-            logHUD.text.color = color;
-            logHUD.text.text = StageInfo.Instance.GetDurationString() + ": " + message;
-
-            logHUD.icon.color = color;
-            logHUD.icon.sprite = icon;
-
-        }
-
-        public void SetKillCount(int current, int total) {
-            speedrunHUD.kills.text = current + "/" + total;
-        }
-
-        public void SetItemCount(int current, int total) {
-            speedrunHUD.items.text = current + "/" + total;
-        }
-
-        public void SetSecretCount(int current, int total) {
-            speedrunHUD.secrets.text = current + "/" + total;
-        }
 
         // Starts a screen feedback effect.
         public void StartScreenFeedback(FeedbackType type) {
@@ -303,6 +388,25 @@ namespace DEEP.UI
             if(playerFeedback.screenFeedbackAnim == null)
                 playerFeedback.screenFeedback.enabled = false;
         }
+
+        // ========================================================================================================
+
+        void Start() {
+
+            // Gathers initial information for the statistics.
+            statistics.Initialize();
+
+        }
+
+        void Update() {
+
+            // Constantly updates the speedrun clock.
+            speedrun.SetStageTime(StageInfo.Instance.GetDurationString());
+
+            // Constantly updates the statistics.
+            statistics.UpdateStats();
+
+        }       
 
     }
 

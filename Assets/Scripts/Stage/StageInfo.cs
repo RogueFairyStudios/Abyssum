@@ -56,9 +56,9 @@ namespace DEEP.Stage
             numCollectiblesCollected = 0;
             numSecretsFound = 0;
 
-            Player.Instance.HUD.SetKillCount(numEnemiesKilled, numStageEnemies);
-            Player.Instance.HUD.SetItemCount(numCollectiblesCollected, numStageCollectibles);
-            Player.Instance.HUD.SetSecretCount(numSecretsFound, numStageSecrets);
+            Player.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
+            Player.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            Player.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
 
             duration = 0.0f;
 
@@ -75,19 +75,19 @@ namespace DEEP.Stage
         // Counts an enemy kill.
         public void CountKill() { 
             numEnemiesKilled++; 
-            Player.Instance.HUD.SetKillCount(numEnemiesKilled, numStageEnemies);
+            Player.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
         }
 
         // Counts a collected item.
         public void CountCollection() { 
             numCollectiblesCollected++; 
-            Player.Instance.HUD.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            Player.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
         }
 
         // Counts a secret found.
         public void CountSecretFound() { 
             numSecretsFound++; 
-            Player.Instance.HUD.SetSecretCount(numSecretsFound, numStageSecrets);
+            Player.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.

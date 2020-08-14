@@ -66,7 +66,7 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                Player.Instance.HUD.ShowWeaponIcons(weaponsEnabled);
+                Player.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
 
             }
 
@@ -89,10 +89,10 @@ namespace DEEP.Weapons {
             currentWeapon.gameObject.SetActive(true);
 
             // Updates the ammo counter on the HUD.
-            Player.Instance.HUD.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
             // Updates the current weapon icon on the HUD.
-            Player.Instance.HUD.SetCurrentWeapon(weaponNum, weapons[GetCurrentWeaponIndex()].icon, ammoDict[currentWeapon.ammoSource.id].icon);
+            Player.Instance.HUD.ammoAndWeapons.SetCurrentWeapon(weaponNum, weapons[GetCurrentWeaponIndex()].icon, ammoDict[currentWeapon.ammoSource.id].icon);
 
         }
 
@@ -104,7 +104,7 @@ namespace DEEP.Weapons {
 
             currentWeapon.Shot();
             // Updates the ammo counter on the HUD.
-            Player.Instance.HUD.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
         }
 
@@ -203,7 +203,7 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                Player.Instance.HUD.ShowWeaponIcons(weaponsEnabled);
+                Player.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
 
                 // Give the initial ammo to the player.
                 GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, feedbackAudio);
@@ -235,7 +235,7 @@ namespace DEEP.Weapons {
 
             // Updates the ammo counter on the HUD.
             if(currentWeapon != null)
-                Player.Instance.HUD.SetAmmoCounter(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+                Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)

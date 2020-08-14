@@ -35,7 +35,7 @@ namespace DEEP.Collectibles
 
             // Logs that this item has been collected.
             if(logText.Length > 0)
-                Player.Instance.HUD.Log(logText, logIcon, logColor);
+                Player.Instance.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this item as collected.
             StageInfo.Instance.CountCollection();

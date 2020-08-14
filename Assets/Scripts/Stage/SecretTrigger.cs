@@ -29,7 +29,7 @@ namespace DEEP.Stage
             // Logs that this secret has been found.
             Debug.Log("Secret found!");
             if(logText.Length > 0)
-                Player.Instance.HUD.Log(logText, logIcon, logColor);
+                Player.Instance.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this secret as found.
             StageInfo.Instance.CountSecretFound();
