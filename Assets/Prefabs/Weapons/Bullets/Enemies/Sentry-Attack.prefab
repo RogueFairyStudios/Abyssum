@@ -47,6 +47,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -202,8 +203,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 12.81
   damage: 15
-  bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
-    type: 3}
+  bulletHole: {fileID: 11400000, guid: bb1ae24f90f18ca48a18d433b00a3e40, type: 2}
+  bulletHoleScale: {x: 1, y: 1, z: 1}
   otherHitEffect: {fileID: 4981454918395137139, guid: f95ecb6af4d1666e79d4a55a8a4d97a7,
     type: 3}
   acceleration: 9.81

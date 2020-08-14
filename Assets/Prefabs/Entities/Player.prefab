@@ -9767,7 +9767,6 @@ GameObject:
   m_Component:
   - component: {fileID: 23879925665409955}
   - component: {fileID: 3114643825807176454}
-  - component: {fileID: 1287680714201674466}
   - component: {fileID: 7117125227116365170}
   m_Layer: 9
   m_Name: WeaponOverlayCamera
@@ -9833,14 +9832,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &1287680714201674466
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7549921667379151493}
-  m_Enabled: 1
 --- !u!114 &7117125227116365170
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11754,6 +11745,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6a98a3b6f904f6840bd3a271524932fe, type: 3}
+--- !u!1 &7687787156282682840 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7429613856597718045, guid: 6a98a3b6f904f6840bd3a271524932fe,
+    type: 3}
+  m_PrefabInstance: {fileID: 985105104495024581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7258613828878280257 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7570565328931831684, guid: 6a98a3b6f904f6840bd3a271524932fe,
@@ -11769,12 +11766,6 @@ MonoBehaviour:
 --- !u!224 &7687787156282682841 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7429613856597718044, guid: 6a98a3b6f904f6840bd3a271524932fe,
-    type: 3}
-  m_PrefabInstance: {fileID: 985105104495024581}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7687787156282682840 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7429613856597718045, guid: 6a98a3b6f904f6840bd3a271524932fe,
     type: 3}
   m_PrefabInstance: {fileID: 985105104495024581}
   m_PrefabAsset: {fileID: 0}

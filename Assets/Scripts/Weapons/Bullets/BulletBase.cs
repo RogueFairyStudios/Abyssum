@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using kTools.Decals;
+
 using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets
@@ -18,8 +20,15 @@ namespace DEEP.Weapons.Bullets
         [Tooltip("Damage inflicted by the projectile.")]
         [SerializeField] protected int damage = 15;
 
-        [Tooltip("Effect to be spawned when hitting other objects.")]
+        [Tooltip("Bullet hole decal.")]
+        [SerializeField] protected DecalData bulletHole = null;
+
+        [Tooltip("Bullet hole decal scale.")]
+        [SerializeField] protected Vector3 bulletHoleScale = Vector3.one;
+
+        [Tooltip("Effect to be spawned when hitting objects without special hit effects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
+
 
         protected bool isTargeted = false;
         protected bool avoidDoubleHit = true;
@@ -50,6 +59,7 @@ namespace DEEP.Weapons.Bullets
         }
 
         protected virtual void OnCollisionEnter(Collision col) {
+
             if (avoidDoubleHit && hasHit)
                 return;
             hasHit = true;
@@ -57,7 +67,7 @@ namespace DEEP.Weapons.Bullets
             // Tries to get an entity component from the object.
             EntityBase entity;
             Rigidbody rigid = col.rigidbody; // Verifies if the object hit has a rigidbody.
-            Debug.Log(col.gameObject);
+
             if(rigid != null)
                 entity = rigid.GetComponent<EntityBase>();
             else
@@ -75,8 +85,15 @@ namespace DEEP.Weapons.Bullets
                 // Does the damage.
                 entity.Damage(damage, 0);
 
-            } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.
-                Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+            } else { // Else, tries spawning bullet hole decal the default hit effect.
+
+
+                if(bulletHole != null && col.gameObject.isStatic) {
+                    DecalSystem.GetDecal(bulletHole, col.contacts[0].point, -col.contacts[0].normal, bulletHoleScale);
+                }
+                if(otherHitEffect != null)
+                    Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+            }
 
             //Destroys the object on collision.
             Destroy(gameObject);

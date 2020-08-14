@@ -62,6 +62,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2142429397573002607, guid: 3eb80257d5c1733fba85ee0241f5101c,
+        type: 3}
+      propertyPath: decalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142429397573002607, guid: 3eb80257d5c1733fba85ee0241f5101c,
+        type: 3}
+      propertyPath: decalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142429397573002607, guid: 3eb80257d5c1733fba85ee0241f5101c,
+        type: 3}
+      propertyPath: decalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142429397573002607, guid: 3eb80257d5c1733fba85ee0241f5101c,
+        type: 3}
+      propertyPath: decal
+      value: 
+      objectReference: {fileID: 11400000, guid: bb1ae24f90f18ca48a18d433b00a3e40,
+        type: 2}
     - target: {fileID: 2407758444088407204, guid: 3eb80257d5c1733fba85ee0241f5101c,
         type: 3}
       propertyPath: m_LocalPosition.y
