@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 
-using kTools.Decals;
-
+using DEEP.Decals;
 using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets
@@ -21,10 +20,10 @@ namespace DEEP.Weapons.Bullets
         [SerializeField] protected int damage = 15;
 
         [Tooltip("Bullet hole decal.")]
-        [SerializeField] protected DecalData bulletHole = null;
+        [SerializeField] protected Material bulletHoleMaterial = null;
 
         [Tooltip("Bullet hole decal scale.")]
-        [SerializeField] protected Vector3 bulletHoleScale = Vector3.one;
+        [SerializeField] protected Vector2 bulletHoleScale = Vector2.one;
 
         [Tooltip("Effect to be spawned when hitting objects without special hit effects.")]
         [SerializeField] protected GameObject otherHitEffect = null;
@@ -88,8 +87,8 @@ namespace DEEP.Weapons.Bullets
             } else { // Else, tries spawning bullet hole decal the default hit effect.
 
 
-                if(bulletHole != null && col.gameObject.isStatic) {
-                    DecalSystem.GetDecal(bulletHole, col.contacts[0].point, -col.contacts[0].normal, bulletHoleScale);
+                if(bulletHoleMaterial != null && col.gameObject.isStatic) {
+                    DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
                 }
                 if(otherHitEffect != null)
                     Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));

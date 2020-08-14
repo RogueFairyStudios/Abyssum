@@ -9658,8 +9658,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0.4
-  decal: {fileID: 11400000, guid: 1437a5dd4ca755049b8498abe3b330df, type: 2}
-  decalScale: {x: 2, y: 2, z: 2}
+  decalMaterial: {fileID: 2100000, guid: 6f728c1df15b77e4480991f0a3ee0178, type: 2}
+  decalScale: {x: 3, y: 3}
   decalDir: {x: 0, y: -1, z: 0}
   maxDecalDistance: 2
   raycastMask:

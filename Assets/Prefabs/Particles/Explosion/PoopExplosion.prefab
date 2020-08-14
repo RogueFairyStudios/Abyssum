@@ -4875,7 +4875,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   delay: 0.4
-  decal: {fileID: 11400000, guid: 4702a6206d2bb6446b435911b22f4928, type: 2}
+  decalMaterial: {fileID: 2100000, guid: 8b4ccb02600b35449b03f04a65390d32, type: 2}
   decalScale: {x: 8, y: 8, z: 8}
   decalDir: {x: 0, y: -1, z: 0}
   maxDecalDistance: 2

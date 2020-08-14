@@ -126,6 +126,7 @@ MonoBehaviour:
   damageDelay: 0.6
   knockbackForce: 20000
   Attacker: {fileID: 6176847882833967499}
+  attackClip: {fileID: 0}
 --- !u!1 &1996691492816018696
 GameObject:
   m_ObjectHideFlags: 0
@@ -683,6 +684,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1020,7 +1022,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 563735449897490569}
-  - component: {fileID: 1845812744470756964}
   - component: {fileID: 8178077098438819930}
   - component: {fileID: 6170750041167520956}
   - component: {fileID: 6258835700556502776}
@@ -1050,27 +1051,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1845812744470756964
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6176847882833967499}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6fa855766c1129dac12fa016802413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomMaterials:
-  - {fileID: 2100000, guid: dc6322c78b8150e30b8a1777e3594a4d, type: 2}
-  - {fileID: 2100000, guid: dc6322c78b8150e30b8a1777e3594a4d, type: 2}
-  - {fileID: 2100000, guid: dc6322c78b8150e30b8a1777e3594a4d, type: 2}
-  - {fileID: 2100000, guid: a7767e6c07ad50fd79f7201c58b87bb9, type: 2}
-  - {fileID: 2100000, guid: a7767e6c07ad50fd79f7201c58b87bb9, type: 2}
-  - {fileID: 2100000, guid: a7767e6c07ad50fd79f7201c58b87bb9, type: 2}
-  - {fileID: 2100000, guid: 04803acf51a45e18b9c639a4e331eccf, type: 2}
-  - {fileID: 2100000, guid: 4b6a28a286fcb82b28b2ee7f7b12e52f, type: 2}
 --- !u!195 &8178077098438819930
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1111,7 +1091,6 @@ MonoBehaviour:
     m_Bits: 1025
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
-  spawned: 0
   agent: {fileID: 0}
   anim: {fileID: 0}
   attackRange: 2
@@ -1142,6 +1121,12 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants:
+  - {fileID: 2100000, guid: 04803acf51a45e18b9c639a4e331eccf, type: 2}
+  - {fileID: 2100000, guid: 4b6a28a286fcb82b28b2ee7f7b12e52f, type: 2}
+  - {fileID: 2100000, guid: dc6322c78b8150e30b8a1777e3594a4d, type: 2}
+  - {fileID: 2100000, guid: a7767e6c07ad50fd79f7201c58b87bb9, type: 2}
   _audio: {fileID: 2579516681668796992}
   grunt: []
   minGruntInterval: 0

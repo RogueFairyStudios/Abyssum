@@ -81,8 +81,12 @@ PrefabInstance:
         type: 3}
       propertyPath: decal
       value: 
-      objectReference: {fileID: 11400000, guid: bb1ae24f90f18ca48a18d433b00a3e40,
-        type: 2}
+      objectReference: {fileID: 0}
+    - target: {fileID: 2142429397573002607, guid: 3eb80257d5c1733fba85ee0241f5101c,
+        type: 3}
+      propertyPath: decalMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 9af8b71f1bdcbf842aca05aacb6a91ad, type: 2}
     - target: {fileID: 2407758444088407204, guid: 3eb80257d5c1733fba85ee0241f5101c,
         type: 3}
       propertyPath: m_LocalPosition.y

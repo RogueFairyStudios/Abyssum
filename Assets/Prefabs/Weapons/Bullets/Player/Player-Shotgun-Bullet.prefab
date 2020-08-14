@@ -194,7 +194,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 45
   damage: 8
-  bulletHole: {fileID: 11400000, guid: c8eccc287fc0fa842acec06bc803c3bd, type: 2}
+  bulletHoleMaterial: {fileID: 2100000, guid: 5a7b6010721d2154bba439532266195d, type: 2}
   bulletHoleScale: {x: 0.125, y: 0.125, z: 0.125}
   otherHitEffect: {fileID: 4981454918395137139, guid: f95ecb6af4d1666e79d4a55a8a4d97a7,
     type: 3}
