@@ -8602,7 +8602,7 @@ ParticleSystem:
       serializedVersion: 2
       m_Bits: 29703
     maxCollisionShapes: 256
-    quality: 2
+    quality: 1
     voxelSize: 0.5
     collisionMessages: 1
     collidesWithDynamic: 1
