@@ -12,7 +12,7 @@ namespace DEEP.Decals {
 
         [SerializeField] protected GameObject baseCube = null;
         [SerializeField] protected int decalAmount = 128;
-
+        
         protected List<Renderer> decalPool;
         protected int currentDecal;
 
@@ -27,6 +27,7 @@ namespace DEEP.Decals {
             decalPool = new List<Renderer>();
             for(int i = 0; i < decalAmount; i++) {
                 Renderer decal = Instantiate(baseCube, transform.position, transform.rotation).GetComponent<Renderer>();
+                decal.transform.SetParent(this.transform);
                 decal.gameObject.SetActive(false);
                 decalPool.Add(decal);
             }

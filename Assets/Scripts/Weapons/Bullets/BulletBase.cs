@@ -87,9 +87,10 @@ namespace DEEP.Weapons.Bullets
             } else { // Else, tries spawning bullet hole decal the default hit effect.
 
 
-                if(bulletHoleMaterial != null && col.gameObject.isStatic) {
+                if(bulletHoleMaterial != null) {
                     DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
                 }
+
                 if(otherHitEffect != null)
                     Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
             }

@@ -17,7 +17,7 @@ namespace DEEP.Weapons.Bullets {
 			SpawnPrefab();
 
 			// Spawns decal if avaliable.
-			if(bulletHoleMaterial != null && col.gameObject.isStatic) {
+			if(bulletHoleMaterial != null) {
 				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
 			}
 
