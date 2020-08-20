@@ -20,6 +20,11 @@ namespace DEEP.AI
         // Checks if has sight to target.
         public bool HasTargetSight()
         {
+
+            // Ensures the target is not null.
+            if(target == null)
+                return false;
+
             // Checks for sight.
             bool hasSight = HasSight(target.transform.position);
 

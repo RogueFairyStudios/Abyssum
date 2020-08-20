@@ -58,7 +58,12 @@ namespace DEEP.Entities
         private CapsuleCollider pCollider = null;
         [HideInInspector] public Camera pCamera = null;
 
-        public void Start() {
+        // If this script has been initialzed by the main Player script.
+        private bool initialized = false;
+
+        public void Initialize() {
+
+            Debug.Log("Initializing PlayerMovementation...");
 
             // Gets the necessary components.
             pRigidbody = GetComponent<Rigidbody>();
@@ -67,12 +72,14 @@ namespace DEEP.Entities
 
             // Gets the mouse sensitivity.
             if (!PlayerPrefs.HasKey("Mouse sensitivity"))
-                PlayerPrefs.SetFloat("Mouse sensitivity", 6.0f);
+                PlayerPrefs.SetFloat("Mouse sensitivity", 120.0f);
             sensitivity = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             // Gets the original rotations for mouselook.
             originalBodyRotation = transform.localRotation;
             originalCamRotation = pCamera.transform.localRotation;
+
+            initialized = true;
 
             // Initializes the player speed.
             SetBaseSpeed();
@@ -80,6 +87,9 @@ namespace DEEP.Entities
         }
 
         private void Update() {
+
+            // Returns if not initialized.
+            if(!initialized) return;
 
             // Physics ======================================================================================== 
 
@@ -94,14 +104,14 @@ namespace DEEP.Entities
             // MouseLook =======================================================================================
 
             // Rotates on the x-axis.
-            rotationX += Input.GetAxis("Mouse X") * sensitivity;
+            rotationX += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
             rotationX = ClampAngle(rotationX, -360.0f, 360.0f);
 
             Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
             transform.localRotation = originalBodyRotation * xQuaternion;
 
             // Rotates on the y-axis.
-            rotationY += Input.GetAxis("Mouse Y") * sensitivity;
+            rotationY += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
             rotationY = ClampAngle(rotationY, -90.0f, 90.0f);
 
             Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
@@ -109,7 +119,7 @@ namespace DEEP.Entities
 
             // Jumping =======================================================================================
 
-            // Makes the Player jump if touching the gorund.
+            // Makes the Player jump if touching the ground.
             if (canJump && onGround && Input.GetButtonDown("Jump"))
                 pRigidbody.AddForce(Vector3.up * jumpAcceleration * pRigidbody.mass, ForceMode.Impulse);
 
@@ -117,6 +127,9 @@ namespace DEEP.Entities
         }
 
         private void FixedUpdate() {
+
+            // Returns if not initialized.
+            if(!initialized) return;
 
             // Velocity calculation =======================================================================
 
@@ -152,12 +165,22 @@ namespace DEEP.Entities
 
         public void SetSlow() {
 
+            if(!initialized) { 
+                Debug.LogError("SetSlow: You need to initialize the script first!");
+                return; 
+            }
+
             groundAcceleration = slowGroundAcceleration;
             canJump = false;
 
         }
 
         public void SetBaseSpeed() {
+
+            if(!initialized) { 
+                Debug.LogError("SetBaseSpeed: You need to initialize the script first!");
+                return; 
+            }
 
             groundAcceleration = baseGroundAcceleration;
             canJump = true;
@@ -168,6 +191,10 @@ namespace DEEP.Entities
 
         private void OnDrawGizmos() // To visualize the ground check
         {
+
+            // Returns if not initialized.
+            if(!initialized) return;
+
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, checkRadius);
             if (pCollider != null) {

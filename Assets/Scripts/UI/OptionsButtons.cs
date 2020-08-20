@@ -27,7 +27,7 @@ namespace DEEP.UI {
             
             //pega o valor inicial do volume
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
-                PlayerPrefs.SetFloat("Mouse sensitivity", 4.0f);
+                PlayerPrefs.SetFloat("Mouse sensitivity", 120.0f);
             mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             resolution = Screen.resolutions;//get the possible resolutions 
@@ -61,12 +61,12 @@ namespace DEEP.UI {
             // Gets initial speedrun HUD value.
             if(!PlayerPrefs.HasKey("SpeedrunHUD"))
                 PlayerPrefs.SetInt("SpeedrunHUD", 0);
-            speedrun.isOn = (PlayerPrefs.GetInt("SpeedrunHUD") == 1);
+            speedrun.isOn = (PlayerPrefs.GetInt("SpeedrunHUD") != 0);
 
             // Gets initial statistics HUD value.
             if(!PlayerPrefs.HasKey("StatisticsHUD"))
                 PlayerPrefs.SetInt("StatisticsHUD", 0);
-            statistics.isOn = (PlayerPrefs.GetInt("StatisticsHUD") == 1);
+            statistics.isOn = (PlayerPrefs.GetInt("StatisticsHUD") != 0);
 
         }
 

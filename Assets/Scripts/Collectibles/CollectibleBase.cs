@@ -38,7 +38,7 @@ namespace DEEP.Collectibles
                 Player.Instance.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this item as collected.
-            StageInfo.Instance.CountCollection();
+            StageManager.Instance.CountCollection();
 
             // Destroys the object if the collectible is used.
             Destroy(gameObject);

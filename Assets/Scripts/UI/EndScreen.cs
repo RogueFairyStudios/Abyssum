@@ -21,7 +21,7 @@ namespace DEEP.UI
         public void ShowScreen() {
 
             // Reference to the stage info (mainly to reduce the size of the kinda big lines below).
-            StageInfo info = StageInfo.Instance;
+            StageManager info = StageManager.Instance;
 
             // Calculates and assigns the stage information to the end screen.
             completionMessage.text = info.GetStageName().ToUpper() + " COMPLETED!";

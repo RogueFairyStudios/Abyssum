@@ -32,7 +32,7 @@ namespace DEEP.Stage
                 Player.Instance.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this secret as found.
-            StageInfo.Instance.CountSecretFound();
+            StageManager.Instance.CountSecretFound();
             // Plays the player feedback.
             Player.Instance.FoundSecret(feedbackAudio);
 

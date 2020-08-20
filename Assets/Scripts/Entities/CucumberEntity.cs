@@ -63,7 +63,7 @@ namespace DEEP.Entities
 
             // Counts this enemy's death as a kill.
             if(!IsSpawned)
-                StageInfo.Instance.CountKill();
+                StageManager.Instance.CountKill();
 
         }
 

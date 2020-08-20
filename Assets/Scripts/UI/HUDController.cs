@@ -160,7 +160,7 @@ namespace DEEP.UI
             public void Message(string message, Sprite icon, Color color) {
 
                 text.color = color;
-                text.text = StageInfo.Instance.GetDurationString() + ": " + message;
+                text.text = StageManager.Instance.GetDurationString() + ": " + message;
 
                 this.icon.color = color;
                 this.icon.sprite = icon;
@@ -313,7 +313,7 @@ namespace DEEP.UI
 
             }
 
-            // Are you serious that neither UnityEngine.Mathf neither System.Math has a GCD function?
+            // Are you serious that neither UnityEngine.Mathf nor System.Math has a GCD function?
             private int GCD(int a, int b)
             {
                 while (a != 0 && b != 0)
@@ -357,6 +357,11 @@ namespace DEEP.UI
 
         // Starts a screen feedback effect.
         public void StartScreenFeedback(FeedbackType type) {
+
+            if(!initialized) { 
+				Debug.LogError("StartScreenFeedback: You need to initialize the script first!"); 
+				return;
+			}
 
             // If a feedback effect is already happening stop it and start a new one.
             if(playerFeedback.screenFeedbackAnim != null)
@@ -414,6 +419,12 @@ namespace DEEP.UI
 
         protected void StartConstantScreenFeedback(Color color)
         {
+
+            if(!initialized) { 
+				Debug.LogError("StartConstantScreenFeedback: You need to initialize the script first!"); 
+				return;
+			}
+
             // Sets the feedback color and shows it
             playerFeedback.screenFeedback.color = color;
             playerFeedback.screenFeedback.enabled = true;
@@ -425,6 +436,12 @@ namespace DEEP.UI
 
         public void StopConstantScreenFeedback()
         {
+
+            if(!initialized) { 
+				Debug.LogError("StopConstantScreenFeedback: You need to initialize the script first!"); 
+				return;
+			}
+
             // Sets up flags
             playerFeedback.constantFeedbackActive = false;
 
@@ -435,7 +452,12 @@ namespace DEEP.UI
 
         // ========================================================================================================
 
-        void Start() {
+        // If this script has been initialzed by the main Player script.
+        private bool initialized = false;
+
+        public void Initialize() {
+
+            Debug.Log("Initializing HUDController...");
 
             // Gathers initial information for the statistics.
             statistics.Initialize();
@@ -443,19 +465,30 @@ namespace DEEP.UI
             // Gets initial speedrun HUD value.
             if(!PlayerPrefs.HasKey("SpeedrunHUD"))
                 PlayerPrefs.SetInt("SpeedrunHUD", 0);
-            speedrun.SetEnabled(PlayerPrefs.GetInt("SpeedrunHUD") == 1);
+            speedrun.SetEnabled(PlayerPrefs.GetInt("SpeedrunHUD") != 0);
 
+            // Initializes the speedrun HUD
+            StageManager stage = StageManager.Instance; 
+            speedrun.SetKillCount(stage.GetKillCount(), stage.GetTotalEnemies());
+            speedrun.SetItemCount(stage.GetCollectibleCount(), stage.GetTotalCollectibles());
+
+            speedrun.SetSecretCount(stage.GetSecretCount(), stage.GetTotalSecrets());
             // Gets initial statistics HUD value.
             if(!PlayerPrefs.HasKey("StatisticsHUD"))
                 PlayerPrefs.SetInt("StatisticsHUD", 0);
-            statistics.SetEnabled(PlayerPrefs.GetInt("StatisticsHUD") == 1);
+            statistics.SetEnabled(PlayerPrefs.GetInt("StatisticsHUD") != 0);
+
+            initialized = true;
 
         }
 
         void Update() {
 
+            // Returns if not initialized.
+            if(!initialized) return;
+
             // Constantly updates the speedrun clock.
-            speedrun.SetStageTime(StageInfo.Instance.GetDurationString());
+            speedrun.SetStageTime(StageManager.Instance.GetDurationString());
 
             // Constantly updates the statistics.
             statistics.UpdateStats();

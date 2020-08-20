@@ -72,10 +72,15 @@ namespace DEEP.Entities
         // Object used to wait in coroutines.
         protected WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
-        protected override void Start()
+        // If this script has been initialzed by the main Player script.
+        private bool initialized = false;
+
+        public void Initialize()
         {
 
-            // Ensures theres only one instance of this script.
+            Debug.Log("Initializing Player...");
+
+            // Ensures there's only one instance of this script.
             if (Instance != null) {
                 Debug.LogError("Player: more than one instance of singleton found!");
                 Destroy(gameObject);
@@ -83,37 +88,53 @@ namespace DEEP.Entities
             }
             Instance = this;
 
-            base.Start();
-
-            // Resets the time.
-            Time.timeScale = 1;
-
             // Initializes the player state.
             currentState = PlayerState.Play;
 
             // Get components ==============================================================================
 
-            // Gets the Player's Movementation script.
-            movementation = GetComponent<PlayerMovementation>();
-
-            // Gets the Player's HUD Controller and initializes the UI.
+            // Gets the HUDController and initializes it.
             HUD = GetComponentInChildren<HUDController>();
+            HUD.Initialize();
             HUD.health.SetValue(health, maxHealth);
             HUD.armor.SetValue(armor, maxArmor);
 
-            // Gets the weapons controller.
-            weaponController = GetComponent<PlayerWeaponController>();
+            // Gets the PlayerMovementation script and initializes it.
+            movementation = GetComponent<PlayerMovementation>();
+            movementation.Initialize();
 
-            // Gets the key inventory.
+            // Gets thePlayerWeaponController script and initializes it.
+            weaponController = GetComponent<PlayerWeaponController>();
+            weaponController.Initialize();
+
+            // Gets the InventoryKey script and initializes it.
             keyInventory = GetComponent<InventoryKey>();
+            keyInventory.Initialize();
+
+
+            // Loads the player inventory if it wasn't reset.
+            if(!StageManager.Instance.GetResetInventory()) {
+
+                // Loads the inventory for a save if there is one.
+                // TODO: Load
+
+                // If no save is avaliable gives the Player the first weapon.
+                weaponController.GiveWeapon(0, 0, null);
+
+            }
+
+            initialized = true;
 
             // Initializes the options menu.
             optionsMenu.Initialize();
-
+            
         }
 
         private void Update()
         {
+
+            // Returns if not initialized.
+            if(!initialized) return;
 
             // Pause ============================================================================================
 
@@ -127,7 +148,7 @@ namespace DEEP.Entities
             if (currentState != PlayerState.Play)
                 return;
 
-            //Equiping weapons ===================================================================================
+            // Equiping weapons ===================================================================================
 
             // Verifies the number keys.
             if(Input.GetKeyDown("0")) // Checks for 0.
@@ -155,12 +176,17 @@ namespace DEEP.Entities
             }
 
             // ===================================================================================================
-            // Player movementation is handled by the PlayerMovimentation script referenced by movementation.
+            // Player movementation is handled by the PlayerMovementation script referenced by movementation.
             // ===================================================================================================
 
         }
 
         public override void Damage(int amount, DamageType type) {
+
+            if(!initialized) { 
+				Debug.LogError("Damage: You need to initialize the script first!"); 
+				return;
+			}
 
             // Initially all damage is to the health.
             int healthDamage = amount;
@@ -199,7 +225,12 @@ namespace DEEP.Entities
 
         protected override void Die() {
             
-            Debug.Log("You died!");
+            if(!initialized) { 
+				Debug.LogError("Die: You need to initialize the script first!"); 
+				return;
+			}
+
+            Debug.Log("Player died!");
 
             // Marks the player as dead.
             currentState = PlayerState.Dead;
@@ -244,6 +275,11 @@ namespace DEEP.Entities
         public virtual bool Heal(int amount, HealType type, AudioClip feedbackAudio) 
         {
 
+            if(!initialized) { 
+				Debug.LogError("Heal: You need to initialize the script first!"); 
+				return false;
+			}
+
             // Tries to heal the entity.
             bool healed = base.Heal(amount, type);
 
@@ -258,6 +294,11 @@ namespace DEEP.Entities
         // Give armor to the player.
         public virtual bool GiveArmor(int amount, AudioClip feedbackAudio) 
         {
+
+            if(!initialized) { 
+				Debug.LogError("GiveArmor: You need to initialize the script first!"); 
+				return false;
+			}
 
             // Checks if armor is not maxed out.
             if(armor >= maxArmor) return false;
@@ -281,6 +322,11 @@ namespace DEEP.Entities
         // Gives a keycard to the player.
         public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
 
+            if(!initialized) { 
+				Debug.LogError("GiveKeyCard: You need to initialize the script first!"); 
+				return;
+			}
+
             Debug.Log("Adding the " + color.ToString() + " key to the inventory");
 			keyInventory.AddKey(color);
 
@@ -295,6 +341,11 @@ namespace DEEP.Entities
 
         // Signalizes the player has found a secret;
         public void FoundSecret(AudioClip feedbackAudio) {
+
+            if(!initialized) { 
+				Debug.LogError("FoundSecret: You need to initialize the script first!"); 
+				return;
+			}
             
             // Plays the player feedback sound.
             if(feedbackAudio != null)
@@ -315,13 +366,18 @@ namespace DEEP.Entities
         // Pauses and un-pauses the game.
         public void TogglePause() {
 
+            if(!initialized) { 
+				Debug.LogError("TogglePause: You need to initialize the script first!"); 
+				return;
+			}
+
             // Pauses or un-pauses the game.
             if (currentState == PlayerState.Play)
                 currentState = PlayerState.Paused;
             else
                 currentState = PlayerState.Play;
 
-            // Stops player movimentation.
+            // Stops player movementation.
             movementation.enabled = (currentState == PlayerState.Play);
 
             // Shows or hides the pause menu and the cursor
@@ -340,9 +396,23 @@ namespace DEEP.Entities
         }
 
         // Updates mouse sensitivity from an outside script.
-        public void UpdateMouseSensitivity(float sensitivity) { movementation.sensitivity = sensitivity; }
+        public void UpdateMouseSensitivity(float sensitivity) { 
+
+            if(!initialized) { 
+				Debug.LogError("UpdateMouseSensitivity: You need to initialize the script first!"); 
+				return;
+			}
+
+            movementation.sensitivity = sensitivity; 
+
+        }
 
         public void EndLevel() {
+
+            if(!initialized) { 
+				Debug.LogError("EndLevel: You need to initialize the script first!"); 
+				return;
+			}
             
             Debug.Log("Level completed!");
 
@@ -352,7 +422,7 @@ namespace DEEP.Entities
             // Disables player control.
             movementation.enabled = false;
 
-            // Displays the ebnd level screen
+            // Displays the end level screen
             endLevelScreen.ShowScreen();
 
             Cursor.visible = true;
@@ -362,14 +432,33 @@ namespace DEEP.Entities
             
         }
 
-        public void ContinueLevel() {  SceneManager.LoadSceneAsync(StageInfo.Instance.nextStageSceneName); }
+        public void ContinueLevel() {  SceneManager.LoadSceneAsync(StageManager.Instance.GetNextStage()); }
 
         public void RestartGame() { SceneManager.LoadSceneAsync(0); }
 
         public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
 
-        public override void SetSlow() { movementation.SetSlow(); }
-        public override void SetBaseSpeed() { movementation.SetBaseSpeed(); }
+        public override void SetSlow() { 
+            
+            if(!initialized) { 
+				Debug.LogError("SetSlow: You need to initialize the script first!"); 
+				return;
+			}
+
+            movementation.SetSlow(); 
+            
+        }
+
+        public override void SetBaseSpeed() { 
+
+            if(!initialized) { 
+				Debug.LogError("SetBaseSpeed: You need to initialize the script first!"); 
+				return;
+			}
+            
+            movementation.SetBaseSpeed(); 
+            
+        }
 
     }
 

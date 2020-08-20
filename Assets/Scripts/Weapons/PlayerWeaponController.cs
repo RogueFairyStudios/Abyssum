@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using DEEP.UI;
 using DEEP.Entities;
 
 namespace DEEP.Weapons {
@@ -27,7 +26,12 @@ namespace DEEP.Weapons {
         // Stores a dictionary with the AmmoSource instances.
         private Dictionary<string, AmmoSource> ammoDict;
 
-        private void Start() {
+         // If this script has been initialzed by the main Player script.
+        private bool initialized = false;
+
+        public void Initialize() {
+
+            Debug.Log("Initializing PlayerWeaponController...");
             
             // Creates a dictionary with the ammo sources.
             ammoDict = new Dictionary<string, AmmoSource>();
@@ -70,10 +74,17 @@ namespace DEEP.Weapons {
 
             }
 
+            initialized = true;
+
         }
 
         // Switches between the Player weapons.
         public void SwitchWeapons(int weaponNum) {
+
+            if(!initialized) { 
+				Debug.LogError("SwitchWeapons: You need to initialize the script first!"); 
+				return;
+			}
 
             // Verifies if it's a valid weapon, if it's not doesn't switch.
             if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
@@ -99,6 +110,11 @@ namespace DEEP.Weapons {
         // Attempts firing the current weapon.
         public void FireCurrentWeapon() {
 
+            if(!initialized) { 
+				Debug.LogError("FireCurrentWeapon: You need to initialize the script first!"); 
+				return;
+			}
+
             if(currentWeapon == null)
                 return;
 
@@ -109,8 +125,12 @@ namespace DEEP.Weapons {
         }
 
         // Returns the index of the current weapon.
-        public int GetCurrentWeaponIndex()
-        {
+        public int GetCurrentWeaponIndex() {
+
+            if(!initialized) { 
+				Debug.LogError("GetCurrentWeaponIndex: You need to initialize the script first!"); 
+				return -1;
+			}
 
             // Searches for the current weapon index.
             int curWeaponIndex = -1;
@@ -126,8 +146,12 @@ namespace DEEP.Weapons {
         }
 
         // Returns the index of the next enabled weapon (rolls around if no weapon with higher index is enabled).
-        public int GetNextEnabledWeaponIndex()
-        {
+        public int GetNextEnabledWeaponIndex() {
+
+            if(!initialized) { 
+				Debug.LogError("GetNextEnabledWeaponIndex: You need to initialize the script first!"); 
+				return -1;
+			}
 
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -153,8 +177,12 @@ namespace DEEP.Weapons {
         }
 
         // Returns the index of the previous enabled weapon (rolls around if no weapon with lower index is enabled).
-        public int GetPreviousEnabledWeaponIndex()
-        {
+        public int GetPreviousEnabledWeaponIndex() {
+
+            if(!initialized) { 
+				Debug.LogError("GetPreviousEnabledWeaponIndex: You need to initialize the script first!"); 
+				return -1;
+			}
            
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -181,6 +209,11 @@ namespace DEEP.Weapons {
 
          // Pick's up a weapon and enables it's use.
         public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
+
+            if(!initialized) { 
+				Debug.LogError("GiveWeapon: You need to initialize the script first!"); 
+				return false;
+			}
 
             // Collects the weapon if the player doesn't have it yet.
             if(!weaponInstances[slot].Item1) {
@@ -223,6 +256,11 @@ namespace DEEP.Weapons {
 
         // Gives a certain type of ammo to the player.
         public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
+
+            if(!initialized) { 
+				Debug.LogError("GiveAmmo: You need to initialize the script first!"); 
+				return false;
+			}
 
             // Checks if the ammo type is valid.
             if(!ammoDict.ContainsKey(type)) return false;
