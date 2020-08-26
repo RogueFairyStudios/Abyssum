@@ -17,7 +17,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 28
+  m_StaticEditorFlags: 24
   m_IsActive: 1
 --- !u!4 &7108521736550939972
 Transform:
@@ -112,7 +112,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 125
+  m_StaticEditorFlags: 121
   m_IsActive: 1
 --- !u!4 &7429293612871621368
 Transform:

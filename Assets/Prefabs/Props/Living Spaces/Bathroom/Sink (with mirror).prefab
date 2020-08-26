@@ -136,6 +136,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sink (with mirror)
       objectReference: {fileID: 0}
+    - target: {fileID: 3150591383841733240, guid: 8036dcc4f5afea62dab6ee0b2fef29cb,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 121
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8036dcc4f5afea62dab6ee0b2fef29cb, type: 3}
 --- !u!4 &1838527066202253051 stripped
