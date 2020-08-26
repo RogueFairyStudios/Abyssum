@@ -28,10 +28,7 @@ namespace DEEP.Utility
 
             // Does the damage.
             if(target != null)
-            {
-                CancelInvoke(nameof(ResetTimer));
                 damageCoroutine = StartCoroutine(DamageOverTime());
-            }
 
         }
 
@@ -43,10 +40,7 @@ namespace DEEP.Utility
 
             // Stop doing damage.
             if (target != null)
-            {
                 StopCoroutine(damageCoroutine);
-                Invoke(nameof(ResetTimer), timeToReset);
-            }
         
         }
 
@@ -60,19 +54,18 @@ namespace DEEP.Utility
                 time += Time.fixedDeltaTime;
 
                 if(time >= delay) {
-                    target.Damage(amount, DamageType.Regular);
-                    time = 0.0f;
+
+                    if(target != null) {
+                        target.Damage(amount, DamageType.Regular);
+                        time = 0.0f;
+                    }
+
                 }
 
                 yield return waitForFixed;
 
             }
 
-        }
-
-        void ResetTimer()
-        {
-            time = 0.0f;
         }
     }
 }

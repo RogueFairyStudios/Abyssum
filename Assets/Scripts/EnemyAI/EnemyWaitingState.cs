@@ -12,7 +12,7 @@ namespace DEEP.AI
 
 #if UNITY_EDITOR
         // Only used in the Editor, set to false to hide logs.
-        private bool showDebug = true;
+        private bool showDebug = false;
 # endif
 
         public EnemyWaitingState(){

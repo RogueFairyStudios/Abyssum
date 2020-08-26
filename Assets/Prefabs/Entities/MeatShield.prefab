@@ -124,7 +124,7 @@ MonoBehaviour:
   targets: []
   damage: 50
   damageDelay: 0.6
-  knockbackForce: 20000
+  knockbackForce: 80000
   Attacker: {fileID: 6176847882833967499}
   attackClip: {fileID: 0}
 --- !u!1 &1996691492816018696

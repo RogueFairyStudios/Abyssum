@@ -8,21 +8,21 @@ namespace DEEP.Entities{
     public class Blowfish : EnemyBase
     {
         [SerializeField] GameObject explosionPrefab = null;
-        [SerializeField] AudioClip swim, inflate;
-        [SerializeField] bool swimSoundEnabled;
-        [SerializeField] float minSwimPitch, maxSwimPitch;
+        [SerializeField] AudioClip swim = null, inflate = null;
+        [SerializeField] bool swimSoundEnabled = true;
+        [SerializeField] float minSwimPitch = 0.8f, maxSwimPitch = 1.2f;
 
         [Tooltip("Sound that plays out when the enemy spots the enemy.")]
-        [SerializeField] protected AudioClip[] growl;
+        [SerializeField] protected AudioClip[] growl = null;
 
         [Tooltip("Sound that plays out when the enemy is hit.")]
-        [SerializeField] protected AudioClip[] damage;
+        [SerializeField] protected AudioClip[] damage = null;
 
         [Tooltip("Sound that plays out when the enemy dies.")]
-        [SerializeField] protected AudioClip[] death;
+        [SerializeField] protected AudioClip[] death = null;
 
 
-        [SerializeField] private AudioSource _audio, _audioloop;
+        [SerializeField] private AudioSource _audio = null, _audioloop = null;
         private Animator _animator;
 
         private BlowfishAI AI;
@@ -83,7 +83,7 @@ namespace DEEP.Entities{
             if(growl.Length > 0)
             {
                 _audio.Stop();
-                _audio.clip = growl[Random.Range(0, damage.Length)];
+                _audio.clip = growl[Random.Range(0, growl.Length)];
                 _audio.Play();
             }
         }

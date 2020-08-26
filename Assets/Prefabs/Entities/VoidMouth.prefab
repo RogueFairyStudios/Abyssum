@@ -620,8 +620,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2.192917, z: 0.5700001}
-  m_Center: {x: 0, y: 0.5679265, z: 0}
+  m_Size: {x: 1, y: 2.192917, z: 0.8126762}
+  m_Center: {x: -4.2508147e-16, y: 0.5679265, z: 0.12133855}
 --- !u!114 &6581984556783994013
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -640,7 +640,7 @@ MonoBehaviour:
   targets: []
   damage: 100
   damageDelay: 0.6
-  knockbackForce: 20000
+  knockbackForce: 160000
   Attacker: {fileID: 2962338941503051293}
   attackClip: {fileID: 8300000, guid: 3da240e449b075b4ab70e0d128d73577, type: 3}
 --- !u!82 &1632538986772169101

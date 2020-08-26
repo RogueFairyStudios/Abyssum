@@ -12,13 +12,13 @@ public class LiquidSound : MonoBehaviour
     [SerializeField] float extraHearingRange = 5, decayTangent = -0.5f, ambientVolume = 0.4f, ambientSpatialBlend = 1;
 
     [Header("Inside liquid settings")]
-    [SerializeField] AudioClip insideLiquidSound;
+    [SerializeField] AudioClip insideLiquidSound = null;
     [SerializeField] float insideVolume = 1;
 
-    [SerializeField] HUDController.FeedbackType feedbackType;
+    [SerializeField] HUDController.FeedbackType feedbackType = HUDController.FeedbackType.Damage;
 
-    private MeshRenderer _mesh;
-    private AudioSource _audio;
+    MeshRenderer _mesh;
+    AudioSource _audio;
 
     void Awake()
     {

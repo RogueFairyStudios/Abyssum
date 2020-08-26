@@ -50,7 +50,7 @@ namespace DEEP.Entities
         }
 
         // Called when health changes.
-        protected virtual void OnChangeHealth() { 
+        protected override void OnChangeHealth() { 
             
             // Applies the damage effect to the material if avaliable.
             if(enemyRenderer.material.HasProperty("_Damage"))
