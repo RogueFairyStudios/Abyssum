@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using DEEP.Entities;
+
+using DEEP.Entities.Player;
 
 namespace DEEP.Collectibles
 {
@@ -11,7 +12,7 @@ namespace DEEP.Collectibles
         protected override void Collect() {
 
             // Tries giving ammo to the player.
-            if(Player.Instance.weaponController.GiveAmmo(amount, type, collectionSound))     
+            if(PlayerController.Instance.weaponController.GiveAmmo(amount, type, collectionSound))     
                 base.Collect();
 
         }

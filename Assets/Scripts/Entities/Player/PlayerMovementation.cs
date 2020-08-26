@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 
-namespace DEEP.Entities
+using DEEP.DoorsAndKeycards;
+
+namespace DEEP.Entities.Player
 {
 
     [RequireComponent(typeof(Rigidbody))]
@@ -47,21 +49,21 @@ namespace DEEP.Entities
         [Tooltip("Sensitivity for the mouselook")]
         public float sensitivity = 6.0f;
 
-        // Original rotations for body and camera.
-        [HideInInspector] public Quaternion originalBodyRotation;
-        [HideInInspector] public Quaternion originalCamRotation;
+        [Tooltip("Layer mask for opening door's raycast.")]
+        [SerializeField] protected LayerMask tryOpenMask = new LayerMask();
 
-        [HideInInspector] public float rotationX = 0.0f; // Rotation on the x angle.
-        [HideInInspector] public float rotationY = 0.0f; // Rotation on the y angle.
+        // Original rotations for body and camera.
+        protected Quaternion originalBodyRotation;
+        protected Quaternion originalCamRotation;
+
+        protected float rotationX = 0.0f; // Rotation on the x angle.
+        protected float rotationY = 0.0f; // Rotation on the y angle.
 
         private Rigidbody pRigidbody = null;
         private CapsuleCollider pCollider = null;
-        [HideInInspector] public Camera pCamera = null;
+        protected Camera pCamera = null;
 
-        // If this script has been initialzed by the main Player script.
-        private bool initialized = false;
-
-        public void Initialize() {
+        public void Start() {
 
             Debug.Log("Initializing PlayerMovementation...");
 
@@ -79,8 +81,6 @@ namespace DEEP.Entities
             originalBodyRotation = transform.localRotation;
             originalCamRotation = pCamera.transform.localRotation;
 
-            initialized = true;
-
             // Initializes the player speed.
             SetBaseSpeed();
 
@@ -88,10 +88,7 @@ namespace DEEP.Entities
 
         private void Update() {
 
-            // Returns if not initialized.
-            if(!initialized) return;
-
-            // Physics ======================================================================================== 
+            // Physics ========================================================================================================
 
             // Verifies if the Player is touching the ground.
             onGround = Physics.OverlapCapsule(transform.position, transform.position + Vector3.down * (pCollider.height / 2.0f) * heightTolerance, checkRadius, raycastMask).Length != 0;
@@ -100,8 +97,7 @@ namespace DEEP.Entities
             pRigidbody.useGravity = !onGround;
             pRigidbody.drag = onGround ? groundDrag : airDrag;
 
-
-            // MouseLook =======================================================================================
+            // MouseLook ======================================================================================================
 
             // Rotates on the x-axis.
             rotationX += Input.GetAxis("Mouse X") * sensitivity;
@@ -117,26 +113,27 @@ namespace DEEP.Entities
             Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
             pCamera.transform.localRotation = originalCamRotation * yQuaternion;
 
-            // Jumping =======================================================================================
+            // Jumping ========================================================================================================
 
             // Makes the Player jump if touching the ground.
             if (canJump && onGround && Input.GetButtonDown("Jump"))
                 pRigidbody.AddForce(Vector3.up * jumpAcceleration * pRigidbody.mass, ForceMode.Impulse);
 
+            // Opening doors ==================================================================================================
+
+            if (Input.GetButtonDown("Interact"))	// If the player tries to interact, raycast to see if there is a door
+				TryOpenDoor();
 
         }
 
         private void FixedUpdate() {
 
-            // Returns if not initialized.
-            if(!initialized) return;
-
-            // Velocity calculation =======================================================================
+            // Velocity calculation ===========================================================================================
 
             // Gets the local velocity of the Rigidbody.
             Vector3 localVel = transform.InverseTransformDirection(pRigidbody.velocity);
 
-            //Input ====================================================================================
+            // Input ==========================================================================================================
 
             // Gets the input for the Player movimentation.
             Vector2 movInput = new Vector3(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
@@ -145,12 +142,11 @@ namespace DEEP.Entities
             if (movInput.magnitude > 1f)
                 movInput.Normalize();
 
-            //Movement =================================================================================
+            // Movement =======================================================================================================
 
             // In order to make movement be based on where you're looking, we get the direction the player is facing and move accordingly
             Vector3 movementVector = this.transform.forward * movInput.y + this.transform.right * movInput.x;
             pRigidbody.MovePosition(transform.position + movementVector * groundAcceleration * Time.fixedDeltaTime);
-
 
         }
 
@@ -165,11 +161,6 @@ namespace DEEP.Entities
 
         public void SetSlow() {
 
-            if(!initialized) { 
-                Debug.LogError("SetSlow: You need to initialize the script first!");
-                return; 
-            }
-
             groundAcceleration = slowGroundAcceleration;
             canJump = false;
 
@@ -177,23 +168,30 @@ namespace DEEP.Entities
 
         public void SetBaseSpeed() {
 
-            if(!initialized) { 
-                Debug.LogError("SetBaseSpeed: You need to initialize the script first!");
-                return; 
-            }
-
             groundAcceleration = baseGroundAcceleration;
             canJump = true;
 
         }
 
+        public void SetMouseSensitivity(float sensitivity) { this.sensitivity = sensitivity; }
+
+        void TryOpenDoor() {
+
+			RaycastHit hit;
+			if (Physics.Raycast(PlayerController.Instance.transform.position, PlayerController.Instance.transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
+				try{
+					hit.collider.GetComponent<Door>().TryOpenDoor();
+				} catch {
+					Debug.LogWarning("Couldn't access the ColorsDoor script from the object " + hit.collider.name);
+				}
+			}
+
+		}
+
 #if UNITY_EDITOR
 
         private void OnDrawGizmos() // To visualize the ground check
         {
-
-            // Returns if not initialized.
-            if(!initialized) return;
 
             Gizmos.color = Color.yellow;
             Gizmos.DrawWireSphere(transform.position, checkRadius);

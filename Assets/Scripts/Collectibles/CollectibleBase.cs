@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 using DEEP.Stage;
-using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Collectibles
 {
@@ -20,12 +20,11 @@ namespace DEEP.Collectibles
         [Tooltip("Color to be used in the log message when collected.")]
         [SerializeField] protected Color logColor = new Color( 0.6f, 0.6f, 0.6f, 0.6f);
 
-        protected virtual void OnTriggerEnter(Collider col)
+        protected virtual void OnTriggerEnter(Collider other)
         {
 
-            // Checks for a Player component.
-            Player player = col.GetComponent<Player>();
-            if (player != null)               
+            // Checks for the Player.
+            if (other.tag == "Player")               
                 Collect(); // Calls the collection function.
 
         }
@@ -35,7 +34,7 @@ namespace DEEP.Collectibles
 
             // Logs that this item has been collected.
             if(logText.Length > 0)
-                Player.Instance.HUD.Log.Message(logText, logIcon, logColor);
+                PlayerController.Instance.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this item as collected.
             StageManager.Instance.CountCollection();

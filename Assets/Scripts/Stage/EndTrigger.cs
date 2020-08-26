@@ -1,9 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 
-using UnityEngine;
-
-using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Stage
 {
@@ -13,12 +10,13 @@ namespace DEEP.Stage
         private void OnTriggerEnter(Collider other)
         {
 
-            Debug.Log("Secret found!");
+            if(other.tag != "Player")
+                return;
 
-            Player player = FindObjectOfType<Player>();
-            player.EndLevel();
-
+            Debug.Log("Level ended!");
+            PlayerController.Instance.EndLevel();
             Destroy(this.gameObject);
+
         }
     }
 }

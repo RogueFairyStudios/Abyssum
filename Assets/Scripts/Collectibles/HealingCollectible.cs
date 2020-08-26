@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+
 using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Collectibles
 {
@@ -11,7 +13,7 @@ namespace DEEP.Collectibles
         protected override void Collect() {
 
             // Tries healing the player.
-            if(Player.Instance.Heal(heal, hType, collectionSound))    
+            if(PlayerController.Instance.entity.Heal(heal, hType, collectionSound))    
                 base.Collect();
 
         }

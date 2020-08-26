@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using DEEP.Entities;
+﻿using UnityEngine;
+
 using DEEP.UI;
+using DEEP.Entities.Player;
 
 [RequireComponent(typeof(Mesh))]
 public class LiquidSound : MonoBehaviour
@@ -59,7 +58,7 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Player.Instance.HUD.StartScreenFeedback(feedbackType);
+            PlayerController.Instance.HUD.StartScreenFeedback(feedbackType);
 
             if(insideLiquidSound != null)
             {
@@ -75,7 +74,7 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            Player.Instance.HUD.StopConstantScreenFeedback();
+            PlayerController.Instance.HUD.StopConstantScreenFeedback();
 
             if(ambientLiquidSound != null)
             {
@@ -94,7 +93,7 @@ public class LiquidSound : MonoBehaviour
 
     private void OnDestroy()
     {
-        Player.Instance.HUD.StopConstantScreenFeedback();
+        PlayerController.Instance.HUD.StopConstantScreenFeedback();
     }
 
 }

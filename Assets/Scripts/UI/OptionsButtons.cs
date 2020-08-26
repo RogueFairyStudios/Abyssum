@@ -3,7 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.UI { 
 
@@ -22,7 +22,7 @@ namespace DEEP.UI {
         [SerializeField] Toggle statistics = null;// Statistics hUD toggle
 
         // Initializes the options, should be called by the main menu.
-        public void Initialize()
+        public void Awake()
         {
             
             //pega o valor inicial do volume
@@ -73,11 +73,11 @@ namespace DEEP.UI {
         //muda a sensibilidade do mouse
         public void SetMouseSensitivity()
         {
+
             PlayerPrefs.SetFloat("Mouse sensitivity", mouseSensitivity.value);
 
-            Player player = FindObjectOfType<Player>();
-            if (player != null)
-                player.UpdateMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
+            if (PlayerController.Instance != null)
+                PlayerController.Instance.movementation.SetMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
 
         }
 
@@ -110,16 +110,16 @@ namespace DEEP.UI {
         public void SetSpeedrunHUD(bool isOn)
         {
             PlayerPrefs.SetInt("SpeedrunHUD", isOn ? 1 : 0);
-            if(Player.Instance != null && Player.Instance.HUD != null)
-                Player.Instance.HUD.speedrun.SetEnabled(isOn);
+            if(PlayerController.Instance != null && PlayerController.Instance.HUD != null)
+                PlayerController.Instance.HUD.speedrun.SetEnabled(isOn);
         }
 
         // Enables or disables the statistics HUD.
         public void SetStatisticsHUD(bool isOn)
         {
             PlayerPrefs.SetInt("StatisticsHUD", isOn ? 1 : 0);
-            if(Player.Instance != null && Player.Instance.HUD != null)
-                Player.Instance.HUD.statistics.SetEnabled(isOn);
+            if(PlayerController.Instance != null && PlayerController.Instance.HUD != null)
+                PlayerController.Instance.HUD.statistics.SetEnabled(isOn);
         }
 
     }

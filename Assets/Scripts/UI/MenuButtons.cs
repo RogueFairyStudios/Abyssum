@@ -11,13 +11,6 @@ namespace DEEP.UI {
         [Tooltip("Optional reference to an options menu.")]
         [SerializeField] protected OptionsButtons optionsMenu = null;
 
-        void Start() {
-
-            if(optionsMenu != null)
-                optionsMenu.Initialize();
-
-        }
-
         public void QuitGame()
         {
             Debug.Log("Application.Quit()");
@@ -33,6 +26,7 @@ namespace DEEP.UI {
             Debug.Log("Opening URL " + url + "...");
             Application.OpenURL(url);
         }
+        
     }
 
 }

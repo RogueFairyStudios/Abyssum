@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 using DEEP.Stage;
-using DEEP.Entities;
+using DEEP.Entities.Player;
 using DEEP.DoorsAndKeycards;
 
 namespace DEEP.UI
@@ -142,9 +142,9 @@ namespace DEEP.UI
 
             public void UpdateValues() {
 
-                blueKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Blue);
-                redKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Red);
-                yellowKeyIcon.enabled = Player.Instance.keyInventory.HasKey(KeysColors.Yellow);
+                blueKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Blue);
+                redKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Red);
+                yellowKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Yellow);
 
             }
 
@@ -358,11 +358,6 @@ namespace DEEP.UI
         // Starts a screen feedback effect.
         public void StartScreenFeedback(FeedbackType type) {
 
-            if(!initialized) { 
-				Debug.LogError("StartScreenFeedback: You need to initialize the script first!"); 
-				return;
-			}
-
             // If a feedback effect is already happening stop it and start a new one.
             if(playerFeedback.screenFeedbackAnim != null)
                 StopCoroutine(playerFeedback.screenFeedbackAnim);
@@ -420,11 +415,6 @@ namespace DEEP.UI
         protected void StartConstantScreenFeedback(Color color)
         {
 
-            if(!initialized) { 
-				Debug.LogError("StartConstantScreenFeedback: You need to initialize the script first!"); 
-				return;
-			}
-
             // Sets the feedback color and shows it
             playerFeedback.screenFeedback.color = color;
             playerFeedback.screenFeedback.enabled = true;
@@ -437,11 +427,6 @@ namespace DEEP.UI
         public void StopConstantScreenFeedback()
         {
 
-            if(!initialized) { 
-				Debug.LogError("StopConstantScreenFeedback: You need to initialize the script first!"); 
-				return;
-			}
-
             // Sets up flags
             playerFeedback.constantFeedbackActive = false;
 
@@ -452,10 +437,7 @@ namespace DEEP.UI
 
         // ========================================================================================================
 
-        // If this script has been initialzed by the main Player script.
-        private bool initialized = false;
-
-        public void Initialize() {
+        public void Awake() {
 
             Debug.Log("Initializing HUDController...");
 
@@ -478,14 +460,9 @@ namespace DEEP.UI
                 PlayerPrefs.SetInt("StatisticsHUD", 0);
             statistics.SetEnabled(PlayerPrefs.GetInt("StatisticsHUD") != 0);
 
-            initialized = true;
-
         }
 
         void Update() {
-
-            // Returns if not initialized.
-            if(!initialized) return;
 
             // Constantly updates the speedrun clock.
             speedrun.SetStageTime(StageManager.Instance.GetDurationString());

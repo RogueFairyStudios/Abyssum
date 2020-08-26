@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Weapons.Bullets
 {
@@ -13,7 +13,7 @@ namespace DEEP.Weapons.Bullets
 
         private void FixedUpdate() {
 
-            _rigidbody.AddForce(acceleration * (Player.Instance.transform.position - transform.position).normalized, ForceMode.Acceleration);
+            _rigidbody.AddForce(acceleration * (PlayerController.Instance.transform.position - transform.position).normalized, ForceMode.Acceleration);
 
             if(_rigidbody.velocity.magnitude > 0)
                 transform.localRotation = Quaternion.LookRotation(_rigidbody.velocity, Vector3.up);

@@ -42,6 +42,8 @@ namespace DEEP.Entities
         {
 
             health = maxHealth; // Sets the initial health to the maximum health.
+            OnChangeHealth();
+            
             isDead = false;
 
         }

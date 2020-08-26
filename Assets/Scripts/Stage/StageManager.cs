@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
 
-using DEEP.AI;
-using DEEP.Collectibles;
-using System.Collections.Generic;
 using DEEP.Entities;
-using System.Linq;
+using DEEP.Entities.Player;
+using DEEP.Collectibles;
 
 namespace DEEP.Stage
 {
@@ -57,7 +55,7 @@ namespace DEEP.Stage
         [Tooltip("If the player inventory should be reset on the start of the level.")]
         [SerializeField] private bool resetPlayerInventory = false;
 
-        private void Start()
+        private void Awake()
         {
             // Ensures theres only one instance of this script.
             if (Instance != null) {
@@ -82,7 +80,7 @@ namespace DEEP.Stage
 
             // Spawns and initializes the player.
             Debug.Log("Spawning player...");
-            Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation).GetComponent<Player>().Initialize();
+            Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
 
         }
 
@@ -97,19 +95,19 @@ namespace DEEP.Stage
         // Counts an enemy kill.
         public void CountKill() { 
             numEnemiesKilled++; 
-            Player.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
+            PlayerController.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
         }
 
         // Counts a collected item.
         public void CountCollection() { 
             numCollectiblesCollected++; 
-            Player.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            PlayerController.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
         }
 
         // Counts a secret found.
         public void CountSecretFound() { 
             numSecretsFound++; 
-            Player.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
+            PlayerController.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.

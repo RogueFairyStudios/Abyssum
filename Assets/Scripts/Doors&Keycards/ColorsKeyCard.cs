@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities;
 using DEEP.Collectibles;
+using DEEP.Entities.Player;
 
 namespace DEEP.DoorsAndKeycards {
 
@@ -12,7 +12,7 @@ namespace DEEP.DoorsAndKeycards {
 		protected override void Collect() {
 
 			// Gives the keycard to the player.
-			Player.Instance.GiveKeyCard(keyColor, collectionSound);
+			PlayerController.Instance.keyInventory.GiveKeyCard(keyColor, collectionSound);
 			base.Collect();
 
 		}

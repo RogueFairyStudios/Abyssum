@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
-using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Weapons {
     public class PlayerWeaponController : MonoBehaviour
@@ -26,10 +26,7 @@ namespace DEEP.Weapons {
         // Stores a dictionary with the AmmoSource instances.
         private Dictionary<string, AmmoSource> ammoDict;
 
-         // If this script has been initialzed by the main Player script.
-        private bool initialized = false;
-
-        public void Initialize() {
+        void Awake() {
 
             Debug.Log("Initializing PlayerWeaponController...");
             
@@ -70,21 +67,44 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                Player.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
+                PlayerController.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
 
             }
 
-            initialized = true;
+        }
+
+        void Update() {
+
+            // Equiping weapons ===================================================================================
+
+            // Verifies the number keys.
+            if(Input.GetKeyDown("0")) // Checks for 0.
+                SwitchWeapons(9); // 0 is the rightmost key so it's actually the last weapon at index 9.
+            else {
+                for(int i = 1; i <= 9; i++) // Checks for the other keys.
+                    if(Input.GetKeyDown(i.ToString()))
+                        SwitchWeapons(i - 1);  // Converts the key into the weapon index of the list.
+            }
+
+            // Check if player has a weapon
+            if (currentWeapon != null)
+            {
+
+                // Change weapon using mouse scrollwheel =========================================================
+                if (Input.GetAxis("Mouse ScrollWheel") > 0f) // Scroll Up
+                    SwitchWeapons(GetNextEnabledWeaponIndex());
+                else if (Input.GetAxis("Mouse ScrollWheel") < 0f) // Scroll Down
+                    SwitchWeapons(GetPreviousEnabledWeaponIndex());
+
+                // Try firing weapons ============================================================================
+                if (Input.GetButton("Fire1"))
+                    FireCurrentWeapon();
+            }
 
         }
 
         // Switches between the Player weapons.
         public void SwitchWeapons(int weaponNum) {
-
-            if(!initialized) { 
-				Debug.LogError("SwitchWeapons: You need to initialize the script first!"); 
-				return;
-			}
 
             // Verifies if it's a valid weapon, if it's not doesn't switch.
             if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
@@ -100,37 +120,27 @@ namespace DEEP.Weapons {
             currentWeapon.gameObject.SetActive(true);
 
             // Updates the ammo counter on the HUD.
-            Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
             // Updates the current weapon icon on the HUD.
-            Player.Instance.HUD.ammoAndWeapons.SetCurrentWeapon(weaponNum, weapons[GetCurrentWeaponIndex()].icon, ammoDict[currentWeapon.ammoSource.id].icon);
+            PlayerController.Instance.HUD.ammoAndWeapons.SetCurrentWeapon(weaponNum, weapons[GetCurrentWeaponIndex()].icon, ammoDict[currentWeapon.ammoSource.id].icon);
 
         }
 
         // Attempts firing the current weapon.
         public void FireCurrentWeapon() {
 
-            if(!initialized) { 
-				Debug.LogError("FireCurrentWeapon: You need to initialize the script first!"); 
-				return;
-			}
-
             if(currentWeapon == null)
                 return;
 
             currentWeapon.Shot();
             // Updates the ammo counter on the HUD.
-            Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
         }
 
         // Returns the index of the current weapon.
         public int GetCurrentWeaponIndex() {
-
-            if(!initialized) { 
-				Debug.LogError("GetCurrentWeaponIndex: You need to initialize the script first!"); 
-				return -1;
-			}
 
             // Searches for the current weapon index.
             int curWeaponIndex = -1;
@@ -147,11 +157,6 @@ namespace DEEP.Weapons {
 
         // Returns the index of the next enabled weapon (rolls around if no weapon with higher index is enabled).
         public int GetNextEnabledWeaponIndex() {
-
-            if(!initialized) { 
-				Debug.LogError("GetNextEnabledWeaponIndex: You need to initialize the script first!"); 
-				return -1;
-			}
 
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -178,11 +183,6 @@ namespace DEEP.Weapons {
 
         // Returns the index of the previous enabled weapon (rolls around if no weapon with lower index is enabled).
         public int GetPreviousEnabledWeaponIndex() {
-
-            if(!initialized) { 
-				Debug.LogError("GetPreviousEnabledWeaponIndex: You need to initialize the script first!"); 
-				return -1;
-			}
            
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -210,11 +210,6 @@ namespace DEEP.Weapons {
          // Pick's up a weapon and enables it's use.
         public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
 
-            if(!initialized) { 
-				Debug.LogError("GiveWeapon: You need to initialize the script first!"); 
-				return false;
-			}
-
             // Collects the weapon if the player doesn't have it yet.
             if(!weaponInstances[slot].Item1) {
 
@@ -236,14 +231,14 @@ namespace DEEP.Weapons {
                 bool[] weaponsEnabled = new bool[weaponInstances.Count];
                 for(int i = 0; i < weaponInstances.Count; i++)
                     weaponsEnabled[i] = weaponInstances[i].Item1;
-                Player.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
+                PlayerController.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
 
                 // Give the initial ammo to the player.
                 GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, feedbackAudio);
 
                 // If collected, plays the player feedback sound.
                 if(feedbackAudio != null)
-                    Player.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                    PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
                 return true;
 
@@ -257,11 +252,6 @@ namespace DEEP.Weapons {
         // Gives a certain type of ammo to the player.
         public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
 
-            if(!initialized) { 
-				Debug.LogError("GiveAmmo: You need to initialize the script first!"); 
-				return false;
-			}
-
             // Checks if the ammo type is valid.
             if(!ammoDict.ContainsKey(type)) return false;
             
@@ -273,11 +263,11 @@ namespace DEEP.Weapons {
 
             // Updates the ammo counter on the HUD.
             if(currentWeapon != null)
-                Player.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+                PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                Player.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             return true;
 

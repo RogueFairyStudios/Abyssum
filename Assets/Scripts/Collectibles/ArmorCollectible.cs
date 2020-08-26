@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using DEEP.Entities;
+
+using DEEP.Entities.Player;
 
 namespace DEEP.Collectibles
 {
@@ -11,7 +12,7 @@ namespace DEEP.Collectibles
         protected override void Collect() {
 
             // Tries giving armor to the player.
-            if(Player.Instance.GiveArmor(amount, collectionSound))      
+            if(PlayerController.Instance.entity.GiveArmor(amount, collectionSound))      
                 base.Collect();
 
         }
