@@ -27,7 +27,7 @@ namespace DEEP.UI {
             
             //pega o valor inicial do volume
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
-                PlayerPrefs.SetFloat("Mouse sensitivity", 120.0f);
+                PlayerPrefs.SetFloat("Mouse sensitivity", 7.0f);
             mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             resolution = Screen.resolutions;//get the possible resolutions 

@@ -446,7 +446,7 @@ namespace DEEP.UI
             playerFeedback.constantFeedbackActive = false;
 
             // If there are no other feedbacks going on, turn the feedback image off
-            if(playerFeedback.screenFeedbackAnim == null)
+            if(playerFeedback.screenFeedbackAnim == null && playerFeedback.screenFeedback != null)
                 playerFeedback.screenFeedback.enabled = false;
         }
 

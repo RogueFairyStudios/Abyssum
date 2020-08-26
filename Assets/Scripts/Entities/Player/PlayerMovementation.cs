@@ -72,7 +72,7 @@ namespace DEEP.Entities
 
             // Gets the mouse sensitivity.
             if (!PlayerPrefs.HasKey("Mouse sensitivity"))
-                PlayerPrefs.SetFloat("Mouse sensitivity", 120.0f);
+                PlayerPrefs.SetFloat("Mouse sensitivity", 7.0f);
             sensitivity = PlayerPrefs.GetFloat("Mouse sensitivity");
 
             // Gets the original rotations for mouselook.
@@ -104,14 +104,14 @@ namespace DEEP.Entities
             // MouseLook =======================================================================================
 
             // Rotates on the x-axis.
-            rotationX += Input.GetAxis("Mouse X") * sensitivity * Time.deltaTime;
+            rotationX += Input.GetAxis("Mouse X") * sensitivity;
             rotationX = ClampAngle(rotationX, -360.0f, 360.0f);
 
             Quaternion xQuaternion = Quaternion.AngleAxis(rotationX, Vector3.up);
             transform.localRotation = originalBodyRotation * xQuaternion;
 
             // Rotates on the y-axis.
-            rotationY += Input.GetAxis("Mouse Y") * sensitivity * Time.deltaTime;
+            rotationY += Input.GetAxis("Mouse Y") * sensitivity;
             rotationY = ClampAngle(rotationY, -90.0f, 90.0f);
 
             Quaternion yQuaternion = Quaternion.AngleAxis(rotationY, Vector3.left);
