@@ -931,7 +931,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bulletSpawn: {fileID: 8494821255109346839}
-  bulletPrefab: {fileID: 4041188500202421656, guid: 7822d5a981e054bc98fa1dc54bc3f1d1,
+  bulletPrefab: {fileID: 4041188500202421651, guid: 7822d5a981e054bc98fa1dc54bc3f1d1,
     type: 3}
   delayBetweenShots: 0.9
   shotClip: {fileID: 8300000, guid: 0e447db95c9a54b0ea7a862cdff60fdb, type: 3}

@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+
 using DEEP.Utility;
+using DEEP.Pooling;
 
 namespace DEEP.Entities
 {
@@ -96,7 +98,7 @@ namespace DEEP.Entities
             isDead = true;
 
             if(deathPrefab != null) // Spawns a prefab after death if assigned.
-                Instantiate(deathPrefab, transform.position, transform.rotation);
+                PoolingSystem.Instance.PoolObject(deathPrefab, transform.position, transform.rotation);
 
             Destroy(gameObject);
 

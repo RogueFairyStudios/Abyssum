@@ -91,13 +91,15 @@ namespace DEEP.Weapons{
             {
 
                 //target i knockback
-                dir = targets[i].transform.position - Attacker.transform.position;
-                dir.y = 0.1f;
-                targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
-                if (targets[i].GetComponent(typeof(EntityBase)) != null)
-                {
-                    EntityBase entity = targets[i].GetComponent<EntityBase>();
-                    entity.Damage(damage, 0);//applying the damage
+                if(targets[i] != null) {
+                    dir = targets[i].transform.position - Attacker.transform.position;
+                    dir.y = 0.1f;
+                    targets[i].GetComponent<Rigidbody>().AddForce(dir.normalized * knockbackForce);
+                    if (targets[i].GetComponent(typeof(EntityBase)) != null)
+                    {
+                        EntityBase entity = targets[i].GetComponent<EntityBase>();
+                        entity.Damage(damage, 0);//applying the damage
+                    }
                 }
 
             }

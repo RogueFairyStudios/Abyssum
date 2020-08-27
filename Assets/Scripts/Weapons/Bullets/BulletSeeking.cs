@@ -11,12 +11,14 @@ namespace DEEP.Weapons.Bullets
 
         [SerializeField] protected float acceleration = 9.81f;
 
-        private void FixedUpdate() {
+        protected override void FixedUpdate() {
 
-            _rigidbody.AddForce(acceleration * (PlayerController.Instance.transform.position - transform.position).normalized, ForceMode.Acceleration);
+            bRigidbody.AddForce(acceleration * (PlayerController.Instance.transform.position - transform.position).normalized, ForceMode.Acceleration);
 
-            if(_rigidbody.velocity.magnitude > 0)
-                transform.localRotation = Quaternion.LookRotation(_rigidbody.velocity, Vector3.up);
+            if(bRigidbody.velocity.magnitude > 0)
+                transform.localRotation = Quaternion.LookRotation(bRigidbody.velocity, Vector3.up);
+
+            base.FixedUpdate();
 
         }
 

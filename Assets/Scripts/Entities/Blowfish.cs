@@ -2,6 +2,7 @@
 using System.Linq;
 
 using DEEP.AI;
+using DEEP.Pooling;
 
 namespace DEEP.Entities{
 
@@ -105,7 +106,7 @@ namespace DEEP.Entities{
         {
             Transform currentPosition = this.transform;
             Destroy(this.gameObject);
-            Instantiate(explosionPrefab, currentPosition.position, currentPosition.rotation);
+            PoolingSystem.Instance.PoolObject(explosionPrefab, currentPosition.position, currentPosition.rotation);
         }
     }
 }

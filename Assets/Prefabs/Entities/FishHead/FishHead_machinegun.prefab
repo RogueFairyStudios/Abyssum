@@ -1419,7 +1419,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   bulletSpawn: {fileID: 1760456921026469914}
-  bulletPrefab: {fileID: 4041188500202421656, guid: e0f494f1dcdf566409d21bd91b635799,
+  bulletPrefab: {fileID: 4041188500202421651, guid: e0f494f1dcdf566409d21bd91b635799,
     type: 3}
   delayBetweenShots: 0.125
   shotClip: {fileID: 8300000, guid: 8fbbcb7dec5e59870a6cf3ef8de8f7d2, type: 3}

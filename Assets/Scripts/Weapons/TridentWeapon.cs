@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using DEEP.Pooling;
 using DEEP.Entities;
 using DEEP.Entities.Player;
 
@@ -143,7 +144,7 @@ namespace DEEP.Weapons {
                 Vector3 randomTargetPos = targets[UnityEngine.Random.Range(0, targets.Count)].position;
 
                 // Instantiates the attack at the target.
-                Instantiate(bulletPrefab, randomTargetPos, new Quaternion());
+                PoolingSystem.Instance.PoolObject(bulletPrefab, randomTargetPos, new Quaternion());
 
                 // Does the visual effect.
                 lineRenderer.positionCount = 2;

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities;
+using DEEP.Pooling;
+using DEEP.Weapons.Bullets;
 
 namespace DEEP.Weapons {
 
@@ -15,7 +16,10 @@ namespace DEEP.Weapons {
         [SerializeField] protected Transform bulletSpawn = null;
 
         [Tooltip("Where the bullet should be spawned.")]
-        [SerializeField] protected Transform bulletPrefab = null;
+        [SerializeField] protected GameObject bulletPrefab = null;
+
+        [Tooltip("Max amount of this type of bullet that can exist in the game at the same time.")]
+        [SerializeField] protected int maxBulletInstances = 128;
 
         [Tooltip("Amount of time to wait between two consecutive shots.")]
         [SerializeField] protected float delayBetweenShots = 0.3f;
@@ -40,8 +44,7 @@ namespace DEEP.Weapons {
             wAnimator = GetComponentInChildren<Animator>();
 
             // Gets the weapon's AudioSource.
-            wAudio = GetComponentInChildren<AudioSource>();
-            
+            wAudio = GetComponentInChildren<AudioSource>();            
 
         }
 
@@ -121,9 +124,9 @@ namespace DEEP.Weapons {
 
         // Fires the weapon.
         protected override void Fire() 
-        {
+        {              
 
-            Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation); // Creates the bullet.
+            PoolingSystem.Instance.PoolObject(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation);
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
@@ -147,7 +150,7 @@ namespace DEEP.Weapons {
         /// <param name="target"></param>
         protected virtual void Fire(Vector3 target)
         {
-            Instantiate(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullets.BulletBase>().SetTarget(target); // Creates the bullet and sets its target.
+            PoolingSystem.Instance.PoolObject(bulletPrefab, bulletSpawn.position, bulletSpawn.rotation).GetComponent<Bullets.BulletBase>().SetTarget(target); // Creates the bullet and sets its target.
             delayTimer = 0; // Resets the delay.
 
             // Plays the animation.
@@ -163,7 +166,7 @@ namespace DEEP.Weapons {
             }
         }
 
-         // Do something when not enough ammo is avaliable.
+        // Do something when not enough ammo is avaliable.
         protected override void NoAmmo() 
         {
 

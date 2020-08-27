@@ -143,6 +143,9 @@ namespace DEEP.Entities.Player
         // Handles the Player entity's death.
         public void Die() {
 
+            // The game has ended.
+            isPlaying = false;
+
             // Disables player control.
             movementation.enabled = false;
             weaponController.enabled = false;
@@ -179,14 +182,14 @@ namespace DEEP.Entities.Player
             // Pauses the game time.
             Time.timeScale = 0;
 
-            // The game has ended.
-            isPlaying = false;
-
         }
 
         public void EndLevel() {
             
             Debug.Log("Level completed!");
+
+            // The game has ended.
+            isPlaying = false;
 
             // Disables player control.
             movementation.enabled = false;
@@ -201,9 +204,6 @@ namespace DEEP.Entities.Player
 
             // Pauses the game time.
             Time.timeScale = 0;
-
-            // The game has ended.
-            isPlaying = false;
             
         }
 

@@ -83,8 +83,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 101379
   bulletSpawn: {fileID: 4171265578445106677}
-  bulletPrefab: {fileID: 783353297757611019, guid: 512e10dec6a33d345aaf923e45c0cb53,
+  bulletPrefab: {fileID: 783353297757611008, guid: 512e10dec6a33d345aaf923e45c0cb53,
     type: 3}
+  maxBulletInstances: 8
   delayBetweenShots: 1
   shotClip: {fileID: 8300000, guid: 55475a585b5e129cd87bb20df0f1314e, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
