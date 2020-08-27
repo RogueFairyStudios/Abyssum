@@ -7,7 +7,22 @@ namespace DEEP.Pooling {
     public class PoolingSystem : MonoBehaviour
     {
 
-        public static PoolingSystem Instance;
+        // Singleton for this class.
+        private static PoolingSystem instance;
+        public static PoolingSystem Instance {
+            get {
+
+                // If no instance is available creates a new one.
+                if(instance == null) {
+                    GameObject obj = new GameObject();
+                    obj.name = "PoolingSystem";
+                    return obj.AddComponent<PoolingSystem>();
+                }
+                
+                return instance;
+
+            }
+        }
 
         [SerializeField] List<PrefabWarmup> prefabWarmups = new List<PrefabWarmup>();
 
@@ -15,7 +30,7 @@ namespace DEEP.Pooling {
 
         public void Awake() {
 
-            Instance = this;
+            instance = this;
 
             pools = new Dictionary<GameObject, ObjectPool>();
 
