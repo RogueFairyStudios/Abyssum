@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 namespace DEEP.UI { 
@@ -19,7 +18,7 @@ namespace DEEP.UI {
 
         public void LoadLevel(string levelName){
             Debug.Log("Loading " + levelName + "...");
-            SceneManager.LoadScene(levelName);
+            SceneManager.LoadSceneAsync(levelName);
         }
 
         public void LoadURL(string url){
