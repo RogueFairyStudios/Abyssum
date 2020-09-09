@@ -55,24 +55,24 @@ namespace DEEP.Entities.Player
 
         public void Awake()
         {
-
+            
             Debug.Log("Initializing Player...");
 
             // Ensures there's only one instance of this script.
             if (Instance != null) {
                 Debug.LogError("Player: more than one instance of singleton found!");
-                Destroy(gameObject);
+                Destroy(Instance.gameObject);
                 return;
             }
             Instance = this;
-
+            
             // The Player always starts the game in regular play mode.
             isPlaying = true;
             isPaused = false;
 
             // Creates the KeyInventory instance.
             keyInventory = new KeyInventory();
-
+            
             // Get components =================================================================================================
 
             // Tries getting the necessary components if they are not avaliable.
@@ -82,7 +82,7 @@ namespace DEEP.Entities.Player
             if(entity == null) entity = GetComponent<PlayerEntity>();
 
             // ================================================================================================================
-
+            
             // Loads the player inventory if it wasn't reset.
             if(!StageManager.Instance.GetResetInventory()) {
 
@@ -94,7 +94,15 @@ namespace DEEP.Entities.Player
 
             }
 
-            System.GC.Collect(); // Collects garbage at start to avoid potential lag.
+            // Ensures timeScale is correct.
+            Time.timeScale = 1;
+
+            // Locks and hides the cursor.
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+
+            // Collects garbage at start to avoid potential lag.
+            System.GC.Collect();
             
         }
 
@@ -142,7 +150,7 @@ namespace DEEP.Entities.Player
 
         // Handles the Player entity's death.
         public void Die() {
-
+            
             // The game has ended.
             isPlaying = false;
 

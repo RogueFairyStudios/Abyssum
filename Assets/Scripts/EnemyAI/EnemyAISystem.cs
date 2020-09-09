@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+
 using UnityEngine;
 using UnityEngine.AI;
-using DEEP.StateMachine;
+
 using DEEP.Weapons;
+using DEEP.StateMachine;
+using DEEP.Entities.Player;
 
 namespace DEEP.AI
 {
@@ -54,9 +57,6 @@ namespace DEEP.AI
 
             if (weapon == null) // Tries getting the enemy weapon if none is found. 
                 weapon = GetComponentInChildren<WeaponBase>();
-
-            target = GameObject.FindGameObjectWithTag("Player"); // Find the player and set it as the target.
-            lastTargetLocation = transform.position; // Inititializes lastTarget location with temporary value.
 
             // Setups delegates.
             OnAggro += AlertAllies;
@@ -112,10 +112,14 @@ namespace DEEP.AI
         public virtual void Pursuing()
         {
 
+            // Checks if there's a target to pursue.
+            if(PlayerController.Instance == null)
+                return;
+
             // Gets the enemy destination.
             Vector3 destination; 
             if (HasTargetSight())
-                destination = target.transform.position;
+                destination = PlayerController.Instance.transform.position;
             else
                 destination = lastTargetLocation;
 
@@ -200,8 +204,12 @@ namespace DEEP.AI
         public bool InAttackRange()
         {
 
+            // CHecks if there's a target to attack.
+            if(PlayerController.Instance == null)
+                return false;
+
             // Checks for sight in addition to the attack range.
-            return (HasTargetSight() && (Vector3.Distance(transform.position, target.transform.position) <= attackRange));
+            return (HasTargetSight() && (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= attackRange));
 
         }
 
@@ -254,12 +262,12 @@ namespace DEEP.AI
         void OnDrawGizmos()
         {
 
-            if (target == null)
+            if (PlayerController.Instance == null)
                 return;
 
-            float distance = Vector3.Distance(transform.position, target.transform.position);
+            float distance = Vector3.Distance(transform.position, PlayerController.Instance.transform.position);
 
-            if (HasSight(target.transform.position))
+            if (HasSight(PlayerController.Instance.transform.position))
             {
 
                 Gizmos.color = Color.blue;

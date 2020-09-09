@@ -1,5 +1,7 @@
 using UnityEngine;
 
+using DEEP.Entities.Player;
+
 namespace DEEP.AI
 {
     public class BaseEntityAI : MonoBehaviour
@@ -14,7 +16,6 @@ namespace DEEP.AI
         
         protected Vector3 agentSightOffset;
 
-        [HideInInspector] public GameObject target;
         [HideInInspector] public Vector3 lastTargetLocation; //location to search if the target has been missed
 
         // Checks if has sight to target.
@@ -22,15 +23,15 @@ namespace DEEP.AI
         {
 
             // Ensures the target is not null.
-            if(target == null)
+            if(PlayerController.Instance == null)
                 return false;
 
             // Checks for sight.
-            bool hasSight = HasSight(target.transform.position);
+            bool hasSight = HasSight(PlayerController.Instance.transform.position);
 
             // Stores the target location if it is seen.
             if (hasSight)
-                lastTargetLocation = target.transform.position;
+                lastTargetLocation = PlayerController.Instance.transform.position;
 
             return hasSight;
         }

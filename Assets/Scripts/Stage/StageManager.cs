@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.Playables;
 
+using DEEP.UI;
 using DEEP.Entities;
 using DEEP.Entities.Player;
 using DEEP.Collectibles;
@@ -55,6 +57,22 @@ namespace DEEP.Stage
         [Tooltip("If the player inventory should be reset on the start of the level.")]
         [SerializeField] private bool resetPlayerInventory = false;
 
+        
+
+        // Stores if the level has already started.
+        private bool canStart;
+        private bool started;
+
+        [System.Serializable]
+        private struct Cutscene 
+        {
+            [Tooltip("Objects that should be enabled only during the cutscene.")]
+            public GameObject[] cutsceneObjects;
+            [Tooltip("Objects that should be enabled only after the cutscene.")]
+            public GameObject[] inGameObjects;
+        }
+        [SerializeField] private Cutscene cutscene = new Cutscene();
+
         private void Awake()
         {
             // Ensures theres only one instance of this script.
@@ -78,17 +96,59 @@ namespace DEEP.Stage
 
             duration = 0.0f;
 
-            // Spawns and initializes the player.
+            // Waits for level start.
+            canStart = false;
+            started = false;
+
+        }
+
+        // Enables the player to spawn and the level to start.
+        public void EnableLevelStart() { canStart = true; }
+
+        // Spawns Player and starts level.
+        private void StartLevel() {
+
+            // Spawns the player.
             Debug.Log("Spawning player...");
-            Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+            GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+
+            // Finishes the cutscene.
+            if(cutscene.cutsceneObjects != null)
+                foreach(GameObject obj in cutscene.cutsceneObjects)
+                    obj.SetActive(false);
+            if(cutscene.inGameObjects != null)
+                foreach(GameObject obj in cutscene.inGameObjects)
+                    obj.SetActive(true);
+            
+
+
+            started = true;
 
         }
 
         private void FixedUpdate()
         {
 
-            // Counts the time spent on the stage.
-            duration += Time.fixedDeltaTime;
+            // Returns if the level has not started yet (is in the cutscene).
+            if(!started) {
+
+                // Checks for a Main Menu that might be running a cutscene
+                MainMenu mainMenu = FindObjectOfType<MainMenu>();
+
+                // If no Main Menu was found the game can start right away.
+                if(mainMenu == null)
+                    canStart = true;
+
+                // Starts the level as soon as allowed to.
+                if(canStart)
+                    StartLevel();
+
+            } else {
+
+                // Counts the time spent on the stage after the level started.
+                duration += Time.fixedDeltaTime;
+
+            }
 
         }
 
