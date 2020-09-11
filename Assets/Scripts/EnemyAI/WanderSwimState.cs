@@ -105,7 +105,10 @@ namespace DEEP.AI
         {
             // Draws the random movement box.
             Gizmos.color = Color.cyan;
-            Gizmos.DrawWireCube(initialPosition, movementBoxSize);
+            if(initialPosition == Vector3.zero) // For when placing in the scene
+                Gizmos.DrawWireCube(this.transform.position, movementBoxSize);
+            else
+                Gizmos.DrawWireCube(initialPosition, movementBoxSize);
 
             // Draws a line to the destination.
             Gizmos.color = Color.blue;
