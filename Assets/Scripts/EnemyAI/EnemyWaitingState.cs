@@ -2,6 +2,7 @@
 using UnityEngine.AI;
 
 using DEEP.StateMachine;
+using DEEP.Entities.Player;
 
 namespace DEEP.AI
 {
@@ -72,7 +73,7 @@ namespace DEEP.AI
             {
 
                 // If can reach target start pursuing.
-                if (owner.GetPath(owner.target.transform.position).status == NavMeshPathStatus.PathComplete)
+                if (owner.GetPath(PlayerController.Instance.transform.position).status == NavMeshPathStatus.PathComplete)
                     owner.ChangeState(EnemyPursuingState.Instance);//target finded, engaging
                 else // If it can't be reached, just stares at it.
                     owner.getAim();
