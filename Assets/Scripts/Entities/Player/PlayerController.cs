@@ -90,7 +90,7 @@ namespace DEEP.Entities.Player
                 // TODO: Load
 
                 // If no save is avaliable gives the Player the first weapon.
-                weaponController.GiveWeapon(0, 0, null);
+                //weaponController.GiveWeapon(0, 0, null);
 
             }
 
