@@ -7,13 +7,14 @@ namespace DEEP.Stage
     public class MusicChange : MonoBehaviour
     {
         [Tooltip("Audio source for music.")]
-        [SerializeField] private AudioSource source = null;
+        [SerializeField] private AudioSource introSource = null, loopSource = null;
 
         [Tooltip("If instead you just want to mute whatever song is playing.")]
         [SerializeField] private bool muteSong = false;
 
         [Tooltip("Which song to swap to.")]
-        [SerializeField] private AudioClip song = null;
+        [SerializeField] private AudioClip songLoop = null, songIntro = null;
+        [SerializeField] private bool hasIntro = false;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -22,11 +23,22 @@ namespace DEEP.Stage
 
             if(!muteSong)
             {
-                source.clip = song;
-                source.Play();
+                if(hasIntro)
+                {
+                    introSource.clip = songIntro;
+                    loopSource.clip = songLoop;
+                    introSource.Play();
+                    loopSource.PlayDelayed(songIntro.length);
+                }
+                else
+                {
+                    introSource.Stop();
+                    loopSource.clip = songLoop;
+                    loopSource.Play();
+                }
             }
             else
-                source.Stop();
+                loopSource.Stop();
 
             Destroy(this.gameObject);
 
