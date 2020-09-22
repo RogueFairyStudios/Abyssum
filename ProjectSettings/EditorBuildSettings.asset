@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: f7c1fa949c0871c438ae5ef41a47866d
   - enabled: 1
+    path: Assets/Scenes/Military.unity
+    guid: 277ee6fa5ebfbb3fe9f22090dd5b8660
+  - enabled: 1
     path: Assets/Scenes/Showcase.unity
     guid: d7fe55d1532e8856780ea0631082c140
   - enabled: 1
-    path: Assets/Scenes/Military.unity
-    guid: 277ee6fa5ebfbb3fe9f22090dd5b8660
+    path: Assets/Scenes/BetaEnd.unity
+    guid: ee12e37e4ff592d4abd2108b47d2df33
+  - enabled: 1
+    path: Assets/Scenes/WebEnd.unity
+    guid: a3833af50fb91de4180d8ba3253688cc
   m_configObjects: {}

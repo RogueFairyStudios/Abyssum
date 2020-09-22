@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6419462659844173595}
   - component: {fileID: 732409074774086626}
   - component: {fileID: 2908556546753426450}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,6 +59,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -83,6 +84,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &2908556546753426450
 Animator:
   serializedVersion: 3
@@ -113,7 +115,7 @@ GameObject:
   - component: {fileID: 4793742014678728445}
   - component: {fileID: 4987060009112865551}
   - component: {fileID: 2927123242889549164}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: barrel3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -157,6 +159,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -181,6 +184,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &3815992334491107051
 GameObject:
   m_ObjectHideFlags: 0
@@ -192,7 +196,7 @@ GameObject:
   - component: {fileID: 4086897737222097092}
   - component: {fileID: 2960613027924858355}
   - component: {fileID: 7095355092206443007}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -236,6 +240,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -260,6 +265,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5989124283477065374
 GameObject:
   m_ObjectHideFlags: 0
@@ -269,7 +275,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7318535671360887079}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -300,7 +306,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1928681572485157076}
   - component: {fileID: 1114353737401434828}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +435,7 @@ GameObject:
   - component: {fileID: 3625250827784887997}
   - component: {fileID: 2971122470867756335}
   - component: {fileID: 942751980130176519}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -473,6 +479,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -497,6 +504,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9168991451539551708
 GameObject:
   m_ObjectHideFlags: 0
@@ -507,7 +515,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8291346311349099943}
   - component: {fileID: 8343769620995970270}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Shotgun
   m_TagString: Untagged
   m_Icon: {fileID: 0}

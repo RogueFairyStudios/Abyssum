@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Rocket
   ammo: 0
   maxAmmo: 24
-  icon: {fileID: 2171929650399820120, guid: 99c762247c1f93facabec571b52d1497, type: 3}
+  icon: {fileID: 6275299128839290957, guid: 4a025b0e1d9aa3449a3e394a72ea2cac, type: 3}

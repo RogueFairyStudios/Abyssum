@@ -1,8 +1,11 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
+
 using DEEP.AI;
 using DEEP.Stage;
+using DEEP.Entities;
 
 
 namespace DEEP.Spawn
@@ -87,9 +90,10 @@ namespace DEEP.Spawn
 
             currentEntity = (currentEntity + 1) % entityList.Count;
 
-            EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
-            enemyAI.spawned = true;
+            EnemyBase enemyBase = instance.GetComponent<EnemyBase>();
+            enemyBase.MarkSpawned();
 
+            EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
             if (patrolStartingPoint != null) {
 
                 enemyAI.addPatrolPoint(patrolStartingPoint);
@@ -112,9 +116,10 @@ namespace DEEP.Spawn
 
                 currentEntity = (currentEntity + 1) % entityList.Count;
 
-                EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
-                enemyAI.spawned = true;
+                EnemyBase enemyBase = instance.GetComponent<EnemyBase>();
+                enemyBase.MarkSpawned();
 
+                EnemyAISystem enemyAI = instance.GetComponent<EnemyAISystem>();
                 if (patrolStartingPoint != null) {
 
                     enemyAI.addPatrolPoint(patrolStartingPoint);

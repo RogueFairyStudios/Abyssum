@@ -17,6 +17,31 @@ PrefabInstance:
       propertyPath: keyColor
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 3155582314133001211, guid: 632b8ae99471c1d89b7928203f3fb9d4,
+        type: 3}
+      propertyPath: logText
+      value: Yellow keycard collected
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155582314133001211, guid: 632b8ae99471c1d89b7928203f3fb9d4,
+        type: 3}
+      propertyPath: logColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155582314133001211, guid: 632b8ae99471c1d89b7928203f3fb9d4,
+        type: 3}
+      propertyPath: logColor.g
+      value: 0.6509804
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155582314133001211, guid: 632b8ae99471c1d89b7928203f3fb9d4,
+        type: 3}
+      propertyPath: logColor.b
+      value: 0.30980393
+      objectReference: {fileID: 0}
+    - target: {fileID: 3155582314133001211, guid: 632b8ae99471c1d89b7928203f3fb9d4,
+        type: 3}
+      propertyPath: logColor.a
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 7403358446315358948, guid: 632b8ae99471c1d89b7928203f3fb9d4,
         type: 3}
       propertyPath: m_LocalPosition.x

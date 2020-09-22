@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Eletric
   ammo: 0
   maxAmmo: 80
-  icon: {fileID: -3852854901230681081, guid: 99c762247c1f93facabec571b52d1497, type: 3}
+  icon: {fileID: 4203629334840669420, guid: b4a0386d64979f7438c8819e70c8992b, type: 3}

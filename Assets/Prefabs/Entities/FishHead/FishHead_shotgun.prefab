@@ -598,6 +598,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -622,6 +623,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5271037719879082710
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1131,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1153,6 +1156,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &7108176753873865220
 GameObject:
   m_ObjectHideFlags: 0
@@ -1337,6 +1341,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1345,7 +1350,7 @@ SkinnedMeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
+  m_ProbeAnchor: {fileID: 5313919480407696733}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -1618,6 +1623,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1642,6 +1648,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &8771497766818405150
 GameObject:
   m_ObjectHideFlags: 0
@@ -1673,6 +1680,36 @@ Transform:
   m_Father: {fileID: 8138320774274368916}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 18.009409, y: -0.000014430567, z: -0.0000041112608}
+--- !u!1 &8800252616656936551
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5313919480407696733}
+  m_Layer: 11
+  m_Name: LightAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5313919480407696733
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8800252616656936551}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8806507968605494666}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8806507968605494656
 GameObject:
   m_ObjectHideFlags: 0
@@ -1708,6 +1745,7 @@ Transform:
   - {fileID: 7169358724033867233}
   - {fileID: 4950482998632059497}
   - {fileID: 1807520556518103789}
+  - {fileID: 5313919480407696733}
   - {fileID: 5650940868366571144}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -1752,7 +1790,6 @@ MonoBehaviour:
     m_Bits: 1025
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
-  spawned: 0
   agent: {fileID: 0}
   anim: {fileID: 0}
   attackRange: 5
@@ -1783,6 +1820,8 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants: []
   _audio: {fileID: 155577590734253887}
   grunt:
   - {fileID: 8300000, guid: 00d5874fc0254fb2f858564ff8190296, type: 3}
@@ -1989,7 +2028,7 @@ PrefabInstance:
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}

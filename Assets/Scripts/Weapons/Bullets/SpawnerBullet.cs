@@ -1,6 +1,6 @@
-﻿using System.Net;
-using System.Collections.ObjectModel;
-using UnityEngine;
+﻿using UnityEngine;
+
+using DEEP.Decals;
 using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets {
@@ -15,6 +15,12 @@ namespace DEEP.Weapons.Bullets {
 		protected override void OnCollisionEnter(Collision col) {
 
 			SpawnPrefab();
+
+			// Spawns decal if avaliable.
+			if(bulletHoleMaterial != null) {
+				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
+			}
+
 			//Destroys the object on collision.
 			Destroy(gameObject);
 

@@ -1,6 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+
 using UnityEngine;
+
+using DEEP.Entities.Player;
 
 namespace DEEP.Entities{
    public class CucumberMud : MonoBehaviour
@@ -26,6 +28,12 @@ namespace DEEP.Entities{
          {
             obj.SetBaseSpeed();
             entitieList.Remove(obj);
+
+            if(obj.gameObject.CompareTag("Player"))
+            {
+               PlayerController.Instance.HUD.StopConstantScreenFeedback();
+               GetComponent<LiquidSound>().Stop();
+            }
          }
       }
 
@@ -34,6 +42,11 @@ namespace DEEP.Entities{
          for (int i = 0; i < entitieList.Count; i++)
          {
             entitieList[i].SetBaseSpeed();
+            if(entitieList[i].gameObject.CompareTag("Player"))
+            {
+               PlayerController.Instance.HUD.StopConstantScreenFeedback();
+               GetComponent<LiquidSound>().Stop();
+            }
          }
       }
 

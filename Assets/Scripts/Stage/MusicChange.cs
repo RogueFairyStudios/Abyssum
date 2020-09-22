@@ -1,6 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
+
+using DEEP.Entities;
 
 namespace DEEP.Stage
 {
@@ -17,18 +17,19 @@ namespace DEEP.Stage
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.GetComponent<Entities.Player>())
-            {
-                if(!muteSong)
-                {
-                    source.clip = song;
-                    source.Play();
-                }
-                else
-                    source.Stop();
+            if(other.tag != "Player")
+                return;
 
-                Destroy(this.gameObject);
+            if(!muteSong)
+            {
+                source.clip = song;
+                source.Play();
             }
+            else
+                source.Stop();
+
+            Destroy(this.gameObject);
+
         }
     }
 }

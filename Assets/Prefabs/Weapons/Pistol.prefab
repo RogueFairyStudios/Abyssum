@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7318535671360887079}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 1576444897780440557}
   - component: {fileID: 5105992513632985364}
   - component: {fileID: 6108245980921884983}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -87,6 +87,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -111,6 +112,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &6108245980921884983
 Animator:
   serializedVersion: 3
@@ -140,7 +142,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1928681572485157076}
   - component: {fileID: 1114353737401434828}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -269,7 +271,7 @@ GameObject:
   - component: {fileID: 3625250827784887997}
   - component: {fileID: 2971122470867756335}
   - component: {fileID: 942751980130176519}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -313,6 +315,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -337,6 +340,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9168991451539551708
 GameObject:
   m_ObjectHideFlags: 0
@@ -347,7 +351,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8291346311349099943}
   - component: {fileID: 5863096473695726834}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}

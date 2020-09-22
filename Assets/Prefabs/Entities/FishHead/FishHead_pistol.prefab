@@ -252,6 +252,7 @@ Transform:
   m_Children:
   - {fileID: 5473310882014678667}
   - {fileID: 4022180440411147555}
+  - {fileID: 4644378775912261982}
   - {fileID: 3345515910008602748}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -296,7 +297,6 @@ MonoBehaviour:
     m_Bits: 1025
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
-  spawned: 0
   agent: {fileID: 0}
   anim: {fileID: 0}
   attackRange: 10
@@ -327,6 +327,8 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants: []
   _audio: {fileID: 4877808787837803111}
   grunt:
   - {fileID: 8300000, guid: 00d5874fc0254fb2f858564ff8190296, type: 3}
@@ -483,6 +485,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -491,7 +494,7 @@ SkinnedMeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
+  m_ProbeAnchor: {fileID: 4644378775912261982}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -988,6 +991,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1012,6 +1016,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5109488566893068619
 GameObject:
   m_ObjectHideFlags: 0
@@ -1649,6 +1654,36 @@ Transform:
   m_Father: {fileID: 220212555069635317}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -5.1434774, y: 0.000013660374, z: -2.5547305e-13}
+--- !u!1 &8612835669018258715
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4644378775912261982}
+  m_Layer: 11
+  m_Name: LightAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4644378775912261982
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8612835669018258715}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1429460697202290622}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8830405093344309012
 GameObject:
   m_ObjectHideFlags: 0
@@ -1844,7 +1879,7 @@ PrefabInstance:
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}

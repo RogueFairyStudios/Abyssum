@@ -15,6 +15,11 @@ namespace DEEP.AI
         BlowfishAI blowfishAI;
         float fuseTime;
 
+        #if UNITY_EDITOR
+            // Only used in the Editor, set to false to hide logs.
+            [SerializeField] private bool showDebug = false;
+        # endif
+
         // Object used to wait in coroutines.
         private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
@@ -25,7 +30,9 @@ namespace DEEP.AI
 
         private void OnEnable()
         {
-            Debug.Log("Start chasing state");
+            #if UNITY_EDITOR
+                if (showDebug) Debug.Log("Start chasing state");
+            # endif
             StartCoroutine(Chase());
         }
 
@@ -48,7 +55,9 @@ namespace DEEP.AI
                 
                 yield return waitForFixed;
 
-                Debug.Log("Angle:" + Quaternion.Angle(transform.rotation, rotate));
+                #if UNITY_EDITOR
+                    if (showDebug) Debug.Log("Angle:" + Quaternion.Angle(transform.rotation, rotate));
+                # endif
 
             } while(Quaternion.Angle(transform.rotation, rotate) > 5f);
 

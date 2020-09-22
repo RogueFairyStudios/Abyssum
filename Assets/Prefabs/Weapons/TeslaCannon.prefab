@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4410003874425923555}
   - component: {fileID: 2507706383895934431}
   - component: {fileID: 180044365811245529}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: BatteryPack
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -55,6 +55,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -79,6 +80,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1303471176357291838
 GameObject:
   m_ObjectHideFlags: 0
@@ -90,7 +92,7 @@ GameObject:
   - component: {fileID: 2615894259142382893}
   - component: {fileID: 6419462659844173595}
   - component: {fileID: 732409074774086626}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -136,6 +138,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -160,6 +163,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1335404441225002881
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,7 +174,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5534263919877553629}
   - component: {fileID: 5561184097205348523}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: line_4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -206,6 +210,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -296,7 +301,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4004016744820267261}
   - component: {fileID: 8190429709082169780}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: line_2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -332,6 +337,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -422,7 +428,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2104660163685335489}
   - component: {fileID: 6856934457345761485}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: line_0_main
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -458,6 +464,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -548,7 +555,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5997345073934618393}
   - component: {fileID: 527746824841798776}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: line_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -584,6 +591,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -673,7 +681,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1764016045348819998}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: renderers
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -709,7 +717,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6679616187407793089}
   - component: {fileID: 2822026891149356533}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: line_3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -745,6 +753,7 @@ LineRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -834,7 +843,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7318535671360887079}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spawn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -865,7 +874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1928681572485157076}
   - component: {fileID: 1114353737401434828}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: audio
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -994,7 +1003,7 @@ GameObject:
   - component: {fileID: 3625250827784887997}
   - component: {fileID: 2971122470867756335}
   - component: {fileID: 942751980130176519}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: fire
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1038,6 +1047,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1062,6 +1072,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &9168991451539551708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1072,7 +1083,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8291346311349099943}
   - component: {fileID: 4652964259414925115}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: TeslaCannon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1117,13 +1128,13 @@ MonoBehaviour:
     m_Bits: 363523
   bulletSpawn: {fileID: 7318535671360887079}
   bulletPrefab: {fileID: 0}
-  delayBetweenShots: 0.2
+  delayBetweenShots: 1
   shotClip: {fileID: 8300000, guid: 06b7db19d11a0c9448875d2b9b679bff, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
   pelletsPerShot: 5
   shotSpreadAngle: 75
-  baseDamage: 8
-  chainDamage: 5
+  baseDamage: 25
+  chainDamage: 20
   firingLayerMask:
     serializedVersion: 2
     m_Bits: 361475
@@ -1134,3 +1145,4 @@ MonoBehaviour:
   - {fileID: 2822026891149356533}
   - {fileID: 5561184097205348523}
   visualEffectDuration: 0.15
+  visualEffectOffset: {x: 0, y: 0.5, z: 0}
