@@ -307,6 +307,8 @@ MonoBehaviour:
   actualPoint: 0
   reversePatrol: 0
   angleReference: {fileID: 4110935053442066410}
+  reloadTime: 2
+  clipSize: 30
 --- !u!114 &1429460697202290621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -483,6 +485,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -988,6 +991,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1012,6 +1016,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &5109488566893068619
 GameObject:
   m_ObjectHideFlags: 0
