@@ -738,7 +738,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efa7093762a1b0647b1113b1f720045e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
+  health: 200
   maxHealth: 200
   maxOverloadedHealth: 400
   bloodEffect: {fileID: 4981454918395137139, guid: d9e807bb920001244a22e202bb87cf42,
