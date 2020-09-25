@@ -10,9 +10,9 @@ namespace DEEP.UI {
 
         string menuScene;
 
-        [SerializeField] string defaultCutsceneScene;
+        [SerializeField] string defaultCutsceneScene = "Military";
 
-        [SerializeField] GameObject background;
+        [SerializeField] GameObject background = null;
 
         void Start() {
 

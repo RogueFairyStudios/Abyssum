@@ -230,7 +230,6 @@ GameObject:
   - component: {fileID: 1429460697202290618}
   - component: {fileID: 1429460697202290619}
   - component: {fileID: 1429460697202290621}
-  - component: {fileID: 2092228392855069787}
   - component: {fileID: 453777076096935818}
   m_Layer: 11
   m_Name: FishHead_pistol
@@ -306,6 +305,8 @@ MonoBehaviour:
   actualPoint: 0
   reversePatrol: 0
   angleReference: {fileID: 4110935053442066410}
+  reloadTime: 2
+  clipSize: 30
 --- !u!114 &1429460697202290621
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,21 +347,6 @@ MonoBehaviour:
   growl: []
   minGrowlInterval: 1.5
   maxGrowlInterval: 2.5
---- !u!114 &2092228392855069787
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1429460697202290612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aa6fa855766c1129dac12fa016802413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomMaterials:
-  - {fileID: 2100000, guid: 429268989330ba24588528875d2f3594, type: 2}
-  - {fileID: 2100000, guid: e9fd587ba01f84347853a42943e4e203, type: 2}
 --- !u!54 &453777076096935818
 Rigidbody:
   m_ObjectHideFlags: 0

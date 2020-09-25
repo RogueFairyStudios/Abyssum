@@ -8,8 +8,19 @@ namespace DEEP.Entities.Player
     // Class that controls the Player.
     public class PlayerEntity : EntityBase
     {
-        
-        [Header("Armor")] // ==============================================================================
+    
+        protected PlayerController ownerPlayer;
+
+        public PlayerController Owner {
+            get {
+                return ownerPlayer;
+            }
+            set {
+                ownerPlayer = value;
+            }
+        }
+
+        [Header("Armor")] // ==================================================================================================
 
         [Tooltip("Players's current armor.")]
         [SerializeField] protected int armor = 0;
@@ -62,7 +73,7 @@ namespace DEEP.Entities.Player
             // Handles any changes that have to be made when modifying health.
             OnChangeHealth();
 
-            PlayerController.Instance.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
+            ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
 
         }
 
@@ -70,7 +81,7 @@ namespace DEEP.Entities.Player
 
             Debug.Log("Player died!");
             
-            PlayerController.Instance.Die();
+            ownerPlayer.Die();
 
         }
 
@@ -82,7 +93,7 @@ namespace DEEP.Entities.Player
 
             // If the entity was healed plays the player feedback sound.
             if(healed && feedbackAudio != null)
-                PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             return healed;
 
@@ -102,7 +113,7 @@ namespace DEEP.Entities.Player
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the armor counter on the HUD.
             OnChangeArmor();
@@ -111,19 +122,19 @@ namespace DEEP.Entities.Player
 
         }
 
-        private void OnChangeArmor() { PlayerController.Instance.HUD.armor.SetValue(armor, maxArmor); }
+        private void OnChangeArmor() { ownerPlayer.HUD.armor.SetValue(armor, maxArmor); }
 
         protected override void OnChangeHealth() {
 
-            PlayerController.Instance.HUD.health.SetValue(health, maxHealth);
+            ownerPlayer.HUD.health.SetValue(health, maxHealth);
 
             base.OnChangeHealth();
 
         }
 
-        public override void SetSlow() { PlayerController.Instance.movementation.SetSlow(); }
+        public override void SetSlow() { ownerPlayer.Movementation.SetSlow(); }
 
-        public override void SetBaseSpeed() { PlayerController.Instance.movementation.SetBaseSpeed(); }
+        public override void SetBaseSpeed() { ownerPlayer.Movementation.SetBaseSpeed(); }
 
     }
 

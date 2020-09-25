@@ -65,7 +65,7 @@ namespace DEEP.DoorsAndKeycards {
 
 		}
 
-		public void TryOpenDoor() {
+		public void TryOpenDoor(KeyInventory inventory) {
 
 			if (lockState)
 				return;
@@ -76,7 +76,7 @@ namespace DEEP.DoorsAndKeycards {
 			if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Opening") || _animator.GetCurrentAnimatorStateInfo(0).IsName("Closing"))
 				return;
 			
-			if (!needKey || PlayerController.Instance.keyInventory.HasKey(doorColor) && !isOpen) {
+			if (!needKey || inventory.HasKey(doorColor) && !isOpen) {
 				OpenDoor();
 			} else if(_source != null && !_source.isPlaying) {
 				_source.clip = lockedClip;

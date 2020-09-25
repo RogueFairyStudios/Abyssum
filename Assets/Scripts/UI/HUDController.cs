@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ namespace DEEP.UI
 
     public class HUDController : MonoBehaviour {
 
-        [System.Serializable] // Health ===========================================================================
+        [System.Serializable] // Health =======================================================================================
         public class HealthHUD
         {
 
@@ -53,7 +54,7 @@ namespace DEEP.UI
         }
         public HealthHUD health = null;
 
-        [System.Serializable] // Armor ============================================================================
+        [System.Serializable] // Armor ========================================================================================
         public class ArmorHUD
         {
             [SerializeField] protected TMP_Text counter = null;
@@ -71,7 +72,7 @@ namespace DEEP.UI
         }
         public ArmorHUD armor = null;
 
-        [System.Serializable] // Ammo & Weapons ===================================================================
+        [System.Serializable] // Ammo & Weapons ===============================================================================
         public class AmmoAndWeaponHUD 
         {
 
@@ -133,25 +134,25 @@ namespace DEEP.UI
         }
         public AmmoAndWeaponHUD ammoAndWeapons = null;
 
-        [System.Serializable] // Keycards =========================================================================
+        [System.Serializable] // Keycards =====================================================================================
         public class KeyHUD 
         {
             [SerializeField] protected Image blueKeyIcon = null;
             [SerializeField] protected Image redKeyIcon = null;
             [SerializeField] protected Image yellowKeyIcon = null;
 
-            public void UpdateValues() {
+            public void UpdateValues(KeyInventory inventory) {
 
-                blueKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Blue);
-                redKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Red);
-                yellowKeyIcon.enabled = PlayerController.Instance.keyInventory.HasKey(KeysColors.Yellow);
+                blueKeyIcon.enabled     =   inventory.HasKey(KeysColors.Blue);
+                redKeyIcon.enabled      =   inventory.HasKey(KeysColors.Red);
+                yellowKeyIcon.enabled   =   inventory.HasKey(KeysColors.Yellow);
 
             }
 
         }
         public KeyHUD keycards = null;
 
-        [System.Serializable] // Log ==============================================================================
+        [System.Serializable] // Log ==========================================================================================
         public class LogHUD
         {
             [SerializeField] protected TMP_Text text = null;
@@ -169,7 +170,7 @@ namespace DEEP.UI
         }
         public LogHUD Log = null;
 
-        [System.Serializable] // Speedrun =========================================================================
+        [System.Serializable] // Speedrun =====================================================================================
         public class SpeedrunHUD
         {
 
@@ -203,7 +204,7 @@ namespace DEEP.UI
         }
         public SpeedrunHUD speedrun = null;
 
-        [System.Serializable] // Statistics =======================================================================
+        [System.Serializable] // Statistics ===================================================================================
         public class StatisticsHUD
         {
 
@@ -329,7 +330,7 @@ namespace DEEP.UI
         }
         public StatisticsHUD statistics = null;
 
-        // Feedback ===============================================================================================
+        // Feedback ===========================================================================================================
 
         // Types of feedback, used to choose screen feedback color.
         public enum FeedbackType { Damage, Toxic, Mud }
@@ -435,9 +436,9 @@ namespace DEEP.UI
                 playerFeedback.screenFeedback.enabled = false;
         }
 
-        // ========================================================================================================
+        // ====================================================================================================================
 
-        public void Awake() {
+        public void Start() {
 
             Debug.Log("Initializing HUDController...");
 

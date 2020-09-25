@@ -14,7 +14,7 @@ namespace DEEP.AI
     public class EnemyAISystem : BaseEntityAI
     {
 
-        private Vector3 originalPosition; // Stores agent original position.
+        protected Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;
 
@@ -41,6 +41,12 @@ namespace DEEP.AI
         [Tooltip("If angle matters (for shooting for example) set from where the angle will be calculated.")]
         [SerializeField] protected Transform angleReference;
 
+        [Tooltip("Reload system")]
+        [SerializeField] protected float reloadTime = 0.0f;
+        [SerializeField] protected int clipSize = 0; // how many bullets to shot before reload; 0 if dont want to reload
+        protected int bullets = 0;
+        protected float reloadingProcess = 0.0f; 
+
         void Start()
         {
 
@@ -65,6 +71,8 @@ namespace DEEP.AI
             enemySM = new StateMachine<EnemyAISystem>(this);
             enemySM.ChangeState(EnemyWaitingState.Instance);//first state
 
+            //create bullets
+            bullets = clipSize;
         }
 
         void Update()
@@ -113,13 +121,13 @@ namespace DEEP.AI
         {
 
             // Checks if there's a target to pursue.
-            if(PlayerController.Instance == null)
+            if(ownerEnemy.TargetPlayer == null)
                 return;
 
             // Gets the enemy destination.
             Vector3 destination; 
             if (HasTargetSight())
-                destination = PlayerController.Instance.transform.position;
+                destination = ownerEnemy.TargetPlayer.transform.position;
             else
                 destination = lastTargetLocation;
 
@@ -146,6 +154,8 @@ namespace DEEP.AI
 
             if (weapon != null)
             {
+                if(!canShoot())
+                    return;
                 bool attacked;
 
                 // Tries to attack and plays the animation on success.
@@ -204,12 +214,12 @@ namespace DEEP.AI
         public bool InAttackRange()
         {
 
-            // CHecks if there's a target to attack.
-            if(PlayerController.Instance == null)
+            // Checks if there's a target to attack.
+            if(ownerEnemy.TargetPlayer == null)
                 return false;
 
             // Checks for sight in addition to the attack range.
-            return (HasTargetSight() && (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= attackRange));
+            return (HasTargetSight() && (Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position) <= attackRange));
 
         }
 
@@ -257,17 +267,42 @@ namespace DEEP.AI
             removePatrolPoint(0);
         }
 
+        public virtual bool canShoot(){
+            
+            if(clipSize > 0 && bullets > 0){ //can reload and have bullets
+                bullets--;
+                return true;
+            }
+            else if(clipSize > 0 && bullets <= 0){ //can reload and haven't bullets; start reloading
+                
+                //reloading
+                reloadingProcess += Time.deltaTime;
+                if(reloadingProcess >= reloadTime){
+                    
+                    bullets = clipSize;
+                    reloadingProcess = 0.0f;
+                    
+                    return true;
+                }
+
+                return false;
+            }
+            else{ // can't reload; skip and shoot
+                return true;
+            }
+        }
+
 #if UNITY_EDITOR
 
         void OnDrawGizmos()
         {
 
-            if (PlayerController.Instance == null)
+            if (ownerEnemy.TargetPlayer == null)
                 return;
 
-            float distance = Vector3.Distance(transform.position, PlayerController.Instance.transform.position);
+            float distance = Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position);
 
-            if (HasSight(PlayerController.Instance.transform.position))
+            if (HasSight(ownerEnemy.TargetPlayer.transform.position))
             {
 
                 Gizmos.color = Color.blue;

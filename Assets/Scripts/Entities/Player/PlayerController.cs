@@ -12,76 +12,103 @@ namespace DEEP.Entities.Player
 {
 
     // Class that controls the Player.
+    [RequireComponent(typeof(PlayerEntity))]
     [RequireComponent(typeof(PlayerMovementation))]
     [RequireComponent(typeof(PlayerWeaponController))]
-    [RequireComponent(typeof(KeyInventory))]
-    [RequireComponent(typeof(PlayerEntity))]
     public class PlayerController : MonoBehaviour
     {
 
-        // Singleton for the player controller.
-        public static PlayerController Instance;
+        // Control variables ==================================================================================================
 
         // If the player is not dead or the level has not ended yet, them the game is playing.
         protected bool isPlaying;
 
-        [Header("Pause")] // ==============================================================================
+        [Header("Pause")] // ==================================================================================================
 
         protected bool isPaused;
 
         [Tooltip("GameObject that contains the pause menu.")]
         [SerializeField] protected GameObject pauseMenu = null;
 
-        [Header("Death")] // ==============================================================================
+        [Header("Death")] // ==================================================================================================
         [Tooltip("The screen overlay for when the player dies.")]
         [SerializeField] protected GameObject deathScreen = null;
         [Tooltip("The menu items for when the player dies.")]
         [SerializeField] protected GameObject deathMenu = null;
 
-        [Header("Level-End")] // ==============================================================================
+        [Header("Level-End")] // ==============================================================================================
         [Tooltip("The screen overlay for when the level ends.")]
         [SerializeField] protected EndScreen endLevelScreen = null;
 
-        [Header("Feedback")] // ===========================================================================
+        [Header("Feedback")] // ===============================================================================================
         [Tooltip("Audio source used to play clips related to feedback to the player.")]
         public AudioSource feedbackAudioSource = null;
 
-        [Header("Components")] // =========================================================================
-        public KeyInventory keyInventory;
-        public PlayerMovementation movementation;
-        public PlayerWeaponController weaponController;
-        public HUDController HUD;
-        public PlayerEntity entity;
+        // PlayerEntity reference =============================================================================================
+        private PlayerEntity entity;
+        // Returns the reference for the PlayerEntity from this PlayerController, 
+        // tries getting it if it's not yet available.
+        public PlayerEntity rEntity {
+            get { return entity; } 
+        }
+
+        // PlayerMovementation reference ======================================================================================
+        private PlayerMovementation movementation;
+        // Returns the reference for the PlayerMovementation from this PlayerController, 
+        // tries getting it if it's not yet available.
+        public PlayerMovementation Movementation {
+            get { return movementation; } 
+        }
+
+        // PlayerWeaponsController reference ==================================================================================
+        private PlayerWeaponController weapons;
+        // Returns the reference for the PlayerWeaponController from this PlayerController, 
+        // tries getting it if it's not yet available.
+        public PlayerWeaponController Weapons {
+            get { return weapons; } 
+        }
+
+        // HUDController reference ============================================================================================
+        private HUDController hud;
+        // Returns the reference for the PlayerWeaponController from this PlayerController, 
+        // tries getting it if it's not yet available.
+        public HUDController HUD {
+            get { return hud; } 
+        }
+
+        // KeyInventory instance ==============================================================================================
+        private KeyInventory keyInventory;
+        // Returns the KeyInventory from this PlayerController, 
+        // creates a new one if it doesn't exists yet.
+        public KeyInventory Keys {
+            get { return keyInventory; } 
+        }
+
+        // ====================================================================================================================
 
         public void Awake()
         {
             
             Debug.Log("Initializing Player...");
-
-            // Ensures there's only one instance of this script.
-            if (Instance != null) {
-                Debug.LogError("Player: more than one instance of singleton found!");
-                Destroy(Instance.gameObject);
-                return;
-            }
-            Instance = this;
             
+            // Gets/creates the necessary components and initializes them when needed.
+            entity = GetComponent<PlayerEntity>();
+            entity.Owner = this;
+
+            movementation = GetComponent<PlayerMovementation>();
+            movementation.Owner = this;
+
+            weapons = GetComponent<PlayerWeaponController>();
+            weapons.Owner = this;
+
+            hud = GetComponentInChildren<HUDController>();
+
+            keyInventory = new KeyInventory(this);
+
+
             // The Player always starts the game in regular play mode.
             isPlaying = true;
             isPaused = false;
-
-            // Creates the KeyInventory instance.
-            keyInventory = new KeyInventory();
-            
-            // Get components =================================================================================================
-
-            // Tries getting the necessary components if they are not avaliable.
-            if(movementation == null) movementation = GetComponent<PlayerMovementation>();
-            if(weaponController == null) weaponController = GetComponent<PlayerWeaponController>();
-            if(HUD == null) HUD = GetComponentInChildren<HUDController>();
-            if(entity == null) entity = GetComponent<PlayerEntity>();
-
-            // ================================================================================================================
             
             // Loads the player inventory if it wasn't reset.
             if(!StageManager.Instance.GetResetInventory()) {
@@ -90,7 +117,7 @@ namespace DEEP.Entities.Player
                 // TODO: Load
 
                 // If no save is avaliable gives the Player the first weapon.
-                weaponController.GiveWeapon(0, 0, null);
+                //weaponController.GiveWeapon(0, 0, null);
 
             }
 
@@ -132,8 +159,8 @@ namespace DEEP.Entities.Player
             Cursor.visible = isPaused;
 
             // Enables or disables player components.
-            movementation.enabled = (!isPaused);
-            weaponController.enabled = (!isPaused);
+            Movementation.enabled = (!isPaused);
+            Weapons.enabled = (!isPaused);
 
             // Set the cursor LockMode and time to the correct value.
             if (!isPaused) {
@@ -154,9 +181,9 @@ namespace DEEP.Entities.Player
             // The game has ended.
             isPlaying = false;
 
-            // Disables player control.
-            movementation.enabled = false;
-            weaponController.enabled = false;
+            // Disables player components.
+            Movementation.enabled = false;
+            Weapons.enabled = false;
 
             // Enables the death menu overlay.
             deathScreen.SetActive(true);
@@ -201,7 +228,6 @@ namespace DEEP.Entities.Player
 
             // Disables player control.
             movementation.enabled = false;
-            weaponController.enabled = false;
 
             // Displays the end level screen
             endLevelScreen.ShowScreen();
