@@ -9,6 +9,8 @@ namespace DEEP.Entities
     public abstract class EnemyBase : EntityBase
     {
 
+        [Header("Rendering")]
+
         [Tooltip("Reference to the SkinnedMeshRenderer of this enemy.")]
         [SerializeField] public SkinnedMeshRenderer enemyRenderer;
 
