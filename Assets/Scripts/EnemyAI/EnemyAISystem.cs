@@ -14,7 +14,7 @@ namespace DEEP.AI
     public class EnemyAISystem : BaseEntityAI
     {
 
-        private Vector3 originalPosition; // Stores agent original position.
+        protected Vector3 originalPosition; // Stores agent original position.
 
         public NavMeshAgent agent;
 
@@ -44,8 +44,8 @@ namespace DEEP.AI
         [Tooltip("Reload system")]
         [SerializeField] protected float reloadTime = 0.0f;
         [SerializeField] protected int clipSize = 0; // how many bullets to shot before reload; 0 if dont want to reload
-        private int bullets = 0;
-        private float reloadingProcess = 0.0f; 
+        protected int bullets = 0;
+        protected float reloadingProcess = 0.0f; 
 
         void Start()
         {
@@ -121,13 +121,13 @@ namespace DEEP.AI
         {
 
             // Checks if there's a target to pursue.
-            if(PlayerController.Instance == null)
+            if(ownerEnemy.TargetPlayer == null)
                 return;
 
             // Gets the enemy destination.
             Vector3 destination; 
             if (HasTargetSight())
-                destination = PlayerController.Instance.transform.position;
+                destination = ownerEnemy.TargetPlayer.transform.position;
             else
                 destination = lastTargetLocation;
 
@@ -214,12 +214,12 @@ namespace DEEP.AI
         public bool InAttackRange()
         {
 
-            // CHecks if there's a target to attack.
-            if(PlayerController.Instance == null)
+            // Checks if there's a target to attack.
+            if(ownerEnemy.TargetPlayer == null)
                 return false;
 
             // Checks for sight in addition to the attack range.
-            return (HasTargetSight() && (Vector3.Distance(transform.position, PlayerController.Instance.transform.position) <= attackRange));
+            return (HasTargetSight() && (Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position) <= attackRange));
 
         }
 
@@ -297,12 +297,12 @@ namespace DEEP.AI
         void OnDrawGizmos()
         {
 
-            if (PlayerController.Instance == null)
+            if (ownerEnemy.TargetPlayer == null)
                 return;
 
-            float distance = Vector3.Distance(transform.position, PlayerController.Instance.transform.position);
+            float distance = Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position);
 
-            if (HasSight(PlayerController.Instance.transform.position))
+            if (HasSight(ownerEnemy.TargetPlayer.transform.position))
             {
 
                 Gizmos.color = Color.blue;

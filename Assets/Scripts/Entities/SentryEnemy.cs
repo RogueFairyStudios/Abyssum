@@ -3,7 +3,6 @@
 using UnityEngine;
 
 using DEEP.Pooling;
-using DEEP.Entities.Player;
 
 namespace DEEP.Entities
 {
@@ -34,6 +33,7 @@ namespace DEEP.Entities
         // Object used to wait in coroutines.
         private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
+
         protected override void Start() {
 
             base.Start();
@@ -59,7 +59,7 @@ namespace DEEP.Entities
                 }
 
                 // Makes the attack if the player is in range.
-                if(Vector3.Distance(PlayerController.Instance.transform.position, transform.position) <= sentry.attackRange) {
+                if(Vector3.Distance(TargetPlayer.transform.position, transform.position) <= sentry.attackRange) {
 
                     Attack();
                     delayTimer = 0.0f;

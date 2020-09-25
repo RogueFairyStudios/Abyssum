@@ -1,12 +1,12 @@
 using UnityEngine;
 
 using DEEP.Entities;
-using DEEP.Entities.Player;
 
 namespace DEEP.AI
 {
     public class BlowfishAI : BaseSwimAI
     {
+        
         ChaseSwimState chaseState;
         Blowfish entityScript;
 
@@ -68,12 +68,12 @@ namespace DEEP.AI
 
         void OnDrawGizmos()
         {
-            if (PlayerController.Instance == null)
+            if (ownerEnemy.TargetPlayer == null)
                 return;
 
-            float distance = Vector3.Distance(transform.position, PlayerController.Instance.transform.position);
+            float distance = Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position);
 
-            if (HasSight(PlayerController.Instance.transform.position))
+            if (HasSight(ownerEnemy.TargetPlayer.transform.position))
                 Gizmos.color = Color.blue;
             else
                 Gizmos.color = Color.white;

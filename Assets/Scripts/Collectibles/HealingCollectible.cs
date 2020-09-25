@@ -10,11 +10,11 @@ namespace DEEP.Collectibles
         [SerializeField] private HealType hType = HealType.Regular;
         [SerializeField] private int heal = 50;
 
-        protected override void Collect() {
+        protected override void Collect(GameObject player) {
 
             // Tries healing the player.
-            if(PlayerController.Instance.entity.Heal(heal, hType, collectionSound))    
-                base.Collect();
+            if(player.GetComponent<PlayerEntity>().Heal(heal, hType, collectionSound))    
+                base.Collect(player);
 
         }
 

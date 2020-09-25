@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Playables;
 
 using DEEP.UI;
 using DEEP.Entities;
@@ -12,7 +11,26 @@ namespace DEEP.Stage
     public class StageManager : MonoBehaviour
     {
 
-        public static StageManager Instance;
+        // Singleton for the StageManager =====================================================================================
+        private static StageManager instance;
+        public static StageManager Instance { get { return instance; } }
+
+        // PlayerController reference =========================================================================================
+        private PlayerController controller;
+
+        // Obtains and stores a reference to the PlayerController instance.
+        public PlayerController targetPlayer {
+            get { 
+                if(controller != null)
+                    return controller; 
+                else {
+                    controller = FindObjectOfType<PlayerController>();
+                    return controller;
+                }
+            } 
+        }
+        // ====================================================================================================================
+
 
         [Tooltip("Name of this stage to be used in the UI.")]
         [SerializeField] private string stageName = "no name";
@@ -76,11 +94,11 @@ namespace DEEP.Stage
         private void Awake()
         {
             // Ensures theres only one instance of this script.
-            if (Instance != null) {
+            if (instance != null) {
                 Debug.LogError("StageInfo: more than one instance of singleton found!");
                 Destroy(Instance.gameObject);
             }
-            Instance = this;
+            instance = this;
 
             // Resets time to ensure the game is not paused.
             Time.timeScale = 1;
@@ -155,19 +173,19 @@ namespace DEEP.Stage
         // Counts an enemy kill.
         public void CountKill() { 
             numEnemiesKilled++; 
-            PlayerController.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
+            targetPlayer.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
         }
 
         // Counts a collected item.
         public void CountCollection() { 
             numCollectiblesCollected++; 
-            PlayerController.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            targetPlayer.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
         }
 
         // Counts a secret found.
         public void CountSecretFound() { 
             numSecretsFound++; 
-            PlayerController.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
+            targetPlayer.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.

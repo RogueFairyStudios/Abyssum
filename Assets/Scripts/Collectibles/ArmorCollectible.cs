@@ -9,11 +9,11 @@ namespace DEEP.Collectibles
 
         [SerializeField] private int amount = 50;
 
-        protected override void Collect() {
+        protected override void Collect(GameObject player) {
 
             // Tries giving armor to the player.
-            if(PlayerController.Instance.entity.GiveArmor(amount, collectionSound))      
-                base.Collect();
+            if(player.GetComponent<PlayerEntity>().GiveArmor(amount, collectionSound))      
+                base.Collect(player);
 
         }
 

@@ -24,17 +24,18 @@ namespace DEEP.Collectibles
         {
 
             // Checks for the Player.
-            if (other.tag == "Player")               
-                Collect(); // Calls the collection function.
+            if (other.tag == "Player") {       
+                Collect(other.gameObject); // Calls the collection function.
+            }
 
         }
 
         // Overwrite to do what you want with your collectible and them call base to log and destroy the object.
-        protected virtual void Collect() {
+        protected virtual void Collect(GameObject player) {
 
             // Logs that this item has been collected.
             if(logText.Length > 0)
-                PlayerController.Instance.HUD.Log.Message(logText, logIcon, logColor);
+                player.GetComponent<PlayerController>().HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this item as collected.
             StageManager.Instance.CountCollection();

@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
 
+using DEEP.Entities.Player;
+
 namespace DEEP.Entities{
 
     public class StaticEnemy : EnemyBase
     {
+
         [Space(5)]
         [Header("Audio")]
         [Tooltip("Audio source for the audio clips.")]

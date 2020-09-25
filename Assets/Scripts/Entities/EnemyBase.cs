@@ -2,12 +2,30 @@ using UnityEngine;
 
 using DEEP.Stage;
 
+using DEEP.Entities.Player;
+
 namespace DEEP.Entities
 {
 
     // Base script for an enemy entity (used to identify them).
     public abstract class EnemyBase : EntityBase
     {
+
+        // PlayerController reference =========================================================================================
+        private PlayerController controller;
+
+        // Obtains and stores a reference to the PlayerController instance.
+        public PlayerController TargetPlayer {
+            get { 
+                if(controller != null)
+                    return controller; 
+                else {
+                    controller = FindObjectOfType<PlayerController>();
+                    return controller;
+                }
+            } 
+        }
+        // ====================================================================================================================
 
         [Header("Rendering")]
 
