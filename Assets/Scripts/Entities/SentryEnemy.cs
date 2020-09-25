@@ -2,6 +2,7 @@
 
 using UnityEngine;
 
+using DEEP.Pooling;
 using DEEP.Entities.Player;
 
 namespace DEEP.Entities
@@ -84,7 +85,7 @@ namespace DEEP.Entities
             _audio.Play();
 
             // Spawns the attack.
-            Instantiate(sentry.attackObject, sentry.attackSpawn.position, sentry.attackSpawn.rotation);
+            PoolingSystem.Instance.PoolObject(sentry.attackObject, sentry.attackSpawn.position, sentry.attackSpawn.rotation);
 
         }
 

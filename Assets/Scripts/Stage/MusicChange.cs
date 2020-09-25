@@ -32,7 +32,8 @@ namespace DEEP.Stage
                 }
                 else
                 {
-                    introSource.Stop();
+                    if(introSource != null)
+                        introSource.Stop();
                     loopSource.clip = songLoop;
                     loopSource.Play();
                 }

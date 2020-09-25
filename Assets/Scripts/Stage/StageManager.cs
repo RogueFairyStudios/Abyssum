@@ -64,12 +64,12 @@ namespace DEEP.Stage
         private bool started;
 
         [System.Serializable]
-        private struct Cutscene 
+        private class Cutscene 
         {
             [Tooltip("Objects that should be enabled only during the cutscene.")]
-            public GameObject[] cutsceneObjects;
+            public GameObject[] cutsceneObjects = new GameObject[0];
             [Tooltip("Objects that should be enabled only after the cutscene.")]
-            public GameObject[] inGameObjects;
+            public GameObject[] inGameObjects = new GameObject[0];
         }
         [SerializeField] private Cutscene cutscene = new Cutscene();
 
