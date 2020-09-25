@@ -41,6 +41,12 @@ namespace DEEP.AI
         [Tooltip("If angle matters (for shooting for example) set from where the angle will be calculated.")]
         [SerializeField] protected Transform angleReference;
 
+        [Tooltip("Reload system")]
+        [SerializeField] protected float reloadTime = 0.0f;
+        [SerializeField] protected int clipSize = 0; // how many bullets to shot before reload; 0 if dont want to reload
+        private int bullets = 0;
+        private float reloadingProcess = 0.0f; 
+
         void Start()
         {
 
@@ -65,6 +71,8 @@ namespace DEEP.AI
             enemySM = new StateMachine<EnemyAISystem>(this);
             enemySM.ChangeState(EnemyWaitingState.Instance);//first state
 
+            //create bullets
+            bullets = clipSize;
         }
 
         void Update()
@@ -146,6 +154,8 @@ namespace DEEP.AI
 
             if (weapon != null)
             {
+                if(!canShoot())
+                    return;
                 bool attacked;
 
                 // Tries to attack and plays the animation on success.
@@ -255,6 +265,31 @@ namespace DEEP.AI
         }
         public void removePatrolPoint(){
             removePatrolPoint(0);
+        }
+
+        public virtual bool canShoot(){
+            
+            if(clipSize > 0 && bullets > 0){ //can reload and have bullets
+                bullets--;
+                return true;
+            }
+            else if(clipSize > 0 && bullets <= 0){ //can reload and haven't bullets; start reloading
+                
+                //reloading
+                reloadingProcess += Time.deltaTime;
+                if(reloadingProcess >= reloadTime){
+                    
+                    bullets = clipSize;
+                    reloadingProcess = 0.0f;
+                    
+                    return true;
+                }
+
+                return false;
+            }
+            else{ // can't reload; skip and shoot
+                return true;
+            }
         }
 
 #if UNITY_EDITOR
