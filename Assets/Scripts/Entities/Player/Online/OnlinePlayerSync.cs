@@ -31,7 +31,7 @@ namespace DEEP.Online.Entities.Player
         [TargetRpc]
         public void SyncWeapon(int index, bool available) {
             Debug.Log("OnlinePlayerSync: Syncing armor [index: " + index + ", available: " + available + "]");
-            (target.Weapons as OnlinePlayerWeaponController).GiveWeaponClient(index, 0, null);
+            (target.Weapons as OnlinePlayerWeaponController).GiveWeaponClient(index);
         }
 
         [Command]
@@ -53,6 +53,12 @@ namespace DEEP.Online.Entities.Player
 
             (target.Weapons as OnlinePlayerWeaponController).ClientSwitchWeapons(weaponNum);
 
+        }
+
+        [TargetRpc]
+        public void SyncAmmo(int amount, string type) {
+            Debug.Log("OnlinePlayerSync: Syncing ammo [new: " + amount + ", tupe: " + type + "]");
+            (target.Weapons as OnlinePlayerWeaponController).ClientSyncAmmo(amount, type);
         }
 
     }

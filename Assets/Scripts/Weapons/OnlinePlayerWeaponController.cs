@@ -12,12 +12,11 @@ namespace DEEP.Online.Weapons {
 
         protected override void Start() {
 
-            // TODO: make work in multiplayer.
-
             base.Start();
 
+            // Ask server for default weapons.
             if((Owner as OnlinePlayerController).Identity.isLocalPlayer)
-                (Owner as OnlinePlayerController).Sync.CmdGiveDefaultWeapons();
+                (Owner as OnlinePlayerController).Sync.CmdGiveDefaultWeapons(); // !FIX: weapon doesn't appear for some clients until switch.
 
         }
 
@@ -26,8 +25,6 @@ namespace DEEP.Online.Weapons {
             // Ensures the code runs on the correct player.
             if(!(Owner as OnlinePlayerController).Identity.isLocalPlayer)
                 return;
-
-            // TODO: make work in multiplayer.
 
             base.Update();
 
@@ -69,33 +66,6 @@ namespace DEEP.Online.Weapons {
 
         }
 
-        // Returns the index of the current weapon.
-        public override int GetCurrentWeaponIndex() {
-
-            // TODO: make work in multiplayer.
-
-            return base.GetCurrentWeaponIndex();
-
-        }
-
-        // Returns the index of the next enabled weapon (rolls around if no weapon with higher index is enabled).
-        public override int GetNextEnabledWeaponIndex() {
-
-            // TODO: make work in multiplayer.
-
-            return base.GetNextEnabledWeaponIndex();
-
-        }
-
-        // Returns the index of the previous enabled weapon (rolls around if no weapon with lower index is enabled).
-        public override int GetPreviousEnabledWeaponIndex() {
-           
-            // TODO: make work in multiplayer.
-
-            return base.GetPreviousEnabledWeaponIndex();
-
-        }
-
         // Give Weapon ========================================================================================================
 
         // Pick's up a weapon and enables it's use.
@@ -106,28 +76,32 @@ namespace DEEP.Online.Weapons {
                 return false;
 
             // Removes the feedback audio before calling the base function.
-            bool given = base.GiveWeapon(slot, ammo, null);
+            bool givenWeapon = base.GiveWeapon(slot, 0, null);
 
             // Syncs the weapon to all clients.
-            if(given)
+            if(givenWeapon)
                 (Owner as OnlinePlayerController).Sync.SyncWeapon(slot, true);
+
+            // !FIX: Ammo not being given.
+
+            // Gives the weapon ammo to the player.
+            bool givenAmmo = GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.name, null);
 
             // Plays the feedback audio.
             // TODO: Play feedback audio for correct player.
 
-            return given;
+            return givenWeapon || givenAmmo;
 
         }
 
-        public virtual bool GiveWeaponClient(int slot, int ammo, AudioClip feedbackAudio) {
+        public virtual bool GiveWeaponClient(int slot) {
             
             // Ignores on server because the weapon has already being received.
             if((Owner as OnlinePlayerController).Identity.isServer)
                 return false;
 
-
             // Gives weapon to the client.
-            base.GiveWeapon(slot, 0, feedbackAudio);
+            base.GiveWeapon(slot, 0, null);
 
             return true;
 
@@ -138,9 +112,33 @@ namespace DEEP.Online.Weapons {
         // Gives a certain type of ammo to the player.
         public override bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
 
-            // TODO: make work in multiplayer.
+            // Ammo is handled by the server.
+            if(!(Owner as OnlinePlayerController).Identity.isServer)
+                return false;
 
-            return base.GiveAmmo(amount, type, feedbackAudio);
+            // Removes the feedback audio before calling the base function.
+            bool given = base.GiveAmmo(amount, type, null);
+
+            // Syncs ammo to the client if it's not the host.
+            if(given && !(Owner as OnlinePlayerController).Identity.isLocalPlayer) {
+                (Owner as OnlinePlayerController).Sync.SyncAmmo(amount, type);
+            }
+
+            // Plays the feedback audio.
+            // TODO: Play feedback audio for correct player.
+
+            return given;
+
+        }
+
+        public virtual bool ClientSyncAmmo(int amount, string type) {
+
+            // Ignores on server because the ammo has already being received.
+            if((Owner as OnlinePlayerController).Identity.isServer)
+                return false;
+
+            // Gives the ammo to the client.
+            return base.GiveAmmo(amount, type, null);
 
         }
 
