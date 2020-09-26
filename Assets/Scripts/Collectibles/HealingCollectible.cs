@@ -7,14 +7,17 @@ namespace DEEP.Collectibles
 {
     public class HealingCollectible : CollectibleBase
     {
+
+        [Tooltip("Type of the heal: Regular is limited by EntityBase.maxHealth, meanwhile Overload is limited by EntityBase.maxOverloadedHealth.")]
         [SerializeField] private HealType hType = HealType.Regular;
+
+        [Tooltip("Health to be given.")]
         [SerializeField] private int heal = 50;
 
-        protected override void Collect(GameObject player) {
+        public override bool Collect(GameObject player) {
 
             // Tries healing the player.
-            if(player.GetComponent<PlayerEntity>().Heal(heal, hType, collectionSound))    
-                base.Collect(player);
+            return player.GetComponent<PlayerEntity>().Heal(heal, hType, collectionSound);
 
         }
 

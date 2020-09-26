@@ -14,11 +14,10 @@ namespace DEEP.Collectibles
         [Tooltip("Ammo to be given.")]
         [SerializeField] private int ammoAmount = 5;
 
-        protected override void Collect(GameObject player) {
+        public override bool Collect(GameObject player) {
 
             // Tries giving the weapon to the player.
-            if(player.GetComponent<PlayerWeaponController>().GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound))
-                base.Collect(player);
+            return player.GetComponent<PlayerWeaponController>().GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
             
         }
         

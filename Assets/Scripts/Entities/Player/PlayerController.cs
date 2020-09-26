@@ -86,7 +86,7 @@ namespace DEEP.Entities.Player
 
         // ====================================================================================================================
 
-        public void Awake()
+        protected virtual void Awake()
         {
             
             Debug.Log("Initializing Player...");
@@ -111,7 +111,7 @@ namespace DEEP.Entities.Player
             isPaused = false;
             
             // Loads the player inventory if it wasn't reset.
-            if(!StageManager.Instance.GetResetInventory()) {
+            if(StageManager.Instance != null && !StageManager.Instance.GetResetInventory()) {
 
                 // Loads the inventory for a save if there is one.
                 // TODO: Load
@@ -133,7 +133,7 @@ namespace DEEP.Entities.Player
             
         }
 
-        void Update() {
+        protected virtual void Update() {
 
             // Pauses and un-pauses the game.
             if (isPlaying) {

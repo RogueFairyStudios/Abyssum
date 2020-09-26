@@ -7,13 +7,13 @@ namespace DEEP.Collectibles
     public class ArmorCollectible : CollectibleBase
     {
 
+        [Tooltip("Armor to be given.")]
         [SerializeField] private int amount = 50;
 
-        protected override void Collect(GameObject player) {
+        public override bool Collect(GameObject player) {
 
             // Tries giving armor to the player.
-            if(player.GetComponent<PlayerEntity>().GiveArmor(amount, collectionSound))      
-                base.Collect(player);
+            return player.GetComponent<PlayerEntity>().GiveArmor(amount, collectionSound);     
 
         }
 

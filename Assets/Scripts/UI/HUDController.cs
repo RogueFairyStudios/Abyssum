@@ -161,7 +161,7 @@ namespace DEEP.UI
             public void Message(string message, Sprite icon, Color color) {
 
                 text.color = color;
-                text.text = StageManager.Instance.GetDurationString() + ": " + message;
+                text.text = (StageManager.Instance != null) ? StageManager.Instance.GetDurationString() + ": " + message : "";
 
                 this.icon.color = color;
                 this.icon.sprite = icon;
@@ -452,10 +452,12 @@ namespace DEEP.UI
 
             // Initializes the speedrun HUD
             StageManager stage = StageManager.Instance; 
-            speedrun.SetKillCount(stage.GetKillCount(), stage.GetTotalEnemies());
-            speedrun.SetItemCount(stage.GetCollectibleCount(), stage.GetTotalCollectibles());
+            if(stage != null) {
+                speedrun.SetKillCount(stage.GetKillCount(), stage.GetTotalEnemies());
+                speedrun.SetItemCount(stage.GetCollectibleCount(), stage.GetTotalCollectibles());
+                speedrun.SetSecretCount(stage.GetSecretCount(), stage.GetTotalSecrets());
+            }
 
-            speedrun.SetSecretCount(stage.GetSecretCount(), stage.GetTotalSecrets());
             // Gets initial statistics HUD value.
             if(!PlayerPrefs.HasKey("StatisticsHUD"))
                 PlayerPrefs.SetInt("StatisticsHUD", 0);
@@ -466,7 +468,8 @@ namespace DEEP.UI
         void Update() {
 
             // Constantly updates the speedrun clock.
-            speedrun.SetStageTime(StageManager.Instance.GetDurationString());
+            if(StageManager.Instance != null)
+                speedrun.SetStageTime(StageManager.Instance.GetDurationString());
 
             // Constantly updates the statistics.
             statistics.UpdateStats();

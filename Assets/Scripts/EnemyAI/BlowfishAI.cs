@@ -68,7 +68,7 @@ namespace DEEP.AI
 
         void OnDrawGizmos()
         {
-            if (ownerEnemy.TargetPlayer == null)
+            if (ownerEnemy == null || ownerEnemy.TargetPlayer == null)
                 return;
 
             float distance = Vector3.Distance(transform.position, ownerEnemy.TargetPlayer.transform.position);

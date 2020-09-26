@@ -21,7 +21,7 @@ namespace DEEP.Weapons {
                 if(controller != null)
                     return controller; 
                 else {
-                    controller = GetComponent<PlayerController>();
+                    controller = FindObjectOfType<PlayerController>();
                     return controller;
                 }
             } 
