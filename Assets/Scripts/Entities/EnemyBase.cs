@@ -64,19 +64,25 @@ namespace DEEP.Entities
 
         public override void Damage(int amount, DamageType type){
 
+            // Saves the old value.
+            int prevHealth = CurrentHealth();
+
             base.Damage(amount,type);
-            OnChangeHealth();
+            OnChangeHealth(prevHealth, CurrentHealth());
 
         }
 
         // Called when health changes.
-        protected override void OnChangeHealth() { 
+        protected override void OnChangeHealth(int oldValue, int newValue) { 
             
+            // Saves the old value.
+            int prevHealth = CurrentHealth();
+
             // Applies the damage effect to the material if avaliable.
             if(enemyRenderer.material.HasProperty("_Damage"))
                 enemyRenderer.material.SetFloat("_Damage", Mathf.Clamp(1 - ((float)health / (float)maxHealth), 0.0f, 1.0f));
 
-            base.OnChangeHealth();
+            base.OnChangeHealth(prevHealth, CurrentHealth());
 
         }
 

@@ -1289,9 +1289,9 @@ GameObject:
   - component: {fileID: 784329731769305212}
   - component: {fileID: 784329731769305213}
   - component: {fileID: 6820551432756247649}
+  - component: {fileID: 784329731769305154}
   - component: {fileID: 4047820183532755202}
   - component: {fileID: 3455191415496438039}
-  - component: {fileID: 784329731769305154}
   m_Layer: 9
   m_Name: Player
   m_TagString: Player
@@ -1366,10 +1366,28 @@ MonoBehaviour:
   deathMenu: {fileID: 6183051250509740394}
   endLevelScreen: {fileID: 8986970998938023453}
   feedbackAudioSource: {fileID: 2214829340411246055}
-  movementation: {fileID: 4047820183532755202}
-  weaponController: {fileID: 3455191415496438039}
-  HUD: {fileID: 7552716056061918607}
-  entity: {fileID: 784329731769305154}
+--- !u!114 &784329731769305154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 784329731769305155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e2183a187a455b44990025b537a6f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 0
+  maxHealth: 100
+  maxOverloadedHealth: 200
+  bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
+    type: 3}
+  deathPrefab: {fileID: 0}
+  conductorBox: {fileID: 0}
+  armor: 0
+  maxArmor: 100
+  minArmorAbsorption: 0.3
 --- !u!114 &4047820183532755202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1426,28 +1444,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a2aad329e153774438f96b1c14262589, type: 2}
   - {fileID: 11400000, guid: 01ff66f3d428bd62abbdcfbce117c172, type: 2}
   - {fileID: 11400000, guid: a221bb79596ab10f8b5f44e192166d02, type: 2}
---- !u!114 &784329731769305154
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 784329731769305155}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e2183a187a455b44990025b537a6f66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 100
-  maxOverloadedHealth: 200
-  bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
-    type: 3}
-  deathPrefab: {fileID: 0}
-  conductorBox: {fileID: 0}
-  armor: 0
-  maxArmor: 100
-  minArmorAbsorption: 0.3
 --- !u!1 &784329732505918586
 GameObject:
   m_ObjectHideFlags: 0
@@ -4845,9 +4841,9 @@ RectTransform:
   m_Father: {fileID: 8081657021382845544}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 118, y: -48}
   m_SizeDelta: {x: 44, y: 44}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &9106800540973152323
@@ -7997,9 +7993,9 @@ RectTransform:
   m_Father: {fileID: 8081657021382845544}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 22, y: -48}
   m_SizeDelta: {x: 44, y: 44}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &5577711621665478176
@@ -9651,9 +9647,9 @@ RectTransform:
   m_Father: {fileID: 8081657021382845544}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 70, y: -48}
   m_SizeDelta: {x: 44, y: 44}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &4503202389672459109

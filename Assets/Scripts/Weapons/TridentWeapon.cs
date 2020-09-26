@@ -72,7 +72,7 @@ namespace DEEP.Weapons {
         {
 
             // Also uses player health as "ammo" for the weapon.
-            PlayerEntity pEntity = rController.rEntity;
+            PlayerEntity pEntity = rController.Entity;
             if (pEntity.CurrentHealth() > healthTribute)
                 pEntity.Damage(healthTribute, DamageType.IgnoreArmor);
             else // If the player has less health than the tribute amount, fires but leaves it with 1 health.

@@ -48,7 +48,7 @@ namespace DEEP.Entities.Player
         private PlayerEntity entity;
         // Returns the reference for the PlayerEntity from this PlayerController, 
         // tries getting it if it's not yet available.
-        public PlayerEntity rEntity {
+        public PlayerEntity Entity {
             get { return entity; } 
         }
 
@@ -145,7 +145,7 @@ namespace DEEP.Entities.Player
 
 
         // Pauses and un-pauses the game.
-        public void TogglePause() {
+        public virtual void TogglePause() {
 
             // Checks if the player can toggle pause.
             if(!isPlaying)
@@ -162,18 +162,18 @@ namespace DEEP.Entities.Player
             Movementation.enabled = (!isPaused);
             Weapons.enabled = (!isPaused);
 
-            // Set the cursor LockMode and time to the correct value.
-            if (!isPaused) {
-                Cursor.lockState = CursorLockMode.Locked;
-                Time.timeScale = 1;
-            } else {
-                Cursor.lockState = CursorLockMode.None;
-                Time.timeScale = 0;
-                System.GC.Collect(); // Uses the pausing of the game to collect garbage as potential lag will be less noticeable.
-            }
+            // Set the cursor LockMode and timeScale.
+            Cursor.lockState = isPaused ? CursorLockMode.None : CursorLockMode.Locked;
+            SetTimeScale(isPaused ? 0 : 1);
 
+            // Uses the pausing of the game to collect garbage as potential lag will be less noticeable.
+            if(isPaused)
+                System.GC.Collect();
 
         }
+
+        // Sets the timeScale, used by the TogglePause function.
+        protected virtual void SetTimeScale(float scale) {  Time.timeScale = scale; }
 
         // Handles the Player entity's death.
         public void Die() {

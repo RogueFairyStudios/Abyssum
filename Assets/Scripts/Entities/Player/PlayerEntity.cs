@@ -38,42 +38,50 @@ namespace DEEP.Entities.Player
             base.Start();
 
             armor = 0; // Sets the initial armor to the maximum armor.
-            OnChangeArmor();
+            OnChangeArmor(0, 0);
 
         }
 
         public override void Damage(int amount, DamageType type) {
 
+            // Saves the old value.
+            int prevHealth = CurrentHealth();
+
             // Initially all damage is to the health.
-            int healthDamage = amount;
-
-            // Calculates armor damage absorption.
-            if (type != DamageType.IgnoreArmor) {
-
-                // Calculates the percent of damage that should be absorbed by armor.
-                float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
-
-                // Calculates the amount of damage to armor.
-                int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); // Clamps to ensure if armor breaks the remaining damage will go to health.
-
-                // Damages the armor.
-                armor -= armorDamage;
-
-                // Handles any changes that have to be made when modifying armor.
-                OnChangeArmor();
-
-                // Decreases the damage to health by the amount of damage that went to the armor instead.
-                healthDamage -= armorDamage;
-
-            }
+            int healthDamage = amount - DamageArmor(amount, type);
 
             // Decreases the health.
             health -= healthDamage;
 
             // Handles any changes that have to be made when modifying health.
-            OnChangeHealth();
+            OnChangeHealth(prevHealth, CurrentHealth());
 
-            ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
+        }
+
+        // Does damage to the armor, returns the amount of damage remaining.
+        protected virtual int DamageArmor(int amount, DamageType type) {
+
+            // Saves the old value.
+            int prevArmor = CurrentArmor();
+
+            // If damage ignores armor, returns 0.
+            if (type == DamageType.IgnoreArmor)
+                return 0;
+
+            // Calculates the percent of damage that should be absorbed by armor.
+            float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
+
+            // Calculates the amount of damage to armor.
+            // Clamps the result to ensure if armor breaks the remaining damage will go to health.
+            int armorDamage = Mathf.Clamp((int)Math.Round(armorAbsorption * amount), 0, armor); 
+
+            // Damages the armor.
+            armor -= armorDamage;
+
+            // Handles any changes that have to be made when modifying armor.
+            OnChangeArmor(prevArmor, CurrentArmor());
+
+            return armorDamage;
 
         }
 
@@ -99,9 +107,15 @@ namespace DEEP.Entities.Player
 
         }
 
+        // Returns the current armor of the player.
+        public int CurrentArmor() { return armor; }
+
         // Give armor to the player.
         public virtual bool GiveArmor(int amount, AudioClip feedbackAudio) 
         {
+
+            // Saves the old value.
+            int prevArmor = CurrentArmor();
 
             // Checks if armor is not maxed out.
             if(armor >= maxArmor) return false;
@@ -116,19 +130,32 @@ namespace DEEP.Entities.Player
                 ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the armor counter on the HUD.
-            OnChangeArmor();
+            OnChangeArmor(prevArmor, CurrentArmor());
 
             return true;
 
         }
 
-        private void OnChangeArmor() { ownerPlayer.HUD.armor.SetValue(armor, maxArmor); }
+        protected override void OnChangeHealth(int oldValue, int newValue) 
+        {
 
-        protected override void OnChangeHealth() {
+            // Plays the damage screen feedback when health decreases.
+            if(newValue < oldValue)
+                ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
 
             ownerPlayer.HUD.health.SetValue(health, maxHealth);
 
-            base.OnChangeHealth();
+            base.OnChangeHealth(oldValue, newValue);
+
+        }
+
+        protected virtual void OnChangeArmor(int oldValue, int newValue) { 
+
+            // Plays the damage screen feedback when armor decreases.
+            if(newValue < oldValue)
+                ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
+
+            ownerPlayer.HUD.armor.SetValue(armor, maxArmor); 
 
         }
 

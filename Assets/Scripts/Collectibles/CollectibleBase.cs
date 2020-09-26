@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 
 using DEEP.Stage;
 using DEEP.Entities.Player;
@@ -24,64 +23,34 @@ namespace DEEP.Collectibles
         [Tooltip("Color to be used in the log message when collected.")]
         [SerializeField] protected Color logColor = new Color( 0.6f, 0.6f, 0.6f, 0.6f);
 
-        [System.Serializable]
-        public class OnCollectEvent : UnityEvent<GameObject>{}
-
-        // Events to be called when the item is collected.
-        public OnCollectEvent OnCollect;
-
-        protected virtual void Awake()
-        {
-
-            // Adds the default functions to be used when the object is collected in
-            // singleplayer mode.
-            if(!onlineCollectible) {
-                OnCollect.AddListener(LogCollection);
-                OnCollect.AddListener(CountCollection);
-                OnCollect.AddListener(DeleteCollectible);
-            }
-
-        }
-
         protected virtual void OnTriggerEnter(Collider other)
         {
 
-            // If it's not a multiplayer collection, checks for the Player and calls for OnCollect function.
-            if (!onlineCollectible && other.tag == "Player" && OnCollect != null) {
-                if(Collect(other.gameObject)) // Tries to collect the item.
-                    OnCollect.Invoke(other.gameObject); // Calls the collection events if collected.
+            // If it's not a multiplayer item, checks for the Player.
+            if (!onlineCollectible && other.tag == "Player") {
+
+                // Tries to collect the item.
+                if(Collect(other.gameObject)) {
+
+                    // Logs that this item has been collected.
+                    if(logText.Length > 0)
+                        other.GetComponent<PlayerController>().HUD.Log.Message(logText, logIcon, logColor);
+
+                     // Count this item as collected.
+                    if(StageManager.Instance != null)
+                        StageManager.Instance.CountCollection();
+
+                    // Destroys the object if the collectible is used.
+                    Destroy(gameObject);
+
+                }
+
             }
 
         }
 
         // Overwrite to do what you want with your collectible.
         public abstract bool Collect(GameObject collector);
-
-        // Logs the collected object information to the log of the player who collected it. (Singleplayer only)
-        protected void LogCollection(GameObject collector) {
-
-            // Logs that this item has been collected.
-            if(logText.Length > 0)
-                collector.GetComponent<PlayerController>().HUD.Log.Message(logText, logIcon, logColor);
-
-        }
-
-        // Counts the colelction of this item to the colelction percentage on the StageManager. (Singleplayer only)
-        protected void CountCollection(GameObject collector) {
-
-            // Count this item as collected.
-            if(StageManager.Instance != null)
-                StageManager.Instance.CountCollection();
-
-        }
-
-        // Deletes the collectible. (Singleplayer only)
-        protected void DeleteCollectible(GameObject collector) {
-
-            // Destroys the object if the collectible is used.
-            Destroy(gameObject);
-
-        }
 
     }
 }
