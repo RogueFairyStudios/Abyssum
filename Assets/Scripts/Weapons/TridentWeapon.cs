@@ -140,8 +140,15 @@ namespace DEEP.Weapons {
             List<Transform> targets = new List<Transform>();
             for (int i = 0; i < allEntities.Length; i++) {
 
+                // Gets the owner of this weapon to make a check later.
+                PlayerWeaponController ownerWeaponController = FindObjectOfType<PlayerWeaponController>();
+
                 // Checks that the entity exists and is not the player.
-                if(allEntities[i] != null && allEntities[i].GetType() != typeof(PlayerEntity)) {
+                if(allEntities[i] != null) {
+
+                    // Ensures the entity is not the Player that fired the trident.
+                    if(ownerWeaponController.Owner.Entity == allEntities[i])
+                        continue;
 
                     // Checks that the entity is visible.
                     if(!Physics.Linecast(bulletSpawn.position, allEntities[i].transform.position, burstVisibilityMask)) {

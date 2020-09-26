@@ -22,19 +22,28 @@ namespace DEEP.Online.Entities.Player
         protected OnlinePlayerSync sync;
         public OnlinePlayerSync Sync { get { return sync; } }
 
+        protected SkinnedMeshRenderer selfRenderer;
+
         protected void Start() {
 
             identity = GetComponent<NetworkIdentity>();
             sync = GetComponent<OnlinePlayerSync>();
+            selfRenderer = GetComponentInChildren<SkinnedMeshRenderer>();
 
             if(!identity.isLocalPlayer) {
 
                 Movementation.enabled = false;
-                Weapons.enabled = false;
                 HUD.gameObject.SetActive(false);
 
                 Camera cam = GetComponentInChildren<Camera>();
-                cam.gameObject.SetActive(false);
+                cam.enabled = false;
+
+                AudioListener listen = GetComponentInChildren<AudioListener>();
+                listen.enabled = false;
+
+            } else {
+
+                selfRenderer.enabled = false;
 
             }
 
