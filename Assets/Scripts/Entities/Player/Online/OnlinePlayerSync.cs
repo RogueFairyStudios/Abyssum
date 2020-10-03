@@ -44,6 +44,11 @@ namespace DEEP.Online.Entities.Player
             (target.Weapons as OnlinePlayerWeaponController).ServerSwitchWeapons(weaponNum);
         }
 
+        [Command]
+        public void CmdForceSwitchWeapons(int weaponNum) {
+            (target.Weapons as OnlinePlayerWeaponController).ServerForceSwitchWeapons(weaponNum);
+        }
+
 
         [ClientRpc]
         public void RpcSyncCurrentWeapon(int weaponNum) {

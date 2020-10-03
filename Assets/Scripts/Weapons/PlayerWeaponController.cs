@@ -163,16 +163,14 @@ namespace DEEP.Weapons {
 
             // Verifies if it's a valid weapon, if it's not doesn't switch.
             if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
-                return;    
+                return;
 
-            // Uses the forced version of the function to make the
-            // execute the actual switch.
-            ForceSwitchWeapons(weaponNum);
+            SetCurrentWeapon(weaponNum);
 
         }
 
-        // Switches between the Player weapons, allows the switch to be forced.
-        protected virtual void ForceSwitchWeapons(int weaponNum) {
+        // Sets the current weapon.
+        protected virtual void SetCurrentWeapon(int weaponNum) {
 
             // Disables the current weapon object.
             if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
@@ -287,7 +285,7 @@ namespace DEEP.Weapons {
                 Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.name + " has been collected!");
 
                 // Equips the weapon.
-                SwitchWeapons(slot);
+                SetCurrentWeapon(slot);
 
                 // Updates the weapons on the HUD.
                 UpdateWeaponHUD();

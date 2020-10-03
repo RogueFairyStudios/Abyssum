@@ -34,7 +34,13 @@ namespace DEEP.Online.Weapons {
 
         // Asks the server to switch weapons.
         protected override void SwitchWeapons(int weaponNum) {
-            (Owner as OnlinePlayerController).Sync.CmdSwitchWeapons(weaponNum);
+
+            // If not the server, asks the server to switch weapons.
+            if(!(Owner as OnlinePlayerController).Identity.isServer)
+                (Owner as OnlinePlayerController).Sync.CmdSwitchWeapons(weaponNum);
+            else // If in the server switchs weapon immediatly.
+                ServerSwitchWeapons(weaponNum);
+
         }
 
         [Server]
@@ -49,10 +55,16 @@ namespace DEEP.Online.Weapons {
 
         }
 
+        [Server]
+        // Switch the weapon immediatly and syncs with clients.
+        public virtual void ServerForceSwitchWeapons(int weaponNum) {
+            (Owner as OnlinePlayerController).Sync.RpcSyncCurrentWeapon(weaponNum);
+        }
+
         // Switches weapons on the client, forces the switch to avoid having to sync weapon 
         // inventories from server to all players.
         public virtual void ClientSwitchWeapons(int weaponNum) {
-            base.ForceSwitchWeapons(weaponNum);
+            base.SetCurrentWeapon(weaponNum);
         }
 
         // ====================================================================================================================
@@ -80,7 +92,7 @@ namespace DEEP.Online.Weapons {
 
             // Syncs the weapon to all clients.
             if(givenWeapon)
-                (Owner as OnlinePlayerController).Sync.SyncWeapon(slot, true);
+                (Owner as OnlinePlayerController).Sync.SyncWeapon(slot, true);              
 
             // !FIX: Ammo not being given.
 
@@ -95,15 +107,15 @@ namespace DEEP.Online.Weapons {
         }
 
         public virtual bool GiveWeaponClient(int slot) {
-            
-            // Ignores on server because the weapon has already being received.
-            if((Owner as OnlinePlayerController).Identity.isServer)
-                return false;
 
             // Gives weapon to the client.
-            base.GiveWeapon(slot, 0, null);
+            bool given = base.GiveWeapon(slot, 0, null);
 
-            return true;
+            // Weapon collection is handled by the server.
+            if((Owner as OnlinePlayerController).Identity.isServer)
+                ServerForceSwitchWeapons(slot);
+
+            return given;
 
         }
 
@@ -149,7 +161,7 @@ namespace DEEP.Online.Weapons {
             
             // TODO: make work in multiplayer.
 
-            DisableWeapons(); 
+            base.DisableWeapons(); 
             
         }
 
