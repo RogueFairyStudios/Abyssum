@@ -8,7 +8,7 @@ namespace DEEP.UI {
     public class MenuCutscenes : MonoBehaviour
     {
         public Object sceneToLoad;
-        [SerializeField] GameObject background;
+        [SerializeField] GameObject background = null;
 
         // Start is called before the first frame update
         void Start()

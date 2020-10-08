@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities.Player;
+using DEEP.Weapons;
 
 namespace DEEP.Collectibles
 {
@@ -14,11 +14,10 @@ namespace DEEP.Collectibles
         [Tooltip("Ammo to be given.")]
         [SerializeField] private int ammoAmount = 5;
 
-        protected override void Collect() {
+        public override bool Collect(GameObject player) {
 
             // Tries giving the weapon to the player.
-            if(PlayerController.Instance.weaponController.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound))
-                base.Collect();
+            return player.GetComponent<PlayerWeaponController>().GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
             
         }
         

@@ -49,6 +49,9 @@ MonoBehaviour:
   logText: Medic kit collected
   logIcon: {fileID: 21300000, guid: c0f5bc8d8e1ab3d4ea2170b6a5baeb33, type: 3}
   logColor: {r: 0.30980393, g: 0.5882353, b: 0.19607843, a: 0.8}
+  OnCollect:
+    m_PersistentCalls:
+      m_Calls: []
   hType: 0
   heal: 50
 --- !u!65 &5045862249035050676

@@ -8,6 +8,9 @@ namespace DEEP.Collectibles
     public abstract class CollectibleBase : MonoBehaviour
     {
 
+        [Tooltip("If this collectible is used in multiplayer mode, if it isn't add the default collection functions to OnCollect.")]
+        [SerializeField] protected bool onlineCollectible = false;
+
         [Tooltip("Audio that can be played when a item is collected.")]
         [SerializeField] protected AudioClip collectionSound = null;
 
@@ -23,25 +26,31 @@ namespace DEEP.Collectibles
         protected virtual void OnTriggerEnter(Collider other)
         {
 
-            // Checks for the Player.
-            if (other.tag == "Player")               
-                Collect(); // Calls the collection function.
+            // If it's not a multiplayer item, checks for the Player.
+            if (!onlineCollectible && other.tag == "Player") {
+
+                // Tries to collect the item.
+                if(Collect(other.gameObject)) {
+
+                    // Logs that this item has been collected.
+                    if(logText.Length > 0)
+                        other.GetComponent<PlayerController>().HUD.Log.Message(logText, logIcon, logColor);
+
+                     // Count this item as collected.
+                    if(StageManager.Instance != null)
+                        StageManager.Instance.CountCollection();
+
+                    // Destroys the object if the collectible is used.
+                    Destroy(gameObject);
+
+                }
+
+            }
 
         }
 
-        // Overwrite to do what you want with your collectible and them call base to log and destroy the object.
-        protected virtual void Collect() {
+        // Overwrite to do what you want with your collectible.
+        public abstract bool Collect(GameObject collector);
 
-            // Logs that this item has been collected.
-            if(logText.Length > 0)
-                PlayerController.Instance.HUD.Log.Message(logText, logIcon, logColor);
-
-            // Count this item as collected.
-            StageManager.Instance.CountCollection();
-
-            // Destroys the object if the collectible is used.
-            Destroy(gameObject);
-
-        }
     }
 }

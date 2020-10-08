@@ -80,7 +80,7 @@ namespace DEEP.Weapons
                     ShootRay(i, GenerateRandomRotation(bulletSpawn.rotation));
             }
 
-            }
+        }
 
         private void ShootRay(int index, Quaternion direction) {
 

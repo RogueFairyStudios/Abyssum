@@ -76,8 +76,10 @@ namespace DEEP.UI {
 
             PlayerPrefs.SetFloat("Mouse sensitivity", mouseSensitivity.value);
 
-            if (PlayerController.Instance != null)
-                PlayerController.Instance.movementation.SetMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
+            // Tries to update mouse sentitivity on player's movementation script.
+            PlayerMovementation movementation = FindObjectOfType<PlayerMovementation>();
+            if(movementation != null)
+                movementation.SetMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
 
         }
 
@@ -110,16 +112,20 @@ namespace DEEP.UI {
         public void SetSpeedrunHUD(bool isOn)
         {
             PlayerPrefs.SetInt("SpeedrunHUD", isOn ? 1 : 0);
-            if(PlayerController.Instance != null && PlayerController.Instance.HUD != null)
-                PlayerController.Instance.HUD.speedrun.SetEnabled(isOn);
+            // Tries to update speedrun HUD status.
+            HUDController hud = FindObjectOfType<HUDController>();
+            if(hud != null)
+                hud.speedrun.SetEnabled(isOn);
         }
 
         // Enables or disables the statistics HUD.
         public void SetStatisticsHUD(bool isOn)
         {
             PlayerPrefs.SetInt("StatisticsHUD", isOn ? 1 : 0);
-            if(PlayerController.Instance != null && PlayerController.Instance.HUD != null)
-                PlayerController.Instance.HUD.statistics.SetEnabled(isOn);
+            // Tries to update statistics HUD status.
+            HUDController hud = FindObjectOfType<HUDController>();
+            if(hud != null)
+                hud.statistics.SetEnabled(isOn);
         }
 
     }

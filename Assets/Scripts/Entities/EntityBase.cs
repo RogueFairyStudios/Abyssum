@@ -44,7 +44,7 @@ namespace DEEP.Entities
         {
 
             health = maxHealth; // Sets the initial health to the maximum health.
-            OnChangeHealth();
+            OnChangeHealth(maxHealth, maxHealth);
             
             isDead = false;
 
@@ -59,6 +59,9 @@ namespace DEEP.Entities
         public virtual bool Heal (int amount, HealType type) 
         {
             
+            // Saves the old value.
+            int prevHealth = CurrentHealth();
+
             // Doesn't heal because health is above max or overloaded max.
             if(type == HealType.Regular && health >= maxHealth) return false;
             if(type == HealType.Overload && health >= maxOverloadedHealth) return false;
@@ -72,7 +75,7 @@ namespace DEEP.Entities
                 health = maxOverloadedHealth;
 
             // Handles any changes that have to be made when modifying health.
-            OnChangeHealth();
+            OnChangeHealth(prevHealth, CurrentHealth());
 
             return true;
 
@@ -81,11 +84,15 @@ namespace DEEP.Entities
         // Deals a certain amount of damage to an entity and verifies if it's "dead", allows the specification of a damage type.
         public virtual void Damage (int amount, DamageType type) 
         { 
+
+            // Saves the old value.
+            int prevHealth = CurrentHealth();
+
             // Decreases health and verifies if the entity has "died".
             health -= amount;
 
             // Handles any changes that have to be made when modifying health.
-            OnChangeHealth();
+            OnChangeHealth(prevHealth, CurrentHealth());
 
         }
 
@@ -105,7 +112,7 @@ namespace DEEP.Entities
         }
 
         // Called when health changes.
-        protected virtual void OnChangeHealth() { 
+        protected virtual void OnChangeHealth(int oldValue, int newValue) { 
             
             // Verifies if the entity died.
             if(health <= 0)

@@ -10,6 +10,17 @@ namespace DEEP.Entities.Player
     public class PlayerMovementation : MonoBehaviour
     {
 
+        protected PlayerController ownerPlayer;
+
+        public PlayerController Owner {
+            get {
+                return ownerPlayer;
+            }
+            set {
+                ownerPlayer = value;
+            }
+        }
+
         [Tooltip("Player acceleration on ground.")]
         public float baseGroundAcceleration = 8.0f;
 
@@ -178,9 +189,9 @@ namespace DEEP.Entities.Player
         void TryOpenDoor() {
 
 			RaycastHit hit;
-			if (Physics.Raycast(PlayerController.Instance.transform.position, PlayerController.Instance.transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
+			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
 				try{
-					hit.collider.GetComponent<Door>().TryOpenDoor();
+					hit.collider.GetComponent<Door>().TryOpenDoor(ownerPlayer.Keys);
 				} catch {
 					Debug.LogWarning("Couldn't access the ColorsDoor script from the object " + hit.collider.name);
 				}

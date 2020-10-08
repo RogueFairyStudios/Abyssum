@@ -11,9 +11,21 @@ namespace DEEP.Weapons.Bullets
 
         [SerializeField] protected float acceleration = 9.81f;
 
+        Transform target;
+
+        public override void OnEnable() {
+
+            // Finds a target for the bullet.
+            PlayerController player = FindObjectOfType<PlayerController>();
+            target = player.transform;
+
+            base.OnEnable();
+
+        }
+
         protected override void FixedUpdate() {
 
-            bRigidbody.AddForce(acceleration * (PlayerController.Instance.transform.position - transform.position).normalized, ForceMode.Acceleration);
+            bRigidbody.AddForce(acceleration * (target.position - transform.position).normalized, ForceMode.Acceleration);
 
             if(bRigidbody.velocity.magnitude > 0)
                 transform.localRotation = Quaternion.LookRotation(bRigidbody.velocity, Vector3.up);

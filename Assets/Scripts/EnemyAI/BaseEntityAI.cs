@@ -1,11 +1,16 @@
 using UnityEngine;
 
-using DEEP.Entities.Player;
+using DEEP.Entities;
 
 namespace DEEP.AI
 {
+
+    [RequireComponent(typeof(EnemyBase))]
     public class BaseEntityAI : MonoBehaviour
     {
+
+        public EnemyBase ownerEnemy;
+
         public delegate void Reaction();
         public Reaction OnAggro, OnLoseAggro;
 
@@ -18,20 +23,26 @@ namespace DEEP.AI
 
         [HideInInspector] public Vector3 lastTargetLocation; //location to search if the target has been missed
 
+        protected virtual void Awake() {
+
+            ownerEnemy = GetComponent<EnemyBase>();
+
+        }
+
         // Checks if has sight to target.
         public bool HasTargetSight()
         {
 
             // Ensures the target is not null.
-            if(PlayerController.Instance == null)
+            if(ownerEnemy.TargetPlayer == null)
                 return false;
 
             // Checks for sight.
-            bool hasSight = HasSight(PlayerController.Instance.transform.position);
+            bool hasSight = HasSight(ownerEnemy.TargetPlayer.transform.position);
 
             // Stores the target location if it is seen.
             if (hasSight)
-                lastTargetLocation = PlayerController.Instance.transform.position;
+                lastTargetLocation = ownerEnemy.TargetPlayer.transform.position;
 
             return hasSight;
         }
