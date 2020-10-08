@@ -517,14 +517,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 40
+  detectRange: 20
   sightMask:
     serializedVersion: 2
     m_Bits: 1025
   lastTargetLocation: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
   anim: {fileID: 0}
-  attackRange: 12
+  attackRange: 30
   weapon: {fileID: 0}
   aimOnAttack: 1
   isMeeleAttack: 0

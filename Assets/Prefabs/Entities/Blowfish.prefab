@@ -17,7 +17,7 @@ GameObject:
   - component: {fileID: 2854612053397230343}
   - component: {fileID: 2442511234986871465}
   m_Layer: 0
-  m_Name: PufferFish
+  m_Name: Blowfish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,11 +51,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 858496c808e96c240952574a36e73d86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  detectRange: 30
+  detectRange: 15
   sightMask:
     serializedVersion: 2
     m_Bits: 1025
-  target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
   _animator: {fileID: 0}
   _rigid: {fileID: 0}
@@ -83,6 +82,8 @@ MonoBehaviour:
   deathPrefab: {fileID: 6051382781513204733, guid: 9540696b296357b7293ce39df91618b4,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants: []
   explosionPrefab: {fileID: 1360392051508864872, guid: 2d469e1c6f84d2a43931f59e2ada3178,
     type: 3}
   swim: {fileID: 8300000, guid: d130f306ec6ed694a83e7241dd77b8dd, type: 3}
@@ -123,6 +124,7 @@ MonoBehaviour:
   pointOfNoReturn: 1
   timeBeforeExploding: 1.5
   startExpandingRange: 5
+  showDebug: 0
 --- !u!114 &473792045271009120
 MonoBehaviour:
   m_ObjectHideFlags: 0
