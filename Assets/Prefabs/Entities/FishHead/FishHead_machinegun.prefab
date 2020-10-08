@@ -532,8 +532,8 @@ MonoBehaviour:
   actualPoint: 0
   reversePatrol: 0
   angleReference: {fileID: 8487922507174213915}
-  reloadTime: 0
-  clipSize: 0
+  reloadTime: 2
+  clipSize: 30
 --- !u!114 &1423937652085240148
 MonoBehaviour:
   m_ObjectHideFlags: 0
