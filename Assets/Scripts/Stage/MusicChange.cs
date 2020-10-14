@@ -1,14 +1,10 @@
 ﻿using UnityEngine;
-
-using DEEP.Entities;
+using System;
 
 namespace DEEP.Stage
 {
     public class MusicChange : MonoBehaviour
     {
-        [Tooltip("Audio source for music.")]
-        [SerializeField] private AudioSource introSource = null, loopSource = null;
-
         [Tooltip("If instead you just want to mute whatever song is playing.")]
         [SerializeField] private bool muteSong = false;
 
@@ -21,28 +17,25 @@ namespace DEEP.Stage
             if(other.tag != "Player")
                 return;
 
-            if(!muteSong)
+            try
             {
-                if(hasIntro)
-                {
-                    introSource.clip = songIntro;
-                    loopSource.clip = songLoop;
-                    introSource.Play();
-                    loopSource.PlayDelayed(songIntro.length);
-                }
+                if(!muteSong)
+                    if(hasIntro)
+                        MusicPlayer.instance.StartSong(songIntro, songLoop);
+                    else
+                        MusicPlayer.instance.StartSong(songLoop);
                 else
-                {
-                    if(introSource != null)
-                        introSource.Stop();
-                    loopSource.clip = songLoop;
-                    loopSource.Play();
-                }
+                    MusicPlayer.instance.Stop();
             }
-            else
-                loopSource.Stop();
+            catch(NullReferenceException nullref)
+            {
+                if(MusicPlayer.instance == null)
+                    Debug.LogError("There is no music player in the scene! Please add the music player prefab to the scene!");
+                else
+                    throw nullref;
+            }
 
             Destroy(this.gameObject);
-
         }
     }
 }
