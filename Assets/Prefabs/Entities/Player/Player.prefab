@@ -1364,6 +1364,10 @@ MonoBehaviour:
   pauseMenu: {fileID: 7039854621110695698}
   deathScreen: {fileID: 3948141073903145448}
   deathMenu: {fileID: 6183051250509740394}
+  playerDeath:
+  - {fileID: 8300000, guid: 564c26a7ce02c064cb08219da573cae7, type: 3}
+  - {fileID: 8300000, guid: fdf0ac3e31f35c7468aec53910a0e562, type: 3}
+  - {fileID: 8300000, guid: 89531cb3a69f67640850f814447384ac, type: 3}
   endLevelScreen: {fileID: 8986970998938023453}
   feedbackAudioSource: {fileID: 2214829340411246055}
 --- !u!114 &784329731769305154
