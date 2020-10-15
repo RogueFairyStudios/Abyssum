@@ -35,6 +35,8 @@ namespace DEEP.Entities.Player
         [SerializeField] protected GameObject deathScreen = null;
         [Tooltip("The menu items for when the player dies.")]
         [SerializeField] protected GameObject deathMenu = null;
+        [Tooltip("Possible audio clips for player death.")]
+        [SerializeField] protected AudioClip[] playerDeath;
 
         [Header("Level-End")] // ==============================================================================================
         [Tooltip("The screen overlay for when the level ends.")]
@@ -178,6 +180,10 @@ namespace DEEP.Entities.Player
         // Handles the Player entity's death.
         public void Die() {
             
+            // Avoids zombie deaths
+            if(!isPlaying)
+                return;
+
             // The game has ended.
             isPlaying = false;
 
@@ -190,6 +196,9 @@ namespace DEEP.Entities.Player
 
             // Plays death animation.
             Camera.main.GetComponent<Animator>().SetBool("Death", true);
+
+            // Plays death sound effect
+            feedbackAudioSource.PlayOneShot(playerDeath[Random.Range(0, playerDeath.Length)], 1.0f);
 
             // Shows the menu after some time.
             StartCoroutine(ShowDeathMenu());
