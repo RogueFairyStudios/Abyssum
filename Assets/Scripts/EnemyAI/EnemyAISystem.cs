@@ -44,7 +44,7 @@ namespace DEEP.AI
         [Tooltip("Reload system")]
         [SerializeField] protected float reloadTime = 0.0f;
         [SerializeField] protected int clipSize = 0; // how many bullets to shot before reload; 0 if dont want to reload
-        private int bullets;
+        private int bullets = 0;
         private float reloadingProcess = 0.0f; 
 
         void Start()
@@ -155,6 +155,7 @@ namespace DEEP.AI
             {
                 if(!canShoot())
                     return;
+                    
                 bool attacked;
 
                 // Tries to attack and plays the animation on success.
