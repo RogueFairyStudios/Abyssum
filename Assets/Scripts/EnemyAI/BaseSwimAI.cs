@@ -13,8 +13,11 @@ namespace DEEP.AI
 
         protected WanderSwimState wanderState;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
+
+            base.Awake();
+
             // Gets the main components.
             _animator = GetComponentInChildren<Animator>();
             _rigid = GetComponentInChildren<Rigidbody>();

@@ -19,6 +19,8 @@ public class LiquidSound : MonoBehaviour
     MeshRenderer _mesh;
     AudioSource _audio;
 
+    PlayerController player;
+
     void Awake()
     {
         _mesh = GetComponent<MeshRenderer>();
@@ -58,7 +60,11 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            PlayerController.Instance.HUD.StartScreenFeedback(feedbackType);
+
+            // Gets the player that entered the liquid.
+            player = other.GetComponent<PlayerController>();
+
+            player.HUD.StartScreenFeedback(feedbackType);
 
             if(insideLiquidSound != null)
             {
@@ -74,7 +80,8 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            PlayerController.Instance.HUD.StopConstantScreenFeedback();
+            if(other.GetComponent<PlayerController>() == player)
+                player.HUD.StopConstantScreenFeedback();
 
             if(ambientLiquidSound != null)
             {
@@ -86,14 +93,13 @@ public class LiquidSound : MonoBehaviour
         }
     }
 
-    public void Stop()
-    {
-        _audio.Stop();
-    }
+    public void Stop() { _audio.Stop(); }
 
-    private void OnDestroy()
-    {
-        PlayerController.Instance.HUD.StopConstantScreenFeedback();
+    private void OnDestroy() { 
+        
+        if(player != null)
+            player.HUD.StopConstantScreenFeedback(); 
+            
     }
 
 }

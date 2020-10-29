@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 using DEEP.Decals;
-using DEEP.Entities;
+using DEEP.Pooling;
 
 namespace DEEP.Weapons.Bullets {
 
@@ -31,7 +31,7 @@ namespace DEEP.Weapons.Bullets {
 				Debug.LogWarning("Missing prefab attribute!");
 				return;
 			}
-			Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+			PoolingSystem.Instance.PoolObject(prefabToSpawn, transform.position, Quaternion.identity);
 		}
 	}
 }

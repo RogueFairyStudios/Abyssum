@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+
 using UnityEngine;
 
 using DEEP.Entities.Player;
@@ -7,18 +8,23 @@ namespace DEEP.DoorsAndKeycards {
 
 	public class KeyInventory {
 
+		// Player that owns this inventory.
+		PlayerController owner;
+
+		// Colors on the inventory.
 		public HashSet<KeysColors> inventory;
 
 		// Start is called before the first frame update
-		public KeyInventory() {
+		public KeyInventory(PlayerController owner) {
 
-			Debug.Log("Initializing InventoryKey...");
+			Debug.Log("Initializing KeyInventory...");
 
+			this.owner = owner;
 			inventory = new HashSet<KeysColors>();
+
 			Debug.Log("Creating new HashSet for the KeysInventory. Inventory size = " + inventory.Count);
 
 		}
-
 
 		// Gives a keycard to the player.
         public void GiveKeyCard(KeysColors color, AudioClip feedbackAudio) {
@@ -28,10 +34,10 @@ namespace DEEP.DoorsAndKeycards {
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                owner.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the collected keys on the HUD.
-            PlayerController.Instance.HUD.keycards.UpdateValues();
+            owner.HUD.keycards.UpdateValues(this);
 
         }
 

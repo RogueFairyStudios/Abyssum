@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities;
 using DEEP.Utility;
+using DEEP.Pooling;
+using DEEP.Entities;
 
 namespace DEEP.Weapons.Bullets {
 
@@ -31,9 +32,9 @@ namespace DEEP.Weapons.Bullets {
 
                 // Spawn the blood splatter effect if avaliable and hit a player or enemy.
                 if (entity.bloodEffect != null)
-                    Instantiate(entity.bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+                    PoolingSystem.Instance.PoolObject(entity.bloodEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
                 else
-                    Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+                    PoolingSystem.Instance.PoolObject(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
 
 				if (entity.conductorBox != null) {
 					entity.conductorBox.Electrify(eletricDamage);
@@ -42,7 +43,7 @@ namespace DEEP.Weapons.Bullets {
                 entity.Damage(damage, 0);
 
             } else if(otherHitEffect != null) // Else, spawn the other hit effect if avaliable.
-                Instantiate(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
+                PoolingSystem.Instance.PoolObject(otherHitEffect, col.contacts[0].point, Quaternion.LookRotation(col.contacts[0].normal));
 
             //Destroys the object on collision.
             Destroy(gameObject);

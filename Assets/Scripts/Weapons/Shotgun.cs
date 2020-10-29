@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+using DEEP.Pooling;
+
 namespace DEEP.Weapons {
 
 	// Base script for a simple weapons that fires common bullets..
@@ -15,7 +17,7 @@ namespace DEEP.Weapons {
 
 			for (int i = 0; i < pelletsPerShot; ++i) {
 				Quaternion direction = GenerateRandomRotation(bulletSpawn.rotation);
-				Instantiate(bulletPrefab, bulletSpawn.position, direction); // Creates the bullet.
+				PoolingSystem.Instance.PoolObject(bulletPrefab, bulletSpawn.position, direction); // Creates the bullet.
 			}
 			delayTimer = 0; // Resets the delay.
 

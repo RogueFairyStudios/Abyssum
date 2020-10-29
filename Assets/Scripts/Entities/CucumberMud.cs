@@ -4,7 +4,8 @@ using UnityEngine;
 
 using DEEP.Entities.Player;
 
-namespace DEEP.Entities{
+namespace DEEP.Entities {
+
    public class CucumberMud : MonoBehaviour
    {
       [SerializeField] private List<EntityBase> entitieList = new List<EntityBase>();  
@@ -31,7 +32,8 @@ namespace DEEP.Entities{
 
             if(obj.gameObject.CompareTag("Player"))
             {
-               PlayerController.Instance.HUD.StopConstantScreenFeedback();
+               PlayerEntity player = obj as PlayerEntity;
+               player.Owner.HUD.StopConstantScreenFeedback();
                GetComponent<LiquidSound>().Stop();
             }
          }
@@ -44,7 +46,8 @@ namespace DEEP.Entities{
             entitieList[i].SetBaseSpeed();
             if(entitieList[i].gameObject.CompareTag("Player"))
             {
-               PlayerController.Instance.HUD.StopConstantScreenFeedback();
+               PlayerEntity player = entitieList[i] as PlayerEntity;
+               player.Owner.HUD.StopConstantScreenFeedback();
                GetComponent<LiquidSound>().Stop();
             }
          }

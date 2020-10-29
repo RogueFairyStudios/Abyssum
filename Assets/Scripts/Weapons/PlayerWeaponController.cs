@@ -6,14 +6,26 @@ using UnityEngine;
 using DEEP.Entities.Player;
 
 namespace DEEP.Weapons {
+
     public class PlayerWeaponController : MonoBehaviour
     {
+
+        protected PlayerController ownerPlayer;
+
+        public PlayerController Owner {
+            get {
+                return ownerPlayer;
+            }
+            set {
+                ownerPlayer = value;
+            }
+        }
 
         [Tooltip("All of the player weapons.")]
         public List<PlayerWeapon> weapons;
 
         // Stores the weapons instances with their info.
-        List<Tuple<bool, WeaponBase>> weaponInstances;
+        protected List<Tuple<bool, WeaponBase>> weaponInstances;
 
         [Tooltip("Where Player weapons should be.")]
         public Transform weaponPosition;
@@ -26,54 +38,24 @@ namespace DEEP.Weapons {
         // Stores a dictionary with the AmmoSource instances.
         private Dictionary<string, AmmoSource> ammoDict;
 
-        void Awake() {
+        protected virtual void Start() {
 
             Debug.Log("Initializing PlayerWeaponController...");
             
             // Creates a dictionary with the ammo sources.
-            ammoDict = new Dictionary<string, AmmoSource>();
             foreach(AmmoSource source in ammoTypes)
-                if(!ammoDict.ContainsKey(source.id))
-                    ammoDict.Add(source.id, Instantiate(source));
+                CreateAmmo(source);
 
-            // Weapon setup =============================================================================================
-
-            // Instantiates the weapons.
-            weaponInstances = new List<Tuple<bool, WeaponBase>>();
+            // Creates the the weapons.
             foreach (PlayerWeapon weapon in weapons)
-            {
+                CreateWeapon(weapon, weaponPosition);
 
-                // Creates the weapons inside the weapon position.
-                GameObject weaponObj = Instantiate(weapon.prefab, weaponPosition.position, weaponPosition.rotation);
-                weaponObj.transform.SetParent(weaponPosition);
-                // Disables the weapon at start.
-                weaponObj.SetActive(false);
-
-                // Gets the weapon script.
-                WeaponBase weaponScript = weaponObj.GetComponent<WeaponBase>();
-                if(weaponScript == null) Debug.LogError("DEEP.Entities.Player.Start: Weapon has no weapon script!");
-
-                // Sets the ammo source of the weapon.
-                if(weapon.ammoId != null && weapon.ammoId != "")
-                    if(ammoDict.ContainsKey(weapon.ammoId))
-                        weaponScript.ammoSource = ammoDict[weapon.ammoId];
-                    else
-                        Debug.LogError("DEEP.Entities.Player.Start: Ammo type not found!");
-
-                // Adds the weapon to the list
-                weaponInstances.Add(new Tuple<bool, WeaponBase>(weapon.enabled, weaponScript));
-
-                // Shows current weapons on the HUD.
-                bool[] weaponsEnabled = new bool[weaponInstances.Count];
-                for(int i = 0; i < weaponInstances.Count; i++)
-                    weaponsEnabled[i] = weaponInstances[i].Item1;
-                PlayerController.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
-
-            }
+            // Shows current weapons on the HUD.
+            UpdateWeaponHUD();
 
         }
 
-        void Update() {
+        protected virtual void Update() {
 
             // Equiping weapons ===================================================================================
 
@@ -103,12 +85,92 @@ namespace DEEP.Weapons {
 
         }
 
+        protected virtual void CreateAmmo(AmmoSource source) {
+
+            // Creates ammo dictionary if necessary.
+            if(ammoDict == null) {
+                ammoDict = new Dictionary<string, AmmoSource>();
+            // Checks if the ammo type is not on the dictionary already.
+            } else if(ammoDict.ContainsKey(source.id)) {
+                Debug.LogWarning("DEEP.Weapons.PlayerWeaponController.CreateAmmo: Ammo type already exists!");
+                return;
+            }
+
+            // Adds ammo type to dictionary.
+            ammoDict.Add(source.id, Instantiate(source));
+
+        }
+
+        // Creates a new weapon parented to a certain spawn position, returns the WeaponBase for the new weapon.
+        protected virtual void CreateWeapon(PlayerWeapon weapon, Transform spawn) {
+
+            // Creates weapon instances list if necessary.
+            if(weaponInstances == null)
+                weaponInstances = new List<Tuple<bool, WeaponBase>>();
+
+            // Creates the weapons at the weapon spawn position.
+            GameObject weaponObj = Instantiate(weapon.prefab, spawn.position, spawn.rotation);
+            weaponObj.transform.SetParent(spawn);
+
+            // Disables the weapon at start.
+            weaponObj.SetActive(false);
+
+            // Gets the weapon script.
+            WeaponBase weaponScript = weaponObj.GetComponent<WeaponBase>();
+            if(weaponScript == null) {
+                Debug.LogError("DEEP.Weapons.PlayerWeaponController.CreateWeapon: Weapon has no weapon script!");
+                return;
+            }
+
+            // Sets the ammo source of the weapon.
+            if(weapon.ammoId != null && weapon.ammoId != "")
+                if(ammoDict.ContainsKey(weapon.ammoId))
+                    weaponScript.ammoSource = ammoDict[weapon.ammoId];
+                else
+                    Debug.LogError("DEEP.Weapons.PlayerWeaponController.CreateWeapon: Ammo type not found!");
+
+            // Adds the weapon to the list
+            weaponInstances.Add(new Tuple<bool, WeaponBase>(weapon.enabled, weaponScript));
+
+        }
+
+        // Updates the weapons list on the HUD.
+        protected virtual void UpdateWeaponHUD() {
+
+            bool[] weaponsEnabled = new bool[weaponInstances.Count];
+            for(int i = 0; i < weaponInstances.Count; i++)
+                weaponsEnabled[i] = weaponInstances[i].Item1;
+            ownerPlayer.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
+
+            // Updates the current weapon icon on the HUD.
+            if(currentWeapon != null) {
+                int curWeaponIndex = GetCurrentWeaponIndex();
+                ownerPlayer.HUD.ammoAndWeapons.SetCurrentWeapon(curWeaponIndex, weapons[curWeaponIndex].icon, ammoDict[currentWeapon.ammoSource.id].icon);
+            }
+
+        }
+
+        // Updates the ammo counter on the HUD.
+        protected virtual void UpdateAmmoHUD() {
+            
+            if(currentWeapon != null)
+               ownerPlayer.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+
+        }
+
         // Switches between the Player weapons.
-        public void SwitchWeapons(int weaponNum) {
+        protected virtual void SwitchWeapons(int weaponNum) {
 
             // Verifies if it's a valid weapon, if it's not doesn't switch.
             if(weaponNum >= weaponInstances.Count || weaponInstances[weaponNum].Item1 == false)
                 return;
+
+            SetCurrentWeapon(weaponNum);
+
+        }
+
+        // Sets the current weapon.
+        protected virtual void SetCurrentWeapon(int weaponNum) {
 
             // Disables the current weapon object.
             if(currentWeapon != null) currentWeapon.gameObject.SetActive(false);
@@ -119,28 +181,26 @@ namespace DEEP.Weapons {
             // Enables the current weapon.
             currentWeapon.gameObject.SetActive(true);
 
-            // Updates the ammo counter on the HUD.
-            PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
-
-            // Updates the current weapon icon on the HUD.
-            PlayerController.Instance.HUD.ammoAndWeapons.SetCurrentWeapon(weaponNum, weapons[GetCurrentWeaponIndex()].icon, ammoDict[currentWeapon.ammoSource.id].icon);
+            // Updates the HUD.
+            UpdateAmmoHUD();
+            UpdateWeaponHUD();        
 
         }
 
         // Attempts firing the current weapon.
-        public void FireCurrentWeapon() {
+        protected virtual void FireCurrentWeapon() {
 
             if(currentWeapon == null)
                 return;
 
             currentWeapon.Shot();
             // Updates the ammo counter on the HUD.
-            PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            ownerPlayer.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
         }
 
         // Returns the index of the current weapon.
-        public int GetCurrentWeaponIndex() {
+        public virtual int GetCurrentWeaponIndex() {
 
             // Searches for the current weapon index.
             int curWeaponIndex = -1;
@@ -156,7 +216,7 @@ namespace DEEP.Weapons {
         }
 
         // Returns the index of the next enabled weapon (rolls around if no weapon with higher index is enabled).
-        public int GetNextEnabledWeaponIndex() {
+        public virtual int GetNextEnabledWeaponIndex() {
 
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -182,7 +242,7 @@ namespace DEEP.Weapons {
         }
 
         // Returns the index of the previous enabled weapon (rolls around if no weapon with lower index is enabled).
-        public int GetPreviousEnabledWeaponIndex() {
+        public virtual int GetPreviousEnabledWeaponIndex() {
            
             // Gets the current weapon index.
             int curWeaponIndex = GetCurrentWeaponIndex();
@@ -208,7 +268,7 @@ namespace DEEP.Weapons {
         }
 
          // Pick's up a weapon and enables it's use.
-        public bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
+        public virtual bool GiveWeapon(int slot, int ammo, AudioClip feedbackAudio) {
 
             // Collects the weapon if the player doesn't have it yet.
             if(!weaponInstances[slot].Item1) {
@@ -225,20 +285,17 @@ namespace DEEP.Weapons {
                 Debug.Log("Player.GiveWeapon: " + weaponInstance.Item2.name + " has been collected!");
 
                 // Equips the weapon.
-                SwitchWeapons(slot);
+                SetCurrentWeapon(slot);
 
                 // Updates the weapons on the HUD.
-                bool[] weaponsEnabled = new bool[weaponInstances.Count];
-                for(int i = 0; i < weaponInstances.Count; i++)
-                    weaponsEnabled[i] = weaponInstances[i].Item1;
-                PlayerController.Instance.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
+                UpdateWeaponHUD();
 
                 // Give the initial ammo to the player.
                 GiveAmmo(ammo, weaponInstances[slot].Item2.ammoSource.id, feedbackAudio);
 
                 // If collected, plays the player feedback sound.
                 if(feedbackAudio != null)
-                    PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                    ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
                 return true;
 
@@ -250,7 +307,7 @@ namespace DEEP.Weapons {
         }
 
         // Gives a certain type of ammo to the player.
-        public bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
+        public virtual bool GiveAmmo(int amount, string type, AudioClip feedbackAudio) {
 
             // Checks if the ammo type is valid.
             if(!ammoDict.ContainsKey(type)) return false;
@@ -261,18 +318,19 @@ namespace DEEP.Weapons {
             // Adds ammo to the source.
             ammoDict[type].GainAmmo(amount);
 
-            // Updates the ammo counter on the HUD.
-            if(currentWeapon != null)
-                PlayerController.Instance.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            // Updates the HUD
+            UpdateAmmoHUD();
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                PlayerController.Instance.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             return true;
 
         }
 
+        // Hides the player's weapons.
+        public virtual void DisableWeapons() { weaponPosition.gameObject.SetActive(false); }
 
     }
 

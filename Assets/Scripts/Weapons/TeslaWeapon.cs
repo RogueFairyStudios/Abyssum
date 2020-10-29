@@ -34,6 +34,20 @@ namespace DEEP.Weapons
         // Object used to wait in coroutines.
         private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
 
+        // Overrides start to avoid pooling system.
+        protected override void Start() {
+
+            // Allows the weapon to be fired at start.
+            delayTimer = delayBetweenShots;
+
+            // Gets the weapon's animator.
+            wAnimator = GetComponentInChildren<Animator>();
+
+            // Gets the weapon's AudioSource.
+            wAudio = GetComponentInChildren<AudioSource>();
+
+        }
+
         protected void OnEnable() {
 
             // Disables the effects.
@@ -66,7 +80,7 @@ namespace DEEP.Weapons
                     ShootRay(i, GenerateRandomRotation(bulletSpawn.rotation));
             }
 
-            }
+        }
 
         private void ShootRay(int index, Quaternion direction) {
 

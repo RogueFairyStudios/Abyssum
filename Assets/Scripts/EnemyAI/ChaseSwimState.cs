@@ -45,6 +45,11 @@ namespace DEEP.AI
 
             do
             {
+
+                // Waits for the necessary components.
+                while(blowfishAI.ownerEnemy == null)
+                    yield return new WaitForEndOfFrame();
+
                 // Update location
                 blowfishAI.HasTargetSight();
                 deltaPos = blowfishAI.lastTargetLocation - transform.position;

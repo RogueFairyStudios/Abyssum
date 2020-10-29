@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using DEEP.Entities.Player;
+using DEEP.Weapons;
 
 namespace DEEP.Collectibles
 {
@@ -9,11 +9,10 @@ namespace DEEP.Collectibles
         [SerializeField] private string type = "Shell";
         [SerializeField] private int amount = 10;
 
-        protected override void Collect() {
+        public override bool Collect(GameObject player) {
 
             // Tries giving ammo to the player.
-            if(PlayerController.Instance.weaponController.GiveAmmo(amount, type, collectionSound))     
-                base.Collect();
+            return player.GetComponent<PlayerWeaponController>().GiveAmmo(amount, type, collectionSound);
 
         }
 
