@@ -91,6 +91,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
+  logText: Red keycard collected
+  logIcon: {fileID: 6393625202743233467, guid: 85bc18e35799f2f4082fb1e85c78b358, type: 3}
+  logColor: {r: 1, g: 0.3137255, b: 0.3137255, a: 0.8}
   keyColor: 1
 --- !u!54 &3781799953442861250
 Rigidbody:

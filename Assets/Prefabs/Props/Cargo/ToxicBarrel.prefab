@@ -67,6 +67,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: ToxicBarrel
       objectReference: {fileID: 0}
+    - target: {fileID: 7361517293713669244, guid: 639f7a4dd94b4958f8d685ad016eab96,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 121
+      objectReference: {fileID: 0}
     - target: {fileID: 9085320610143307936, guid: 639f7a4dd94b4958f8d685ad016eab96,
         type: 3}
       propertyPath: m_Materials.Array.data[0]

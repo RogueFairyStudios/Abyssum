@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: ac1b289a78ccff259a8037b95fd00cde, type: 3}
+  logText: Bandage collected
+  logIcon: {fileID: 21300000, guid: c0f5bc8d8e1ab3d4ea2170b6a5baeb33, type: 3}
+  logColor: {r: 0.30980393, g: 0.5882353, b: 0.19607843, a: 0.8}
   hType: 0
   heal: 25
 --- !u!65 &5119223391253329459

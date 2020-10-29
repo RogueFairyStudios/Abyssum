@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.Utility
 {
@@ -75,7 +76,7 @@ namespace DEEP.Utility
                 if(!entitiesHit.Contains(entity)) {
 
                     // Checks if the object hit is a player.
-                    if(entity.GetType() == typeof(Player)) {
+                    if(entity.GetType() == typeof(PlayerEntity)) {
 
                         // If it's a player, does decreased damage and applies better physics for rocket jumps.
                         entity.Damage(playerDamage, 0);

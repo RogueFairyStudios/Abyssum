@@ -30,7 +30,7 @@ namespace DEEP.Utility {
             if (box.attachedRigidbody != null){
                 entity = box.attachedRigidbody.GetComponent<EntityBase>();
                 if (entity == null) {
-                    Debug.LogWarning("ERRO!!! O objeto " + name + " de " + box.attachedRigidbody.name + " não tem um EntityBase");
+                    Debug.LogError("O objeto " + name + " de " + box.attachedRigidbody.name + " não tem um EntityBase");
                 }
                 else {
                     entity.conductorBox = this;

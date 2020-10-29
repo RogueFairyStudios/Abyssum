@@ -2,6 +2,8 @@
 
 using UnityEngine;
 
+using DEEP.Entities.Player;
+
 namespace DEEP.Entities
 {
 
@@ -56,7 +58,7 @@ namespace DEEP.Entities
                 }
 
                 // Makes the attack if the player is in range.
-                if(Vector3.Distance(Player.Instance.transform.position, transform.position) <= sentry.attackRange) {
+                if(Vector3.Distance(PlayerController.Instance.transform.position, transform.position) <= sentry.attackRange) {
 
                     Attack();
                     delayTimer = 0.0f;

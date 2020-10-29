@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
-using DEEP.Entities;
+
+using DEEP.Entities.Player;
 
 namespace DEEP.Collectibles
 {
@@ -7,23 +8,17 @@ namespace DEEP.Collectibles
     public class WeaponCollectible : CollectibleBase
     {
         
-        // The slot that contains the weapon to be given. 
+        [Tooltip("The slot that contains the weapon to be given.")]
         [SerializeField] private int weaponSlot = 0;
 
-        // Ammo to be given. 
+        [Tooltip("Ammo to be given.")]
         [SerializeField] private int ammoAmount = 5;
 
-        protected override void Collect(Player player) {
+        protected override void Collect() {
 
-            // Tries giving the weapon to the player and stores if it was given.
-            bool collected = player.waponController.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound);
-
-            if(collected) {
-                
-                // Destroys the object if the collectible is used.
-                Destroy(gameObject);
-
-            }
+            // Tries giving the weapon to the player.
+            if(PlayerController.Instance.weaponController.GiveWeapon(weaponSlot - 1, ammoAmount, collectionSound))
+                base.Collect();
             
         }
         

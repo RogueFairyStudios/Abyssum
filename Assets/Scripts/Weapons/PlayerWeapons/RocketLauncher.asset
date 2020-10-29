@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Rocket
   prefab: {fileID: 2543737463301390606, guid: 09403150c9b565a48904b0b015700782, type: 3}
+  icon: {fileID: 2962450382852140736, guid: 4a025b0e1d9aa3449a3e394a72ea2cac, type: 3}

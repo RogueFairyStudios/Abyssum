@@ -228,7 +228,7 @@ SkinnedMeshRenderer:
     firstSubMesh: 0
     subMeshCount: 0
   m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
+  m_ProbeAnchor: {fileID: 7138403923136517686}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
   m_ReceiveGI: 1
@@ -479,6 +479,7 @@ Transform:
   m_Children:
   - {fileID: 759835450182091068}
   - {fileID: 6113854865677479311}
+  - {fileID: 7138403923136517686}
   - {fileID: 2195473974224925444}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -523,7 +524,6 @@ MonoBehaviour:
     m_Bits: 1025
   target: {fileID: 0}
   lastTargetLocation: {x: 0, y: 0, z: 0}
-  spawned: 0
   agent: {fileID: 0}
   anim: {fileID: 0}
   attackRange: 12
@@ -556,6 +556,8 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants: []
   _audio: {fileID: 6585142200658415723}
   grunt:
   - {fileID: 8300000, guid: 00d5874fc0254fb2f858564ff8190296, type: 3}
@@ -1597,6 +1599,36 @@ CapsuleCollider:
   m_Height: 0.0045
   m_Direction: 1
   m_Center: {x: -2.3797306e-10, y: 0.0017069161, z: 0.00003757493}
+--- !u!1 &5488087446576214118
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7138403923136517686}
+  m_Layer: 11
+  m_Name: LightAnchor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7138403923136517686
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5488087446576214118}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1423937652085240151}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5636894580183229882
 GameObject:
   m_ObjectHideFlags: 0
@@ -2169,7 +2201,7 @@ PrefabInstance:
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
 using DEEP.Entities;
+using DEEP.Entities.Player;
 
 using System.Collections;
 using System.Collections.Generic;
@@ -54,10 +55,10 @@ namespace DEEP.Weapons {
         {
 
             // Also uses player health as "ammo" for the weapon.
-            if (Player.Instance.CurrentHealth() > healthTribute)
-                Player.Instance.Damage(healthTribute, DamageType.IgnoreArmor);
+            if (PlayerController.Instance.entity.CurrentHealth() > healthTribute)
+                PlayerController.Instance.entity.Damage(healthTribute, DamageType.IgnoreArmor);
             else // If the player has less health than the tribute amount, fires but leaves it with 1 health.
-                Player.Instance.Damage(Player.Instance.CurrentHealth() - 1, DamageType.IgnoreArmor);
+                PlayerController.Instance.entity.Damage(PlayerController.Instance.entity.CurrentHealth() - 1, DamageType.IgnoreArmor);
 
             delayTimer = 0; // Resets the delay.
 
@@ -122,7 +123,7 @@ namespace DEEP.Weapons {
             for (int i = 0; i < allEntities.Length; i++) {
 
                 // Checks that the entity exists and is not the player.
-                if(allEntities[i] != null && allEntities[i].GetComponent<Player>() == null) {
+                if(allEntities[i] != null && allEntities[i].GetType() != typeof(PlayerEntity)) {
 
                     // Checks that the entity is visible.
                     if(!Physics.Linecast(bulletSpawn.position, allEntities[i].transform.position, burstVisibilityMask)) {

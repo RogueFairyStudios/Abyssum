@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Eletric
   prefab: {fileID: 9168991451539551708, guid: 8ee3152d118268a40ab3fa719e821630, type: 3}
+  icon: {fileID: 7750249385601683445, guid: b4a0386d64979f7438c8819e70c8992b, type: 3}

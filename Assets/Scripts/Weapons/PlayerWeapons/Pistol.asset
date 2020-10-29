@@ -15,3 +15,4 @@ MonoBehaviour:
   enabled: 0
   ammoId: Bullet
   prefab: {fileID: 9168991451539551708, guid: e13d2e8a82ea4934eb577e98568d7bca, type: 3}
+  icon: {fileID: -5262111214504444646, guid: 9d2acb80db25ab44b979918fdf36cda9, type: 3}

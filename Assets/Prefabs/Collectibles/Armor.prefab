@@ -59,6 +59,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
+  logText: Armor collected
+  logIcon: {fileID: 21300000, guid: 216a68fb9566b2a4e96340980876b259, type: 3}
+  logColor: {r: 0.25490198, g: 0.3647059, b: 0.70980394, a: 0.6}
   amount: 50
 --- !u!1001 &6310105049645675146
 PrefabInstance:

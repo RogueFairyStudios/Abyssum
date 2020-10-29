@@ -47,6 +47,7 @@ TrailRenderer:
   m_LightProbeUsage: 0
   m_ReflectionProbeUsage: 0
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -193,6 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   velocity: 35
   damage: 4
+  bulletHoleMaterial: {fileID: 2100000, guid: 5a7b6010721d2154bba439532266195d, type: 2}
+  bulletHoleScale: {x: 0.125, y: 0.125, z: 0.125}
   otherHitEffect: {fileID: 4981454918395137139, guid: f95ecb6af4d1666e79d4a55a8a4d97a7,
     type: 3}
 --- !u!1 &6237404013383432572

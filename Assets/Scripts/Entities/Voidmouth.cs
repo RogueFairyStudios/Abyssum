@@ -5,23 +5,23 @@ using DEEP.AI;
 namespace DEEP.Entities
 {
 
-    public class Voidmouth : EntityBase
+    public class Voidmouth : EnemyBase
     {
-        [SerializeField] AudioClip idleHum, persueHum;
+        [SerializeField] protected AudioClip idleHum = null, persueHum = null;
 
         [Tooltip("Sound that plays out when the enemy is hit.")]
-        [SerializeField] protected AudioClip[] damage;
+        [SerializeField] protected AudioClip[] damage = new AudioClip[0];
 
         [Tooltip("Sound that plays out when the enemy dies.")]
-        [SerializeField] protected AudioClip[] death;
+        [SerializeField] protected AudioClip[] death = new AudioClip[0];
 
 
-        [SerializeField] private AudioSource _audio, _audioloop;
-        private Animator _animator;
+        [SerializeField] protected AudioSource _audio = null, _audioloop = null;
+        protected Animator _animator;
 
-        private BaseEntityAI AI;
+        protected BaseEntityAI AI;
 
-        private void Awake()
+        protected override void Start()
         {
             _animator = GetComponentInChildren<Animator>();
             AI = GetComponentInChildren<BaseEntityAI>();
@@ -33,9 +33,11 @@ namespace DEEP.Entities
                 AI.OnLoseAggro += IdleHum;
 
             IdleHum();
+
+            base.Start();
         }
 
-        private void IdleHum()
+        protected void IdleHum()
         {
             if(_audioloop.clip != persueHum)
             {
@@ -45,7 +47,7 @@ namespace DEEP.Entities
             }
         }
 
-        private void PersueHum()
+        protected void PersueHum()
         {
             if(_audioloop.clip != persueHum)
             {
@@ -68,6 +70,10 @@ namespace DEEP.Entities
         }
 
         protected override void Die(){
+
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
 
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);

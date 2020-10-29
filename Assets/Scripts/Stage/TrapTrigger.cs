@@ -18,15 +18,16 @@ namespace DEEP.Stage
         private void OnTriggerEnter(Collider other)
         {
 
-            if (other.GetComponent<Player>() != null) {
+            if (other.tag != "Player")
+                return;
 
-                Debug.Log("Trap triggered.");
-                foreach (var trap in traps)
-                    trap.GetComponentInChildren<ITrappable>()?.ActivateTrap();
+            Debug.Log("Trap triggered.");
+            foreach (var trap in traps)
+                trap.GetComponentInChildren<ITrappable>()?.ActivateTrap();
 
-                Destroy(this.gameObject);
+            Destroy(this.gameObject);
 
-            }
+            
         }
 
 #if UNITY_EDITOR

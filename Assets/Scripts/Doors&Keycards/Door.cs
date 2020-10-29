@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 using DEEP.Stage;
 using DEEP.Entities;
+using DEEP.Entities.Player;
 
 namespace DEEP.DoorsAndKeycards {
 
@@ -75,7 +76,7 @@ namespace DEEP.DoorsAndKeycards {
 			if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Opening") || _animator.GetCurrentAnimatorStateInfo(0).IsName("Closing"))
 				return;
 			
-			if (!needKey || Player.Instance.keyInventory.HasKey(doorColor) && !isOpen) {
+			if (!needKey || PlayerController.Instance.keyInventory.HasKey(doorColor) && !isOpen) {
 				OpenDoor();
 			} else if(_source != null && !_source.isPlaying) {
 				_source.clip = lockedClip;

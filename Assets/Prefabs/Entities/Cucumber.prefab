@@ -512,6 +512,7 @@ SkinnedMeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -745,6 +746,8 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: e4ceb210b7e1daa4db80fb8c19ea824f,
     type: 3}
   conductorBox: {fileID: 0}
+  enemyRenderer: {fileID: 0}
+  materialVariants: []
   _audio: {fileID: 2472775610914529316}
   grunt: []
   minGruntInterval: 0
@@ -1123,6 +1126,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1147,6 +1151,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &8466713609464976239
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1192,7 +1197,7 @@ MonoBehaviour:
   ambientSpatialBlend: 0
   insideLiquidSound: {fileID: 8300000, guid: edc63d0b0c7407b48ab6898989d8ac49, type: 3}
   insideVolume: 0.1
-  feedbackType: 7
+  feedbackType: 2
 --- !u!1 &7650067990197141104
 GameObject:
   m_ObjectHideFlags: 0

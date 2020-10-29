@@ -15,4 +15,4 @@ MonoBehaviour:
   id: Shell
   ammo: 0
   maxAmmo: 50
-  icon: {fileID: 2431757279545825570, guid: 99c762247c1f93facabec571b52d1497, type: 3}
+  icon: {fileID: -9206853495540762817, guid: be02a4b62b4e5394bb87f6d555c66659, type: 3}

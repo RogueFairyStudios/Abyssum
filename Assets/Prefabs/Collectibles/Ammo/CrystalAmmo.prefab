@@ -46,6 +46,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   collectionSound: {fileID: 8300000, guid: 9a4b975cd7a6e3405a69ead44386d29f, type: 3}
+  logText: Crystal collected
+  logIcon: {fileID: 9196581803509727745, guid: e54dc161f541b544d8f3dfa54b04839d, type: 3}
+  logColor: {r: 0.5019608, g: 0.3254902, b: 0.15686275, a: 0.8}
   type: Crystal
   amount: 1
 --- !u!65 &4275474618342950811
@@ -116,6 +119,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -140,3 +144,4 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
