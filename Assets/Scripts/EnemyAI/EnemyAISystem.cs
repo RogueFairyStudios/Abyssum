@@ -156,6 +156,7 @@ namespace DEEP.AI
             {
                 if(!canShoot())
                     return;
+                    
                 bool attacked;
 
                 // Tries to attack and plays the animation on success.
