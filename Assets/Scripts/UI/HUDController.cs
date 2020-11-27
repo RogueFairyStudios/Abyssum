@@ -161,7 +161,7 @@ namespace DEEP.UI
             public void Message(string message, Sprite icon, Color color) {
 
                 text.color = color;
-                text.text = (StageManager.Instance != null) ? StageManager.Instance.GetDurationString() + ": " + message : "";
+                text.text = (StageManager.Instance != null) ? StageManager.GetDurationString(StageManager.Instance.GetDuration()) + ": " + message : "";
 
                 this.icon.color = color;
                 this.icon.sprite = icon;
@@ -469,7 +469,7 @@ namespace DEEP.UI
 
             // Constantly updates the speedrun clock.
             if(StageManager.Instance != null)
-                speedrun.SetStageTime(StageManager.Instance.GetDurationString());
+                speedrun.SetStageTime(StageManager.GetDurationString(StageManager.Instance.GetDuration()));
 
             // Constantly updates the statistics.
             statistics.UpdateStats();

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
 using DEEP.UI;
 using DEEP.Entities;
@@ -31,19 +32,8 @@ namespace DEEP.Stage
         }
         // ====================================================================================================================
 
-
-        [Tooltip("Name of this stage to be used in the UI.")]
-        [SerializeField] private string stageName = "no name";
-
-
-        [Tooltip("This level is the final stage of a Beta build (next stage is the BetaEnd scene).")]
-        [SerializeField] private bool isBetaEnd = false;
-
-        [Tooltip("This level is the final stage of a Beta build (next stage is the WebEnd scene).")]
-        [SerializeField] private bool isWebEnd = false;
-
-        [Tooltip("Next stage scene name (will be ignored if isBetaEnd or isWebEnd applies)")]
-        [SerializeField] private string nextStageSceneName = "no name";
+        [Tooltip("ScriptableObject with information about the stage")]
+        public StageInfo stageInfo;
 
         // Initial number of enemies in the stage.
         private int numStageEnemies;
@@ -74,8 +64,6 @@ namespace DEEP.Stage
 
         [Tooltip("If the player inventory should be reset on the start of the level.")]
         [SerializeField] private bool resetPlayerInventory = false;
-
-        
 
         // Stores if the level has already started.
         private bool canStart;
@@ -189,7 +177,7 @@ namespace DEEP.Stage
         }
 
         // Gets the stage name.
-        public string GetStageName() { return stageName; }
+        public string GetStageName() { return stageInfo.stageName; }
 
         // Initial number of enemies
         public int GetTotalEnemies() { return numStageEnemies; }
@@ -241,7 +229,10 @@ namespace DEEP.Stage
         public float GetDuration() { return duration; }
 
         // Get current time elapsed from the start of the level, without pauses and returns as a formated string.
-        public string GetDurationString() {  
+        public static string GetDurationString(float duration) {  
+
+            if(duration < 0)
+                return "-.--.-";
 
             float minutes = (int)Mathf.Floor(duration / 60);
             float seconds = (int)Mathf.Floor(duration - (minutes * 60));
@@ -254,15 +245,21 @@ namespace DEEP.Stage
         // Returns the name of the next stage to be loaded.
         public string GetNextStage() {
 
-            if(isBetaEnd) { return "BetaEnd"; }
+            if(stageInfo.isBetaEnd) { return "BetaEnd"; }
 
-            if(isWebEnd) {
+            if(stageInfo.isWebEnd) {
                 #if UNITY_WEBGL
                     return "WebEnd";
                 #endif
             }
 
-            return nextStageSceneName;
+            // Resets the game if there is no nextStage.
+            if(stageInfo == null) {
+                Debug.LogWarning("StageManager.GetNextStage: No next scene! Reseting game...");
+                return SceneManager.GetSceneByBuildIndex(0).name;
+            }
+
+            return stageInfo.nextStage.stageScene;
 
         }
 
