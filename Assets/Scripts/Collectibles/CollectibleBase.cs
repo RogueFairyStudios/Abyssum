@@ -23,6 +23,16 @@ namespace DEEP.Collectibles
         [Tooltip("Color to be used in the log message when collected.")]
         [SerializeField] protected Color logColor = new Color( 0.6f, 0.6f, 0.6f, 0.6f);
 
+        // An spawned weapon doesn't count as an item at the stage statistics.
+        private bool spawned = false;
+        [SerializeField] protected bool IsSpawned {
+
+            get {
+                return spawned;
+            }
+
+        }
+
         protected virtual void OnTriggerEnter(Collider other)
         {
 
@@ -37,7 +47,7 @@ namespace DEEP.Collectibles
                         other.GetComponent<PlayerController>().HUD.Log.Message(logText, logIcon, logColor);
 
                      // Count this item as collected.
-                    if(StageManager.Instance != null)
+                    if(!IsSpawned && StageManager.Instance != null)
                         StageManager.Instance.CountCollection();
 
                     // Destroys the object if the collectible is used.

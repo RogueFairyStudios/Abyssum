@@ -45,6 +45,18 @@ namespace DEEP.Entities
 
         }
 
+        // ====================================================================================================================
+
+        [Header("Drop")]
+
+        [Tooltip("Reference to the SkinnedMeshRenderer of this enemy.")]
+        [SerializeField] public GameObject dropItem;
+
+        [Tooltip("Where to spawn the dropped item.")]
+        [SerializeField] public Transform dropPoint;
+
+        // ====================================================================================================================
+
         protected override void Start()
         {
 
@@ -101,7 +113,11 @@ namespace DEEP.Entities
             // Counts this enemy's death as a kill.
             if(!IsSpawned)
                 StageManager.Instance.CountKill();
-                
+            
+            // Spawns the item drop.
+            if(dropItem != null)
+                Transform.Instantiate(dropItem, dropPoint.position, dropPoint.rotation);
+
             base.Die();
 
         }
