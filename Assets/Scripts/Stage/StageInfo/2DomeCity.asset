@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageName: The Dome
   stageScene: DomeCity
-  stagePAR: 180
+  stagePAR: -1
   banner: {fileID: 0}
   isBetaEnd: 1
   isWebEnd: 1

@@ -15,7 +15,7 @@ MonoBehaviour:
   stageName: Showcase
   stageScene: Showcase
   stagePAR: -1
-  banner: {fileID: 0}
+  banner: {fileID: 21300000, guid: d07c27161d3d5ef4d881255f911bea92, type: 3}
   isBetaEnd: 1
   isWebEnd: 1
   nextStage: {fileID: 0}
