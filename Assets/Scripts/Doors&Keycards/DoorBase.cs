@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 using DEEP.Stage;
 using DEEP.Entities;
-using DEEP.Entities.Player;
 
 namespace DEEP.DoorsAndKeycards {
 

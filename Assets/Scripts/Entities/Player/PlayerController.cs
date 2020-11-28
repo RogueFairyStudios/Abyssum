@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using DEEP.UI;
+using DEEP.HUD;
 using DEEP.Stage;
 using DEEP.Weapons;
 using DEEP.DoorsAndKeycards;

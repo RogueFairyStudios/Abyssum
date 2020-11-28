@@ -5706,9 +5706,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6119864056765809435}
+  - component: {fileID: 238142254317606415}
   - component: {fileID: 8863100666858291387}
   m_Layer: 9
-  m_Name: Horizontal
+  m_Name: Speedrun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5737,6 +5738,23 @@ RectTransform:
   m_AnchoredPosition: {x: 10, y: -10}
   m_SizeDelta: {x: 780, y: 96}
   m_Pivot: {x: 0, y: 1}
+--- !u!114 &238142254317606415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3855747133049860704}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4d9d058b70f878047ae90bd7f7d5bb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 3855747133049860704}
+  kills: {fileID: 2384278818940948714}
+  items: {fileID: 3249846713005336263}
+  secrets: {fileID: 309238249798658252}
+  time: {fileID: 1713303759370385018}
 --- !u!114 &8863100666858291387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6549,6 +6567,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8746844737722740620}
   - component: {fileID: 300170190029553585}
+  - component: {fileID: 5853076572344408287}
   - component: {fileID: 3259407355634123361}
   - component: {fileID: 6838484104482044672}
   - component: {fileID: 7787998791710397978}
@@ -6596,11 +6615,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 907e4923bfd7db1448af981202561636, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerInfo: {fileID: 5853076572344408287}
+  speedrun: {fileID: 238142254317606415}
+  statistics: {fileID: 5006232135679139770}
+  feedback: {fileID: 5491686894593166251}
+--- !u!114 &5853076572344408287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283851241659134986}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b1de6ed017fd4b418c2469e81a6dead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   health:
     counter: {fileID: 1692889408274677652}
     counterTitle: {fileID: 2919380925885429884}
-    defaultColor: {r: 0.30980393, g: 0.5882353, b: 0.19607843, a: 0.8}
-    overloadColor: {r: 0.19607843, g: 0.5882353, b: 0.5882353, a: 0.8}
+    defaultColor: {r: 0.30980393, g: 0.5882353, b: 0.19607845, a: 0.8}
+    overloadColor: {r: 0.19607845, g: 0.5882353, b: 0.5882353, a: 0.8}
   armor:
     counter: {fileID: 8734704725316728376}
   ammoAndWeapons:
@@ -6624,25 +6659,6 @@ MonoBehaviour:
   Log:
     text: {fileID: 7002745481521517611}
     icon: {fileID: 4284131068384042337}
-  speedrun:
-    panel: {fileID: 3855747133049860704}
-    kills: {fileID: 2384278818940948714}
-    items: {fileID: 3249846713005336263}
-    secrets: {fileID: 309238249798658252}
-    time: {fileID: 1713303759370385018}
-  statistics:
-    panel: {fileID: 8681107576870167828}
-    stats: {fileID: 2519899514619268362}
-    FPSSampleCount: 30
-    updateFPSDelay: 0.5
-  playerFeedback:
-    screenFeedback: {fileID: 430319725281076332}
-    duration: 0.1
-    damageFeedbackColor: {r: 0.43529412, g: 0.13725491, b: 0.13725491, a: 0.32156864}
-    toxicFeedbackColor: {r: 0.30980393, g: 0.3921569, b: 0.015686275, a: 0.18431373}
-    mudFeedbackColor: {r: 0.4339623, g: 0.29551372, b: 0.14124244, a: 0.19215687}
-    constantFeedbackActive: 0
-    currentConstantFeedbackColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!223 &3259407355634123361
 Canvas:
   m_ObjectHideFlags: 0
@@ -9527,6 +9543,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8421801095518936380}
   - component: {fileID: 8764460827616656366}
+  - component: {fileID: 5491686894593166251}
   - component: {fileID: 430319725281076332}
   m_Layer: 9
   m_Name: ScreenFeedback
@@ -9562,6 +9579,23 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6168318251205734836}
   m_CullTransparentMesh: 0
+--- !u!114 &5491686894593166251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6168318251205734836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 196eed83a71002a46a78a16fa8929e29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenFeedback: {fileID: 430319725281076332}
+  duration: 0.1
+  damageFeedbackColor: {r: 0.43529412, g: 0.13725491, b: 0.13725491, a: 0.32156864}
+  toxicFeedbackColor: {r: 0.30980393, g: 0.39215687, b: 0.015686275, a: 0.18039216}
+  mudFeedbackColor: {r: 0.43529412, g: 0.29411766, b: 0.14117648, a: 0.18039216}
 --- !u!114 &430319725281076332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11121,6 +11155,7 @@ GameObject:
   - component: {fileID: 6826678646685573754}
   - component: {fileID: 6173455072410313882}
   - component: {fileID: 1247283747071210756}
+  - component: {fileID: 5006232135679139770}
   m_Layer: 9
   m_Name: Stats
   m_TagString: Untagged
@@ -11187,6 +11222,22 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &5006232135679139770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8681107576870167828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5464d5886f5df6249ad6b9d53052222c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  panel: {fileID: 8681107576870167828}
+  stats: {fileID: 2519899514619268362}
+  FPSSampleCount: 30
+  updateFPSDelay: 0.5
 --- !u!1 &8806904297954531004
 GameObject:
   m_ObjectHideFlags: 0
@@ -11785,7 +11836,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 0.31531537, b: 0.31531537, a: 0.8}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:

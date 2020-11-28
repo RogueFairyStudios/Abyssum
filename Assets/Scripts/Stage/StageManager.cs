@@ -161,19 +161,19 @@ namespace DEEP.Stage
         // Counts an enemy kill.
         public void CountKill() { 
             numEnemiesKilled++; 
-            targetPlayer.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
+            targetPlayer.HUD.Speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
         }
 
         // Counts a collected item.
         public void CountCollection() { 
             numCollectiblesCollected++; 
-            targetPlayer.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            targetPlayer.HUD.Speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
         }
 
         // Counts a secret found.
         public void CountSecretFound() { 
             numSecretsFound++; 
-            targetPlayer.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
+            targetPlayer.HUD.Speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.

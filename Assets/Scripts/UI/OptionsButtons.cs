@@ -3,6 +3,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
+using DEEP.HUD;
 using DEEP.Entities.Player;
 
 namespace DEEP.UI { 
@@ -115,7 +116,7 @@ namespace DEEP.UI {
             // Tries to update speedrun HUD status.
             HUDController hud = FindObjectOfType<HUDController>();
             if(hud != null)
-                hud.speedrun.SetEnabled(isOn);
+                hud.Speedrun.SetEnabled(isOn);
         }
 
         // Enables or disables the statistics HUD.
@@ -125,7 +126,7 @@ namespace DEEP.UI {
             // Tries to update statistics HUD status.
             HUDController hud = FindObjectOfType<HUDController>();
             if(hud != null)
-                hud.statistics.SetEnabled(isOn);
+                hud.Statistics.SetEnabled(isOn);
         }
 
     }

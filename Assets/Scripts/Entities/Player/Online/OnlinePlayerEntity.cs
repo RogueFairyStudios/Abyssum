@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using DEEP.HUD;
 using DEEP.Entities;
 using DEEP.Entities.Player;
 
@@ -49,9 +50,9 @@ namespace DEEP.Online.Entities.Player
 
             // Plays the damage screen feedback when health decreases.
             if(newValue < oldValue)
-                ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
+                ownerPlayer.HUD.Feedback.StartScreenFeedback(FeedbackType.Damage);
 
-            ownerPlayer.HUD.health.SetValue(newValue, maxHealth);
+            ownerPlayer.HUD.Health.SetValue(newValue, maxHealth);
 
         }
 
@@ -66,9 +67,9 @@ namespace DEEP.Online.Entities.Player
 
             // Plays the damage screen feedback when armor decreases.
             if(newValue < oldValue)
-                ownerPlayer.HUD.StartScreenFeedback(UI.HUDController.FeedbackType.Damage);
+                ownerPlayer.HUD.Feedback.StartScreenFeedback(FeedbackType.Damage);
 
-            ownerPlayer.HUD.armor.SetValue(newValue, maxArmor); 
+            ownerPlayer.HUD.Armor.SetValue(newValue, maxArmor); 
 
         }
 

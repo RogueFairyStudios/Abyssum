@@ -33,7 +33,7 @@ namespace DEEP.Entities {
             if(obj.gameObject.CompareTag("Player"))
             {
                PlayerEntity player = obj as PlayerEntity;
-               player.Owner.HUD.StopConstantScreenFeedback();
+               player.Owner.HUD.Feedback.StopConstantScreenFeedback();
                GetComponent<LiquidSound>().Stop();
             }
          }
@@ -47,7 +47,7 @@ namespace DEEP.Entities {
             if(entitieList[i].gameObject.CompareTag("Player"))
             {
                PlayerEntity player = entitieList[i] as PlayerEntity;
-               player.Owner.HUD.StopConstantScreenFeedback();
+               player.Owner.HUD.Feedback.StopConstantScreenFeedback();
                GetComponent<LiquidSound>().Stop();
             }
          }

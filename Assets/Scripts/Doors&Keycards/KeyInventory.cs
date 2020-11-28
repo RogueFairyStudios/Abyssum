@@ -37,7 +37,7 @@ namespace DEEP.DoorsAndKeycards {
                 owner.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the collected keys on the HUD.
-            owner.HUD.keycards.UpdateValues(this);
+            owner.HUD.Keycards.UpdateValues(this);
 
         }
 

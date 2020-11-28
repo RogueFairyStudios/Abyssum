@@ -140,12 +140,12 @@ namespace DEEP.Weapons {
             bool[] weaponsEnabled = new bool[weaponInstances.Count];
             for(int i = 0; i < weaponInstances.Count; i++)
                 weaponsEnabled[i] = weaponInstances[i].Item1;
-            ownerPlayer.HUD.ammoAndWeapons.SetWeaponNumbers(weaponsEnabled);
+            ownerPlayer.HUD.AmmoAndWeapons.SetWeaponNumbers(weaponsEnabled);
 
             // Updates the current weapon icon on the HUD.
             if(currentWeapon != null) {
                 int curWeaponIndex = GetCurrentWeaponIndex();
-                ownerPlayer.HUD.ammoAndWeapons.SetCurrentWeapon(curWeaponIndex, weapons[curWeaponIndex].icon, ammoDict[currentWeapon.ammoSource.id].icon);
+                ownerPlayer.HUD.AmmoAndWeapons.SetCurrentWeapon(curWeaponIndex, weapons[curWeaponIndex].icon, ammoDict[currentWeapon.ammoSource.id].icon);
             }
 
         }
@@ -154,7 +154,7 @@ namespace DEEP.Weapons {
         protected virtual void UpdateAmmoHUD() {
             
             if(currentWeapon != null)
-               ownerPlayer.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+               ownerPlayer.HUD.AmmoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
         }
 
@@ -195,7 +195,7 @@ namespace DEEP.Weapons {
 
             currentWeapon.Shot();
             // Updates the ammo counter on the HUD.
-            ownerPlayer.HUD.ammoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
+            ownerPlayer.HUD.AmmoAndWeapons.SetAmmo(ammoDict[currentWeapon.ammoSource.id].ammo, ammoDict[currentWeapon.ammoSource.id].maxAmmo);
 
         }
 
