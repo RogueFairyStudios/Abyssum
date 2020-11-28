@@ -191,7 +191,7 @@ namespace DEEP.Entities.Player
 			RaycastHit hit;
 			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
 				try{
-					hit.collider.GetComponent<Door>().TryOpenDoor(ownerPlayer.Keys);
+					hit.collider.GetComponent<DoorBase>().TryOpenDoor(ownerPlayer.Keys);
 				} catch {
 					Debug.LogWarning("Couldn't access the ColorsDoor script from the object " + hit.collider.name);
 				}

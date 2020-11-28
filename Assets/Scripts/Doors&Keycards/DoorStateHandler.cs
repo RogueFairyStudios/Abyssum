@@ -11,14 +11,14 @@ namespace DEEP.DoorsAndKeycards
             
             if(stateInfo.IsName("Opening")) {
                 
-                Door door = animator.gameObject.GetComponent<Door>();
+                DoorBase door = animator.gameObject.GetComponent<DoorBase>();
                 door.OnStartOpening();
 
             }
 
             if(stateInfo.IsName("Closing")) {
                 
-                Door door = animator.gameObject.GetComponent<Door>();
+                DoorBase door = animator.gameObject.GetComponent<DoorBase>();
                 door.OnStartClosing();
 
             }
@@ -37,14 +37,14 @@ namespace DEEP.DoorsAndKeycards
           
             if(stateInfo.IsName("Opening")) {
                 
-                Door door = animator.gameObject.GetComponent<Door>();
+                DoorBase door = animator.gameObject.GetComponent<DoorBase>();
                 door.OnFinishOpening();
 
             }
 
             if(stateInfo.IsName("Closing")) {
                 
-                Door door = animator.gameObject.GetComponent<Door>();
+                DoorBase door = animator.gameObject.GetComponent<DoorBase>();
                 door.OnFinishClosing();
 
             }

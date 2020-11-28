@@ -564,7 +564,7 @@ MonoBehaviour:
   actualPoint: 0
   reversePatrol: 0
   angleReference: {fileID: 8487922507174213915}
-  reloadTime: 2
+  reloadTime: 5
   clipSize: 30
 --- !u!114 &1423937652085240148
 MonoBehaviour:
