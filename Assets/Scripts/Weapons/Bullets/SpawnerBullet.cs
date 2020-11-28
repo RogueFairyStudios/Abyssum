@@ -18,7 +18,7 @@ namespace DEEP.Weapons.Bullets {
 
 			// Spawns decal if avaliable.
 			if(bulletHoleMaterial != null) {
-				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
+				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.transform, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
 			}
 
 			//Destroys the object on collision.
