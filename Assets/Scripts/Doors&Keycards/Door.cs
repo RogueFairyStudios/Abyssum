@@ -1,11 +1,4 @@
-﻿using System.Collections;
-
-using UnityEngine;
-using UnityEngine.AI;
-
-using DEEP.Stage;
-using DEEP.Entities;
-using DEEP.Entities.Player;
+﻿using UnityEngine;
 
 namespace DEEP.DoorsAndKeycards {
 
@@ -20,9 +13,11 @@ namespace DEEP.DoorsAndKeycards {
 			if (lockState)
 				return;
 
-			Debug.Log("Trying to open the door");
+			# if UNITY_EDITOR
+				Debug.Log("Trying to open the door");
+			# endif
 
-			// Dont open the door during an animation.
+			// Don't open the door during an animation.
 			if(_animator.GetCurrentAnimatorStateInfo(0).IsName("Opening") || _animator.GetCurrentAnimatorStateInfo(0).IsName("Closing"))
 				return;
 			

@@ -34,18 +34,41 @@ namespace DEEP.Decals {
 
         }
 
-        public void PlaceDecal(Material material, Vector3 position, Vector3 normal, Vector2 scale) {
+        // Places a decal with the assigned material somewhere in the world.
+        public Renderer PlaceDecal(Material material, Vector3 position, Vector3 normal, Vector2 scale) {
 
+            // Gest decal from pool.
             Renderer decal = decalPool[currentDecal];
 
+            // Sets the decal material.
             decal.material = material;
+
+            // Clear any decal parent.
+            decal.transform.SetParent(null); 
+
+            // Sets the decal transform.
             decal.transform.position = position;
             decal.transform.LookAt(position - normal);
             decal.transform.localRotation *= Quaternion.Euler(0, 0, Random.Range(0, 180));
             decal.transform.localScale = new Vector3(scale.x, scale.y, 0.01f);
+
+            // Enables decal.
             decal.gameObject.SetActive(true);
 
+            // Updates the decal pool.
             currentDecal = (currentDecal + 1) % decalPool.Count;
+
+            return decal;
+
+        }
+
+         // Places a decal with the assigned material somewhere in the world and assigns it's parent.
+        public Renderer PlaceDecal(Material material, Transform parent, Vector3 position, Vector3 normal, Vector2 scale) {
+
+            // Places a decal and them sets it's parent.
+            Renderer decal = PlaceDecal(material, position, normal, scale);
+            decal.transform.SetParent(parent);
+            return decal;
 
         }
 

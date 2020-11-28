@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7726861723458695668}
   - component: {fileID: 5692047907694197194}
   - component: {fileID: 9012205918553615449}
-  m_Layer: 10
+  m_Layer: 17
   m_Name: graphics
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,8 +49,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isOpen: 0
   lockState: 0
-  needKey: 1
-  doorColor: 0
   autoClose: 1
   autoCloseDelay: 9
   clearanceHalfHeight: 3
@@ -61,6 +59,8 @@ MonoBehaviour:
   _navObstacle: {fileID: 6510697326932326908}
   _occlusion: {fileID: 597075885490484557}
   _collider: {fileID: 9012205918553615449}
+  needKey: 1
+  doorColor: 0
 --- !u!95 &5692047907694197194
 Animator:
   serializedVersion: 3
@@ -265,7 +265,7 @@ GameObject:
   - component: {fileID: 4130312449020485532}
   - component: {fileID: 2386033831403045729}
   - component: {fileID: 293534060640717281}
-  m_Layer: 17
+  m_Layer: 10
   m_Name: mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -309,6 +309,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -333,6 +334,7 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
 --- !u!65 &293534060640717281
 BoxCollider:
   m_ObjectHideFlags: 0
