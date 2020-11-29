@@ -11,11 +11,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: ac16f3b637c739b4693ce1e542347084, type: 2}
+      objectReference: {fileID: 2100000, guid: 9d599b9aea75ad74fa34b68a939f4de8, type: 2}
     - target: {fileID: 6254390015456322991, guid: 5934c8b1585d0b042bd1273c62cbcd36,
         type: 3}
       propertyPath: m_Name
       value: WallLight Blue - OFF
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
         type: 3}
@@ -34,6 +39,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0.7071068
       objectReference: {fileID: 0}
@@ -45,16 +55,6 @@ PrefabInstance:
     - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.7071068
-      objectReference: {fileID: 0}
-    - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,
-        type: 3}
-      propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6960127733482444732, guid: 5934c8b1585d0b042bd1273c62cbcd36,

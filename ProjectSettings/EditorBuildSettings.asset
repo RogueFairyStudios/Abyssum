@@ -18,7 +18,7 @@ EditorBuildSettings:
     path: Assets/Scenes/DomeCity.unity
     guid: 6311dbca59ef74e42ae158fe314bffc8
   - enabled: 1
-    path: Assets/Scenes/Lab_Cabral.unity
+    path: Assets/Scenes/DEV/Lab_Cabral.unity
     guid: 7d793b68a4273e54b8fbd79577cbb146
   - enabled: 1
     path: Assets/Scenes/Elevator.unity
