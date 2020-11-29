@@ -7,19 +7,17 @@ using DEEP.HUD;
 namespace DEEP.Entities.Player
 {
 
-    // Class that controls the Player.
+    // ========================================================================================================================
+    // Entity class for the player.
+    // ========================================================================================================================
     public class PlayerEntity : EntityBase
     {
     
+        // PlayerController that owns this script.
         protected PlayerController ownerPlayer;
-
         public PlayerController Owner {
-            get {
-                return ownerPlayer;
-            }
-            set {
-                ownerPlayer = value;
-            }
+            get { return ownerPlayer; }
+            set { ownerPlayer = value; }
         }
 
         [Header("Armor")] // ==================================================================================================
@@ -44,12 +42,13 @@ namespace DEEP.Entities.Player
 
         }
 
+        // Does damage to the player.
         public override void Damage(int amount, DamageType type) {
 
             // Saves the old value.
             int prevHealth = CurrentHealth();
 
-            // Initially all damage is to the health.
+            // Does damage to the armor first, them does the remaining damage to health.
             int healthDamage = amount - DamageArmor(amount, type);
 
             // Decreases the health.
@@ -67,8 +66,7 @@ namespace DEEP.Entities.Player
             int prevArmor = CurrentArmor();
 
             // If damage ignores armor, returns 0.
-            if (type == DamageType.IgnoreArmor)
-                return 0;
+            if (type == DamageType.IgnoreArmor) return 0;
 
             // Calculates the percent of damage that should be absorbed by armor.
             float armorAbsorption = Mathf.Clamp(armor / maxArmor, minArmorAbsorption, 1f);
@@ -87,14 +85,13 @@ namespace DEEP.Entities.Player
 
         }
 
+        // Kills the player.
         protected override void Die() {
-
-            Debug.Log("Player died!");
-            
+            Debug.Log("Player died!");     
             ownerPlayer.Die();
-
         }
 
+        // Heals player health.
         public virtual bool Heal(int amount, HealType type, AudioClip feedbackAudio) 
         {
 

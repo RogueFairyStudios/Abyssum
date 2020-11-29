@@ -5,24 +5,32 @@ using UnityEngine;
 using DEEP.Entities.Player;
 
 namespace DEEP.DoorsAndKeycards {
-
+        
+    // ========================================================================================================================
+    // Contains the player's key inventory.
+    // ========================================================================================================================
 	public class KeyInventory {
 
-		// Player that owns this inventory.
-		PlayerController owner;
+		// PlayerController that owns this script.
+		protected PlayerController ownerPlayer;
+		public PlayerController Owner {
+            get { return ownerPlayer; }
+            set { ownerPlayer = value; }
+        }
 
 		// Colors on the inventory.
 		public HashSet<KeysColors> inventory;
 
-		// Start is called before the first frame update
-		public KeyInventory(PlayerController owner) {
+		public KeyInventory() {
 
 			Debug.Log("Initializing KeyInventory...");
 
-			this.owner = owner;
+			// Creates the HashSet of Keys
 			inventory = new HashSet<KeysColors>();
 
-			Debug.Log("Creating new HashSet for the KeysInventory. Inventory size = " + inventory.Count);
+			# if UNITY_EDITOR
+				Debug.Log("Creating new HashSet for the KeysInventory. Inventory size = " + inventory.Count);
+			# endif
 
 		}
 
@@ -34,10 +42,10 @@ namespace DEEP.DoorsAndKeycards {
 
             // Plays the player feedback sound.
             if(feedbackAudio != null)
-                owner.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
+                ownerPlayer.feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
 
             // Updates the collected keys on the HUD.
-            owner.HUD.Keycards.UpdateValues(this);
+            ownerPlayer.HUD.Keycards.UpdateValues(this);
 
         }
 

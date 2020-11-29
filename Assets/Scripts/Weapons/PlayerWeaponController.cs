@@ -6,19 +6,18 @@ using UnityEngine;
 using DEEP.Entities.Player;
 
 namespace DEEP.Weapons {
-
+ 
+    // ========================================================================================================================
+    // Class that manages the player's weapons.
+    // ========================================================================================================================
     public class PlayerWeaponController : MonoBehaviour
     {
 
+        // PlayerController that owns this script.
         protected PlayerController ownerPlayer;
-
         public PlayerController Owner {
-            get {
-                return ownerPlayer;
-            }
-            set {
-                ownerPlayer = value;
-            }
+            get { return ownerPlayer; }
+            set { ownerPlayer = value; }
         }
 
         [Tooltip("All of the player weapons.")]

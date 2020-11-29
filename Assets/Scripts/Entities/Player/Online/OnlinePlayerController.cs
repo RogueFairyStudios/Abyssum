@@ -69,7 +69,7 @@ namespace DEEP.Online.Entities.Player
         }
 
         // Sets the timeScale, used by the TogglePause function.
-        protected override void SetTimeScale(float scale) { /* You can't pause an online game! */ }
+        protected override void SetTime(float scale) { /* You can't pause an online game! */ }
 
         public void Disconnect() {
 

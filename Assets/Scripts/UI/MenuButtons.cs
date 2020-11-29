@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+using DEEP.Stage;
 
 namespace DEEP.UI { 
 
@@ -25,6 +26,12 @@ namespace DEEP.UI {
             Debug.Log("Opening URL " + url + "...");
             Application.OpenURL(url);
         }
+
+        public void NextLevel() { SceneManager.LoadSceneAsync(StageManager.Instance.GetNextStage()); }
+
+        public void RestartGame() { SceneManager.LoadSceneAsync(0); }
+
+        public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
         
     }
 
