@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+
+using UnityEngine;
 
 using DEEP.Utility;
 using DEEP.Pooling;
@@ -33,12 +35,16 @@ namespace DEEP.Entities
         [Tooltip("Prefab to be spawned when the entity dies.")]
         [SerializeField] protected GameObject deathPrefab = null;
 
+        [Tooltip("Delay between dying and despawning the entities.")]
+        [SerializeField] protected float despawnDeathDelay = 0.0f;
+
+        // Used to ensure Die(), can't be called twice.
+        protected bool isDead;
+
         [Tooltip("Reference to the ConductorBox that represents the conductive range of this entity.")]
         [SerializeField] public ConductorBox conductorBox;
         protected float baseSpeed;
 
-        // Used to ensure Die(), can't be called twice.
-        protected bool isDead;
 
         protected virtual void Start()
         {
@@ -96,27 +102,54 @@ namespace DEEP.Entities
 
         }
 
-        // "Kills" an entity.
-        protected virtual void Die() {
-
-            // Checks if the entity isn't already dead.
-            if(isDead)
-                return;
-            isDead = true;
-
-            if(deathPrefab != null) // Spawns a prefab after death if assigned.
-                PoolingSystem.Instance.PoolObject(deathPrefab, transform.position, transform.rotation);
-
-            Destroy(gameObject);
-
-        }
-
         // Called when health changes.
         protected virtual void OnChangeHealth(int oldValue, int newValue) { 
             
             // Verifies if the entity died.
             if(health <= 0)
                 Die();
+
+        }
+
+        // "Kills" an entity.
+        protected virtual void Die() {
+
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
+
+            if(despawnDeathDelay <= 0.0f)
+                Despawn();
+            else
+                StartCoroutine(DespawnDelay());
+                
+            isDead = true;
+
+        }
+        
+        // Despawns after a certain amount of time.
+        protected virtual IEnumerator DespawnDelay()
+        {
+
+            // Waits for the delay.
+            float time = 0;
+            while(time < despawnDeathDelay) // Waits for the delay.
+            {
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+            }
+
+            Despawn();
+
+        }
+
+        // Destroys the entity and spawns death prefab if available.
+        protected virtual void Despawn() {
+
+            if(deathPrefab != null) // Spawns a prefab after death if assigned.
+                PoolingSystem.Instance.PoolObject(deathPrefab, transform.position, transform.rotation);
+
+            Destroy(gameObject);
 
         }
 

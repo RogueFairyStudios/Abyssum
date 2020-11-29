@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 
 using UnityEngine;
 
@@ -87,9 +88,21 @@ namespace DEEP.Entities.Player
 
         // Kills the player.
         protected override void Die() {
+            
+            // Checks if the entity isn't already dead.
+            if(isDead)
+                return;
+
+            base.Die();
+
             Debug.Log("Player died!");     
-            ownerPlayer.Die();
+            ownerPlayer.PlayerDie();
+
+            isDead = true;
+            
         }
+
+        protected override void Despawn() { ownerPlayer.PlayerDespawn();}
 
         // Heals player health.
         public virtual bool Heal(int amount, HealType type, AudioClip feedbackAudio) 

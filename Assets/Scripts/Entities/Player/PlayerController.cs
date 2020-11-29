@@ -102,7 +102,7 @@ namespace DEEP.Entities.Player
         [SerializeField] protected AudioClip[] playerDeath;
 
         // Handles the Player entity's death.
-        public void Die() {
+        public void PlayerDie() {
             
             // Avoids zombie deaths
             if(CurrentState != State.Playing) return;
@@ -115,23 +115,10 @@ namespace DEEP.Entities.Player
             feedbackAudioSource.PlayOneShot(playerDeath[Random.Range(0, playerDeath.Length)], 1.0f);
             deathScreen.SetActive(true);
 
-            // Shows the menu after some time.
-            StartCoroutine(ShowDeathMenu());
-
         }
 
-        // Shows death menu after a certain amount of time.
-        protected IEnumerator ShowDeathMenu()
-        {
-
-            // Waits for the delay.
-            float time = 0;
-            while(time < 2.0f) // Waits for the delay.
-            {
-                time += Time.fixedDeltaTime;
-                yield return new WaitForFixedUpdate();
-            }
-
+        public void PlayerDespawn() {
+            
             // Finishes the game and shows the death menu.
             CurrentState = State.End;
             deathMenu.SetActive(true);

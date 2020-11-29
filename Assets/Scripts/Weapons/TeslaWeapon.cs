@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using DEEP.Pooling;
 using DEEP.Utility;
 using DEEP.Entities;
 
@@ -100,7 +101,7 @@ namespace DEEP.Weapons
 
                     // Spawn the blood splatter effect if avaliable and hit a player or enemy.
                     if (entity.bloodEffect != null)
-                        Instantiate(entity.bloodEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                        PoolingSystem.Instance.PoolObject(entity.bloodEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
 
                     if (entity.conductorBox != null)
                         conductorsActivated = entity.conductorBox.Electrify(chainDamage);

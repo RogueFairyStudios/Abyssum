@@ -4,7 +4,7 @@ using DEEP.AI;
 
 namespace DEEP.Entities{
 
-    [RequireComponent(typeof(BaseEntityAI))]
+    //[RequireComponent(typeof(BaseEntityAI))]
     public class Enemy : EnemyBase
     {
 
@@ -94,10 +94,25 @@ namespace DEEP.Entities{
             if(isDead)
                 return;
 
+            base.Die();
+
+            // Plays a random death sound.
             if(death.Length > 0)
                 AudioSource.PlayClipAtPoint(death[Random.Range(0, death.Length)], transform.position, _audio.volume);
 
-            base.Die();
+            if(AI is EnemyAISystem navmeshAI) {
+
+                EnemyAISystem aiSystem = (EnemyAISystem)AI;
+
+                // Plays the death animation.
+                aiSystem.anim.SetBool("Dead", true);
+
+                // Destroys the AI.
+                aiSystem.SelfDestroy();
+
+            }
+
+            isDead = true;
             
         }
 

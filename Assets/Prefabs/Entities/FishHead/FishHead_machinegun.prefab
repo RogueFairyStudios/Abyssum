@@ -585,9 +585,11 @@ MonoBehaviour:
     type: 3}
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
+  despawnDeathDelay: 1
   conductorBox: {fileID: 0}
   enemyRenderer: {fileID: 0}
   materialVariants: []
+  gibThreshold: 20
   dropItem: {fileID: 4942178168644201908, guid: 51411342e133010609407070dcbd4c6f,
     type: 3}
   dropPoint: {fileID: 378356573822525327}
@@ -1312,6 +1314,7 @@ GameObject:
   m_Component:
   - component: {fileID: 759835450182091068}
   - component: {fileID: 7206174543550803014}
+  - component: {fileID: 8111751396348614055}
   m_Layer: 11
   m_Name: FishHead
   m_TagString: Untagged
@@ -1346,7 +1349,7 @@ Animator:
   m_GameObject: {fileID: 4382041504459043631}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 021a66b7e1c19f242bd267dadef88531, type: 3}
-  m_Controller: {fileID: 9100000, guid: cafedde5c5243b240a5ee9c099dc7f9f, type: 2}
+  m_Controller: {fileID: 9100000, guid: 2479de0cb5bb31d45967fa2729da90ff, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1355,6 +1358,23 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8111751396348614055
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4382041504459043631}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c60168127fd4d2ac6983dcb5f50fe7fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parameterName: Weapon
+  parameterType: 0
+  parameterIntValue: 2
+  parameterFloatValue: 1
+  parameterBooleanValue: 1
 --- !u!1 &4807154188449662102
 GameObject:
   m_ObjectHideFlags: 0

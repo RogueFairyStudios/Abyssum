@@ -1,7 +1,8 @@
+using System.Collections;
+
 using UnityEngine;
 
 using DEEP.Stage;
-
 using DEEP.Entities.Player;
 
 namespace DEEP.Entities
@@ -30,10 +31,13 @@ namespace DEEP.Entities
         [Header("Rendering")]
 
         [Tooltip("Reference to the SkinnedMeshRenderer of this enemy.")]
-        [SerializeField] public SkinnedMeshRenderer enemyRenderer;
+        public SkinnedMeshRenderer enemyRenderer;
 
         [Tooltip("Material variants for this enemy, one will be picked at random at start, leave empty for no variants.")]
-        [SerializeField] public Material[] materialVariants = null;
+        public Material[] materialVariants = null;
+        
+        [Tooltip("Amount of extra damage below 0 for the enemy to be instantly gibbed.")]
+        [SerializeField] protected int gibThreshold = 30;
 
         // An spawned enemy doesn't count as a kill at the stage statistics.
         private bool spawned = false;
@@ -110,6 +114,8 @@ namespace DEEP.Entities
             if(isDead)
                 return;
 
+            base.Die();
+
             // Counts this enemy's death as a kill.
             if(!IsSpawned)
                 StageManager.Instance.CountKill();
@@ -117,10 +123,30 @@ namespace DEEP.Entities
             // Spawns the item drop.
             if(dropItem != null)
                 Transform.Instantiate(dropItem, dropPoint.position, dropPoint.rotation);
-
-            base.Die();
+                
+            isDead = true;
 
         }
+
+        // Despawns after a certain amount of time.
+        protected override IEnumerator DespawnDelay() {
+
+            // Waits for the delay.
+            float time = 0;
+            while(time < despawnDeathDelay) { // Waits for the delay.
+                
+                // Gibs if receiving a certain amount of extra damage.
+                if(health < -gibThreshold)
+                    break;
+
+                time += Time.fixedDeltaTime;
+                yield return new WaitForFixedUpdate();
+
+            }
+
+            Despawn();
+
+        }                       
 
     }
 }

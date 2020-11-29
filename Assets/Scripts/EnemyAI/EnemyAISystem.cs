@@ -293,6 +293,15 @@ namespace DEEP.AI
             }
         }
 
+        // Rests path and destroys itself;
+        public virtual void SelfDestroy() {
+
+            if(agent.hasPath)
+                agent.ResetPath();
+            Destroy(this);
+
+        }
+
 #if UNITY_EDITOR
 
         void OnDrawGizmos()

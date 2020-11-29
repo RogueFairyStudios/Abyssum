@@ -437,6 +437,7 @@ MonoBehaviour:
   bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
     type: 3}
   deathPrefab: {fileID: 0}
+  despawnDeathDelay: 2
   conductorBox: {fileID: 0}
   armor: 0
   maxArmor: 100
@@ -935,22 +936,22 @@ PrefabInstance:
     - target: {fileID: 3838623338403693997, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3838623338403693997, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3838623338403693997, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 118
       objectReference: {fileID: 0}
     - target: {fileID: 3838623338403693997, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 4116817931459469765, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
@@ -1150,22 +1151,22 @@ PrefabInstance:
     - target: {fileID: 6874168473169783807, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874168473169783807, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6874168473169783807, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 6874168473169783807, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 6928868087595320493, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
@@ -1200,22 +1201,22 @@ PrefabInstance:
     - target: {fileID: 7641559796714402480, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7641559796714402480, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7641559796714402480, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 22
       objectReference: {fileID: 0}
     - target: {fileID: 7641559796714402480, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -48
       objectReference: {fileID: 0}
     - target: {fileID: 7688362859806436773, guid: 359ec69b08e9e274ea7acb88b724c97d,
         type: 3}
