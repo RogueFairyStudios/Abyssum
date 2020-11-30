@@ -83,7 +83,7 @@ namespace DEEP.Stage
         {
             // Ensures theres only one instance of this script.
             if (instance != null) {
-                Debug.LogError("StageInfo: more than one instance of singleton found!");
+                Debug.Log("StageInfo: more than one instance of singleton found! Overwriting...");
                 Destroy(Instance.gameObject);
             }
             instance = this;
