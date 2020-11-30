@@ -3854,11 +3854,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   optionsMenu: {fileID: 3388724826401187506}
-  defaultCutsceneStage: {fileID: 11400000, guid: 2297b5414f2d9b94cafbe2c5a575eebc,
+  defaultCutsceneLevel: {fileID: 11400000, guid: 2297b5414f2d9b94cafbe2c5a575eebc,
     type: 2}
+  background: {fileID: 364618838}
   mainMenu: {fileID: 2109419656}
   loadingScreen: {fileID: 1431765829}
-  background: {fileID: 364618838}
 --- !u!1 &833119330
 GameObject:
   m_ObjectHideFlags: 0

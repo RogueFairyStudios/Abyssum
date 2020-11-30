@@ -1,6 +1,4 @@
-﻿using System.Collections;
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 using DEEP.Stage;
@@ -10,17 +8,14 @@ namespace DEEP.UI {
     public class MainMenu : MenuButtons
     {
 
-        Scene menuScene;
-        Scene cutScene;
+        string menuScene;
 
-        [SerializeField] StageInfo defaultCutsceneStage = null;
-
-        [SerializeField] GameObject mainMenu = null;
-
-        [SerializeField] GameObject loadingScreen = null;
+        [SerializeField] StageInfo defaultCutsceneLevel = null;
 
         [SerializeField] GameObject background = null;
 
+        [SerializeField] GameObject mainMenu = null;
+        [SerializeField] GameObject loadingScreen = null;
 
         void Start() {
 
@@ -28,19 +23,16 @@ namespace DEEP.UI {
             DontDestroyOnLoad(gameObject);         
 
             // Gets the name of the original menu scene.
-            menuScene = SceneManager.GetActiveScene();
+            menuScene = SceneManager.GetActiveScene().name;
 
             // Loads the cutscene scene.
             SceneManager.sceneLoaded += OnCutsceneSceneLoaded;
-            SceneManager.LoadSceneAsync(defaultCutsceneStage.stageScene, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(defaultCutsceneLevel.stageScene, LoadSceneMode.Additive);
 
         }
 
         void OnCutsceneSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-
-            // Saves a cutscene reference.
-            cutScene = scene;
 
             // Unloads the original menu scene.
             SceneManager.UnloadSceneAsync(menuScene);
@@ -48,25 +40,30 @@ namespace DEEP.UI {
             // Disables the background.
             background.SetActive(false);
 
-            // Shows the main menu.
-            mainMenu.SetActive(true);
+            // Enables the main menu.
             loadingScreen.SetActive(false);
+            mainMenu.SetActive(true);
 
             SceneManager.sceneLoaded -= OnCutsceneSceneLoaded;
 
         }
 
-        public override void LoadLevel(string sceneName){
+        public override void LoadLevel(string levelName){
 
-            Debug.Log("Loading " + sceneName + "...");
+            Debug.Log("Loading " + levelName + "...");
             
-            Debug.Log(sceneName + "/" + defaultCutsceneStage.stageScene);
-            if(sceneName == defaultCutsceneStage.stageScene) {
+            Debug.Log(levelName + "/" + defaultCutsceneLevel.stageScene);
+            if(levelName == defaultCutsceneLevel.stageScene) {
                 
                 Debug.Log("Scene already loaded!");
                 OnSceneAlreadyLoaded();
 
-            } else { StartCoroutine(SwapScene(sceneName)); }
+            } else {
+
+                SceneManager.LoadScene(levelName, LoadSceneMode.Single);
+                SceneManager.sceneLoaded += OnSceneLoaded;
+
+            }
 
         }
 
@@ -77,30 +74,9 @@ namespace DEEP.UI {
 
         }
 
-        IEnumerator SwapScene(string sceneName) { 
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode) { 
 
-            AsyncOperation loadAsync = null;
-            AsyncOperation unloadAsync = null; 
-            
-            // Loads the target scene and waits.
-            loadAsync = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
-            while(!loadAsync.isDone) {
-
-                // Waits for when scene activation stage is close.
-                if(loadAsync.progress >= 0.85f) {
-
-                    // Enables background.
-                    background.SetActive(true);
-
-                }
-                yield return null;
-
-            }
-
-            // Unloads the cutscene and waits.
-            unloadAsync = SceneManager.UnloadSceneAsync(cutScene);
-            while(!unloadAsync.isDone) yield return null;
-
+            SceneManager.sceneLoaded -= OnSceneLoaded;
             OnSceneAlreadyLoaded(); 
 
         }
