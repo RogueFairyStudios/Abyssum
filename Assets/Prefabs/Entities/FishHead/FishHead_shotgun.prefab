@@ -185,7 +185,7 @@ MonoBehaviour:
     type: 3}
   maxBulletInstances: 128
   delayBetweenShots: 1.2
-  shotClip: {fileID: 8300000, guid: 805ac1c11c4e80afd9b45c5fddb53ccd, type: 3}
+  shotClip: {fileID: 8300000, guid: cd76cf89f2e1c0a4e89302baffaa3afd, type: 3}
   noAmmoCLip: {fileID: 8300000, guid: 408daba4ba0907c87bdce6102b149fd7, type: 3}
   pelletsPerShot: 12
   shotSpreadAngle: 15

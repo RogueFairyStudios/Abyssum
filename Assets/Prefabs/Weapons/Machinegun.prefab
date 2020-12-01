@@ -15083,5 +15083,5 @@ MonoBehaviour:
     type: 3}
   maxBulletInstances: 64
   delayBetweenShots: 0.1
-  shotClip: {fileID: 8300000, guid: 8fbbcb7dec5e59870a6cf3ef8de8f7d2, type: 3}
-  noAmmoCLip: {fileID: 8300000, guid: 805a061830ad6591cb0ef29fb7c10735, type: 3}
+  shotClip: {fileID: 8300000, guid: 5f89ff9303621e148a92c37c638fb6c6, type: 3}
+  noAmmoCLip: {fileID: 8300000, guid: dc7ee723d4aa73449a2afa2d7f775479, type: 3}
