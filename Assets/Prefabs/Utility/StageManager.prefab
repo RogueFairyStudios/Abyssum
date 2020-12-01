@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6838176599197860206}
   - component: {fileID: 3277411033102125022}
   m_Layer: 0
-  m_Name: StageInfo
+  m_Name: StageManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,10 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c6a2479bf6e882e6bbbc0a94fe21394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageName: no name
-  isBetaEnd: 0
-  isWebEnd: 0
-  nextStageSceneName: no name
+  stageInfo: {fileID: 0}
   playerPrefab: {fileID: 784329731769305155, guid: edd4274b99418424cbc6f535c9afb112,
     type: 3}
   playerSpawn: {fileID: 0}
+  resetPlayerInventory: 0
+  cutscene:
+    cutsceneObjects: []
+    inGameObjects: []
