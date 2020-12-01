@@ -3,6 +3,7 @@
 using System.Collections;
 
 using DEEP.Stage;
+using DEEP.Pooling;
 
 namespace DEEP.Entities
 {
@@ -56,7 +57,7 @@ namespace DEEP.Entities
             }
 
             if (deathPrefab != null) // Spawns a prefab after death if assigned.
-                Instantiate(deathPrefab, transform.position, transform.rotation);
+                PoolingSystem.Instance.PoolObject(deathPrefab, transform.position, transform.rotation);
 
             // Moves the object to "fade" the pool.
             StartCoroutine(DyingFade());

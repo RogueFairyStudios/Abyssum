@@ -18,8 +18,10 @@ namespace DEEP.Pooling {
             this.gameObject.SetActive(false);
             if(origin != null)
                 origin.Return(this.gameObject);
-            else // !FIX
-                Debug.LogWarning("FIXME - DEEP.Pooling.PoolableObject.Despawn: Origin not found! (" + transform.name + ")");
+            else {
+                Debug.LogWarning("FIXME - DEEP.Pooling.PoolableObject.Despawn: Origin not found! Destroying... (" + transform.name + ")");
+                Destroy(this.gameObject);
+            }
 
         }
 
