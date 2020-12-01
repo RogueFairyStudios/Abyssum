@@ -26,8 +26,14 @@ namespace DEEP.Weapons {
         // Stores the weapons instances with their info.
         protected List<Tuple<bool, WeaponBase>> weaponInstances;
 
-        [Tooltip("Where Player weapons should be.")]
-        public Transform weaponPosition;
+        [Tooltip("The parent that all weapons should be assigned to.")]
+        public Transform weaponParent;
+
+        [Tooltip("Where Player weapons should be, when positioned on the center side..")]
+        public Transform weaponCenterPosition;
+
+        [Tooltip("Where Player weapons should be, when positioned on the right side.")]
+        public Transform weaponRightSidePosition;
 
         // Stores the current weapon.
         [SerializeField] public WeaponBase currentWeapon;
@@ -36,6 +42,9 @@ namespace DEEP.Weapons {
         public List<AmmoSource> ammoTypes;
         // Stores a dictionary with the AmmoSource instances.
         private Dictionary<string, AmmoSource> ammoDict;
+
+        // Script used to retract the weapon.
+        protected WeaponRetract weaponRetract;
 
         protected virtual void Start() {
 
@@ -47,7 +56,16 @@ namespace DEEP.Weapons {
 
             // Creates the the weapons.
             foreach (PlayerWeapon weapon in weapons)
-                CreateWeapon(weapon, weaponPosition);
+                CreateWeapon(weapon, weaponParent);
+
+            // Searches the weapons retract script.
+            weaponRetract = GetComponentInChildren<WeaponRetract>();
+
+            // Correctly position the weapons.
+            if(PlayerPrefs.HasKey("RightSideWeapon") && PlayerPrefs.GetInt("RightSideWeapon") == 1)
+                SetRightSideWeapon(true);
+            else 
+                SetRightSideWeapon(false);
 
             // Shows current weapons on the HUD.
             UpdateWeaponHUD();
@@ -329,7 +347,22 @@ namespace DEEP.Weapons {
         }
 
         // Hides the player's weapons.
-        public virtual void DisableWeapons() { weaponPosition.gameObject.SetActive(false); }
+        public virtual void DisableWeapons() { weaponParent.gameObject.SetActive(false); }
+
+        // Puts the weapon on the right side of the screen or back at the center.
+        public virtual void SetRightSideWeapon(bool enabled) {
+
+            // Corrects the position.
+            if(enabled) 
+                weaponParent.localPosition = weaponRightSidePosition.localPosition;
+            else 
+                weaponParent.localPosition = weaponCenterPosition.localPosition;
+
+            // Corrects the weapon retract origin if needed.
+            if(weaponRetract != null)
+                weaponRetract.SetOrigin(weaponParent.localPosition);
+
+        }
 
     }
 

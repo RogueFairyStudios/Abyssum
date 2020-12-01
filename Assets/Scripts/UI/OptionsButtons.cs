@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 using DEEP.HUD;
+using DEEP.Weapons;
 using DEEP.Entities.Player;
 
 namespace DEEP.UI { 
@@ -12,6 +13,8 @@ namespace DEEP.UI {
     {
 
         [SerializeField] Slider mouseSensitivity = null;//mouse sensitivity slider
+        [SerializeField] Toggle rightSideWeapon = null;// Weapon on the right side of the screen toggle
+
         [SerializeField] Toggle fullscreen = null;//fullscreen toggle
         [SerializeField] Dropdown quality = null;//dropdown quality
         [SerializeField] Dropdown resolutionDropdown = null;//Dropdown resolution
@@ -26,10 +29,15 @@ namespace DEEP.UI {
         public void Awake()
         {
             
-            //pega o valor inicial do volume
+            //pega o valor inicial da sensibilidade do mouse
             if(!PlayerPrefs.HasKey("Mouse sensitivity"))
                 PlayerPrefs.SetFloat("Mouse sensitivity", 7.0f);
             mouseSensitivity.value = PlayerPrefs.GetFloat("Mouse sensitivity");
+
+            // Gets initial right side weapon value.
+            if(!PlayerPrefs.HasKey("RightSideWeapon"))
+                PlayerPrefs.SetInt("RightSideWeapon", 0);
+            rightSideWeapon.isOn = (PlayerPrefs.GetInt("RightSideWeapon") != 0);
 
             resolution = Screen.resolutions;//get the possible resolutions 
             resolutionDropdown.ClearOptions();//clear the dropdown
@@ -82,6 +90,17 @@ namespace DEEP.UI {
             if(movementation != null)
                 movementation.SetMouseSensitivity(PlayerPrefs.GetFloat("Mouse sensitivity"));
 
+        }
+
+        // Enables or disables weapon on the right side.
+        public void SetRightSideWeapon(bool isOn)
+        {
+            PlayerPrefs.SetInt("RightSideWeapon", isOn ? 1 : 0);
+            // Tries to update weapon position.
+            PlayerWeaponController weaponController = FindObjectOfType<PlayerWeaponController>();
+            if(weaponController != null)
+                weaponController.SetRightSideWeapon(isOn);
+                
         }
 
             //muda a resolucao pelo index selecionado
