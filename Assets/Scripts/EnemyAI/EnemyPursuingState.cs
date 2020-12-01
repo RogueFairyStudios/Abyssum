@@ -39,7 +39,7 @@ namespace DEEP.AI
         if(showDebug) Debug.Log(owner.transform.name + ": Entering Enemy Pursuing State");
 #endif
 
-            owner.anim.SetBool("Walk", true);
+            owner.ownerEnemy.enemyAnimator.SetBool("Walk", true);
             
             if(owner.HasTargetSight())
                 owner.OnAggro?.Invoke();

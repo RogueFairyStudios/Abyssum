@@ -110,10 +110,11 @@ namespace DEEP.Entities.Player
             // Ends the game and player control.
             CurrentState = State.Dead;
 
-            // Starts the death process, plays animation and audio.
+            // Starts the death process, plays animation, audio and hides the weapon.
             Camera.main.GetComponent<Animator>().SetBool("Death", true);
             feedbackAudioSource.PlayOneShot(playerDeath[Random.Range(0, playerDeath.Length)], 1.0f);
             deathScreen.SetActive(true);
+            weapons.DisableWeapons();
 
         }
 

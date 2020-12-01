@@ -38,7 +38,7 @@ namespace DEEP.AI
         {
 
             // Makes sure enemy movement is reset.
-            owner.anim.SetBool("Walk", false);
+            owner.ownerEnemy.enemyAnimator.SetBool("Walk", false);
             owner.agent.ResetPath();
             owner.ResetPatrol();
 

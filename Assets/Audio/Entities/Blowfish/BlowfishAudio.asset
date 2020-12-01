@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 557d825e2a7b30a419517947596e42e0, type: 3}
+  m_Name: BlowfishAudio
+  m_EditorClassIdentifier: 
+  damage:
+  - {fileID: 8300000, guid: 44e54c7a4d384314895bab23a6cf2f62, type: 3}
+  - {fileID: 8300000, guid: e7291c68385f78241b547b2c2ed3780a, type: 3}
+  - {fileID: 8300000, guid: 7d1c3265af8a9db4baece3b6fc8dc8de, type: 3}
+  death:
+  - {fileID: 8300000, guid: 0796b6978cbd6984687ba8cd2f1c0ac9, type: 3}
+  - {fileID: 8300000, guid: 6a875f4f26c870c47b7f7d6d349f2746, type: 3}
+  grunt:
+    clips: []
+    minInterval: 0
+    maxInterval: 0
+  growl:
+    clips: []
+    minInterval: 0
+    maxInterval: 0
+  volume: 0.5
+  pitch: 1

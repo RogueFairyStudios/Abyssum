@@ -18,8 +18,6 @@ namespace DEEP.AI
 
         public NavMeshAgent agent;
 
-        public Animator anim;
-
         [SerializeField] protected float attackRange = 10.0f;
         
         public WeaponBase weapon;
@@ -57,9 +55,6 @@ namespace DEEP.AI
 
             // Calculates from what point of the agent to check for sight.
             agentSightOffset = Vector3.up * (agent.baseOffset + (agent.height / 2.0f));
-
-            if (anim == null) // Tries getting the enemy Animator if none is found.
-                anim = GetComponentInChildren<Animator>();
 
             if (weapon == null) // Tries getting the enemy weapon if none is found. 
                 weapon = GetComponentInChildren<WeaponBase>();
@@ -104,7 +99,7 @@ namespace DEEP.AI
                     }
                 }
 
-                anim.SetBool("Walk", true);
+                ownerEnemy.enemyAnimator.SetBool("Walk", true);
                 return;
             }
         }
@@ -166,7 +161,7 @@ namespace DEEP.AI
                     attacked = weapon.Shot();
 
                 if (attacked)
-                    anim.SetBool("Attack", true);
+                    ownerEnemy.enemyAnimator.SetBool("Attack", true);
 
             }
 
@@ -196,7 +191,7 @@ namespace DEEP.AI
                 transform.rotation = Quaternion.Slerp(transform.rotation, rotate, Time.deltaTime * (3 * Mathf.Deg2Rad * agent.angularSpeed));
 
                 // If angle matters to the animation
-                foreach(var param in anim.parameters)
+                foreach(var param in ownerEnemy.enemyAnimator.parameters)
                 {
                     if(param.name == "Angle")
                     {
@@ -205,7 +200,7 @@ namespace DEEP.AI
                         Vector3 forward     = Vector3.Cross(right, -transform.right);
                         float angle         = Mathf.Atan2(Vector3.Dot(targetDir.normalized, right), Vector3.Dot(targetDir.normalized, forward)) * Mathf.Rad2Deg;
 
-                        anim.SetFloat("Angle", angle);
+                        ownerEnemy.enemyAnimator.SetFloat("Angle", angle);
                         return;
                     }
                 }

@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1429460697202290622}
   - component: {fileID: 1429460697202290618}
   - component: {fileID: 1429460697202290619}
-  - component: {fileID: 1429460697202290621}
+  - component: {fileID: 4522571820629942435}
   - component: {fileID: 453777076096935818}
   m_Layer: 11
   m_Name: FishHead_pistol
@@ -297,7 +297,6 @@ MonoBehaviour:
     m_Bits: 1025
   lastTargetLocation: {x: 0, y: 0, z: 0}
   agent: {fileID: 0}
-  anim: {fileID: 0}
   attackRange: 40
   weapon: {fileID: 0}
   aimOnAttack: 1
@@ -308,7 +307,7 @@ MonoBehaviour:
   angleReference: {fileID: 4110935053442066410}
   reloadTime: 2
   clipSize: 30
---- !u!114 &1429460697202290621
+--- !u!114 &4522571820629942435
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -317,7 +316,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1429460697202290612}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42980d3a7948c744789c937643eb09ba, type: 3}
+  m_Script: {fileID: 11500000, guid: a00c960123680814dab7a45d383cc77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   health: 50
@@ -328,30 +327,17 @@ MonoBehaviour:
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
   despawnDeathDelay: 1
-  conductorBox: {fileID: 0}
-  enemyRenderer: {fileID: 0}
-  materialVariants: []
+  conductorBox: {fileID: 3345515910008602746}
+  enemyRenderer: {fileID: 7963945484614982270}
+  materialVariants:
+  - {fileID: 2100000, guid: 5e9b71f1bdb75a2be876cb9f7b9a1344, type: 2}
+  - {fileID: 2100000, guid: 5e466de31c515dcc782e4d1489f93ef3, type: 2}
   gibThreshold: 20
+  enemyAnimator: {fileID: 2701905781683872753}
   dropItem: {fileID: 0}
   dropPoint: {fileID: 0}
   _audio: {fileID: 4877808787837803111}
-  grunt:
-  - {fileID: 8300000, guid: 00d5874fc0254fb2f858564ff8190296, type: 3}
-  - {fileID: 8300000, guid: 6f1568f583c0b66d780a8fe0e74e9336, type: 3}
-  - {fileID: 8300000, guid: e000d5e0137c9d085b1bceb4266ba57e, type: 3}
-  - {fileID: 8300000, guid: 7f781e105b82f4f40bf560164dc1dd35, type: 3}
-  minGruntInterval: 5
-  maxGruntInterval: 9
-  damage:
-  - {fileID: 8300000, guid: 358e1156fcce5661c9f640ded6abbc47, type: 3}
-  - {fileID: 8300000, guid: 7d7927e92431847a8b2fcf968753dc04, type: 3}
-  - {fileID: 8300000, guid: 99edb0a49960e3da4ba4bd3220dd49a0, type: 3}
-  death:
-  - {fileID: 8300000, guid: fd53f7e1742f8234cbc9d5ab8ba3d861, type: 3}
-  - {fileID: 8300000, guid: b742bb1f1ca4505f1a49fe3ae1228ccd, type: 3}
-  growl: []
-  minGrowlInterval: 1.5
-  maxGrowlInterval: 2.5
+  audioProfile: {fileID: 11400000, guid: 4f67c883dae5b8142be97d41e4c210a5, type: 2}
 --- !u!54 &453777076096935818
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -479,7 +465,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 429268989330ba24588528875d2f3594, type: 2}
+  - {fileID: 2100000, guid: 5e9b71f1bdb75a2be876cb9f7b9a1344, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1787,11 +1773,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c60168127fd4d2ac6983dcb5f50fe7fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parameterName: Weapon
-  parameterType: 0
+  parameterName: TwoHanded
+  parameterType: 2
   parameterIntValue: 1
   parameterFloatValue: 1
-  parameterBooleanValue: 1
+  parameterBooleanValue: 0
 --- !u!1 &9069502103947979482
 GameObject:
   m_ObjectHideFlags: 0
@@ -1943,3 +1929,15 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 3271545245343753254}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3345515910008602746 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 219398678785172572, guid: e1a6e6342e3de604e95498defd50e039,
+    type: 3}
+  m_PrefabInstance: {fileID: 3271545245343753254}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e2fa161e552a774ca4d12953dae318e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

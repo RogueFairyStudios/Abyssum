@@ -42,7 +42,7 @@ namespace DEEP.AI
 # endif
 
             // Makes sure enemy is not move when shooting.
-            owner.anim.SetBool("Walk", false);
+            owner.ownerEnemy.enemyAnimator.SetBool("Walk", false);
             owner.agent.ResetPath();
 
             if(owner.OnAggro != null)
@@ -62,7 +62,7 @@ namespace DEEP.AI
         public override void UpdateState(EnemyAISystem owner) {
 
             // Waits for attack to end.
-            if (owner.anim.GetBool("Attack"))
+            if (owner.ownerEnemy.enemyAnimator.GetBool("Attack"))
             {
                 // Aims towards target during attack.
                 if (owner.aimOnAttack)

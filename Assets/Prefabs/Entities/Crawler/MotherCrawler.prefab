@@ -898,13 +898,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462e48365c0a8ed43a21de3b0741446e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ownerEnemy: {fileID: 0}
   detectRange: 40
   sightMask:
     serializedVersion: 2
     m_Bits: 1025
   lastTargetLocation: {x: 0, y: 0, z: 0}
   agent: {fileID: 7147733072622018902}
-  anim: {fileID: 8158210135559349100}
   attackRange: 5
   weapon: {fileID: 5942268808932419221}
   aimOnAttack: 0
@@ -913,6 +913,8 @@ MonoBehaviour:
   actualPoint: 0
   reversePatrol: 0
   angleReference: {fileID: 0}
+  reloadTime: 0
+  clipSize: 0
 --- !u!114 &1577845529709544228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -932,24 +934,16 @@ MonoBehaviour:
     type: 3}
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
+  despawnDeathDelay: 0
   conductorBox: {fileID: 0}
   enemyRenderer: {fileID: 0}
   materialVariants: []
+  gibThreshold: 30
+  enemyAnimator: {fileID: 0}
+  dropItem: {fileID: 0}
+  dropPoint: {fileID: 0}
   _audio: {fileID: 960725773131162602}
-  grunt: []
-  minGruntInterval: 0
-  maxGruntInterval: 0
-  damage:
-  - {fileID: 8300000, guid: fb5c75145b432784faddf639c5a4bbf1, type: 3}
-  - {fileID: 8300000, guid: bc20a7c2c0d03d44ba26fff0de881cc7, type: 3}
-  - {fileID: 8300000, guid: 472cdb6c3bcd51a4f994bdefd990133c, type: 3}
-  death:
-  - {fileID: 8300000, guid: b11388db0ba926d46ace805c6afb8e07, type: 3}
-  growl:
-  - {fileID: 8300000, guid: df19d8fc7be387645b3b02e57e9f10fe, type: 3}
-  - {fileID: 8300000, guid: 0b72e982c045b2f4db03b2795247d59f, type: 3}
-  minGrowlInterval: 2.5
-  maxGrowlInterval: 3.5
+  audioProfile: {fileID: 11400000, guid: c96b291707a8505469ced1ff132da14f, type: 2}
 --- !u!54 &3178648037627115279
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1226,6 +1220,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -1241,6 +1240,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
@@ -1253,16 +1257,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 219398678785172570, guid: e1a6e6342e3de604e95498defd50e039,
         type: 3}

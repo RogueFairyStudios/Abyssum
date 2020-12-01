@@ -61,7 +61,7 @@ namespace DEEP.AI
             if(wanderState.enabled)
             {
                 OnAggro?.Invoke();
-                entityScript.Growl();
+                entityScript.AIGrowl();
                 Chase();
             }
         }
