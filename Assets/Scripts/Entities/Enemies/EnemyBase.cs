@@ -155,14 +155,15 @@ namespace DEEP.Entities
             // Saves the old value.
             int prevHealth = CurrentHealth();
 
-            // Plays the damage sound.
-            if(audioProfile != null && audioProfile.damage.Length > 0) {
-                _audio.clip = audioProfile.damage[Random.Range(0, audioProfile.damage.Length)];
-                _audio.Play();
-            }
-
             base.Damage(amount,type);
-            OnChangeHealth(prevHealth, CurrentHealth());
+
+            // Plays the damage sound if not dead.
+            if(!isDead) {
+                if(audioProfile != null && audioProfile.damage.Length > 0) {
+                    _audio.clip = audioProfile.damage[Random.Range(0, audioProfile.damage.Length)];
+                    _audio.Play();
+                }
+            }
 
         }
 

@@ -40,7 +40,6 @@ namespace DEEP.Entities{
                 _audioloop.Stop();
                 _audio.Stop();
                 _audio.clip = blowfishAudio.inflate;
-                _audio.time = enemyAnimator.GetFloat("FuseTime");
                 _audio.Play();
             }
         }
