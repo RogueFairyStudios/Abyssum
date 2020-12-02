@@ -32,6 +32,7 @@ Deep is a game developed by Fellowship of the Game.
     OS: 
     - Windows 7 or later
     - Linux Ubuntu 16.04 or later [other main stream distros are probably compatible]
+    - macOS Catalina [other versions are untested]
     Processor: 2C/2T 2.0 Ghz Processor or better
     Memory: 2GB RAM
     Graphics: 2nd Gen Intel HD Graphics or better
@@ -43,13 +44,10 @@ Deep is a game developed by Fellowship of the Game.
 ## Acknowledgements and Disclaimers
 
 * Some textures from textures.com were used
-* The following sounds were used in the game:
-    - https://freesound.org/people/LeMudCrab/sounds/163456/
-    - https://freesound.org/people/michorvath/sounds/427603/
-    - https://freesound.org/people/tommccann/sounds/235968/
+* Some sounds from freesound.com were used
 
 ---
 
-## Additional Notes
+GitHub:
 
-The game will run by default using the DirectX11 and OpenGL graphics APIs in Windows and Linux respectively. It's possible on both systems to run the game with Vulkan by executing it in a terminal with the argument "-force-vulkan".
+More documentation is available [here](./Assets/Docs).
