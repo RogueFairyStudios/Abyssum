@@ -2,7 +2,6 @@
 
 using System.Collections;
 
-using DEEP.Stage;
 using DEEP.Pooling;
 
 namespace DEEP.Entities

@@ -5,7 +5,6 @@ using UnityEngine.AI;
 
 using DEEP.Weapons;
 using DEEP.StateMachine;
-using DEEP.Entities.Player;
 
 namespace DEEP.AI
 {
