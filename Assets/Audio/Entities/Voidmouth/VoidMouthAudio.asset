@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557d825e2a7b30a419517947596e42e0, type: 3}
+  m_Script: {fileID: 11500000, guid: f1590b7e73b4b684d8c3f832c452e13e, type: 3}
   m_Name: VoidMouthAudio
   m_EditorClassIdentifier: 
   damage:
@@ -28,3 +28,5 @@ MonoBehaviour:
     maxInterval: 0
   volume: 0.5
   pitch: 1
+  idleHum: {fileID: 8300000, guid: ca81341dea292554a95983d361e8d351, type: 3}
+  persueHum: {fileID: 8300000, guid: 20d9477a2de2d744884ac32f9a532594, type: 3}

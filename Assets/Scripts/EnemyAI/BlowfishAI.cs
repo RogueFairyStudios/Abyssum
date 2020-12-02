@@ -8,12 +8,12 @@ namespace DEEP.AI
     {
         
         ChaseSwimState chaseState;
-        Blowfish entityScript;
+        BlowfishEntity entityScript;
 
         protected override void Awake()
         {
             chaseState = GetComponent<ChaseSwimState>();
-            entityScript = GetComponent<Blowfish>();
+            entityScript = GetComponent<BlowfishEntity>();
             base.Awake();
         }
 

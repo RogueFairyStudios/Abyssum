@@ -130,9 +130,19 @@ namespace DEEP.Entities
                 AI.OnLoseAggro  += () => {   CancelInvoke(nameof(DoGrowl));    Invoke(nameof(DoGrunt), 0f);  };
             }
 
-            // Starts grunting if clips are available.
-            if(audioProfile != null && audioProfile.grunt.clips.Length > 0)
-                Invoke(nameof(DoGrunt), Random.Range(audioProfile.grunt.minInterval, audioProfile.grunt.maxInterval));       
+            // Sets up audio.
+            if(_audio != null && audioProfile != null ) {
+
+                // Applies audio settings.
+                _audio.outputAudioMixerGroup = audioProfile.mixerGroup;
+                _audio.volume = audioProfile.volume;
+                _audio.pitch = audioProfile.pitch;
+
+                // Starts grunting if clips are available.
+                if(audioProfile.grunt.clips.Length > 0)
+                    Invoke(nameof(DoGrunt), Random.Range(audioProfile.grunt.minInterval, audioProfile.grunt.maxInterval));
+
+            }
 
         }
 

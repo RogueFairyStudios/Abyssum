@@ -1,5 +1,3 @@
-using System.Collections;
-
 using UnityEngine;
 
 using DEEP.UI;
@@ -205,7 +203,7 @@ namespace DEEP.Entities.Player
             if(flashlight != null)
                 flashlight.enabled = false;
             else
-                Debug.Log("Play has no flashlight! Just make sure this was intended...");
+                Debug.Log("Player has no flashlight! Just make sure this was intended...");
 
             // Checks for the HUD and prints an error if missing.
             hud = GetComponentInChildren<HUDController>();

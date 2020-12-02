@@ -5,10 +5,10 @@ namespace DEEP.Entities
 {
 
     // Contains information about an entities sounds.
-    [CreateAssetMenu(fileName = "newEntityAudioProfile", menuName = "ScriptableObjects/Entity Audio Profile", order = 1)]
+    [CreateAssetMenu(fileName = "newEntityAudioProfile", menuName = "ScriptableObjects/Audio Profiles/Entity", order = 1)]
     public class EntityAudioProfile : ScriptableObject {
 
-        AudioMixerGroup mixerGroup;
+        public AudioMixerGroup mixerGroup;
 
         public AudioClip[] damage;
 

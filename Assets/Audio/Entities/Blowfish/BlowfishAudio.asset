@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 557d825e2a7b30a419517947596e42e0, type: 3}
+  m_Script: {fileID: 11500000, guid: b9cda69885cb7e444baa706922628286, type: 3}
   m_Name: BlowfishAudio
   m_EditorClassIdentifier: 
   damage:
@@ -24,8 +24,14 @@ MonoBehaviour:
     minInterval: 0
     maxInterval: 0
   growl:
-    clips: []
-    minInterval: 0
-    maxInterval: 0
+    clips:
+    - {fileID: 8300000, guid: ad463f13f98c0c84f8fb6ad4f9f185b0, type: 3}
+    - {fileID: 8300000, guid: 192773a4e3f4f564c80522b9e318e19f, type: 3}
+    minInterval: 2.5
+    maxInterval: 3.5
   volume: 0.5
   pitch: 1
+  swim: {fileID: 8300000, guid: d130f306ec6ed694a83e7241dd77b8dd, type: 3}
+  inflate: {fileID: 8300000, guid: 1ea2e136dbd291244a51e897c10e27ed, type: 3}
+  minSwimPitch: 0.8
+  maxSwimPitch: 1.2

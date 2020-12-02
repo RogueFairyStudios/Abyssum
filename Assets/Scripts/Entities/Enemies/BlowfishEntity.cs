@@ -4,13 +4,28 @@ using DEEP.Pooling;
 
 namespace DEEP.Entities{
 
-    public class Blowfish : EnemyBase
+    public class BlowfishEntity : EnemyBase
     {
-        [SerializeField] protected GameObject explosionPrefab = null;
-        [SerializeField] protected AudioClip swim = null, inflate = null;
+
+
+        [SerializeField] protected AudioSource _audioloop = null;
         [SerializeField] protected bool swimSoundEnabled = true;
-        [SerializeField] protected float minSwimPitch = 0.8f, maxSwimPitch = 1.2f;
-        [SerializeField] protected private AudioSource _audioloop = null;
+
+        protected BlowfishAudioProfile blowfishAudio;
+
+        [Header("Explosion")]
+        [SerializeField] protected GameObject explosionPrefab = null;
+
+        protected override void Start()
+        {
+            base.Start();
+
+            if(audioProfile is BlowfishAudioProfile)
+                blowfishAudio = (BlowfishAudioProfile)audioProfile;
+            else
+                Debug.LogError("DEEP.Entities.Blowfish.Start: Audio profile is not a BlowfishAudioProfile!");
+                
+        }
 
         public override void Damage(int amount, DamageType type)
         {
@@ -20,11 +35,11 @@ namespace DEEP.Entities{
 
         public void Inflate()
         {
-            if(!_audio.isPlaying || _audio.clip != inflate)
+            if(!_audio.isPlaying || _audio.clip != blowfishAudio.inflate)
             {
                 _audioloop.Stop();
                 _audio.Stop();
-                _audio.clip = inflate;
+                _audio.clip = blowfishAudio.inflate;
                 _audio.time = enemyAnimator.GetFloat("FuseTime");
                 _audio.Play();
             }
@@ -32,7 +47,7 @@ namespace DEEP.Entities{
 
         public void Deflate()
         {
-            if(_audio.clip == inflate)
+            if(_audio.clip == blowfishAudio.inflate)
                 _audio.Stop();
         }
 
@@ -49,8 +64,8 @@ namespace DEEP.Entities{
         private void Update()
         {
             if(swimSoundEnabled && enemyAnimator.GetBool("Swim") && !enemyAnimator.GetBool("Attack")) {
-                _audioloop.clip = swim;
-                _audioloop.pitch = Mathf.Lerp(maxSwimPitch, minSwimPitch, enemyAnimator.GetFloat("Speed"));
+                _audioloop.clip = blowfishAudio.swim;
+                _audioloop.pitch = Mathf.Lerp(blowfishAudio.maxSwimPitch, blowfishAudio.minSwimPitch, enemyAnimator.GetFloat("Speed"));
                 if(!_audioloop.isPlaying)
                     _audioloop.Play();
             }
