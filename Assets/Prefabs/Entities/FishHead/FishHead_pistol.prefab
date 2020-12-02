@@ -296,9 +296,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1025
   lastTargetLocation: {x: 0, y: 0, z: 0}
-  agent: {fileID: 0}
+  agent: {fileID: 1429460697202290618}
   attackRange: 40
-  weapon: {fileID: 0}
+  weapon: {fileID: 9022710461707746167}
   aimOnAttack: 1
   isMeeleAttack: 0
   patrolPoints: []

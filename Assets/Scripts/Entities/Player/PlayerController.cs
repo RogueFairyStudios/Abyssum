@@ -175,6 +175,9 @@ namespace DEEP.Entities.Player
         // creates a new one if it doesn't exists yet.
         public KeyInventory Keys { get { return keyInventory; } }
 
+        // Flashlight reference.
+        public Light flashlight;
+
         // ====================================================================================================================
         // ====================================================================================================================
         // ====================================================================================================================
@@ -197,6 +200,14 @@ namespace DEEP.Entities.Player
             keyInventory = new KeyInventory();
             keyInventory.Owner = this;
 
+            // Gets the flashlight and turns it off if available.
+            flashlight = GetComponentInChildren<Light>();
+            if(flashlight != null)
+                flashlight.enabled = false;
+            else
+                Debug.Log("Play has no flashlight! Just make sure this was intended...");
+
+            // Checks for the HUD and prints an error if missing.
             hud = GetComponentInChildren<HUDController>();
             if(hud == null)
                 Debug.LogError("DEEP.Entities.Player.PlayerController.Start: No HUDController was found!");
@@ -221,8 +232,14 @@ namespace DEEP.Entities.Player
 
             // Pauses and un-pauses the game.
             if (CurrentState == State.Playing || currentState == State.Paused) {
-                if (Input.GetButtonDown("Cancel")) 
+                if (Input.GetButtonDown("Pause")) 
                     TogglePause(); 
+            }
+
+            // Toggles the flashlight if available.
+            if(flashlight != null && CurrentState == State.Playing) {
+                if (Input.GetButtonDown("Flashlight"))
+                    flashlight.enabled = (!flashlight.enabled);
             }
 
         }
