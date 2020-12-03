@@ -1877,7 +1877,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e9fd587ba01f84347853a42943e4e203, type: 2}
   gibThreshold: 30
   enemyAnimator: {fileID: 1005619965714645147}
-  dropItem: {fileID: 4942178168644201908, guid: 51411342e133010609407070dcbd4c6f,
+  dropItem: {fileID: 5814060134540301991, guid: 63e2b1c2cf9d4b37890ce111b1d2a124,
     type: 3}
   dropPoint: {fileID: 8915928300832980950}
   _audio: {fileID: 155577590734253887}

@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c4da757c219cc149a8f553a77346fe0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  velocity: 45
+  velocity: 200
   damage: 9
   lifespam: 10
   bulletHoleMaterial: {fileID: 2100000, guid: 5a7b6010721d2154bba439532266195d, type: 2}
