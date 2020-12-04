@@ -836,7 +836,7 @@ GameObject:
   - component: {fileID: 563735449897490569}
   - component: {fileID: 7147733072622018902}
   - component: {fileID: 7498585446819022014}
-  - component: {fileID: 1577845529709544228}
+  - component: {fileID: 6569024449523965897}
   - component: {fileID: 3178648037627115279}
   m_Layer: 11
   m_Name: MotherCrawler
@@ -915,7 +915,7 @@ MonoBehaviour:
   angleReference: {fileID: 0}
   reloadTime: 0
   clipSize: 0
---- !u!114 &1577845529709544228
+--- !u!114 &6569024449523965897
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -924,25 +924,27 @@ MonoBehaviour:
   m_GameObject: {fileID: 6176847882833967499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42980d3a7948c744789c937643eb09ba, type: 3}
+  m_Script: {fileID: 11500000, guid: a00c960123680814dab7a45d383cc77c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1000
-  maxHealth: 1000
-  maxOverloadedHealth: 1000
+  health: 35
+  maxHealth: 35
+  maxOverloadedHealth: 70
   bloodEffect: {fileID: 4981454918395137139, guid: 69491bf726a9720baa2b676eb960d5f5,
     type: 3}
   deathPrefab: {fileID: 6215489283981922205, guid: 3eb80257d5c1733fba85ee0241f5101c,
     type: 3}
-  despawnDeathDelay: 0
-  conductorBox: {fileID: 0}
-  enemyRenderer: {fileID: 0}
+  despawnDeathDelay: 1
+  conductorBox: {fileID: 7879365604781380003, guid: 4e56e0eab94254c039b47ae47e167144,
+    type: 3}
+  enemyRenderer: {fileID: 5336268617878420122}
   materialVariants: []
   gibThreshold: 30
-  enemyAnimator: {fileID: 0}
+  enemyAnimator: {fileID: 8158210135559349100, guid: 4e56e0eab94254c039b47ae47e167144,
+    type: 3}
   dropItem: {fileID: 0}
   dropPoint: {fileID: 0}
-  _audio: {fileID: 960725773131162602}
+  _audio: {fileID: 8202180400921605158, guid: 4e56e0eab94254c039b47ae47e167144, type: 3}
   audioProfile: {fileID: 11400000, guid: c96b291707a8505469ced1ff132da14f, type: 2}
 --- !u!54 &3178648037627115279
 Rigidbody:
