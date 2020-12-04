@@ -10,14 +10,16 @@ namespace DEEP.UI {
 
         string menuScene;
 
-        [SerializeField] StageInfo defaultCutsceneLevel = null;
+        [SerializeField] protected StageInfo defaultCutsceneLevel = null;
 
-        [SerializeField] GameObject background = null;
+        [SerializeField] protected GameObject background = null;
 
-        [SerializeField] GameObject mainMenu = null;
-        [SerializeField] GameObject loadingScreen = null;
+        [SerializeField] protected GameObject mainMenu = null;
+        [SerializeField] protected GameObject loadingScreen = null;
 
-        void Start() {
+        protected override void Start() {
+
+            base.Start();
 
             // Sets the menu to not be destroyed.
             DontDestroyOnLoad(gameObject);         
@@ -31,7 +33,7 @@ namespace DEEP.UI {
 
         }
 
-        void OnCutsceneSceneLoaded(Scene scene, LoadSceneMode mode)
+        protected void OnCutsceneSceneLoaded(Scene scene, LoadSceneMode mode)
         {
 
             // Unloads the original menu scene.
@@ -67,14 +69,14 @@ namespace DEEP.UI {
 
         }
 
-        void OnSceneAlreadyLoaded() {
+        protected void OnSceneAlreadyLoaded() {
 
             StageManager.Instance.EnableLevelStart();
             Destroy(gameObject);
 
         }
 
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode) { 
+        protected void OnSceneLoaded(Scene scene, LoadSceneMode mode) { 
 
             SceneManager.sceneLoaded -= OnSceneLoaded;
             OnSceneAlreadyLoaded(); 

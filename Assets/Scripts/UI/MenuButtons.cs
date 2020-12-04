@@ -11,6 +11,13 @@ namespace DEEP.UI {
         [Tooltip("Optional reference to an options menu.")]
         [SerializeField] protected OptionsButtons optionsMenu = null;
 
+        protected virtual void Start() {
+
+            // Initializes OptionsMenu to apply settings.
+            optionsMenu.Initialize();
+
+        }
+
         public virtual void QuitGame()
         {
             Debug.Log("Application.Quit()");

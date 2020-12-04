@@ -109,7 +109,7 @@ namespace DEEP.Entities.Player
             CurrentState = State.Dead;
 
             // Starts the death process, plays animation, audio and hides the weapon.
-            Camera.main.GetComponent<Animator>().SetBool("Death", true);
+            playerCamera.GetComponent<Animator>().SetBool("Death", true);
             feedbackAudioSource.PlayOneShot(playerDeath[Random.Range(0, playerDeath.Length)], 1.0f);
             deathScreen.SetActive(true);
             weapons.DisableWeapons();
@@ -173,6 +173,9 @@ namespace DEEP.Entities.Player
         // creates a new one if it doesn't exists yet.
         public KeyInventory Keys { get { return keyInventory; } }
 
+        // Camera reference.
+        public Camera playerCamera;
+
         // Flashlight reference.
         public Light flashlight;
 
@@ -198,12 +201,17 @@ namespace DEEP.Entities.Player
             keyInventory = new KeyInventory();
             keyInventory.Owner = this;
 
-            // Gets the flashlight and turns it off if available.
-            flashlight = GetComponentInChildren<Light>();
-            if(flashlight != null)
-                flashlight.enabled = false;
+            // Checks for the player camera and sets the FOV.
+            if(playerCamera == null)
+                Debug.LogError("Player has no Camera!");
             else
-                Debug.Log("Player has no flashlight! Just make sure this was intended...");
+                SetFoV(PlayerPrefs.HasKey("FoV") ? PlayerPrefs.GetFloat("FoV") : 75.0f);
+
+            // Gets the flashlight and turns it off if available.
+            if(playerCamera == null)
+                Debug.LogWarning("Player has no flashlight!");
+            else
+                flashlight.enabled = false;
 
             // Checks for the HUD and prints an error if missing.
             hud = GetComponentInChildren<HUDController>();
@@ -247,6 +255,8 @@ namespace DEEP.Entities.Player
             if(feedbackAudio != null)
                 feedbackAudioSource.PlayOneShot(feedbackAudio, 1.0f);
         }
+
+        public void SetFoV(float fov) { playerCamera.fieldOfView = fov; }
 
     }
 
