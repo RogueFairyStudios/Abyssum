@@ -14,7 +14,6 @@ namespace DEEP.Weapons {
         void Start() {
 
             cameraTransform = Camera.main.transform;
-            originalLocalPosition = transform.localPosition;
 
         }
 
@@ -29,6 +28,8 @@ namespace DEEP.Weapons {
             }
 
         }
+
+        public void SetOrigin(Vector3 position) { originalLocalPosition = position; }
 
 # if UNITY_EDITOR
 

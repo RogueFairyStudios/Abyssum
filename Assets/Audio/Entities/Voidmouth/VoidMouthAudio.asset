@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f1590b7e73b4b684d8c3f832c452e13e, type: 3}
+  m_Name: VoidMouthAudio
+  m_EditorClassIdentifier: 
+  damage:
+  - {fileID: 8300000, guid: 410ae9f975234d547be4c8e58f641fa8, type: 3}
+  - {fileID: 8300000, guid: 466030eec8cf56746b4bcde4f0edcbbc, type: 3}
+  - {fileID: 8300000, guid: 0b514cfd75ec5c941a94a2c2259b9cfe, type: 3}
+  death:
+  - {fileID: 8300000, guid: a323c0b6325bb5c41a9682c2a38808f5, type: 3}
+  grunt:
+    clips: []
+    minInterval: 0
+    maxInterval: 0
+  growl:
+    clips: []
+    minInterval: 0
+    maxInterval: 0
+  volume: 0.5
+  pitch: 1
+  idleHum: {fileID: 8300000, guid: ca81341dea292554a95983d361e8d351, type: 3}
+  persueHum: {fileID: 8300000, guid: 20d9477a2de2d744884ac32f9a532594, type: 3}

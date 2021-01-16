@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+using DEEP.Pooling;
 using DEEP.Entities;
 using DEEP.Entities.Player;
 
@@ -10,6 +11,22 @@ namespace DEEP.Weapons {
 
     public class TridentWeapon : SimpleWeapon
     {
+
+        // PlayerController reference =========================================================================================
+        private PlayerController controller;
+        // Returns a reference for the PlayerController instance, 
+        // tries getting it if it's not yet available.
+        protected PlayerController rController {
+            get { 
+                if(controller != null)
+                    return controller; 
+                else {
+                    controller = FindObjectOfType<PlayerController>();
+                    return controller;
+                }
+            } 
+        }
+        // ====================================================================================================================
 
         [Tooltip("Amount of health used as \"tribute\" when shooting.")]
         [SerializeField] protected int healthTribute = 50;
@@ -55,10 +72,11 @@ namespace DEEP.Weapons {
         {
 
             // Also uses player health as "ammo" for the weapon.
-            if (PlayerController.Instance.entity.CurrentHealth() > healthTribute)
-                PlayerController.Instance.entity.Damage(healthTribute, DamageType.IgnoreArmor);
+            PlayerEntity pEntity = rController.Entity;
+            if (pEntity.CurrentHealth() > healthTribute)
+                pEntity.Damage(healthTribute, DamageType.IgnoreArmor);
             else // If the player has less health than the tribute amount, fires but leaves it with 1 health.
-                PlayerController.Instance.entity.Damage(PlayerController.Instance.entity.CurrentHealth() - 1, DamageType.IgnoreArmor);
+                pEntity.Damage(pEntity.CurrentHealth() - 1, DamageType.IgnoreArmor);
 
             delayTimer = 0; // Resets the delay.
 
@@ -122,8 +140,15 @@ namespace DEEP.Weapons {
             List<Transform> targets = new List<Transform>();
             for (int i = 0; i < allEntities.Length; i++) {
 
+                // Gets the owner of this weapon to make a check later.
+                PlayerWeaponController ownerWeaponController = FindObjectOfType<PlayerWeaponController>();
+
                 // Checks that the entity exists and is not the player.
-                if(allEntities[i] != null && allEntities[i].GetType() != typeof(PlayerEntity)) {
+                if(allEntities[i] != null) {
+
+                    // Ensures the entity is not the Player that fired the trident.
+                    if(ownerWeaponController.Owner.Entity == allEntities[i])
+                        continue;
 
                     // Checks that the entity is visible.
                     if(!Physics.Linecast(bulletSpawn.position, allEntities[i].transform.position, burstVisibilityMask)) {
@@ -143,7 +168,7 @@ namespace DEEP.Weapons {
                 Vector3 randomTargetPos = targets[UnityEngine.Random.Range(0, targets.Count)].position;
 
                 // Instantiates the attack at the target.
-                Instantiate(bulletPrefab, randomTargetPos, new Quaternion());
+                PoolingSystem.Instance.PoolObject(bulletPrefab, randomTargetPos, new Quaternion());
 
                 // Does the visual effect.
                 lineRenderer.positionCount = 2;

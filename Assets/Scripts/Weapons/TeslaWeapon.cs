@@ -3,6 +3,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using DEEP.Pooling;
 using DEEP.Utility;
 using DEEP.Entities;
 
@@ -33,6 +34,20 @@ namespace DEEP.Weapons
 
         // Object used to wait in coroutines.
         private WaitForFixedUpdate waitForFixed = new WaitForFixedUpdate();
+
+        // Overrides start to avoid pooling system.
+        protected override void Start() {
+
+            // Allows the weapon to be fired at start.
+            delayTimer = delayBetweenShots;
+
+            // Gets the weapon's animator.
+            wAnimator = GetComponentInChildren<Animator>();
+
+            // Gets the weapon's AudioSource.
+            wAudio = GetComponentInChildren<AudioSource>();
+
+        }
 
         protected void OnEnable() {
 
@@ -66,7 +81,7 @@ namespace DEEP.Weapons
                     ShootRay(i, GenerateRandomRotation(bulletSpawn.rotation));
             }
 
-            }
+        }
 
         private void ShootRay(int index, Quaternion direction) {
 
@@ -86,7 +101,7 @@ namespace DEEP.Weapons
 
                     // Spawn the blood splatter effect if avaliable and hit a player or enemy.
                     if (entity.bloodEffect != null)
-                        Instantiate(entity.bloodEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+                        PoolingSystem.Instance.PoolObject(entity.bloodEffect, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
 
                     if (entity.conductorBox != null)
                         conductorsActivated = entity.conductorBox.Electrify(chainDamage);

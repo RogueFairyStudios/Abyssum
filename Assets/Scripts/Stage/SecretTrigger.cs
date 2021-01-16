@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEngine;
 
-using UnityEngine;
-
+using DEEP.UI;
 using DEEP.Entities.Player;
 
 namespace DEEP.Stage
@@ -29,15 +27,17 @@ namespace DEEP.Stage
             if(other.tag != "Player")
                 return;
 
+            PlayerController player = other.GetComponent<PlayerController>();
+
             // Logs that this secret has been found.
             Debug.Log("Secret found!");
             if(logText.Length > 0)
-                PlayerController.Instance.HUD.Log.Message(logText, logIcon, logColor);
+                player.HUD.Log.Message(logText, logIcon, logColor);
 
             // Count this secret as found.
             StageManager.Instance.CountSecretFound();
             // Plays the player feedback.
-            PlayerController.Instance.FoundSecret(feedbackAudio);
+            player.FoundSecret(feedbackAudio);
 
             Destroy(this.gameObject);
             

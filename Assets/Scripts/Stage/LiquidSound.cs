@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-using DEEP.UI;
+using DEEP.HUD;
 using DEEP.Entities.Player;
 
 [RequireComponent(typeof(Mesh))]
@@ -14,10 +14,12 @@ public class LiquidSound : MonoBehaviour
     [SerializeField] AudioClip insideLiquidSound = null;
     [SerializeField] float insideVolume = 1;
 
-    [SerializeField] HUDController.FeedbackType feedbackType = HUDController.FeedbackType.Damage;
+    [SerializeField] FeedbackType feedbackType = FeedbackType.Damage;
 
     MeshRenderer _mesh;
     AudioSource _audio;
+
+    PlayerController player;
 
     void Awake()
     {
@@ -58,7 +60,11 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            PlayerController.Instance.HUD.StartScreenFeedback(feedbackType);
+
+            // Gets the player that entered the liquid.
+            player = other.GetComponent<PlayerController>();
+
+            player.HUD.Feedback.StartScreenFeedback(feedbackType);
 
             if(insideLiquidSound != null)
             {
@@ -74,7 +80,8 @@ public class LiquidSound : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            PlayerController.Instance.HUD.StopConstantScreenFeedback();
+            if(other.GetComponent<PlayerController>() == player)
+                player.HUD.Feedback.StopConstantScreenFeedback();
 
             if(ambientLiquidSound != null)
             {
@@ -86,14 +93,13 @@ public class LiquidSound : MonoBehaviour
         }
     }
 
-    public void Stop()
-    {
-        _audio.Stop();
-    }
+    public void Stop() { _audio.Stop(); }
 
-    private void OnDestroy()
-    {
-        PlayerController.Instance.HUD.StopConstantScreenFeedback();
+    private void OnDestroy() { 
+        
+        if(player != null)
+            player.HUD.Feedback.StopConstantScreenFeedback(); 
+            
     }
 
 }

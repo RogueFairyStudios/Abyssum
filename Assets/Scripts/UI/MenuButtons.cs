@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
+using DEEP.Stage;
 
 namespace DEEP.UI { 
 
@@ -11,21 +11,34 @@ namespace DEEP.UI {
         [Tooltip("Optional reference to an options menu.")]
         [SerializeField] protected OptionsButtons optionsMenu = null;
 
-        public void QuitGame()
+        protected virtual void Start() {
+
+            // Initializes OptionsMenu to apply settings.
+            optionsMenu.Initialize();
+
+        }
+
+        public virtual void QuitGame()
         {
             Debug.Log("Application.Quit()");
             Application.Quit();
         }
 
-        public void LoadLevel(string levelName){
+        public virtual void LoadLevel(string levelName){
             Debug.Log("Loading " + levelName + "...");
-            SceneManager.LoadScene(levelName);
+            SceneManager.LoadSceneAsync(levelName);
         }
 
-        public void LoadURL(string url){
+        public virtual void LoadURL(string url){
             Debug.Log("Opening URL " + url + "...");
             Application.OpenURL(url);
         }
+
+        public void NextLevel() { SceneManager.LoadSceneAsync(StageManager.Instance.GetNextStage()); }
+
+        public void RestartGame() { SceneManager.LoadSceneAsync(0); }
+
+        public void RestartLevel() { SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().name); }
         
     }
 

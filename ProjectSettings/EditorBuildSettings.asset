@@ -9,14 +9,32 @@ EditorBuildSettings:
     path: Assets/Scenes/Menu.unity
     guid: f7c1fa949c0871c438ae5ef41a47866d
   - enabled: 1
+    path: Assets/Scenes/Lobby.unity
+    guid: 43f5b1ca44b33174e854aac371f63df2
+  - enabled: 1
     path: Assets/Scenes/Military.unity
     guid: 277ee6fa5ebfbb3fe9f22090dd5b8660
+  - enabled: 1
+    path: Assets/Scenes/DomeCity.unity
+    guid: 6311dbca59ef74e42ae158fe314bffc8
+  - enabled: 1
+    path: Assets/Scenes/DEV/Lab_Cabral.unity
+    guid: 7d793b68a4273e54b8fbd79577cbb146
+  - enabled: 1
+    path: Assets/Scenes/Elevator.unity
+    guid: 9d1dda58820f48443a11953dadc62a6f
+  - enabled: 1
+    path: Assets/Scenes/Atlantis.unity
+    guid: fcd1e13a4af3ff44a91425bcdb02d2a1
   - enabled: 1
     path: Assets/Scenes/Showcase.unity
     guid: d7fe55d1532e8856780ea0631082c140
   - enabled: 1
+    path: Assets/Scenes/MultiplayerTest.unity
+    guid: 7506c228a722ccd40a23902d87ab0b72
+  - enabled: 1
     path: Assets/Scenes/BetaEnd.unity
-    guid: ee12e37e4ff592d4abd2108b47d2df33
+    guid: c0964036ac553a244af76dbbe0506031
   - enabled: 1
     path: Assets/Scenes/WebEnd.unity
     guid: a3833af50fb91de4180d8ba3253688cc

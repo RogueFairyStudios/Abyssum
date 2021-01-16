@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 
+using DEEP.UI;
 using DEEP.Entities;
 using DEEP.Entities.Player;
 using DEEP.Collectibles;
@@ -10,20 +12,28 @@ namespace DEEP.Stage
     public class StageManager : MonoBehaviour
     {
 
-        public static StageManager Instance;
+        // Singleton for the StageManager =====================================================================================
+        private static StageManager instance;
+        public static StageManager Instance { get { return instance; } }
 
-        [Tooltip("Name of this stage to be used in the UI.")]
-        [SerializeField] private string stageName = "no name";
+        // PlayerController reference =========================================================================================
+        private PlayerController controller;
 
+        // Obtains and stores a reference to the PlayerController instance.
+        public PlayerController targetPlayer {
+            get { 
+                if(controller != null)
+                    return controller; 
+                else {
+                    controller = FindObjectOfType<PlayerController>();
+                    return controller;
+                }
+            } 
+        }
+        // ====================================================================================================================
 
-        [Tooltip("This level is the final stage of a Beta build (next stage is the BetaEnd scene).")]
-        [SerializeField] private bool isBetaEnd = false;
-
-        [Tooltip("This level is the final stage of a Beta build (next stage is the WebEnd scene).")]
-        [SerializeField] private bool isWebEnd = false;
-
-        [Tooltip("Next stage scene name (will be ignored if isBetaEnd or isWebEnd applies)")]
-        [SerializeField] private string nextStageSceneName = "no name";
+        [Tooltip("ScriptableObject with information about the stage")]
+        public StageInfo stageInfo;
 
         // Initial number of enemies in the stage.
         private int numStageEnemies;
@@ -55,14 +65,28 @@ namespace DEEP.Stage
         [Tooltip("If the player inventory should be reset on the start of the level.")]
         [SerializeField] private bool resetPlayerInventory = false;
 
+        // Stores if the level has already started.
+        private bool canStart;
+        private bool started;
+
+        [System.Serializable]
+        private class Cutscene 
+        {
+            [Tooltip("Objects that should be enabled only during the cutscene.")]
+            public GameObject[] cutsceneObjects = new GameObject[0];
+            [Tooltip("Objects that should be enabled only after the cutscene.")]
+            public GameObject[] inGameObjects = new GameObject[0];
+        }
+        [SerializeField] private Cutscene cutscene = new Cutscene();
+
         private void Awake()
         {
             // Ensures theres only one instance of this script.
-            if (Instance != null) {
-                Debug.LogError("StageInfo: more than one instance of singleton found!");
+            if (instance != null) {
+                Debug.Log("StageInfo: more than one instance of singleton found! Overwriting...");
                 Destroy(Instance.gameObject);
             }
-            Instance = this;
+            instance = this;
 
             // Resets time to ensure the game is not paused.
             Time.timeScale = 1;
@@ -78,40 +102,82 @@ namespace DEEP.Stage
 
             duration = 0.0f;
 
-            // Spawns and initializes the player.
+            // Waits for level start.
+            canStart = false;
+            started = false;
+
+        }
+
+        // Enables the player to spawn and the level to start.
+        public void EnableLevelStart() { canStart = true; }
+
+        // Spawns Player and starts level.
+        private void StartLevel() {
+
+            // Spawns the player.
             Debug.Log("Spawning player...");
-            Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+            GameObject player = Instantiate(playerPrefab, playerSpawn.position, playerSpawn.rotation);
+
+            // Finishes the cutscene.
+            if(cutscene.cutsceneObjects != null)
+                foreach(GameObject obj in cutscene.cutsceneObjects)
+                    obj.SetActive(false);
+            if(cutscene.inGameObjects != null)
+                foreach(GameObject obj in cutscene.inGameObjects)
+                    obj.SetActive(true);
+            
+
+
+            started = true;
 
         }
 
         private void FixedUpdate()
         {
 
-            // Counts the time spent on the stage.
-            duration += Time.fixedDeltaTime;
+            // Returns if the level has not started yet (is in the cutscene).
+            if(!started) {
+
+                // Checks for a Main Menu that might be running a cutscene
+                MainMenu mainMenu = FindObjectOfType<MainMenu>();
+
+                // If no Main Menu was found the game can start right away.
+                if(mainMenu == null)
+                    canStart = true;
+
+                // Starts the level as soon as allowed to.
+                if(canStart)
+                    StartLevel();
+
+            } else {
+
+                // Counts the time spent on the stage after the level started.
+                duration += Time.fixedDeltaTime;
+
+            }
 
         }
 
         // Counts an enemy kill.
         public void CountKill() { 
             numEnemiesKilled++; 
-            PlayerController.Instance.HUD.speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
+            targetPlayer.HUD.Speedrun.SetKillCount(numEnemiesKilled, numStageEnemies);
         }
 
         // Counts a collected item.
         public void CountCollection() { 
             numCollectiblesCollected++; 
-            PlayerController.Instance.HUD.speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
+            targetPlayer.HUD.Speedrun.SetItemCount(numCollectiblesCollected, numStageCollectibles);
         }
 
         // Counts a secret found.
         public void CountSecretFound() { 
             numSecretsFound++; 
-            PlayerController.Instance.HUD.speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
+            targetPlayer.HUD.Speedrun.SetSecretCount(numSecretsFound, numStageSecrets);
         }
 
         // Gets the stage name.
-        public string GetStageName() { return stageName; }
+        public string GetStageName() { return stageInfo.stageName; }
 
         // Initial number of enemies
         public int GetTotalEnemies() { return numStageEnemies; }
@@ -163,7 +229,10 @@ namespace DEEP.Stage
         public float GetDuration() { return duration; }
 
         // Get current time elapsed from the start of the level, without pauses and returns as a formated string.
-        public string GetDurationString() {  
+        public static string GetDurationString(float duration) {  
+
+            if(duration < 0)
+                return "-.--.-";
 
             float minutes = (int)Mathf.Floor(duration / 60);
             float seconds = (int)Mathf.Floor(duration - (minutes * 60));
@@ -176,15 +245,21 @@ namespace DEEP.Stage
         // Returns the name of the next stage to be loaded.
         public string GetNextStage() {
 
-            if(isBetaEnd) { return "BetaEnd"; }
+            if(stageInfo.isBetaEnd) { return "BetaEnd"; }
 
-            if(isWebEnd) {
+            if(stageInfo.isWebEnd) {
                 #if UNITY_WEBGL
                     return "WebEnd";
                 #endif
             }
 
-            return nextStageSceneName;
+            // Resets the game if there is no nextStage.
+            if(stageInfo == null) {
+                Debug.LogWarning("StageManager.GetNextStage: No next scene! Reseting game...");
+                return SceneManager.GetSceneByBuildIndex(0).name;
+            }
+
+            return stageInfo.nextStage.stageScene;
 
         }
 

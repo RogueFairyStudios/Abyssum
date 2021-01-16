@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 using DEEP.Decals;
-using DEEP.Entities;
+using DEEP.Pooling;
 
 namespace DEEP.Weapons.Bullets {
 
@@ -18,7 +18,7 @@ namespace DEEP.Weapons.Bullets {
 
 			// Spawns decal if avaliable.
 			if(bulletHoleMaterial != null) {
-				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
+				DecalSystem.Instance.PlaceDecal(bulletHoleMaterial, col.transform, col.contacts[0].point, col.contacts[0].normal, bulletHoleScale);
 			}
 
 			//Destroys the object on collision.
@@ -31,7 +31,7 @@ namespace DEEP.Weapons.Bullets {
 				Debug.LogWarning("Missing prefab attribute!");
 				return;
 			}
-			Instantiate(prefabToSpawn, transform.position, Quaternion.identity);
+			PoolingSystem.Instance.PoolObject(prefabToSpawn, transform.position, Quaternion.identity);
 		}
 	}
 }

@@ -13,8 +13,10 @@ namespace DEEP.Utility
         void Update()
         {
 
-            transform.LookAt(Camera.main.transform);
-            transform.rotation *= Quaternion.Euler(rotationOffset);
+            if(Camera.main != null) {
+                transform.LookAt(Camera.main.transform);
+                transform.rotation *= Quaternion.Euler(rotationOffset);
+            }
 
         }
 

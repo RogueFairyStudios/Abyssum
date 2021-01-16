@@ -5,49 +5,59 @@ using DEEP.DoorsAndKeycards;
 namespace DEEP.Entities.Player
 {
 
+    // ========================================================================================================================
+    // Class that manages the player's movementation and scenery interaction.
+    // ========================================================================================================================
     [RequireComponent(typeof(Rigidbody))]
     [RequireComponent(typeof(CapsuleCollider))]
     public class PlayerMovementation : MonoBehaviour
     {
 
+        // PlayerController that owns this script.
+        protected PlayerController ownerPlayer;
+        public PlayerController Owner {
+            get { return ownerPlayer; }
+            set { ownerPlayer = value; }
+        }
+
         [Tooltip("Player acceleration on ground.")]
-        public float baseGroundAcceleration = 8.0f;
+        [SerializeField] protected float baseGroundAcceleration = 8.0f;
 
         [Tooltip("Player acceleration on ground when under the slow effect.")]
-        public float slowGroundAcceleration = 1.5f;
+        [SerializeField] protected float slowGroundAcceleration = 1.5f;
 
-        private float groundAcceleration;
+        protected float groundAcceleration;
 
         [Tooltip("If the Player is allowed jumping.")]
-        public bool canJump = true;
+        [SerializeField] protected bool canJump = true;
 
         [Tooltip("Player acceleration when jumping.")]
-        public float jumpAcceleration = 7.5f;
+        [SerializeField] protected float jumpAcceleration = 7.5f;
 
         [Range(0, 5)]
         [Tooltip("Drag used to slow down the Player when walking.")]
-        public float groundDrag = 4.0f;
+        [SerializeField] protected float groundDrag = 4.0f;
 
         [Range(0, 5)]
         [Tooltip("Drag used to slow down the Player midair.")]
-        public float airDrag = 1.0f;
+        [SerializeField] protected float airDrag = 1.0f;
 
         [Space(10)]
         [Tooltip("Stores if the Player is touching the ground.")]
-        public bool onGround = false;
+        [SerializeField] protected bool onGround = false;
 
         [Range(float.Epsilon, Mathf.Infinity)]
         [Tooltip("How much height tolerance is used to determine if the Player is touching the ground (Proportional to the collider heigth).")]
-        public float heightTolerance = 0.89f;
+        [SerializeField] protected float heightTolerance = 0.89f;
 
         [Tooltip("Mask used for raycast checks.")]
-        public LayerMask raycastMask = new LayerMask();
+        [SerializeField] protected LayerMask raycastMask = new LayerMask();
 
         [Tooltip("Radius for the ground check.")]
-        public float checkRadius = 0.25f;
+        [SerializeField] protected float checkRadius = 0.25f;
 
         [Tooltip("Sensitivity for the mouselook")]
-        public float sensitivity = 6.0f;
+        [SerializeField] protected float sensitivity = 6.0f;
 
         [Tooltip("Layer mask for opening door's raycast.")]
         [SerializeField] protected LayerMask tryOpenMask = new LayerMask();
@@ -59,8 +69,8 @@ namespace DEEP.Entities.Player
         protected float rotationX = 0.0f; // Rotation on the x angle.
         protected float rotationY = 0.0f; // Rotation on the y angle.
 
-        private Rigidbody pRigidbody = null;
-        private CapsuleCollider pCollider = null;
+        protected Rigidbody pRigidbody = null;
+        protected CapsuleCollider pCollider = null;
         protected Camera pCamera = null;
 
         public void Start() {
@@ -86,7 +96,7 @@ namespace DEEP.Entities.Player
 
         }
 
-        private void Update() {
+        protected void Update() {
 
             // Physics ========================================================================================================
 
@@ -126,7 +136,7 @@ namespace DEEP.Entities.Player
 
         }
 
-        private void FixedUpdate() {
+        protected void FixedUpdate() {
 
             // Velocity calculation ===========================================================================================
 
@@ -151,7 +161,7 @@ namespace DEEP.Entities.Player
         }
 
         // Clamps player's rotation angles.
-        private float ClampAngle(float angle, float min, float max) {
+        protected float ClampAngle(float angle, float min, float max) {
             if (angle < -360.0f)
                 angle += 360.0f;
             if (angle > 360.0f)
@@ -160,37 +170,31 @@ namespace DEEP.Entities.Player
         }
 
         public void SetSlow() {
-
             groundAcceleration = slowGroundAcceleration;
             canJump = false;
-
         }
 
         public void SetBaseSpeed() {
-
             groundAcceleration = baseGroundAcceleration;
             canJump = true;
-
         }
 
         public void SetMouseSensitivity(float sensitivity) { this.sensitivity = sensitivity; }
 
-        void TryOpenDoor() {
+        protected void TryOpenDoor() {
 
 			RaycastHit hit;
-			if (Physics.Raycast(PlayerController.Instance.transform.position, PlayerController.Instance.transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
-				try{
-					hit.collider.GetComponent<Door>().TryOpenDoor();
-				} catch {
-					Debug.LogWarning("Couldn't access the ColorsDoor script from the object " + hit.collider.name);
-				}
+			if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 5.0f, tryOpenMask)) {
+				DoorBase door = hit.collider.GetComponent<DoorBase>();
+                if(door != null)
+					hit.collider.GetComponent<DoorBase>().TryOpenDoor(ownerPlayer.Keys);
 			}
 
 		}
 
 #if UNITY_EDITOR
 
-        private void OnDrawGizmos() // To visualize the ground check
+        protected void OnDrawGizmos() // To visualize the ground check
         {
 
             Gizmos.color = Color.yellow;

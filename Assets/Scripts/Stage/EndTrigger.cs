@@ -14,7 +14,7 @@ namespace DEEP.Stage
                 return;
 
             Debug.Log("Level ended!");
-            PlayerController.Instance.EndLevel();
+            other.GetComponent<PlayerController>().EndLevel();
             Destroy(this.gameObject);
 
         }
